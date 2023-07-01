@@ -1,5 +1,5 @@
 import pg from "pg";
-const { Pool } = pg;
+const { Pool, Client } = pg;
 
 const pool = new Pool({
   user: 'jasonnam',
@@ -9,7 +9,7 @@ const pool = new Pool({
   port: 5432,
 })
 
-console.log(await pool.query('SELECT NOW()'))
+console.log(await pool.query('SELECT * FROM customer LIMIT 1'))
 
 const client = new Client({
   user: 'jasonnam',
@@ -20,7 +20,7 @@ const client = new Client({
 })
 await client.connect()
 
-console.log(await client.query('SELECT NOW()'))
+console.log(await client.query('SELECT * FROM customer LIMIT 1'))
 
 await client.end()
 
