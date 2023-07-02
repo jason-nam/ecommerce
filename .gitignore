@@ -1,5 +1,5 @@
-.env
-.env.example
-example.env
+# .env
+# .env.example
+# example.env
 
-node_modules
+# node_modules
