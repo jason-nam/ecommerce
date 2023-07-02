@@ -4,8 +4,8 @@ const { DB } = require("./config");
 (async () => {
   const usersTableStmt = `
     CREATE TABLE IF NOT EXISTS users (
-      id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
-    )
+      id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL
+    );
   `
 
   try {
@@ -23,6 +23,7 @@ const { DB } = require("./config");
     await db.query(usersTableStmt); // users table
 
     await db.end();
+
   } catch(err) {
     console.log("ERROR CREATING ONE OR MORE TABLES: ", err);
   }
