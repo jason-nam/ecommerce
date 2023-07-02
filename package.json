@@ -1,7 +1,20 @@
 {
-  "type": "module",
+  "name": "ecap-backend",
+  "version": "1.0.0",
+  "description": "ecommerce REST API",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon -r dotenv/config app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create-db": "node -r dotenv/config setupDatabase"
+  },
+  "author": "Yun Jae Nam, Yun Hye Nam",
+  "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
     "pg": "^8.11.1"
+  },
+  "devDependencies": {
+
   }
 }
