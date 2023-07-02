@@ -69,7 +69,9 @@ module.exports = class UserModel {
         try {
 
             // TODO
-            return null;
+            const results = await db.query('SELECT * FROM users WHERE id = $1 LIMIT 1', [id]);
+            return results.rows;
+            // return null;
 
         } catch(err) {
             throw new Error(err);

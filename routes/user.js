@@ -1,5 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const UserModel = require("../models/user");
+const UserModelInstance = new UserModel();
+
 
 module.exports = (app) => {
   
@@ -9,6 +12,7 @@ module.exports = (app) => {
 
     try {
       // TODO
+      res.status(200).send(await UserModelInstance.getUserById());
     } catch(err) {
       next(err);
     }
@@ -18,6 +22,8 @@ module.exports = (app) => {
     
     try {
       // TODO
+      await updateUser(req.body.data);
+      res.status(200).end()
     } catch(err) {
       next(err);
     }
