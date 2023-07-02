@@ -13,7 +13,6 @@ module.exports = class ProductModel {
     async getProducts() {
         // await db.query('SELECT * FROM products ORDER BY id ASC', (error, results) => {
         try {
-            // TODO
             const results = await db.query('SELECT * FROM products ORDER BY id ASC');
             return results.rows;
             // return [];
@@ -30,10 +29,8 @@ module.exports = class ProductModel {
     async getProductById(id) {
         // db.query('SELECT * FROM products WHERE id = $1', [id], (error, results) => {
             try {
-                // TODO
-                const results = await db.query('SELECT * FROM products WHERE id = $1', [id]);
+                const results = await db.query('SELECT * FROM products WHERE id = $1 LIMIT 1', [id]);
                 return results.rows;
-
             } catch(err) {
                 throw new Error(error);
             }

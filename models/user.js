@@ -15,6 +15,9 @@ module.exports = class UserModel {
         try {
 
             // TODO
+            await db.query(
+                'INSERT INTO users (email, passwordhash, firstname, lastname) VALUES ($1, $2, $3, $4)', 
+                [email, password, firstname, lastname]);
             return null;
 
         } catch(err) {
@@ -31,6 +34,9 @@ module.exports = class UserModel {
         try {
 
             // TODO
+            await db.query(
+                'UPDATE users SET email = $1, firstname = $2, lastname = $3 WHERE id = $4', 
+                [email, firstname, lastname, id]);
             return null;
 
         } catch(err) {
@@ -45,9 +51,9 @@ module.exports = class UserModel {
      */
     async getUserByEmail(email) {
         try {
-
             // TODO
-            return null;
+            const results = await db.query('SELECT * FROM users WHERE email = $1 LIMIT 1', [email]);
+            return results.rows;
 
         } catch(err) {
             throw new Error(err);

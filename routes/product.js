@@ -9,7 +9,6 @@ module.exports = (app) => {
     app.use("/products", router)
     app.use(express.urlencoded({ extended: false }))
 
-    
     router.get("/", async (req, res, next) => {
         try {
             // TODO
