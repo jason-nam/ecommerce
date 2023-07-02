@@ -11,13 +11,14 @@ module.exports = class ProductModel {
      * @return {Array} array of products
      */
     async getProducts() {
+        // await db.query('SELECT * FROM products ORDER BY id ASC', (error, results) => {
         try {
-
             // TODO
-            return [];
-
+            const results = await db.query('SELECT * FROM products ORDER BY id ASC');
+            return results.rows;
+            // return [];
         } catch(err) {
-            throw new Error(err);
+            throw new Error(error);
         }
     }
 
@@ -27,13 +28,14 @@ module.exports = class ProductModel {
      * @return {Object|null} product record
      */
     async getProductById(id) {
-        try {
+        // db.query('SELECT * FROM products WHERE id = $1', [id], (error, results) => {
+            try {
+                // TODO
+                const results = await db.query('SELECT * FROM products WHERE id = $1', [id]);
+                return results.rows;
 
-            // TODO
-            return null;
-
-        } catch(err) {
-            throw new Error(err);
-        }
+            } catch(err) {
+                throw new Error(error);
+            }
     }
 }
