@@ -8,7 +8,7 @@ module.exports = (app) => {
   router.get("/:userId", async (req, res, next) => {
 
     try {
-
+      // TODO
     } catch(err) {
       next(err);
     }
@@ -17,7 +17,7 @@ module.exports = (app) => {
   router.put("/:userId", async (req, res, next) => {
     
     try {
-
+      // TODO
     } catch(err) {
       next(err);
     }

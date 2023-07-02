@@ -7,7 +7,7 @@ module.exports = (app) => {
 
     router.get("/", async (req, res, next) => {
         try {
-
+            // TODO
         } catch(err) {
             next(err);
         }
@@ -15,7 +15,7 @@ module.exports = (app) => {
 
     router.get("/:productId", async (req, res, next) => {
         try {
-
+            // TODO
         } catch(err) {
             next(err);
         }

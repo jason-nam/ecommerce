@@ -8,6 +8,11 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "create-db": "node -r dotenv/config setupDatabase"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jason-yunjae-nam/ecommerce"
+  },
+  "keywords": [],
   "author": "Yun Jae Nam, Yun Hye Nam",
   "license": "MIT",
   "dependencies": {
@@ -15,6 +20,7 @@
     "body-parser": "^1.20.2",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
+    "moment": "^2.29.4",
     "pg": "^8.11.1"
   }
 }
