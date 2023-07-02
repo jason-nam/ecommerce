@@ -11,10 +11,8 @@
   "author": "Yun Jae Nam, Yun Hye Nam",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^16.3.1",
     "express": "^4.18.2",
     "pg": "^8.11.1"
-  },
-  "devDependencies": {
-
   }
 }
