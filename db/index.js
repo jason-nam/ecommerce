@@ -1,28 +1,46 @@
-import pg from "pg";
-const { Pool, Client } = pg;
+"use strict";
+
+const { Pool } = require("pg");
+const { DB } = require("../config");
 
 const pool = new Pool({
-  user: 'jasonnam',
-  host: 'localhost',
-  database: 'ecap_database',
-  password: 'jay0416hee',
-  port: 5432,
-})
+  user: DB.PGUSER,
+  host: DB.PGHOST,
+  database: DB.PGDATABASE,
+  password: DB.PGPASSWORD,
+  port: DB.PGPORT
+});
 
-console.log(await pool.query('SELECT * FROM customer LIMIT 1'))
+module.exports = {
+  query: (text, params) => pool.query(text, params)
+}
 
-const client = new Client({
-  user: 'jasonnam',
-  host: 'localhost',
-  database: 'ecap_database',
-  password: 'jay0416hee',
-  port: 5432,
-})
-await client.connect()
 
-console.log(await client.query('SELECT * FROM customer LIMIT 1'))
+// import pg from "pg";
+// const { Pool, Client } = pg;
 
-await client.end()
+// const pool = new Pool({
+//   user: 'jasonnam',
+//   host: '127.0.0.1',
+//   database: 'ecap_database',
+//   password: 'jasonnam',
+//   port: 5432,
+// })
+
+// console.log(await pool.query('SELECT * FROM customer LIMIT 1'))
+
+// const client = new Client({
+//   user: 'jasonnam',
+//   host: '127.0.0.1',
+//   database: 'ecap_database',
+//   password: 'jasonnam',
+//   port: 5432,
+// })
+// await client.connect()
+
+// console.log(await client.query('SELECT * FROM customer LIMIT 1'))
+
+// await client.end()
 
 
 // export const query = async (text, params) => {

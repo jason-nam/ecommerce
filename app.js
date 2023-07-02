@@ -1,40 +1,33 @@
-// const express = require('express')
-import express from "express";
-const app = express()
-const port = 3000
+const express = require("express");
+const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
+const loaders = require("./loaders");
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+const { PORT } = require("./config");
 
-// Connecting database "ecap_database"
+async function startServer() {
 
-// import { Pool, Client } from 'pg'
-//
-// const pool = new Pool({
-//   user: 'jasonnam',
-//   host: 'localhost',
-//   database: 'ecap_database',
-//   password: 'jay0416hee',
-//   port: 5432,
+  loaders(app); // init app loaders
+
+  // starting server
+  app.listen(PORT, () => {
+    console.log(`Server listening on PORT ${PORT}`);
+  })
+
+}
+
+startServer();
+
+
+// // const express = require('express')
+// import express from "express";
+// const app = express()
+// const port = 3000
+
+// app.get('/', (req, res) => {
+//   res.send('Hello World!')
 // })
-//
-// console.log(await pool.query('SELECT NOW()'))
-//
-// const client = new Client({
-//   user: 'jasonnam',
-//   host: 'localhost',
-//   database: 'ecap_database',
-//   password: 'jay0416hee',
-//   port: 5432,
+
+// app.listen(port, () => {
+//   console.log(`Example app listening on port ${port}`)
 // })
-//
-// await client.connect()
-//
-// console.log(await client.query('SELECT NOW()'))
-//
-// await client.end()
