@@ -1,5 +1,6 @@
 const db = require("../db");
 
+
 module.exports = class ProductModel {
 
     constructor(data = {}) {
@@ -11,13 +12,13 @@ module.exports = class ProductModel {
      * @return {Array} array of products
      */
     async getProducts() {
+        // await db.query('SELECT * FROM products ORDER BY id ASC', (error, results) => {
         try {
-
-            // TODO
-            return [];
-
+            const results = await db.query('SELECT * FROM products ORDER BY id ASC');
+            return results.rows;
+            // return [];
         } catch(err) {
-            throw new Error(err);
+            throw new Error(error);
         }
     }
 
@@ -27,13 +28,12 @@ module.exports = class ProductModel {
      * @return {Object|null} product record
      */
     async getProductById(id) {
-        try {
-
-            // TODO
-            return null;
-
-        } catch(err) {
-            throw new Error(err);
-        }
+        // db.query('SELECT * FROM products WHERE id = $1', [id], (error, results) => {
+            try {
+                const results = await db.query('SELECT * FROM products WHERE id = $1 LIMIT 1', [id]);
+                return results.rows;
+            } catch(err) {
+                throw new Error(error);
+            }
     }
 }
