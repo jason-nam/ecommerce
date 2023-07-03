@@ -1,18 +1,24 @@
 const express = require("express");
 const router = express.Router();
-const UserModel = require("../models/user");
-const UserModelInstance = new UserModel();
+
+const UserService = require("../services/userServices");
+const UserServiceInstance = new UserService();
 
 
 module.exports = (app) => {
   
   app.use("/users", router);
+  app.use(express.urlencoded({ extended: false }));
 
   router.get("/:userId", async (req, res, next) => {
 
     try {
-      // TODO
-      res.status(200).send(await UserModelInstance.getUserById());
+
+      const { userId } = req.params;
+      const response = await UserServiceInstance.get(userId);
+
+      res.status(200).send(response);
+
     } catch(err) {
       next(err);
     }
@@ -21,9 +27,14 @@ module.exports = (app) => {
   router.put("/:userId", async (req, res, next) => {
     
     try {
-      // TODO
-      await updateUser(req.body.data);
-      res.status(200).end()
+
+      const { userId } = req.params;
+      const data = req.body;
+
+      const response = await UserServiceInstance.update({ userId, ...data });
+
+      res.status(200).end(response);
+
     } catch(err) {
       next(err);
     }

@@ -70,10 +70,10 @@ const { DB } = require("./config");
     );
   `
 
-  const insertProducts = `
-    INSERT INTO products (name, price, description)
-      VALUES ('Water Bottle', 10.10, 'Bottle for drinking water'); 
-  `
+  // const insertProducts = `
+  //   INSERT INTO products (name, price, description)
+  //     VALUES ('Water Bottle', 10.10, 'Bottle for drinking water'); 
+  // `
   
   try {
     const db = new Client({
@@ -93,7 +93,7 @@ const { DB } = require("./config");
     await db.query(orderItemsTableStatement);
     await db.query(cartsTableStatement);
     await db.query(cartItemsTableStatement);
-    await db.query(insertProducts);
+    // await db.query(insertProducts);
 
     await db.end();
 

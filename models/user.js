@@ -1,4 +1,5 @@
 const db = require("../db");
+const pgp = require("pg-promise");
 
 module.exports = class UserModel {
 
@@ -14,10 +15,22 @@ module.exports = class UserModel {
     async createUser(data) {
         try {
 
-            // TODO
-            await db.query(
-                'INSERT INTO users (email, passwordhash, firstname, lastname) VALUES ($1, $2, $3, $4)', 
-                [email, password, firstname, lastname]);
+            // const { email, passwordHash, firstName, lastName } = data;
+            // const statement = `INSERT INTO users (email, passwordHash, firstName, lastName)
+            //                    VALUES ($1, $2, $3, $4)
+            //                    RETURNING *`;
+
+            // await db.query(
+            //     'INSERT INTO users (email, passwordhash, firstname, lastname) VALUES ($1, $2, $3, $4)', 
+            //     [email, password, firstname, lastname]);
+
+            const statement = pgp.helpers.insert(data, null, "users") + `RETURNING *`;
+            const result = await db.query(statement);
+
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+
             return null;
 
         } catch(err) {
@@ -33,10 +46,21 @@ module.exports = class UserModel {
     async updateUser(data) {
         try {
 
-            // TODO
-            await db.query(
-                'UPDATE users SET email = $1, firstname = $2, lastname = $3 WHERE id = $4', 
-                [email, firstname, lastname, id]);
+            // await db.query(
+            //     'UPDATE users SET email = $1, firstname = $2, lastname = $3 WHERE id = $4', 
+            //     [email, firstname, lastname, id]);
+
+            const { id, ...params } = data;
+
+            const statement = pgp.helpers.update(params, null, "users") 
+                            + `WHERE id = ${ id } RETURNING *`;
+
+            const result = await db.query(statement);
+
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+
             return null;
 
         } catch(err) {
@@ -51,9 +75,23 @@ module.exports = class UserModel {
      */
     async getUserByEmail(email) {
         try {
-            // TODO
-            const results = await db.query('SELECT * FROM users WHERE email = $1 LIMIT 1', [email]);
-            return results.rows;
+            
+            // const results = await db.query('SELECT * FROM users WHERE email = $1 LIMIT 1', [email]);
+            // return results.rows;
+
+            const statement = `SELECT * 
+                               FROM users 
+                               WHERE email = $1 
+                               LIMIT 1`;
+            const values =  [email];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows;
+            }
+
+            return null;
 
         } catch(err) {
             throw new Error(err);
@@ -68,10 +106,22 @@ module.exports = class UserModel {
     async getUserById(id) {
         try {
 
-            // TODO
-            const results = await db.query('SELECT * FROM users WHERE id = $1 LIMIT 1', [id]);
-            return results.rows;
-            // return null;
+            // const results = await db.query('SELECT * FROM users WHERE id = $1 LIMIT 1', [id]);
+            // return results.rows;
+            
+            const statement = `SELECT * 
+                               FROM users 
+                               WHERE id = $1 
+                               LIMIT 1`;
+            const values = [id];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows;
+            }
+            
+            return null;
 
         } catch(err) {
             throw new Error(err);
