@@ -6,48 +6,37 @@ const UserServiceInstance = new UserService();
 
 
 module.exports = (app) => {
-  
-  app.use("/users", router);
-  app.use(express.urlencoded({ extended: false }));
 
-  router.get("/:userId", async (req, res, next) => {
+    app.use("/users", router);
+    app.use(express.urlencoded({ extended: false }));
 
-    try {
+    router.get("/:userId", async (req, res, next) => {
 
-      const { userId } = req.params;
-      const response = await UserServiceInstance.get(userId);
+        try {
 
-      res.status(200).send(response);
+        const { userId } = req.params;
+        const response = await UserServiceInstance.get(userId);
 
-    } catch(err) {
-      next(err);
-    }
-  })
+        res.status(200).send(response);
 
-  router.put("/:userId", async (req, res, next) => {
-    
-    try {
+        } catch(err) {
+            next(err);
+        }
+    })
 
-      const { userId } = req.params;
-      const data = req.body;
+    router.put("/:userId", async (req, res, next) => {
+        
+        try {
 
-      const response = await UserServiceInstance.update({ userId, ...data });
+        const { userId } = req.params;
+        const data = req.body;
 
-      res.status(200).end(response);
+        const response = await UserServiceInstance.update({ userId, ...data });
 
-    } catch(err) {
-      next(err);
-    }
-  })
+        res.status(200).end(response);
+
+        } catch(err) {
+            next(err);
+        }
+    })
 }
-
-// // notice here I'm requiring my database adapter file
-// // and not requiring node-postgres directly
-// import * as db from '../db/index.js'
-
-// app.get('/:id', async (req, res, next) => {
-//   const result = await db.query('SELECT * FROM customer WHERE id = $1', [req.params.id])
-//   res.send(result.rows[0])
-// })
-
-// // ... many other routes in this file
