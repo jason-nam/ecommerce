@@ -3,11 +3,6 @@ const UserModelInstance = new UserModel();
 
 module.exports = class AuthenticationService {
 
-    /**
-     * Register new user
-     * @param {Object} data user data
-     * @return 
-     */
     async register(data) {
 
         const { email } = data;
@@ -28,13 +23,27 @@ module.exports = class AuthenticationService {
 
     }
 
-    /**
-     * Login user
-     * @param {Object} data user data
-     * @return 
-     */
     async login(data) {
-        // TODO
+        
+        const { email, passwordhash } = data;
+
+        try {
+
+            const user = UserModelInstance.getUserByEmail(email);
+
+            if (!user) {
+                throw createError(401, "Incorrect email or password");
+            }
+
+            if (user.passwordhash !== passwordhash) {
+                throw createError(401, "Incorrect email or password");
+            }
+
+            return user;
+
+        } catch(err) {
+            throw createError(500, err); // 500 internal service error
+        }
     }
 
 }
