@@ -12,11 +12,25 @@ module.exports = class ProductModel {
      * @return {Array} array of products
      */
     async getProducts() {
-        // await db.query('SELECT * FROM products ORDER BY id ASC', (error, results) => {
+
         try {
-            const results = await db.query('SELECT * FROM products ORDER BY id ASC');
-            return results.rows;
-            // return [];
+            
+            // select list of all products in ascending id order
+            const statement = `SELECT *
+                               FROM products
+                               ORDER BY id ASC`;
+
+            const values = [];
+
+            const result = await db.query(statement, values);
+
+            // return result array if result.rows not null and has length property
+            if (result.rows?.length) {
+                return result.rows;
+            }
+
+            return [];
+
         } catch(err) {
             throw new Error(error);
         }
@@ -28,10 +42,24 @@ module.exports = class ProductModel {
      * @return {Object|null} product record
      */
     async getProductById(id) {
-        // db.query('SELECT * FROM products WHERE id = $1', [id], (error, results) => {
             try {
-                const results = await db.query('SELECT * FROM products WHERE id = $1 LIMIT 1', [id]);
-                return results.rows;
+
+                // select products with id 1 of limit 1
+                const statement = `SELECT *
+                                   FROM products
+                                   WHERE id = $1
+                                   LIMIT 1`
+
+                const values = [id];
+
+                const result = await db.query(statement, values);
+
+                if (result.row?.length) {
+                    return result.row;
+                }
+
+                return null;
+
             } catch(err) {
                 throw new Error(error);
             }

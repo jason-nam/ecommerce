@@ -3,6 +3,8 @@ const routers = require("../routes")
 module.exports = async (app) => {
 
     // TODO
+
+    // Load API route handlers
     await routers(app);
 
     // error handling
