@@ -51,5 +51,15 @@ module.exports = {
         } catch(err) {
             next(err);
         }
+    },
+
+    checkout: async(req, res, next) => {
+        try {
+
+            // TODO
+
+        } catch(err) {
+            next(err);
+        }
     }
 }

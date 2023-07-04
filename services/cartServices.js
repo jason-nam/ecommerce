@@ -58,4 +58,14 @@ module.exports = class CartService {
         }
     }
 
+    async checkout(cartId, userId, paymentInfo) {
+        
+        try {
+
+            // TODO
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
 }
