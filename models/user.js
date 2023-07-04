@@ -15,17 +15,14 @@ module.exports = class UserModel {
     async createUser(data) {
         try {
 
-            // const { email, passwordHash, firstName, lastName } = data;
-            // const statement = `INSERT INTO users (email, passwordHash, firstName, lastName)
-            //                    VALUES ($1, $2, $3, $4)
-            //                    RETURNING *`;
-
-            // await db.query(
-            //     'INSERT INTO users (email, passwordhash, firstname, lastname) VALUES ($1, $2, $3, $4)', 
-            //     [email, password, firstname, lastname]);
-
-            const statement = pgp.helpers.insert(data, null, "users") + `RETURNING *`;
-            const result = await db.query(statement);
+            const { email, passwordhash, firstname, lastname } = data;
+            const statement = `INSERT INTO users (email, passwordhash, firstname, lastname)
+                               VALUES ($1, $2, $3, $4)
+                               RETURNING *`;
+            const result = await db.query(statement, [email, passwordhash, firstname, lastname]);
+            
+            // const statement = pgp.helpers.insert(data, null, 'users') + `RETURNING *`;
+            // const result = await db.query(statement);
 
             if (result.rows?.length) {
                 return result.rows[0];
@@ -46,16 +43,16 @@ module.exports = class UserModel {
     async updateUser(data) {
         try {
 
-            // await db.query(
-            //     'UPDATE users SET email = $1, firstname = $2, lastname = $3 WHERE id = $4', 
-            //     [email, firstname, lastname, id]);
+            const { userId, email, passwordhash, firstname, lastname } = data;
+            const statement =
+                `UPDATE users SET email = $1, passwordhash = $2, firstname = $3, lastname = $4 WHERE id = $5
+                  RETURNING *`;
+            const result = await db.query(statement, [email, passwordhash, firstname, lastname, userId]);
 
-            const { id, ...params } = data;
-
-            const statement = pgp.helpers.update(params, null, "users") 
-                            + `WHERE id = ${ id } RETURNING *`;
-
-            const result = await db.query(statement);
+            // const { userId, ...params} = data
+            // const statement = pgp.helpers.update(params, null, "users") 
+            //                 + `WHERE id = ${ userId } RETURNING *`;
+            // const result = await db.query(statement);
 
             if (result.rows?.length) {
                 return result.rows[0];

@@ -33,7 +33,7 @@ module.exports = (app) => {
 
         const response = await UserServiceInstance.update({ userId, ...data });
 
-        res.status(200).end(response);
+        res.status(200).send(response);
 
         } catch(err) {
             next(err);

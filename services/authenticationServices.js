@@ -11,11 +11,11 @@ module.exports = class AuthenticationService {
 
             const user = await UserModelInstance.getUserByEmail(email);
 
-            if (user) {
+            if (user != null) {
                 throw createError(409, "Email already in use"); // 409 create error
             }
 
-            return await UserModelInstance.create(data);
+            return await UserModelInstance.createUser(data);
 
         } catch(err) {
             throw createError(500, err); // 500 internal service error
@@ -29,17 +29,19 @@ module.exports = class AuthenticationService {
 
         try {
 
-            const user = UserModelInstance.getUserByEmail(email);
+            let user = await UserModelInstance.getUserByEmail(email);
 
             if (!user) {
+                console.log("User does not exist")
                 throw createError(401, "Incorrect email or password");
             }
 
-            if (user.passwordhash !== passwordhash) {
+            if (user[0].passwordhash !== passwordhash) {
+                console.log("Wrong password")
                 throw createError(401, "Incorrect email or password");
             }
 
-            return user;
+            return user[0];
 
         } catch(err) {
             throw createError(500, err); // 500 internal service error
