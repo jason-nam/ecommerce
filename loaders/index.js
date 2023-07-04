@@ -1,16 +1,18 @@
 const routers = require("../routes")
-const bodyParser = require('body-parser');
+const expressMiddleware = require("../middleware/express");
 
 module.exports = async (app) => {
 
+    // app.use(bodyParser.urlencoded({ extended: false }));
+    // app.use(bodyParser.json());
+
+    // load express middleware
+    const expressApp = await expressMiddleware(app);
+
+    // load authenticator middleware
     // TODO
-    app.use(bodyParser.urlencoded({
-        extended: false
-    }));
 
-    app.use(bodyParser.json());
-
-    // Load API route handlers
+    // load API route handlers
     await routers(app);
 
     // error handling
