@@ -4,7 +4,10 @@ const moment = require("moment");
 module.exports = class CartModel {
 
     constructor(data = {}) {
-        // TODO
+        this.created = data.created || moment.utc().toISOString();
+        this.modified = moment.utc().toISOString();
+        this.converted = data.converted || null;
+        this.isActive = data.isActive || true;
     }
 
     /**
@@ -28,7 +31,7 @@ module.exports = class CartModel {
      * @param {number} userId user id
      * @return {Object|null} cart record
      */
-    static async loadByUser(userId) {
+    static async getByUser(userId) {
         try {
 
             // TODO
@@ -44,7 +47,7 @@ module.exports = class CartModel {
      * @param {number} id cart id
      * @return {Object|null} cart record
      */
-    static async loadById(id) {
+    static async getById(id) {
         try {
 
             // TODO
