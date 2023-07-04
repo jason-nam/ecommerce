@@ -6,17 +6,23 @@ module.exports = {
     create: async (req, res, next) => {
         try {
 
-            // TODO
+            const { id } = req.user;
+            const response = await CartServiceInstance.create(id);
+
+            res.status(200).send(response);
 
         } catch(err) {
             next(err);
         }
     },
 
-    loadCart: async (req, res, next) => {
+    getCart: async (req, res, next) => {
         try {
             
-            // TODO
+            const { id } = req.user;
+            const response = await CartServiceInstance.getCart(id);
+
+            res.status(200).send(response);
 
         } catch(err) {
             next(err);

@@ -1,24 +1,29 @@
 const CartModel = require("../models/cart");
 const CartModelInstance = new CartModel();
+const CartItemModel = require("../models/cartItem");
+const CartItemModelInstance = new CartItemModel();
 
 module.exports = class CartService {
 
-    async create(data) {
+    async create(userId) {
 
         try {
 
-            // TODO
+            const cart = CartModelInstance.createCart(userId);
+
+            return cart;
 
         } catch(err) {
             throw new Error(err);
         }
     }
 
-    async loadCart(userId, item) {
+    async getCart(userId) {
 
         try {
 
-            // TODO
+            const cart = await CartModelInstance.getByUser(userId);
+            const items = await CartItemModelInstance.getByUser()
 
         } catch(err) {
             throw new Error(err);

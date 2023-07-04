@@ -5,7 +5,7 @@ const { SESSION_SECRET } = require('../config');
 module.exports = (app) => {
 
     app.use(bodyParser.json());
-    app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.urlencoded({ extended: false }));
 
     // create proxy
     app.set('trust proxy', 1);
