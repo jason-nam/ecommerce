@@ -48,7 +48,7 @@ module.exports = class ProductModel {
                 const statement = `SELECT *
                                    FROM products
                                    WHERE id = $1
-                                   LIMIT 1`
+                                   LIMIT 1`;
 
                 const values = [id];
 

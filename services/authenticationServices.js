@@ -32,12 +32,12 @@ module.exports = class AuthenticationService {
             let user = await UserModelInstance.getUserByEmail(email);
 
             if (!user) {
-                console.log("User does not exist")
+                console.log("User does not exist");
                 throw createError(401, "Incorrect email or password");
             }
 
             if (user[0].passwordhash !== passwordhash) {
-                console.log("Wrong password")
+                console.log("Wrong password");
                 throw createError(401, "Incorrect email or password");
             }
 
