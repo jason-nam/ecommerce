@@ -19,6 +19,7 @@ module.exports = class UserModel {
             const statement = `INSERT INTO users (email, passwordhash, firstname, lastname)
                                VALUES ($1, $2, $3, $4)
                                RETURNING *`;
+
             const result = await db.query(statement, [email, passwordhash, firstname, lastname]);
             
             // const statement = pgp.helpers.insert(data, null, 'users') + `RETURNING *`;
@@ -44,9 +45,11 @@ module.exports = class UserModel {
         try {
 
             const { userId, email, passwordhash, firstname, lastname } = data;
-            const statement =
-                `UPDATE users SET email = $1, passwordhash = $2, firstname = $3, lastname = $4 WHERE id = $5
-                  RETURNING *`;
+            const statement = `UPDATE users 
+                               SET email = $1, passwordhash = $2, firstname = $3, lastname = $4 
+                               WHERE id = $5
+                               RETURNING *`;
+
             const result = await db.query(statement, [email, passwordhash, firstname, lastname, userId]);
 
             // const { userId, ...params} = data
@@ -110,6 +113,7 @@ module.exports = class UserModel {
                                FROM users 
                                WHERE id = $1 
                                LIMIT 1`;
+                               
             const values = [id];
 
             const result = await db.query(statement, values);

@@ -14,10 +14,10 @@ module.exports = (app) => {
 
         try {
 
-        const { userId } = req.params;
-        const response = await UserServiceInstance.get(userId);
+            const { userId } = req.params;
+            const response = await UserServiceInstance.get(userId);
 
-        res.status(200).send(response);
+            res.status(200).send(response);
 
         } catch(err) {
             next(err);
@@ -28,12 +28,12 @@ module.exports = (app) => {
         
         try {
 
-        const { userId } = req.params;
-        const data = req.body;
+            const { userId } = req.params;
+            const data = req.body;
 
-        const response = await UserServiceInstance.update({ userId, ...data });
+            const response = await UserServiceInstance.update({ userId, ...data });
 
-        res.status(200).send(response);
+            res.status(200).send(response);
 
         } catch(err) {
             next(err);
