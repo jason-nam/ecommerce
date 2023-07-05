@@ -6,8 +6,8 @@ module.exports = {
     create: async (req, res, next) => {
         try {
 
-            const { id } = req.user;
-            const response = await CartServiceInstance.create(id);
+            const { userId } = req.params;
+            const response = await CartServiceInstance.create(userId);
 
             res.status(200).send(response);
 
@@ -19,8 +19,8 @@ module.exports = {
     getCart: async (req, res, next) => {
         try {
             
-            const { id } = req.user;
-            const response = await CartServiceInstance.getCart(id);
+            const { userId } = req.params;
+            const response = await CartServiceInstance.getCart(userId);
 
             res.status(200).send(response);
 
@@ -32,7 +32,12 @@ module.exports = {
     addItem: async (req, res, next) => {
         try {
             
-            // TODO
+            const { userId } = req.params;
+            const data = req.body;
+
+            const response = await CartServiceInstance.addItem(userId, data);
+
+            res.status(200).send(response);
 
         } catch(err) {
             next(err);
@@ -42,7 +47,12 @@ module.exports = {
     updateItem: async (req, res, next) => {
         try {
 
-            // TODO
+            const { cartItemId } = req.params;
+            const data = req.body;
+
+            const response = await CartServiceInstance.updateItem(cartItemId, data);
+
+            res.status(200).send(response);
 
         } catch(err) {
             next(err);
@@ -52,7 +62,11 @@ module.exports = {
     removeItem: async (req, res, next) => {
         try {
 
-            // TODO
+            const { cartItemId } = req.params;
+
+            const response = await CartServiceInstance.removeItem(cartItemId);
+
+            res.status(200).send(response);
 
         } catch(err) {
             next(err);
@@ -62,7 +76,12 @@ module.exports = {
     checkout: async(req, res, next) => {
         try {
 
-            // TODO
+            const { userId } = req.params;
+            const { cartId, paymentInfo } = req.body;
+
+            const response = await CartServiceInstance.checkout(cartId, userId, paymentInfo);
+
+            res.status(200).send(response);
 
         } catch(err) {
             next(err);

@@ -44,7 +44,7 @@ module.exports = class CartItemModel {
      * @param {Object} cartId cart id
      * @return {Array} created cart item
      */
-    static async getCartItem(cartId) {
+    static async getCartItems(cartId) {
         try {
 
             // TODO
