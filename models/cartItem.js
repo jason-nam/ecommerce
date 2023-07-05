@@ -1,4 +1,5 @@
 const db = require("../db");
+const pgp = require("pg-promise")({ capSQL: true });
 
 module.exports = class CartItemModel {
 
@@ -14,7 +15,21 @@ module.exports = class CartItemModel {
     static async createCartItem(data) {
         try {
 
-            // TODO
+            // const statement = pgp.helpers.insert(data, null, "cartItems") + `RETURNING *`;
+
+            const { qty, productId, cartId } = data;
+
+            const statement = `INSERT INTO cartItems (qty, productid, cartid)
+                               VALUES ($1, $2, $3)
+                               RETURNING *`;
+            const values = [qty, productId, cartId];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result;
+            }
+
             return null;
 
         } catch(err) {
@@ -31,7 +46,23 @@ module.exports = class CartItemModel {
     static async updateCartItem(id, data) {
         try {
 
-            // TODO
+            // const condition = pgp.as.format('WHERE id = ${id} RETURNING *', { id });
+            // const statement = pgp.helpers.update(data, null, 'cartItems') + condition;
+
+            const { qty, productId, cartId } = data;
+
+            const statement = `UPDATE cartItems 
+                               SET qty = $1, productid = $2, cartid = $3
+                               WHERE id = $4
+                               RETURNING *`;
+            const values = [qty, productId, cartId, id];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result;
+            }
+
             return null;
 
         } catch(err) {
@@ -44,10 +75,24 @@ module.exports = class CartItemModel {
      * @param {Object} cartId cart id
      * @return {Array} created cart item
      */
-    static async getCartItem(cartId) {
+    static async getCartItems(cartId) {
         try {
 
-            // TODO
+            const statement = `SELECT 
+                               ci.qty,
+                               ci.id AS "cartItemId", 
+                               p.*
+                               FROM "cartItems" ci
+                               INNER JOIN products p ON p.id = ci."productId"
+                               WHERE "cartId" = $1`;
+            const values = [cartId];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows;
+            }
+
             return [];
 
         } catch(err) {
@@ -63,7 +108,19 @@ module.exports = class CartItemModel {
     static async deleteCartItem(id) {
         try {
 
-            // TODO
+            const statement = `DELETE
+                               FROM "cartItems"
+                               WHERE id = $1
+                               RETURNING *`;
+            const values = [id];
+        
+            // Execute SQL statment
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+
             return null;
 
         } catch(err) {

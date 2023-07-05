@@ -1,5 +1,6 @@
 const db = require("../db");
 const moment = require("moment");
+const pgp = require("pg-promise")({ capSQL: true });
 
 module.exports = class CartModel {
 
@@ -18,7 +19,20 @@ module.exports = class CartModel {
     async createCart(userId) {
         try {
 
-            // TODO
+            const data = { userId, ...this };
+
+            // const statement = `INSERT INTO carts (created, modified, userid)
+            //                    VALUES ($1, $2, $3, $4)
+            //                    RETURNING *`;
+
+            const statement = pgp.helpers.insert(data, null, 'carts') + 'RETURNING *';
+
+            const result = await db.query(statement);
+
+            if (result.rows?.length) {
+                return result;
+            }
+
             return null;
 
         } catch(err) {
@@ -34,7 +48,18 @@ module.exports = class CartModel {
     static async getByUser(userId) {
         try {
 
-            // TODO
+            const statement = `SELECT *
+                               FROM carts
+                               WHERE "userId" = $1
+                               LIMIT 1`;
+            const values = [userId];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result;
+            }
+
             return null;
 
         } catch(err) {
@@ -50,7 +75,18 @@ module.exports = class CartModel {
     static async getById(id) {
         try {
 
-            // TODO
+            const statement = `SELECT *
+                               FROM carts
+                               WHERE "id" = $1
+                               LIMIT 1`;
+            const values = [id];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result;
+            }
+
             return null;
 
         } catch(err) {
