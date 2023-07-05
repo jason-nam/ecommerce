@@ -2,6 +2,9 @@ const bodyParser = require('body-parser');
 const session = require('express-session');
 const { SESSION_SECRET } = require('../config');
 
+const cors=require('cors');
+
+
 module.exports = (app) => {
 
     app.use(bodyParser.json());
@@ -9,6 +12,7 @@ module.exports = (app) => {
 
     // create proxy
     app.set('trust proxy', 1);
+    app.use(cors())
 
     // Creates a session
     app.use(

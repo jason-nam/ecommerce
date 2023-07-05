@@ -22,7 +22,9 @@ module.exports = {
             const { productId } = req.params;
             const response = await ProductServiceInstance.get(productId);
 
-            res.status(200).send(response);
+            // res.status(200).send(response);
+            res.json(response);
+
 
         } catch(err) {
             next(err);
