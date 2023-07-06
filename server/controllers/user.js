@@ -8,10 +8,10 @@ module.exports = {
 
             const { userId } = req.params;
             const response = await UserServiceInstance.get(userId);
-
             res.status(200).send(response);
 
         } catch(err) {
+            res.status(404).send("Does not exist");
             next(err);
         }
     },
@@ -24,9 +24,10 @@ module.exports = {
 
             const response = await UserServiceInstance.update({ userId, ...data });
 
-            res.status(200).send(response);
+            res.status(204).send(response);
 
         } catch(err) {
+            res.status(400).send();
             next(err);
         }
     }

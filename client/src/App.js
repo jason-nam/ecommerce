@@ -1,7 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import {Product} from './components/Product';
-import {User} from './components/Product';
+import {ProductsList} from './components/ProductsList';
+import {User} from './components/User';
+
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -33,8 +35,9 @@ function App() {
       {/* <Route exact path='/' element={<Home />} /> */}
       {/* <Route path='/about' element={<About />} /> */}
       <Route path='/products/:id' element={<Product />} />
+      <Route path='/products' element={<ProductsList />} />
       <Route path='/users/:id' element={<User />} />
-
+      {/* <Route path="*" component={NotFound}  status={404} /> */}
     </Routes>
     </Router>
   );
