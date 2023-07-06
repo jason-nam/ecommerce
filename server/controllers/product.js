@@ -12,7 +12,7 @@ module.exports = {
             res.status(200).send(response);
 
         } catch(err) {
-            res.status(404).send("Does not exist");
+            res.status(404).send({"message":"404"});
             next(err);
         }
     },
@@ -27,7 +27,7 @@ module.exports = {
 
 
         } catch(err) {
-            res.status(404).send();
+            res.status(404).send({"message":"Product does not exist"});
             next(err);
         }
     }

@@ -3,6 +3,8 @@ import './App.css';
 import {Product} from './components/Product';
 import {ProductsList} from './components/ProductsList';
 import {User} from './components/User';
+import {Login} from './components/Login';
+import {Register} from './components/Register';
 
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
@@ -37,6 +39,8 @@ function App() {
       <Route path='/products/:id' element={<Product />} />
       <Route path='/products' element={<ProductsList />} />
       <Route path='/users/:id' element={<User />} />
+      <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
       {/* <Route path="*" component={NotFound}  status={404} /> */}
     </Routes>
     </Router>

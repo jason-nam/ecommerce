@@ -12,8 +12,7 @@ module.exports = {
             res.status(201).send(response);
 
         } catch(err) {
-            res.status(409).send("Creation failed");
-            next(err);
+            res.status(409).send({"message": "User Registration Fail"});
         }
     },
 
@@ -22,12 +21,10 @@ module.exports = {
 
             const data = req.body;
             const response = await AuthenticationServiceInstance.login(data);
-
             res.status(200).send(response);
 
         } catch(err) {
-            res.status(401).send("Login fail");
-            next(err);
+            res.status(401).send({"message": "Authentication Fail"});
         }
     }
 }

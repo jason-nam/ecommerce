@@ -5,6 +5,8 @@ module.exports = class AuthenticationService {
 
     async register(data) {
 
+        data["passwordhash"] = data.password; //change
+        
         const { email } = data;
 
         try {
@@ -25,6 +27,7 @@ module.exports = class AuthenticationService {
 
     async login(data) {
         
+        data["passwordhash"] = data.password; //change
         const { email, passwordhash } = data;
 
         try {
@@ -44,6 +47,7 @@ module.exports = class AuthenticationService {
             return user[0];
 
         } catch(err) {
+            
             throw createError(500, err); // 500 internal service error
         }
     }

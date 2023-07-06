@@ -11,8 +11,7 @@ module.exports = {
             res.status(200).send(response);
 
         } catch(err) {
-            res.status(404).send("Does not exist");
-            next(err);
+            res.status(404).send({"message":"User does not exist"});
         }
     },
 
@@ -27,8 +26,7 @@ module.exports = {
             res.status(204).send(response);
 
         } catch(err) {
-            res.status(400).send();
-            next(err);
+            res.status(400).send({"message":"User Info Edit Fail"});
         }
     }
 }

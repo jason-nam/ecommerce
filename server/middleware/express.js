@@ -4,7 +4,6 @@ const { SESSION_SECRET } = require('../config');
 
 const cors=require('cors');
 
-
 module.exports = (app) => {
 
     app.use(bodyParser.json());

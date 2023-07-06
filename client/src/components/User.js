@@ -6,6 +6,7 @@ export function User() {
     const { id } = useParams()
     const [user, setUser] = useState({});
     const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetch("/users/"+id)
@@ -15,9 +16,12 @@ export function User() {
             else
                 return res.json()
             })
-        .then((data) => setUser(data[0]))
+        .then((data) => {
+            setUser(data[0]);
+            setLoading(false);
+        })
         .catch((err) => setError(true));        
-    }, []);
+    }, [id]);
 
     if (error) {
         return (
@@ -26,10 +30,12 @@ export function User() {
         </div>
     )
     } else
-        return (
+        return !loading ?(
             <div className="App">
             <div>{user.firstname} {user.lastname}</div>
             </div>
-        );
+        ) :
+        (<p>loading</p>)
+        ;
 }
 
