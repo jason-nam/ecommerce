@@ -4,20 +4,22 @@ const UserModelInstance = new UserModel();
 module.exports = class AuthenticationService {
 
     async register(data) {
-
-        data["passwordhash"] = data.password; //change
         
         const { email } = data;
 
         try {
 
-            const user = await UserModelInstance.getUserByEmail(email);
+            const existingUser = await UserModelInstance.getUserByEmail(email);
 
-            if (user != null) {
+            if (existingUser != null) {
                 throw createError(409, "Email already in use"); // 409 create error
             }
 
-            return await UserModelInstance.createUser(data);
+            const user = await UserModelInstance.createUser(data);
+
+            const { passwordhash, ...censoredUser } = user;
+
+            return user;
 
         } catch(err) {
             throw createError(500, err); // 500 internal service error
@@ -27,8 +29,7 @@ module.exports = class AuthenticationService {
 
     async login(data) {
         
-        data["passwordhash"] = data.password; //change
-        const { email, passwordhash } = data;
+        const { email, passwordhash: inputPasswordHash } = data;
 
         try {
 
@@ -39,15 +40,16 @@ module.exports = class AuthenticationService {
                 throw createError(401, "Incorrect email or password");
             }
 
-            if (user[0].passwordhash !== passwordhash) {
+            if (user[0].passwordhash !== inputPasswordHash) {
                 console.log("Wrong password");
                 throw createError(401, "Incorrect email or password");
             }
 
-            return user[0];
+            const { passwordhash, ...censoredUser } = user[0];
+
+            return censoredUser; 
 
         } catch(err) {
-            
             throw createError(500, err); // 500 internal service error
         }
     }

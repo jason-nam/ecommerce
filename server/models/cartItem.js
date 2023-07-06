@@ -78,10 +78,7 @@ module.exports = class CartItemModel {
     static async getCartItems(cartId) {
         try {
 
-            const statement = `SELECT 
-                               ci.qty,
-                               ci.id AS "cartItemId", 
-                               p.*
+            const statement = `SELECT ci.qty, ci.id AS "cartItemId", p.*
                                FROM "cartItems" ci
                                INNER JOIN products p ON p.id = ci."productId"
                                WHERE "cartId" = $1`;
