@@ -6,6 +6,7 @@ export function Product() {
     const { id } = useParams()
     const [product, setProduct] = useState({});
     const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetch("/products/"+id)
@@ -15,9 +16,12 @@ export function Product() {
             else
                 return res.json()
             })
-        .then((data) => setProduct(data[0]))
+        .then((data) => {
+            setProduct(data[0]);             
+            setLoading(false);
+        })
         .catch(err => setError(true));        
-    }, []);
+    }, [id]);
 
     if (error) {
         return (    
@@ -27,11 +31,13 @@ export function Product() {
         )
     } else
         return (
-            <div className="App">
-            <div>{product.name}</div>
-            <div>${product.price}</div>
-            <div>{product.description}</div>
-            </div>
+            !loading ? (
+                <div className="App">
+                    <div>{product.name}</div>
+                    <div>${product.price}</div>
+                    <div>{product.description}</div>
+                </div>)
+            : (<p>loading</p>)
         );
 }
 

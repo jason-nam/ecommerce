@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
 
 export function ProductsList() {
 
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         fetch("/products")
@@ -14,7 +14,10 @@ export function ProductsList() {
             else
                 return res.json()
             })
-        .then((data) => setProducts(data))
+        .then((data) => {
+            setProducts(data);             
+            setLoading(false);
+        })
         .catch(err => setError(true));        
     }, []);
 
@@ -26,7 +29,7 @@ export function ProductsList() {
         )
     } else
         return (
-            <div className="container">{products.map( product => {
+            <div className="container">{!loading ? products.map( product => {
                 return (
                     <div key={product.id} id={product.id}>
                         <div className="name">{product.name}</div>
@@ -34,7 +37,10 @@ export function ProductsList() {
                         <div className="desc">{product.description}</div>
                     </div> 
                 )
-            })}</div>
+            }) : (
+                <p>Loading...</p>
+            )
+        }</div>
         );
 }
 
