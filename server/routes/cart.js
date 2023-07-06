@@ -8,11 +8,11 @@ module.exports = (app) => {
     app.use("/carts", router);
     app.use(express.urlencoded({ extended: false }));
 
-    router.post("/:userId", controller.create);
-    router.post("/:userId/items", controller.addItem);
-    router.post("/:userId/checkout", controller.checkout);
-    router.get("/:userId", controller.getCart);
-    router.put("/:userId/items/:cartItemId", controller.updateItem);
-    router.delete("/:userId/items/:cartItemId", controller.removeItem);
+    router.post("/mycart", controller.create);
+    router.post("/mycart/items", controller.addItem);
+    router.post("/mycart/checkout", controller.checkout);
+    router.get("/mycart", controller.getCart);
+    router.put("/mycart/items/:cartItemId", controller.updateItem);
+    router.delete("/mycart/items/:cartItemId", controller.removeItem);
 
 }

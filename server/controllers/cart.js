@@ -6,7 +6,7 @@ module.exports = {
     create: async (req, res, next) => {
         try {
 
-            const { userId } = req.params;
+            const { userId } = req.body;
             const response = await CartServiceInstance.create(userId);
 
             res.status(200).send(response);
@@ -19,7 +19,7 @@ module.exports = {
     getCart: async (req, res, next) => {
         try {
             
-            const { userId } = req.params;
+            const { userId } = req.body;
             const response = await CartServiceInstance.getCart(userId);
 
             res.status(200).send(response);
@@ -32,8 +32,8 @@ module.exports = {
     addItem: async (req, res, next) => {
         try {
             
-            const { userId } = req.params;
-            const data = req.body;
+            const { userId, ...data } = req.body;
+            // const data = req.body;
 
             const response = await CartServiceInstance.addItem(userId, data);
 
@@ -76,8 +76,7 @@ module.exports = {
     checkout: async(req, res, next) => {
         try {
 
-            const { userId } = req.params;
-            const { cartId, paymentInfo } = req.body;
+            const { userId, cartId, paymentInfo } = req.body;
 
             const response = await CartServiceInstance.checkout(cartId, userId, paymentInfo);
 
