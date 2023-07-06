@@ -8,7 +8,7 @@ export function Product() {
 
     const [product, setProduct] = useState("");
     useEffect(() => {
-        fetch("http://localhost:4000/products/"+id)
+        fetch("/products/"+id)
         .then((res) => res.json())
         .then((data) => setProduct(data[0]));
     }, []);
