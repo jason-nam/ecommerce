@@ -21,13 +21,14 @@ module.exports = class CartModel {
 
             const data = { userId, ...this };
 
-            // const statement = `INSERT INTO carts (created, modified, userid)
-            //                    VALUES ($1, $2, $3, $4)
-            //                    RETURNING *`;
+            const statement = `INSERT INTO carts (created, modified, userid, converted, isactive)
+                               VALUES ($1, $2, $3, $4, $5)
+                               RETURNING *`;
+            const values = [this.created, this.modified, userId, this.converted, this.isActive];
 
-            const statement = pgp.helpers.insert(data, null, 'carts') + 'RETURNING *';
+            // const statement = pgp.helpers.insert(data, null, 'carts') + 'RETURNING *';
 
-            const result = await db.query(statement);
+            const result = await db.query(statement, values);
 
             if (result.rows?.length) {
                 return result;
@@ -50,8 +51,7 @@ module.exports = class CartModel {
 
             const statement = `SELECT *
                                FROM carts
-                               WHERE "userId" = $1
-                               LIMIT 1`;
+                               WHERE "userid" = $1`;
             const values = [userId];
 
             const result = await db.query(statement, values);

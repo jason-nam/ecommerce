@@ -23,7 +23,7 @@ module.exports = class CartService {
         try {
 
             const cart = await CartModel.getByUser(userId);
-            const items = await CartItemModel.getCartItems(cart.id);
+            const items = await CartItemModel.getCartItems(cart.rows[0].id);
 
             cart.items = items;
 
@@ -40,7 +40,8 @@ module.exports = class CartService {
 
             const cart = await CartModel.getByUser(userId);
 
-            const data = { cartId: cart.id, ...item };
+            const data = { cartId: cart.rows[0].id, ...item };
+
             const cartItem = await CartItemModel.createCartItem(data);
 
             return cartItem;
