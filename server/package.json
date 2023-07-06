@@ -1,0 +1,26 @@
+{
+  "name": "ecap-backend",
+  "version": "1.0.0",
+  "description": "E-Commerce REST API",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon -r dotenv/config app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create-db": "node -r dotenv/config setupDatabase"
+  },
+  "keywords": [],
+  "author": "Yun Jae Nam, Yun Hye Nam",
+  "license": "MIT",
+  "dependencies": {
+    "argon2": "^0.30.3",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "moment": "^2.29.4",
+    "nodemon": "^2.0.22",
+    "pg": "^8.11.1",
+    "pg-promise": "^11.5.0"
+  }
+}
