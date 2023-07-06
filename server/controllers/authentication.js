@@ -21,6 +21,7 @@ module.exports = {
 
             const data = req.body;
             const response = await AuthenticationServiceInstance.login(data);
+            
             res.status(200).send(response);
 
         } catch(err) {
