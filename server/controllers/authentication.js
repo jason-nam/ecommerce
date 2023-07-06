@@ -12,7 +12,7 @@ module.exports = {
             res.status(201).send(response);
 
         } catch(err) {
-            res.status(409).send("Creation failed");
+            res.status(409).send({"message": "User Registration Fail"});
         }
     },
 

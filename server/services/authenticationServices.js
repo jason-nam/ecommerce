@@ -5,6 +5,8 @@ module.exports = class AuthenticationService {
 
     async register(data) {
 
+        data["passwordhash"] = data.password; //change
+        
         const { email } = data;
 
         try {

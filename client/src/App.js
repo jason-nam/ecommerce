@@ -40,6 +40,7 @@ function App() {
       <Route path='/products' element={<ProductsList />} />
       <Route path='/users/:id' element={<User />} />
       <Route path='/login' element={<Login />} />
+      <Route path='/register' element={<Register />} />
       {/* <Route path="*" component={NotFound}  status={404} /> */}
     </Routes>
     </Router>
