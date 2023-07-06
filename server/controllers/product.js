@@ -12,6 +12,7 @@ module.exports = {
             res.status(200).send(response);
 
         } catch(err) {
+            res.status(404).send("Does not exist");
             next(err);
         }
     },
@@ -22,11 +23,11 @@ module.exports = {
             const { productId } = req.params;
             const response = await ProductServiceInstance.get(productId);
 
-            // res.status(200).send(response);
-            res.json(response);
+            res.status(200).send(response);
 
 
         } catch(err) {
+            res.status(404).send();
             next(err);
         }
     }
