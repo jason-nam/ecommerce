@@ -23,7 +23,7 @@ export function Login() {
 
     const doLogin = (e) => {
         e.preventDefault();
-        fetch("http://localhost:4000/login", {
+        fetch("http://localhost:4000/api/login", {
             method: "POST",
             headers: {
               "content-type": "application/json",

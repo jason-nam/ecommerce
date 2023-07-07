@@ -9,7 +9,7 @@ export function Product() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("/products/"+id)
+        fetch("/api/products/"+id)
         .then((res) => {
             if (!res.ok) 
                 throw new Error(res.status)

@@ -8,7 +8,7 @@ export function ProductsList() {
     const [imgOnLoad, setImgOnLoad] = useState(false);
 
     useEffect(() => {
-        fetch("/products")
+        fetch("/api/products")
         .then((res) => {
             if (!res.ok) 
                 throw new Error(res.status)
@@ -34,7 +34,7 @@ export function ProductsList() {
         return (
             <div className="container">{!loading ? products.map( product => {
                 return (
-                    <div key={product.id} id={product.id}>
+                    <a href={`/products/${product.id}`} ><div key={product.id} id={product.id}>
                         <img src={product.image} 
                             className="image" 
                             width='300px'
@@ -44,6 +44,7 @@ export function ProductsList() {
                         <div className="desc">{product.description}</div>
                         <div className="desc">{product.category}</div>
                     </div> 
+                    </a>
                 )
             }) : (
                 <p>Loading...</p>
