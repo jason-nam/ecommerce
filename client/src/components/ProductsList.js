@@ -5,6 +5,7 @@ export function ProductsList() {
     const [products, setProducts] = useState([]);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [imgOnLoad, setImgOnLoad] = useState(false);
 
     useEffect(() => {
         fetch("/products")
@@ -17,9 +18,11 @@ export function ProductsList() {
         .then((data) => {
             setProducts(data);             
             setLoading(false);
+            
         })
         .catch(err => setError(true));        
     }, []);
+
 
     if (error) {
         return (    
@@ -32,9 +35,14 @@ export function ProductsList() {
             <div className="container">{!loading ? products.map( product => {
                 return (
                     <div key={product.id} id={product.id}>
+                        <img src={product.image} 
+                            className="image" 
+                            width='300px'
+                            />
                         <div className="name">{product.name}</div>
                         <div className="price">${product.price}</div>
                         <div className="desc">{product.description}</div>
+                        <div className="desc">{product.category}</div>
                     </div> 
                 )
             }) : (

@@ -1,6 +1,8 @@
 const { Client } = require("pg");
 const { DB } = require("./config");
 
+const { faker } = require('@faker-js/faker');
+
 (async () => {
 
     const usersTableStatement = `
@@ -18,7 +20,9 @@ const { DB } = require("./config");
         id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
         name            VARCHAR(50)       NOT NULL,
         price           DECIMAL(10,2)     NOT NULL,
-        description     VARCHAR(200)      NOT NULL
+        description     VARCHAR(300)      NOT NULL,
+        category        VARCHAR(50)       NOT NULL,
+        image           VARCHAR(200)      NOT NULL
         );
     `
 
@@ -69,11 +73,13 @@ const { DB } = require("./config");
         FOREIGN KEY (productId) REFERENCES products(id)
         );
     `
-
     const insertProducts = `
-      INSERT INTO products (name, price, description)
-        VALUES ('Water Bottle', 10.10, 'Bottle for drinking water'); 
-    `
+        INSERT INTO products (name, price, description, category, image)
+        VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+    // const insertProducts = `
+    //   INSERT INTO products (name, price, description)
+    //     VALUES ('Water Bottle', 10.10, 'Bottle for drinking water'); 
+    // `
 
     try {
         const db = new Client({
@@ -93,7 +99,19 @@ const { DB } = require("./config");
         await db.query(orderItemsTableStatement);
         await db.query(cartsTableStatement);
         await db.query(cartItemsTableStatement);
-        await db.query(insertProducts);
+
+        // await db.query(insertProducts);
+        for (let i=0; i<20; i++) {
+            const values = [faker.commerce.productName(), 
+                faker.commerce.price({ max: 100 }),
+                faker.commerce.productDescription(),
+                faker.commerce.department(),
+                faker.image.urlLoremFlickr( {
+                    category: "food"})              
+            ]
+            await db.query(insertProducts, values);
+        }
+    
 
         await db.end();
 

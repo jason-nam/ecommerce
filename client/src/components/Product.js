@@ -33,9 +33,11 @@ export function Product() {
         return (
             !loading ? (
                 <div className="App">
+                    <img src={product.image}/>
                     <div>{product.name}</div>
                     <div>${product.price}</div>
                     <div>{product.description}</div>
+                    <div>{product.category}</div>
                 </div>)
             : (<p>loading</p>)
         );
