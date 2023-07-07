@@ -10,15 +10,15 @@ export function Login() {
     const [userId, setUserId] = useState(null);
 
     const navigate = useNavigate();
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [authSuccess, setAuthSuccess] = useState(false);
    
     useEffect(() => {
-      if (!loggedIn) {
+      if (!authSuccess) {
         navigate("");
       } else {
         navigate("/users/" + userId);
       }
-    }, [navigate, loggedIn, userId]);
+    }, [navigate, authSuccess, userId]);
   
 
     const doLogin = (e) => {
@@ -37,7 +37,7 @@ export function Login() {
                 throw Error(res.status)
             return res.json()
         })
-        .then(data => {setUserId(data.id); setLoggedIn(true);})
+        .then(data => {setUserId(data.id); console.log(data.id); setAuthSuccess(true);})
         .catch(err => {console.log(err); setAuthFail(true)});
     }
 
