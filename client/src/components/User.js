@@ -9,7 +9,7 @@ export function User() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("/users/"+id)
+        fetch("/api/users/"+id)
         .then((res) => {
             if (!res.ok)
                 throw new Error(res.status)

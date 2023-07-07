@@ -5,7 +5,7 @@ const controller = require("../controllers/cart");
 
 module.exports = (app) => {
 
-    app.use("/carts", router);
+    app.use("/api/carts", router);
     app.use(express.urlencoded({ extended: false }));
 
     router.post("/mycart", controller.create);

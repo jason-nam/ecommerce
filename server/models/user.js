@@ -76,9 +76,6 @@ module.exports = class UserModel {
     async getUserByEmail(email) {
         try {
             
-            // const results = await db.query('SELECT * FROM users WHERE email = $1 LIMIT 1', [email]);
-            // return results.rows;
-
             const statement = `SELECT * 
                                FROM users 
                                WHERE email = $1 
@@ -105,9 +102,6 @@ module.exports = class UserModel {
      */
     async getUserById(id) {
         try {
-
-            // const results = await db.query('SELECT * FROM users WHERE id = $1 LIMIT 1', [id]);
-            // return results.rows;
             
             const statement = `SELECT * 
                                FROM users 

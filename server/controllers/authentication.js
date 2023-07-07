@@ -21,6 +21,7 @@ module.exports = {
             const response = await AuthenticationServiceInstance.login(data);
             res.status(200).send(response);
 
+
         } catch(err) {
             res.status(401).send({"message": "Authentication Fail"});
         }
