@@ -9,7 +9,7 @@
     "start": "concurrently \"npm run server\" \"npm run client\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "create-db": "cd server && node -r dotenv/config setupDatabase",
-    "rm-modules": "rm -rf node_modules ;rm -rf ./server/node_modules ; rm -rf ./client/node_modules"
+    "rm-modules": "rm -rf node_modules ; rm -rf ./server/node_modules ; rm -rf ./client/node_modules"
   },
   "repository": {
     "type": "git",
