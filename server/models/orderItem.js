@@ -24,10 +24,10 @@ module.exports = class OrderItemModel {
 
     /**
      * Retrieve order items for an order
-     * @param {Object} orderId order id
+     * @param {Object} orderid order id
      * @return {Array} created cart item
      */
-    static async getOrderItem(orderId) {
+    static async getOrderItem(orderid) {
         try {
 
             // TODO

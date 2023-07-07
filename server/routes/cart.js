@@ -12,7 +12,7 @@ module.exports = (app) => {
     router.post("/mycart/items", controller.addItem);
     router.post("/mycart/checkout", controller.checkout);
     router.get("/mycart", controller.getCart);
-    router.put("/mycart/items/:cartItemId", controller.updateItem);
-    router.delete("/mycart/items/:cartItemId", controller.removeItem);
+    router.put("/mycart/items/:cartitemid", controller.updateItem);
+    router.delete("/mycart/items/:cartitemid", controller.removeItem);
 
 }

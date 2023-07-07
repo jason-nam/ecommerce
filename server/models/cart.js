@@ -13,18 +13,18 @@ module.exports = class CartModel {
 
     /**
      * Create a cart for user
-     * @param {Object} userId user id
+     * @param {Object} userid user id
      * @return {Object|null} created cart record
      */
-    async createCart(userId) {
+    async createCart(userid) {
         try {
 
-            const data = { userId, ...this };
+            // const data = { userId, ...this };
 
             const statement = `INSERT INTO carts (created, modified, userid, converted, isactive)
                                VALUES ($1, $2, $3, $4, $5)
                                RETURNING *`;
-            const values = [this.created, this.modified, userId, this.converted, this.isActive];
+            const values = [this.created, this.modified, userid, this.converted, this.isActive];
 
             // const statement = pgp.helpers.insert(data, null, 'carts') + 'RETURNING *';
 
@@ -43,16 +43,16 @@ module.exports = class CartModel {
 
     /**
      * Load a cart by user id
-     * @param {number} userId user id
+     * @param {number} userid user id
      * @return {Object|null} cart record
      */
-    static async getByUser(userId) {
+    static async getByUser(userid) {
         try {
 
             const statement = `SELECT *
                                FROM carts
-                               WHERE "userid" = $1`;
-            const values = [userId];
+                               WHERE userid = $1`;
+            const values = [userid];
 
             const result = await db.query(statement, values);
 
@@ -77,7 +77,7 @@ module.exports = class CartModel {
 
             const statement = `SELECT *
                                FROM carts
-                               WHERE "id" = $1
+                               WHERE id = $1
                                LIMIT 1`;
             const values = [id];
 

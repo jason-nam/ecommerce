@@ -17,12 +17,12 @@ module.exports = class CartItemModel {
 
             // const statement = pgp.helpers.insert(data, null, "cartItems") + `RETURNING *`;
 
-            const { qty, productId, cartId } = data;
+            const { qty, productid, cartid } = data;
 
             const statement = `INSERT INTO cartitems (qty, productid, cartid)
                                VALUES ($1, $2, $3)
                                RETURNING *`;
-            const values = [qty, productId, cartId];
+            const values = [qty, productid, cartid];
 
             const result = await db.query(statement, values);
 
@@ -49,13 +49,13 @@ module.exports = class CartItemModel {
             // const condition = pgp.as.format('WHERE id = ${id} RETURNING *', { id });
             // const statement = pgp.helpers.update(data, null, 'cartItems') + condition;
 
-            const { qty, productId, cartId } = data;
+            const { qty, productid, cartid } = data;
 
             const statement = `UPDATE cartitems 
                                SET qty = $1, productid = $2, cartid = $3
                                WHERE id = $4
                                RETURNING *`;
-            const values = [qty, productId, cartId, id];
+            const values = [qty, productid, cartid, id];
 
             const result = await db.query(statement, values);
 
@@ -72,17 +72,16 @@ module.exports = class CartItemModel {
     
     /**
      * Retrieve cart item for a cart
-     * @param {Object} cartId cart id
+     * @param {Object} cartid cart id
      * @return {Array} created cart item
      */
-    static async getCartItems(cartId) {
+    static async getCartItems(cartid) {
         try {
 
             const statement = `SELECT ci.qty, ci.id AS cartitemid, p.*
-                               FROM cartitems ci
-                               INNER JOIN products p ON p.id = ci.productid
+                               FROM cartitems ci INNER JOIN products p ON p.id = ci.productid
                                WHERE cartid = $1`;
-            const values = [cartId];
+            const values = [cartid];
 
             const result = await db.query(statement, values);
 
@@ -106,7 +105,7 @@ module.exports = class CartItemModel {
         try {
 
             const statement = `DELETE
-                               FROM "cartitems"
+                               FROM cartitems
                                WHERE id = $1
                                RETURNING *`;
             const values = [id];

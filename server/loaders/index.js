@@ -3,9 +3,6 @@ const expressMiddleware = require("../middleware/express");
 
 module.exports = async (app) => {
 
-    // app.use(bodyParser.urlencoded({ extended: false }));
-    // app.use(bodyParser.json());
-
     // load express middleware
     const expressApp = await expressMiddleware(app);
 
