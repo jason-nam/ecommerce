@@ -19,12 +19,10 @@ module.exports = class CartModel {
     async createCart(userid) {
         try {
 
-            // const data = { userId, ...this };
-
-            const statement = `INSERT INTO carts (created, modified, userid, converted, isactive)
-                               VALUES ($1, $2, $3, $4, $5)
+            const statement = `INSERT INTO carts (created, modified, userid)
+                               VALUES ($1, $2, $3)
                                RETURNING *`;
-            const values = [this.created, this.modified, userid, this.converted, this.isActive];
+            const values = [this.created, this.modified, userid];
 
             // const statement = pgp.helpers.insert(data, null, 'carts') + 'RETURNING *';
 
