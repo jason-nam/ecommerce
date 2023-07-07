@@ -15,12 +15,12 @@ module.exports = class UserModel {
     async createUser(data) {
         try {
 
-            const { email, passwordhash, firstname, lastname } = data;
-            const statement = `INSERT INTO users (email, passwordhash, firstname, lastname)
+            const { email, password, firstname, lastname } = data;
+            const statement = `INSERT INTO users (email, password, firstname, lastname)
                                VALUES ($1, $2, $3, $4)
                                RETURNING *`;
 
-            const result = await db.query(statement, [email, passwordhash, firstname, lastname]);
+            const result = await db.query(statement, [email, password, firstname, lastname]);
             
             // const statement = pgp.helpers.insert(data, null, 'users') + `RETURNING *`;
             // const result = await db.query(statement);
@@ -44,13 +44,13 @@ module.exports = class UserModel {
     async updateUser(data) {
         try {
 
-            const { userId, email, passwordhash, firstname, lastname } = data;
+            const { userId, email, password, firstname, lastname } = data;
             const statement = `UPDATE users 
-                               SET email = $1, passwordhash = $2, firstname = $3, lastname = $4 
+                               SET email = $1, password = $2, firstname = $3, lastname = $4 
                                WHERE id = $5
                                RETURNING *`;
 
-            const result = await db.query(statement, [email, passwordhash, firstname, lastname, userId]);
+            const result = await db.query(statement, [email, password, firstname, lastname, userId]);
 
             // const { userId, ...params} = data
             // const statement = pgp.helpers.update(params, null, "users") 

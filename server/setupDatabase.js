@@ -9,9 +9,9 @@ const { faker } = require('@faker-js/faker');
         CREATE TABLE IF NOT EXISTS users (
         id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
         email           VARCHAR(50),
-        passwordHash    TEXT,
-        firstName       VARCHAR(50),
-        lastName        VARCHAR(50)
+        password        TEXT,
+        firstname       VARCHAR(50),
+        lastname        VARCHAR(50)
         );
     `
 
