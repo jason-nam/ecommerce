@@ -33,23 +33,23 @@ const { faker } = require('@faker-js/faker');
         status          VARCHAR(50)       NOT NULL,
         created         DATE              NOT NULL,
         modified        DATE              NOT NULL,
-        userId          INT               NOT NULL,
-        FOREIGN KEY (userId) REFERENCES users(id)
+        userid          INT               NOT NULL,
+        FOREIGN KEY (userid) REFERENCES users(id)
         );
     `
 
     const orderItemsTableStatement = `
-        CREATE TABLE IF NOT EXISTS orderItems (
+        CREATE TABLE IF NOT EXISTS orderitems (
         id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
         qty             INT               NOT NULL,
         created         DATE              NOT NULL,
         price           DECIMAL(10,2)     NOT NULL,
         name            VARCHAR(50)       NOT NULL,
         description     VARCHAR(200)      NOT NULL,
-        orderId         INT               NOT NULL,
-        productId       INT               NOT NULL,
-        FOREIGN KEY (orderId) REFERENCES orders(id),
-        FOREIGN KEY (productId) REFERENCES products(id)
+        orderid         INT               NOT NULL,
+        productid       INT               NOT NULL,
+        FOREIGN KEY (orderid) REFERENCES orders(id),
+        FOREIGN KEY (productid) REFERENCES products(id)
         );
     `
 
@@ -58,28 +58,24 @@ const { faker } = require('@faker-js/faker');
         id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,       
         created         DATE              NOT NULL,
         modified        DATE              NOT NULL,
-        userId          INT               NOT NULL,
-        FOREIGN KEY (userId) REFERENCES users(id)
+        userid          INT               NOT NULL,
+        FOREIGN KEY (userid) REFERENCES users(id)
         );
     `
 
     const cartItemsTableStatement = `
-        CREATE TABLE IF NOT EXISTS cartItems (
+        CREATE TABLE IF NOT EXISTS cartitems (
         id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
         qty             INT               NOT NULL,
-        productId       INT               NOT NULL,
-        cartId          INT               NOT NULL,
-        FOREIGN KEY (cartId) REFERENCES carts(id),
-        FOREIGN KEY (productId) REFERENCES products(id)
+        productid       INT               NOT NULL,
+        cartid          INT               NOT NULL,
+        FOREIGN KEY (cartid) REFERENCES carts(id),
+        FOREIGN KEY (productid) REFERENCES products(id)
         );
     `
     const insertProducts = `
         INSERT INTO products (name, price, description, category, image)
         VALUES ($1, $2, $3, $4, $5) RETURNING *`;
-    // const insertProducts = `
-    //   INSERT INTO products (name, price, description)
-    //     VALUES ('Water Bottle', 10.10, 'Bottle for drinking water'); 
-    // `
 
     try {
         const db = new Client({

@@ -8,7 +8,7 @@ module.exports = (app) => {
     app.use("/api/users", router);
     app.use(express.urlencoded({ extended: false }));
 
-    router.get("/:userId", controller.get);
-    router.put("/:userId", controller.update);
+    router.get("/:userid", controller.get);
+    router.put("/:userid", controller.update);
 
 }

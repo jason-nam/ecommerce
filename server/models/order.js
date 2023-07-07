@@ -46,10 +46,10 @@ module.exports = class OrderModel {
 
     /**
      * Load order for a user
-     * @param {number} userId user id
+     * @param {number} userid user id
      * @return {Array} order records
      */
-    static async getOrderByUser(userId) {
+    static async getOrderByUser(userid) {
         try {
 
             // TODO

@@ -4,12 +4,12 @@ const OrderModel = require("../models/order");
 
 module.exports = class CartService {
 
-    async create(userId) {
+    async create(userid) {
 
         try {
 
             const CartModelInstance = new CartModel();
-            const cart = await CartModelInstance.createCart(userId);
+            const cart = await CartModelInstance.createCart(userid);
 
             return cart;
 
@@ -18,11 +18,11 @@ module.exports = class CartService {
         }
     }
 
-    async getCart(userId) {
+    async getCart(userid) {
 
         try {
 
-            const cart = await CartModel.getByUser(userId);
+            const cart = await CartModel.getByUser(userid);
             const items = await CartItemModel.getCartItems(cart.rows[0].id);
 
             cart.items = items;
@@ -34,13 +34,12 @@ module.exports = class CartService {
         }
     }
 
-    async addItem(userId, item) {
+    async addItem(userid, item) {
 
         try {
 
-            const cart = await CartModel.getByUser(userId);
-
-            const data = { cartId: cart.rows[0].id, ...item };
+            const cart = await CartModel.getByUser(userid);
+            const data = { cartid: cart.rows[0].id, ...item };
 
             const cartItem = await CartItemModel.createCartItem(data);
 
@@ -51,11 +50,11 @@ module.exports = class CartService {
         }
     }
 
-    async updateItem(cartItemId, data) {
+    async updateItem(cartitemid, data) {
 
         try {
 
-            const cartItem = await CartItemModel.updateCartItem(cartItemId, data);
+            const cartItem = await CartItemModel.updateCartItem(cartitemid, data);
 
             return cartItem;
 
@@ -64,11 +63,11 @@ module.exports = class CartService {
         }
     }
 
-    async removeItem(cartItemId) {
+    async removeItem(cartitemid) {
 
         try {
 
-            const cartItem = await CartItemModel.deleteCartItem(cartItemId);
+            const cartItem = await CartItemModel.deleteCartItem(cartitemid);
 
             return cartItem;
 
@@ -77,19 +76,19 @@ module.exports = class CartService {
         }
     }
 
-    async checkout(cartId, userId, paymentInfo) {
+    async checkout(cartid, userid, paymentinfo) {
         
         try {
 
             // list of cart items
-            const cartItems = await CartItemModel.getCartItems(cartId);
+            const cartItems = await CartItemModel.getCartItems(cartid);
 
             // generate total price from cart items
             const totalPrice = cartItems.reduce((totalPrice, item) => {
                 return totalPrice += Number(item.price);
             }, 0);
 
-            const Order = new OrderModel({ totalPrice, userId });
+            const Order = new OrderModel({ totalPrice, userid });
             Order.addItems(cartItems);
             await Order.createOrder();
 

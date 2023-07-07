@@ -12,7 +12,7 @@ module.exports = {
             res.status(200).send(response);
 
         } catch(err) {
-            res.status(404).send({"message":"404"});
+            res.status(404).send({"message": "404"});
             next(err);
         }
     },
@@ -20,14 +20,14 @@ module.exports = {
     get: async (req, res, next) => {
         try {
             
-            const { productId } = req.params;
-            const response = await ProductServiceInstance.get(productId);
+            const { productid } = req.params;
+            const response = await ProductServiceInstance.get(productid);
 
             res.status(200).send(response);
 
 
         } catch(err) {
-            res.status(404).send({"message":"Product does not exist"});
+            res.status(404).send({"message": "Product does not exist"});
             next(err);
         }
     }

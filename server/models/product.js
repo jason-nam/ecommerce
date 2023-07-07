@@ -19,7 +19,6 @@ module.exports = class ProductModel {
             const statement = `SELECT *
                                FROM products
                                ORDER BY id ASC`;
-
             const values = [];
 
             const result = await db.query(statement, values);
@@ -32,7 +31,7 @@ module.exports = class ProductModel {
             return [];
 
         } catch(err) {
-            throw new Error(error);
+            throw new Error(err);
         }
     }
 
@@ -49,7 +48,6 @@ module.exports = class ProductModel {
                                    FROM products
                                    WHERE id = $1
                                    LIMIT 1`;
-
                 const values = [id];
 
                 const result = await db.query(statement, values);
@@ -61,7 +59,7 @@ module.exports = class ProductModel {
                 return null;
 
             } catch(err) {
-                throw new Error(error);
+                throw new Error(err);
             }
     }
 }

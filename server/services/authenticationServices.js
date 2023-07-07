@@ -1,20 +1,15 @@
 const UserModel = require("../models/user");
 const UserModelInstance = new UserModel();
-
-var bcrypt = require('bcryptjs');
-const saltRounds = 10
+const { verifyPassword } = require("../middleware/bcrypt") 
 
 module.exports = class AuthenticationService {
 
     async register(data) {
         
-        const { email, password: pw } = data;
-        bcrypt.genSalt(saltRounds)
-                .then(salt => bcrypt.hash(pw, salt))
-                .then(hash => {data.password = hash})
-                .catch(err => console.error(err.message))
+        const { email } = data;
 
         try {
+            
             const existingUser = await UserModelInstance.getUserByEmail(email);
 
             if (existingUser != null) {
@@ -47,14 +42,13 @@ module.exports = class AuthenticationService {
                 throw createError(401, "Incorrect email or password");
             }
 
-            if (bcrypt.compareSync(password, user[0].password)) {
+            if (await verifyPassword(password, user[0].password)) {
                 const { password, ...censoredUser } = user[0];
                 return censoredUser;         
             } else {
                 console.log("Wrong password");
                 throw createError(401, "Incorrect email or password");
             }
-
             
         } catch(err) {
             throw createError(500, err); // 500 internal service error

@@ -19,8 +19,9 @@ module.exports = class UserModel {
             const statement = `INSERT INTO users (email, password, firstname, lastname)
                                VALUES ($1, $2, $3, $4)
                                RETURNING *`;
+            const values = [email, password, firstname, lastname];
 
-            const result = await db.query(statement, [email, password, firstname, lastname]);
+            const result = await db.query(statement, values);
             
             // const statement = pgp.helpers.insert(data, null, 'users') + `RETURNING *`;
             // const result = await db.query(statement);
@@ -41,16 +42,17 @@ module.exports = class UserModel {
      * @param {Object} data updated user data
      * @return {Object|null} update user record
      */
-    async updateUser(data) {
+    async updateUser(userid, data) {
         try {
 
-            const { userId, email, password, firstname, lastname } = data;
+            const { email, password, firstname, lastname } = data;
             const statement = `UPDATE users 
                                SET email = $1, password = $2, firstname = $3, lastname = $4 
                                WHERE id = $5
                                RETURNING *`;
+            const values = [email, password, firstname, lastname, userid];
 
-            const result = await db.query(statement, [email, password, firstname, lastname, userId]);
+            const result = await db.query(statement, values);
 
             // const { userId, ...params} = data
             // const statement = pgp.helpers.update(params, null, "users") 
@@ -80,7 +82,7 @@ module.exports = class UserModel {
                                FROM users 
                                WHERE email = $1 
                                LIMIT 1`;
-            const values =  [email];
+            const values = [email];
 
             const result = await db.query(statement, values);
 
@@ -107,7 +109,6 @@ module.exports = class UserModel {
                                FROM users 
                                WHERE id = $1 
                                LIMIT 1`;
-                               
             const values = [id];
 
             const result = await db.query(statement, values);

@@ -9,6 +9,6 @@ module.exports = (app) => {
     app.use(express.urlencoded({ extended: false }));
 
     router.get("/", controller.list);
-    router.get("/:productId", controller.get);
+    router.get("/:productid", controller.get);
 
 }

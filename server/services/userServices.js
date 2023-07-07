@@ -22,9 +22,13 @@ module.exports = class UserService {
 
     async update(data) {
 
+        const { userid, ...newData } = data;
+
         try {
+
+            // TODO
         
-            const user = await UserModelInstance.updateUser(data);
+            const user = await UserModelInstance.updateUser(userid, newData);
 
             return user;
 

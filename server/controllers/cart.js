@@ -6,8 +6,8 @@ module.exports = {
     create: async (req, res, next) => {
         try {
 
-            const { userId } = req.body;
-            const response = await CartServiceInstance.create(userId);
+            const { userid } = req.body;
+            const response = await CartServiceInstance.create(userid);
 
             res.status(200).send(response);
 
@@ -19,8 +19,8 @@ module.exports = {
     getCart: async (req, res, next) => {
         try {
             
-            const { userId } = req.body;
-            const response = await CartServiceInstance.getCart(userId);
+            const { userid } = req.body;
+            const response = await CartServiceInstance.getCart(userid);
 
             res.status(200).send(response);
 
@@ -32,10 +32,8 @@ module.exports = {
     addItem: async (req, res, next) => {
         try {
             
-            const { userId, ...data } = req.body;
-            // const data = req.body;
-
-            const response = await CartServiceInstance.addItem(userId, data);
+            const { userid, ...data } = req.body;
+            const response = await CartServiceInstance.addItem(userid, data);
 
             res.status(200).send(response);
 
@@ -47,10 +45,9 @@ module.exports = {
     updateItem: async (req, res, next) => {
         try {
 
-            const { cartItemId } = req.params;
+            const { cartitemid } = req.params;
             const data = req.body;
-
-            const response = await CartServiceInstance.updateItem(cartItemId, data);
+            const response = await CartServiceInstance.updateItem(cartitemid, data);
 
             res.status(200).send(response);
 
@@ -62,9 +59,8 @@ module.exports = {
     removeItem: async (req, res, next) => {
         try {
 
-            const { cartItemId } = req.params;
-
-            const response = await CartServiceInstance.removeItem(cartItemId);
+            const { cartitemid } = req.params;
+            const response = await CartServiceInstance.removeItem(cartitemid);
 
             res.status(200).send(response);
 
@@ -76,9 +72,8 @@ module.exports = {
     checkout: async(req, res, next) => {
         try {
 
-            const { userId, cartId, paymentInfo } = req.body;
-
-            const response = await CartServiceInstance.checkout(cartId, userId, paymentInfo);
+            const { userid, cartid, paymentinfo } = req.body;
+            const response = await CartServiceInstance.checkout(cartid, userid, paymentinfo);
 
             res.status(200).send(response);
 
