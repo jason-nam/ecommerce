@@ -10,9 +10,9 @@ module.exports = class AuthenticationService {
         
         const { email, password: pw } = data;
         bcrypt.genSalt(saltRounds)
-                                .then(salt => bcrypt.hash(pw, salt))
-                                .then(hash => {data.password = hash})
-                                .catch(err => console.error(err.message))
+                .then(salt => bcrypt.hash(pw, salt))
+                .then(hash => {data.password = hash})
+                .catch(err => console.error(err.message))
 
         try {
             const existingUser = await UserModelInstance.getUserByEmail(email);
@@ -26,7 +26,7 @@ module.exports = class AuthenticationService {
 
             const { password, ...censoredUser } = user;
 
-            return user;
+            return censoredUser;
 
         } catch(err) {
             throw createError(500, err); // 500 internal service error
