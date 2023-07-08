@@ -1,3 +1,4 @@
+const createError = require('http-errors');
 const UserModel = require("../models/user");
 const UserModelInstance = new UserModel();
 const { verifyPassword } = require("../middleware/bcrypt") 
@@ -29,34 +30,32 @@ module.exports = class AuthenticationService {
 
     }
 
-    // async login(data) { 
+    async login(data) { 
 
-        // const { email, password } = data;
- 
-    async login(email, password, cb) {
+        const { email, password } = data;
 
         try {
 
-            let user = await UserModelInstance.getUserByEmail(email);
+            const user = await UserModelInstance.getUserByEmail(email);
 
             if (!user) {
                 console.log("User does not exist");
-                return cb(null, false)
+                // return cb(null, false)
                 throw createError(401, "Incorrect email or password");
             }
 
             if (await verifyPassword(password, user[0].password)) {
                 const { password, ...censoredUser } = user[0];
-                return cb(null, censoredUser)
+                // return cb(null, censoredUser)
                 return censoredUser;         
             } else {
                 console.log("Wrong password");
-                return cb(null, false)
+                // return cb(null, false)
                 throw createError(401, "Incorrect email or password");
             }
             
         } catch(err) {
-            return cb(err)
+            // return cb(err)
             throw createError(500, err); // 500 internal service error
         }
     }

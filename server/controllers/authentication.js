@@ -20,8 +20,8 @@ module.exports = {
     login: async (req, res, next) => {
         try {
 
-            const data = req.body;
-            const response = await AuthenticationServiceInstance.login(data);
+            const { username, password } = req.body;
+            const response = await AuthenticationServiceInstance.login({ email: username, password });
 
             res.status(200).send(response);
 
