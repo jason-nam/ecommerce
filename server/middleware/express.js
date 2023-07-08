@@ -7,7 +7,12 @@ const passport = require('passport');
 module.exports = (app) => {
 
     // cross origin resource sharing to all origins 
-    app.use(cors());
+    app.use(cors(
+        {  
+        origin: 'http://localhost:3000',
+        credentials: true
+     }
+    ));
 
     // transform raw string of req.body into json format
     app.use(bodyParser.json());

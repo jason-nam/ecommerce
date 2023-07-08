@@ -29,17 +29,16 @@ export function ProductsList() {
         return (
             <div className="container">{!loading ? products.map( product => {
                 return (
-                    <div key={product.id} id={product.id}>
+                    <div key={product.id.toString()} id={product.id}>
                         <a href={`/products/${product.id}`}>
                         <img src={product.image} 
-                            key={product.id}
                             className="image" 
                             width='300px'
                             />
-                        <div className="name" key={product.id}>{product.name}</div>
-                        <div className="price" key={product.id}>${product.price}</div>
-                        <div className="desc" key={product.id}>{product.description}</div>
-                        <div className="desc" key={product.id}>{product.category}</div>
+                        <div className="name" >{product.name}</div>
+                        <div className="price" >${product.price}</div>
+                        <div className="desc" >{product.description}</div>
+                        <div className="desc" >{product.category}</div>
                         </a>
                     </div> 
                 )
