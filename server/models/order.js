@@ -1,6 +1,6 @@
 const db = require("../db");
-const moment = require('moment');
-const OrderItem = require("./orderItem");
+const moment = require("moment");
+const OrderItemModel = require("./orderItem");
 
 module.exports = class OrderModel {
 
@@ -14,7 +14,7 @@ module.exports = class OrderModel {
     }
 
     addItems(items) {
-        this.items = items.map(item => new OrderItem(item));
+        this.items = items.map(item => new OrderItemModel(item));
     }
 
     /**
