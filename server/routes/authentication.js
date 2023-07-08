@@ -7,7 +7,6 @@ const controller = require("../controllers/authentication");
 module.exports = (app) => {
 
     app.use("/api", router);
-    app.use(express.urlencoded({ extended: false }));
 
     router.post("/register", hashPasswordRoute, controller.register); // registration endpoint
     router.post("/login", controller.login); // login endpoint
