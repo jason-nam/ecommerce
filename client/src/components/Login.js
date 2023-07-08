@@ -14,22 +14,32 @@ export function Login() {
     const [authSuccess, setAuthSuccess] = useState(false);
    
     useEffect(() => {
-      if (!authSuccess) {
-        navigate("");
-      } else {
-        navigate("/users/" + userId);
-      }
+    //   if (!authSuccess) {
+    //     navigate("");
+    //   } else {
+    //     navigate("/users/" + userId);
+    //   }
     }, [navigate, authSuccess, userId]);
   
 
     const doLogin = (e) => {
         e.preventDefault();
-        axios.post("/api/login", {      
-            email: email,
-            password: password
-      })
+        fetch("http://localhost:4000/api/login", {
+            method: "POST",
+            // credentials: "include",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify({
+                email, password
+            })
+        })
         .then(res => {
-            setUserId(res.data.id); setAuthSuccess(true);})
+            if (!res.ok)
+                throw Error(res.status)
+            return res.json()
+        })
+        .then(data => {setUserId(data.id); console.log(data); setAuthSuccess(true);})
         .catch(err => {console.log(err); setAuthFail(true)});
     }
 

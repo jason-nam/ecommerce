@@ -16,6 +16,7 @@ export function User() {
             setUser(res.data[0]);
             setLoading(false);
         })
+        .catch(err => setError(true));        
     }, [id]);
 
     if (error) {

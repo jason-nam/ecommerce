@@ -29,9 +29,11 @@ module.exports = class AuthenticationService {
 
     }
 
-    async login(data) {        
+    // async login(data) { 
 
-        const { email, password } = data;
+        // const { email, password } = data;
+ 
+    async login(email, password, cb) {
 
         try {
 
@@ -39,18 +41,22 @@ module.exports = class AuthenticationService {
 
             if (!user) {
                 console.log("User does not exist");
+                return cb(null, false)
                 throw createError(401, "Incorrect email or password");
             }
 
             if (await verifyPassword(password, user[0].password)) {
                 const { password, ...censoredUser } = user[0];
+                return cb(null, censoredUser)
                 return censoredUser;         
             } else {
                 console.log("Wrong password");
+                return cb(null, false)
                 throw createError(401, "Incorrect email or password");
             }
             
         } catch(err) {
+            return cb(err)
             throw createError(500, err); // 500 internal service error
         }
     }
