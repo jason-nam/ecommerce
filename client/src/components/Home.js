@@ -14,7 +14,10 @@ export function Home() {
             )
         } else {
             return (
+                <div>
                 <a href={`/users/${id}`}><div className="profile-link">Profile</div></a>
+                <a href={`/`}><div className="signout-link">Sign Out</div></a>
+                </div>
             )
         }
     }
