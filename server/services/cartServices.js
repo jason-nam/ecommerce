@@ -84,11 +84,11 @@ module.exports = class CartService {
             const cartItems = await CartItemModel.getCartItems(cartid);
 
             // generate total price from cart items
-            const totalPrice = cartItems.reduce((totalPrice, item) => {
-                return totalPrice += Number(item.price);
+            const total = cartItems.reduce((total, item) => {
+                return total += Number(item.price);
             }, 0);
 
-            const Order = new OrderModel({ totalPrice, userid });
+            const Order = new OrderModel({ total, userid });
             Order.addItems(cartItems);
             await Order.createOrder();
 

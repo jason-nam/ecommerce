@@ -3,7 +3,14 @@ const db = require("../db");
 module.exports = class OrderItemModel {
 
     constructor(data = {}) {
-        // TODO
+        this.created = data.created || moment.utc().toISOString();
+        this.description = data.description;
+        this.modified = moment.utc().toISOString();
+        this.name = data.name;
+        this.price = data.price || 0;
+        this.productid = data.id;
+        this.qty = data.qty || 1;
+        this.orderid = data.orderid || null;
     }
 
     /**
