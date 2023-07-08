@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"
+import axios from "axios";
+
 
 export function User() {
 
@@ -9,18 +11,11 @@ export function User() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch("/api/users/"+id)
+        axios.get("/api/users/"+id)
         .then((res) => {
-            if (!res.ok)
-                throw new Error(res.status)
-            else
-                return res.json()
-            })
-        .then((data) => {
-            setUser(data[0]);
+            setUser(res.data[0]);
             setLoading(false);
         })
-        .catch((err) => setError(true));        
     }, [id]);
 
     if (error) {
