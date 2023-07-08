@@ -1,4 +1,5 @@
 const db = require("../db");
+const moment = require("moment");
 
 module.exports = class OrderItemModel {
 
@@ -18,10 +19,20 @@ module.exports = class OrderItemModel {
      * @param {Object} data order item data
      * @return {Object|null} created order item
      */
-    static async createOrderItem(data) {
+    static async create(data) {
         try {
 
-            // TODO
+            const statement = `INSERT INTO orderitems (qty, created, price, name, description, orderid, productid)
+                               VALUES ($1, $2, $3, $4, $5, $6, $7)
+                               RETURNING *`;
+            const values = [this.qty, this.created, this.price, this.name, this.description, this.orderid, this.productid];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+
             return null;
 
         } catch(err) {
@@ -37,7 +48,18 @@ module.exports = class OrderItemModel {
     static async getOrderItem(orderid) {
         try {
 
-            // TODO
+            const statement = `SELECT oi.qty, oi.id AS cartitemid, p.*
+                               FROM orderitems oi
+                               INNER JOIN products p ON p.id = oi.productid
+                               WHERE orderid = $1`
+            const values = [orderid];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+
             return [];
 
         } catch(err) {

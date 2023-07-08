@@ -11,14 +11,10 @@ module.exports = (app) => {
     app.use(passport.session());
 
     // method to serialize data to store in cookie
-    passport.serializeUser((user, done) => {
-        done(null, user.id);
-    });
+    passport.serializeUser((user, done) => { done(null, user.id) });
 
     // method to deserialize data stored in cookie and attach to req.user
-    passport.deserializeUser((id, done) => {
-        done(null, { id });
-    });
+    passport.deserializeUser((id, done) => { done(null, { id }) });
 
     // local strategy to be use for local login
     passport.use(new LocalStrategy(
