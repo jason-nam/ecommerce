@@ -16,6 +16,4 @@ module.exports = (app, passport) => {
 
     /* another way */
     // router.post("/login", passport.authenticate('local'), controller.login); // login endpoint
-
-
 }
