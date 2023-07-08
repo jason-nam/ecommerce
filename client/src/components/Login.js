@@ -26,13 +26,13 @@ export function Login() {
         e.preventDefault();
         fetch("http://localhost:4000/api/login", {
             method: "POST",
-            // credentials: "include",
             headers: {
               "content-type": "application/json",
             },
             body: JSON.stringify({
                 email, password
-            })
+            }),
+            credentials: "include"
         })
         .then(res => {
             if (!res.ok)
