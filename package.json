@@ -3,13 +3,13 @@
   "version": "1.0.0",
   "description": "E-Commerce App",
   "scripts": {
-    "postinstall": "npm --prefix ./client install ; npm --prefix ./server install",
-    "client": "npm start --prefix client",
-    "server": "npm start --prefix server",
-    "start": "concurrently \"npm run server\" \"npm run client\"",
+    "postinstall": "npm --prefix ./frontend install ; npm --prefix ./backend install",
+    "frontend": "npm start --prefix frontend",
+    "backend": "npm start --prefix backend",
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "create-db": "cd server && node -r dotenv/config setupDatabase",
-    "rm-modules": "rm -rf node_modules ; rm -rf ./server/node_modules ; rm -rf ./client/node_modules"
+    "create-db": "cd backend && node -r dotenv/config setupDatabase",
+    "rm-modules": "rm -rf node_modules ; rm -rf ./backend/node_modules ; rm -rf ./frontend/node_modules"
   },
   "repository": {
     "type": "git",
