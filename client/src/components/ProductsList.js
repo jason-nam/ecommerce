@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export function ProductsList() {
 
@@ -8,15 +9,9 @@ export function ProductsList() {
     const [imgOnLoad, setImgOnLoad] = useState(false);
 
     useEffect(() => {
-        fetch("/api/products")
+        axios.get("/api/products")
         .then((res) => {
-            if (!res.ok) 
-                throw new Error(res.status)
-            else
-                return res.json()
-            })
-        .then((data) => {
-            setProducts(data);             
+            setProducts(res.data);             
             setLoading(false);
             
         })
@@ -34,17 +29,19 @@ export function ProductsList() {
         return (
             <div className="container">{!loading ? products.map( product => {
                 return (
-                    <a href={`/products/${product.id}`} ><div key={product.id} id={product.id}>
+                    <div key={product.id} id={product.id}>
+                        <a href={`/products/${product.id}`}>
                         <img src={product.image} 
+                            key={product.id}
                             className="image" 
                             width='300px'
                             />
-                        <div className="name">{product.name}</div>
-                        <div className="price">${product.price}</div>
-                        <div className="desc">{product.description}</div>
-                        <div className="desc">{product.category}</div>
+                        <div className="name" key={product.id}>{product.name}</div>
+                        <div className="price" key={product.id}>${product.price}</div>
+                        <div className="desc" key={product.id}>{product.description}</div>
+                        <div className="desc" key={product.id}>{product.category}</div>
+                        </a>
                     </div> 
-                    </a>
                 )
             }) : (
                 <p>Loading...</p>

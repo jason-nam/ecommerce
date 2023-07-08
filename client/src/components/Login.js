@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 
 export function Login() {
@@ -23,21 +24,12 @@ export function Login() {
 
     const doLogin = (e) => {
         e.preventDefault();
-        fetch("http://localhost:4000/api/login", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({
-                email, password
-            })
-        })
+        axios.post("/api/login", {      
+            email: email,
+            password: password
+      })
         .then(res => {
-            if (!res.ok)
-                throw Error(res.status)
-            return res.json()
-        })
-        .then(data => {setUserId(data.id); console.log(data.id); setAuthSuccess(true);})
+            setUserId(res.data.id); setAuthSuccess(true);})
         .catch(err => {console.log(err); setAuthFail(true)});
     }
 
