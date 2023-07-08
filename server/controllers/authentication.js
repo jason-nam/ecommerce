@@ -1,5 +1,6 @@
 const AuthenticationService = require("../services/authenticationServices");
 const AuthenticationServiceInstance = new AuthenticationService();
+const passport = require('passport')
 
 module.exports = {
 
@@ -18,16 +19,35 @@ module.exports = {
     },
 
     login: async (req, res, next) => {
-        try {
+        passport.authenticate('local', (err, user) => {
+            if (err) {
+                if (err.status == 500) return res.status(500).send({ message : 'Server Error' });
+                return res.status(err.status).send({message: 'Something went wrong'})
+            }
+            if (!user) { 
+                return res.status(401).send({ message : 'Authentication Fail' });
+            }
+            return res.status(200).send(user); 
+        })(req, res, next);
+              
+        
+        /* another way */
 
-            const { username, password } = req.body;
-            const response = await AuthenticationServiceInstance.login({ email: username, password });
+        // router.post("/login", passport.authenticate('local'), (req, res, err) => {
+        //     if(req.user)  return res.status(200).send(req.user);
+        //     return res.status(404).send(res);
+        // });
 
-            res.status(200).send(response);
+        /* pre-Passport */
 
-        } catch(err) {
-            res.status(401).send({"message": "Authentication Fail"});
-            // next(err);
-        }
+        // try {
+        //     const { username, password } = req.body;
+        //     const response = await AuthenticationServiceInstance.login({ email: username, password });
+        //     console.log(response)
+        //     res.status(200).send(response);
+        // } catch(err) {
+        //     res.status(401).send({"message": "Authentication Fail"});
+        //     // next(err);
+        // }
     }
 }

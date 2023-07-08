@@ -1,6 +1,8 @@
 const routers = require("../routes")
 const expressMiddleware = require("../middleware/express");
 const passportMiddleware = require("../middleware/passport");
+const passport = require('passport')
+
 
 module.exports = async (app) => {
 
@@ -8,10 +10,10 @@ module.exports = async (app) => {
     const expressApp = await expressMiddleware(app);
 
     // load authenticator middleware
-    const passport = await passportMiddleware(expressApp);
+    const passportApp = await passportMiddleware(expressApp);
 
     // load API route handlers
-    await routers(app, passport);
+    await routers(app);
 
     // error handling
     app.use((err, req, res, next) => {

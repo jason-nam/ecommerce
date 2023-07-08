@@ -14,11 +14,11 @@ export function Login() {
     const [authSuccess, setAuthSuccess] = useState(false);
    
     useEffect(() => {
-    //   if (!authSuccess) {
-    //     navigate("");
-    //   } else {
-    //     navigate("/users/" + userId);
-    //   }
+      if (!authSuccess) {
+        navigate("");
+      } else {
+        navigate("/users/" + userId);
+      }
     }, [navigate, authSuccess, userId]);
   
 
@@ -39,7 +39,7 @@ export function Login() {
                 throw Error(res.status)
             return res.json()
         })
-        .then(data => {setUserId(data.id); console.log(data); setAuthSuccess(true);})
+        .then(data => {setUserId(data.id); setAuthSuccess(true); })
         .catch(err => {console.log(err); setAuthFail(true)});
     }
 
