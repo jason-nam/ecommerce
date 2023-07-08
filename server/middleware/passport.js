@@ -6,8 +6,21 @@ const AuthenticationServiceInstance = new AuthenticationService();
 
 module.exports = (app) => {
 
-    app.use(passport.initialize());
-    app.use(passport.session());
+    passport.use(new LocalStrategy( { usernameField: 'email'},
+
+        async (email, password, done) => {
+            try {
+                const user = await AuthenticationServiceInstance.login({ email, password });
+                return done(null, user);
+            } catch(err) {
+                if (err.status == 401)
+                    return done(null, false)
+                else 
+                    return done(err);
+            }
+        }
+    ));
+
 
     // serialize data to store in cookie
     passport.serializeUser((user, done) => { done(null, user.id) });
@@ -15,16 +28,9 @@ module.exports = (app) => {
     // deserialize data stored in cookie and attach to req.user
     passport.deserializeUser((id, done) => { done(null, { id }) });
 
-    passport.use(new LocalStrategy(
-        async (username, password, done) => {
-            try {
-                const user = await AuthenticationServiceInstance.login({ email: username, password });
-                return done(null, user);
-            } catch(err) {
-                return done(err);
-            }
-        }
-    ));
+    app.use(passport.initialize());
+    app.use(passport.session());
+
 
     return passport;
 
