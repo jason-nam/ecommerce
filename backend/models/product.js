@@ -19,9 +19,32 @@ module.exports = class ProductModel {
             const statement = `SELECT *
                                FROM products
                                ORDER BY id ASC
-                               LIMIT ${limit}
-                               OFFSET ${(page - 1) * limit}
+                               LIMIT $1
+                               OFFSET $2
                                `;
+            const values = [limit, (page - 1) * limit];
+
+            const result = await db.query(statement, values);
+
+            // return result array if result.rows not null and has length property
+            if (result.rows?.length) {
+                return result.rows;
+            }
+
+            return [];
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    async getProductsCount () {
+        try {
+            const statement = `SELECT COUNT(*) 
+                                FROM products  `
+                    //             WHERE
+                    //             NAME LIKE %${query}%;
+                    //    `;
             const values = [];
 
             const result = await db.query(statement, values);
