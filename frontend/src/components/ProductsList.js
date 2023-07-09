@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSearchParams } from 'react-router-dom';
 
-
 export function ProductsList() {
 
     const [products, setProducts] = useState([]);
@@ -22,24 +21,35 @@ export function ProductsList() {
             setProducts(res.data.products);             
             setLoading(false);
             setProductsCount(res.data.count);
-            console.log(res.data.count)
         })
         .catch(err => setError(true));        
     }, []);
 
-    const getPageNum = () => {
-        let curPage = page;
+    const getPagination = () => {
+        let curPage = !page ? 1 : Number(page);
         let nextPage = null;
         let prevPage = null;
         if (curPage == null)
             curPage = 1
-        if (productsCount/limit > curPage)
+        if (productsCount/limit > curPage) {
             nextPage = curPage + 1;
+        }
         if (curPage > 1)
             prevPage = curPage - 1;
-        return curPage
+        return (
+            <div className="pagination">
+            <a href={`products?page=${prevPage}&limit=${!limit ? 10 : limit}`}>
+                <div className='prev-page' 
+                style={{display: prevPage ? 'block' :'none'}}>Prev</div>
+            </a>
+            <div className='cur-page'>{curPage}</div>
+            <a href={`products?page=${nextPage}&limit=${!limit ? 10 : limit}`}>
+                <div className='next-page'
+                style={{display: nextPage ? 'block' : 'none'}}>Next</div>
+            </a>
+        </div>
+        )
     }
-
 
     if (error) {
         return (    
@@ -69,11 +79,8 @@ export function ProductsList() {
                     <p>Loading...</p>
                 )
             }</div>
-            <div className="pagination">
-                {/* <div className='prev-page'>{getPageNum()}</div> */}
-                <div className='cur-page'>{getPageNum()}</div>
-                {/* <div className='next-page'>{getPageNum()}</div> */}
-            </div>
+            {/* <Pagination /> */}
+            {getPagination()}
         </div>
         );
 }
