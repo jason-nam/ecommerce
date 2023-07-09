@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import axios from 'axios'
 
 export function Register() {
 
@@ -11,6 +11,8 @@ export function Register() {
 
     const navigate = useNavigate();
     const [registered, setRegistered] = useState(false);
+    const [userExists, setUserExists] = useState(false);
+
    
     useEffect(() => {
       if (!registered) {
@@ -23,22 +25,16 @@ export function Register() {
 
     const register = (e) => {
         e.preventDefault();
-        fetch("/api/register", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({
+        axios.post("/api/register", {
                 email, firstname, lastname, password
-            })
         })
-        .then(res => {
-            if (!res.ok)
-                throw Error(res.status)
-            return res.json()
-        })
-        .then(data => {setRegistered(true);})
-        .catch(err => {console.log(err)});
+        .then(res => 
+            {setRegistered(true);}
+        )
+        .catch(err => {
+            if (err.response.status == 409)
+                setUserExists(true)
+        });
     }
 
     return (
@@ -50,6 +46,7 @@ export function Register() {
                             <input 
                                 type="text" 
                                 value={firstname}
+                                placeholder = "First Name"
                                 onChange={(e) => setFirstname(e.target.value)}                      
                                 required
                             />
@@ -57,6 +54,7 @@ export function Register() {
                             <input 
                                 type="text" 
                                 value={lastname}
+                                placeholder = "Last Name"
                                 onChange={(e) => setLastname(e.target.value)}                      
                                 required
                             />
@@ -65,7 +63,7 @@ export function Register() {
                             <label>Email</label>
                             <input 
                                 type="text" 
-                                placeholder="your email..."
+                                placeholder="Email"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}                      
                                 required
@@ -76,6 +74,7 @@ export function Register() {
                             <input 
                                 type="password" 
                                 value={password}
+                                placeholder = "Password"
                                 onChange={(e) => setPassword(e.target.value)}                      
                                 required
                             ></input>
@@ -83,6 +82,7 @@ export function Register() {
                         <button type="submit">Create Account</button>  
                     </form>
                 </div>
+                {userExists ? <div>User Already Exists</div> : undefined}
             </div>
     );
 }

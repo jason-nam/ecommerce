@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 
 
@@ -14,12 +14,23 @@ export function Login() {
     const navigate = useNavigate();
    
     useEffect(() => {
-      if (!authSuccess) {
-        navigate("");
-      } else {
-        navigate("/users/" + userId);
-      }
-    }, [navigate, authSuccess, userId]);
+        axios.get("/api/login")
+        .then((res) => {
+            if (res.data.loggedIn) 
+                navigate("/users/"+userId);
+            else
+                console.log(res.data.loggedIn)
+        })
+        .catch(err => console.log("Session Error"));        
+
+    }, [userId]);
+
+    //   if (!authSuccess) {
+    //     navigate("");
+    //   } else {
+    //     navigate("/users/" + userId);
+    //   }
+    // }, [navigate, authSuccess, userId]);
   
 
     const doLogin = (e) => {
@@ -39,7 +50,7 @@ export function Login() {
                 throw Error(res.status)
             return res.json()
         })
-        .then(data => {setUserId(data.id); setAuthSuccess(true); })
+        .then(data => {setUserId(data.id); })
         .catch(err => {console.log(err); setAuthFail(true)});
     }
 
@@ -76,6 +87,7 @@ export function Login() {
                             ></input>
                         </div>  
                         <button type="submit">Login</button>  
+                        <Link to="/register"><div>Create Account</div></Link>
                     </form>
                 </div>
                 {

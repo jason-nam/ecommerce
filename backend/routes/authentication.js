@@ -9,9 +9,12 @@ const controller = require("../controllers/authentication");
 module.exports = (app, passport) => {
 
     app.use("/api", router);
-    app.use(express.urlencoded({ extended: false }));
 
-    router.post("/register", hashPasswordRoute, controller.register); // registration endpoint
+    router.get("/login", controller.loginPage);
+    router.get("/logout", controller.logout);
+    router.get("/", controller.homePage)
+
+    router.post("/register", hashPasswordRoute, controller.register); // registration endpoint    
     router.post("/login", controller.login); // login endpoint
     // router.post("/logout", controller.logout); // login endpoint
     // router.get("/abcd", (req, res, next) => {

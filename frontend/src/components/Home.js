@@ -1,18 +1,39 @@
 import React, { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
+import axios from "axios";
+import { Link } from "react-router-dom";
+
 
 
 export function Home() {
 
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [id, setId] = useState(null);
+    const [error, setError] = useState(false)
+
     useEffect(() => {
-        // console.log(Cookies.get("authenticated"));
+        axios.get("/api/login")
+        .then((res) => {
+            setId(res.data.user.id)
+            setLoggedIn(res.data.loggedIn)
+        })
+        .catch(err => console.log("Session Error"));        
 
       }, []);
-  
-
-
     
-    const [loggedIn, setLoggedIn] = useState(false);
+
+      const logout = () => {
+        axios.get("/api/logout")
+        .then((res) => {
+            console.log(res.data.loggedOut)
+            if (res.data.loggedOut)
+                window.location.reload();
+            else
+                console.log("sth wrong")
+        })
+        .catch(err => console.log("error"));        
+      }
+
 
     const linksShow = () => {
         if (!loggedIn){
@@ -26,23 +47,17 @@ export function Home() {
             return (
                 <div>
                 <a href={`/users/${id}`}><div className="profile-link">Profile</div></a>
-                <a href={`/`}><div className="signout-link">Sign Out</div></a>
+                <Link to="/">
+                <button className="logout-button" onClick={logout}>
+                    Sign Out
+                </button>
+                </Link>
                 </div>
             )
         }
     }
 
-    //session
-    const id = 1;
+    return linksShow();
 
-        return (
-                <div className="App">
-                    <a href="/products"><div className="products-link">Products</div></a>
-                    {linksShow()}
-                    {/* <a href={`/login`}><div>Sign In</div></a>
-                    <a href={`/register`}><div>Sign Up</div></a>
-                    <a href={`/users/${id}`}><div>Profile</div></a> */}
-                </div>);
-        
 }
 

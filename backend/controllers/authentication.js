@@ -13,12 +13,18 @@ module.exports = {
             res.status(201).send(response);
 
         } catch(err) {
-            res.status(409).send({"message": "User Registration Fail"});
+            if (err.status == 500 )
+                res.status(500).send({message: "Server Error"});
+            if (err.status == 409)
+                res.status(409).send({message: "User already exists"});
             // next(err);
         }
     },
 
     login: async (req, res, next) => {
+        if (req.session.authenticated) {
+            return res.status(403).send({ message : 'Already logged in' }); 
+        }
 
         passport.authenticate('local', (err, user) => {
             if (err) {
@@ -28,7 +34,7 @@ module.exports = {
             if (!user) { 
                 return res.status(401).send({ message : 'Authentication Fail' });
             }
-            req.session.authenticated = true;
+            req.session.user = user;
             return res.status(200).send(user); 
         })(req, res, next);
               
@@ -58,10 +64,25 @@ module.exports = {
     },
 
     logout: async (req, res, next) => {
-        if (req.session.authenticated) {
+        if (req.session.user) {
             req.session.destroy();
-            res.status(200).send(res);
+            res.status(200).send({loggedOut: true, message: "Logged Out"});
         } else 
-            res.status(403).send({message: "Not logged in"})
-    }
+            res.status(403).send({loggedOut: false, message: "Not Logged In"})
+    },
+
+    loginPage: async (req, res, next) => {
+        if (req.session.user) {
+            res.status(200).send({loggedIn: true, user: req.session.user});
+        } else 
+            res.status(200).send({loggedIn: false})
+    },
+
+    homePage: async (req, res, next) => {
+        if (req.session.user) {
+            res.status(200).send({loggedIn: true, user: req.session.user});
+        } else 
+            res.status(200).send({loggedIn: false})
+    },
+
 }
