@@ -7,11 +7,11 @@ export function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [authSuccess, setAuthSuccess] = useState(false);
     const [authFail, setAuthFail] = useState(false);
     const [userId, setUserId] = useState(null);
 
     const navigate = useNavigate();
-    const [authSuccess, setAuthSuccess] = useState(false);
    
     useEffect(() => {
       if (!authSuccess) {
@@ -57,9 +57,11 @@ export function Login() {
                             <label>Email</label>
                             <input 
                                 type="text" 
-                                placeholder="your email..."
+                                placeholder="Email"
                                 value={email}
-                                onChange={(e) => setEmail(e.target.value)}                      
+                                onChange={(e) => setEmail(e.target.value)}
+                                // type="email"   
+                                // clearOnEscape                   
                                 required
                             ></input>
                         </div>   
@@ -67,8 +69,9 @@ export function Login() {
                             <label>Password</label>
                             <input 
                                 type="password" 
+                                placeholder="Password"
                                 value={password}
-                                onChange={(e) => setPassword(e.target.value)}                      
+                                onChange={(e) => setPassword(e.target.value)} 
                                 required
                             ></input>
                         </div>  

@@ -13,6 +13,7 @@ module.exports = (app, passport) => {
 
     router.post("/register", hashPasswordRoute, controller.register); // registration endpoint
     router.post("/login", controller.login); // login endpoint
+    router.post("/logout", controller.logout); // login endpoint
 
     /* another way */
     // router.post("/login", passport.authenticate('local'), controller.login); // login endpoint
