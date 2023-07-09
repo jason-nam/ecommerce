@@ -13,8 +13,23 @@ module.exports = (app, passport) => {
 
     router.post("/register", hashPasswordRoute, controller.register); // registration endpoint
     router.post("/login", controller.login); // login endpoint
-    router.post("/logout", controller.logout); // login endpoint
+    // router.post("/logout", controller.logout); // login endpoint
+    // router.get("/abcd", (req, res, next) => {
+    //     // console.log(req)
+    //     if (req.isAuthenticated()) {
+    //         console.log("abcd")
+    //         return res.status(200).send("abcd")
+    //     } else {
+    //         console.log("not auth")
+    //         return res.status(200).send("not auth")
+    //     }
+    // }); 
+
 
     /* another way */
     // router.post("/login", passport.authenticate('local'), controller.login); // login endpoint
+
+
+
+
 }

@@ -11,14 +11,17 @@ module.exports = class ProductModel {
      * Get list of products
      * @return {Array} array of products
      */
-    async getProducts() {
+    async getProducts(page, limit) {
 
         try {
             
             // select list of all products in ascending id order
             const statement = `SELECT *
                                FROM products
-                               ORDER BY id ASC`;
+                               ORDER BY id ASC
+                               LIMIT ${limit}
+                               OFFSET ${(page - 1) * limit}
+                               `;
             const values = [];
 
             const result = await db.query(statement, values);

@@ -3,6 +3,7 @@ const session = require('express-session');
 const { SESSION_SECRET } = require('../config');
 const cors = require('cors');
 const passport = require('passport');
+const cookieParser = require('cookie-parser')
 
 module.exports = (app) => {
 
@@ -23,6 +24,8 @@ module.exports = (app) => {
 
     //passport
 
+    app.use(cookieParser());
+
     // Creates a session
     app.use(
         session({  
@@ -40,7 +43,6 @@ module.exports = (app) => {
         console.log("session", req.session)
         next();
     } )
-
 
 
     return app;

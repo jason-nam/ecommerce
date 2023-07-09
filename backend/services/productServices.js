@@ -7,8 +7,13 @@ module.exports = class ProductService {
 
         try {
 
+            console.log(options)
+            let { limit, page } = options
+            if (limit==null || isNaN(limit) || limit < 1) limit = 10;
+            if (page==null || isNaN(page) || page < 1) page = 1;
+
             // load products list
-            const products = await ProductModelInstance.getProducts();
+            const products = await ProductModelInstance.getProducts(page, limit);
 
             return products;
 

@@ -6,6 +6,9 @@ const AuthenticationServiceInstance = new AuthenticationService();
 
 module.exports = (app) => {
 
+    app.use(passport.initialize());
+    app.use(passport.session());
+
     passport.use(new LocalStrategy( { usernameField: 'email'},
 
         async (email, password, done) => {
@@ -28,13 +31,8 @@ module.exports = (app) => {
     // deserialize data stored in cookie and attach to req.user
     passport.deserializeUser((id, done) => { done(null, { id }) });
 
-    app.use(passport.initialize());
-    app.use(passport.session());
 
-    app.use((req, res, next)=> {
-        console.log("session", req.session)
-        next();
-    } )
+
     return passport;
 
 }

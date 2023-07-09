@@ -36,6 +36,10 @@ module.exports = {
         /* another way */
 
         // router.post("/login", passport.authenticate('local'), (req, res, err) => {
+        //     if (err) {
+        //         console.log(err)
+        //         return;
+        //     }
         //     if(req.user)  return res.status(200).send(req.user);
         //     return res.status(404).send(res);
         // });
@@ -55,7 +59,7 @@ module.exports = {
 
     logout: async (req, res, next) => {
         if (req.session.authenticated) {
-            req.session.authenticated = false;
+            req.session.destroy();
             res.status(200).send(res);
         } else 
             res.status(403).send({message: "Not logged in"})
