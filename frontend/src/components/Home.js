@@ -1,7 +1,17 @@
 import React, { useState, useEffect } from "react";
+import Cookies from 'js-cookie';
+
 
 export function Home() {
 
+    useEffect(() => {
+        // console.log(Cookies.get("authenticated"));
+
+      }, []);
+  
+
+
+    
     const [loggedIn, setLoggedIn] = useState(false);
 
     const linksShow = () => {

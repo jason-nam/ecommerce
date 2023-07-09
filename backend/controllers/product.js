@@ -5,7 +5,6 @@ module.exports = {
 
     list: async (req, res, next) => {
         try {
-
             const queryParams = req.query;
             const response = await ProductServiceInstance.list(queryParams);
 

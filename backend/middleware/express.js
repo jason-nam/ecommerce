@@ -36,6 +36,13 @@ module.exports = (app) => {
         })
     );
 
+    app.use((req, res, next)=> {
+        console.log("session", req.session)
+        next();
+    } )
+
+
+
     return app;
     
 }

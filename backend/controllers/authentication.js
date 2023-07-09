@@ -19,6 +19,7 @@ module.exports = {
     },
 
     login: async (req, res, next) => {
+
         passport.authenticate('local', (err, user) => {
             if (err) {
                 if (err.status == 500) return res.status(500).send({ message : 'Server Error' });
@@ -27,6 +28,7 @@ module.exports = {
             if (!user) { 
                 return res.status(401).send({ message : 'Authentication Fail' });
             }
+            req.session.authenticated = true;
             return res.status(200).send(user); 
         })(req, res, next);
               
@@ -49,5 +51,13 @@ module.exports = {
         //     res.status(401).send({"message": "Authentication Fail"});
         //     // next(err);
         // }
+    },
+
+    logout: async (req, res, next) => {
+        if (req.session.authenticated) {
+            req.session.authenticated = false;
+            res.status(200).send(res);
+        } else 
+            res.status(403).send({message: "Not logged in"})
     }
 }
