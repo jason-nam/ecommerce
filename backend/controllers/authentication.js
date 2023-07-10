@@ -44,11 +44,18 @@ module.exports = {
     },
 
     logout: async (req, res, next) => {
-        if (req.isAuthenticated()) {
-            req.session.destroy();
+        
+                /* another way*/
+        // if (req.isAuthenticated()) {
+        //     req.session.destroy();
+        //     res.status(200).send({loggedOut: true, message: "Logged Out"});
+        // } else 
+        //     res.status(403).send({loggedOut: false, message: "Not Logged In"})
+
+        req.logout(function(err) {
+            if (err) { res.status(err.status).send({loggedOut: false, message: "Not Logged In"})}
             res.status(200).send({loggedOut: true, message: "Logged Out"});
-        } else 
-            res.status(403).send({loggedOut: false, message: "Not Logged In"})
+          });
     },
 
     checkAuth: async (req, res, next) => {

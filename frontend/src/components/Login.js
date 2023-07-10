@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, Link, Navigate} from "react-router-dom";
 import axios from "axios";
-import Cookies from 'js-cookie'
 
 
 export function Login() {
@@ -44,14 +43,12 @@ export function Login() {
     const doLogin = (e) => {
         e.preventDefault();
         axios.post("/api/login", {
-                email, password
-            },
-            {
-                headers: { "Content-Type" : "application/json" },
-                withCredentials: true,
-            }        
-            )
-        .then(res => { 
+            email, password
+        },
+        {
+            headers: { "Content-Type" : "application/json" },
+            withCredentials: true,
+        }).then(res => { 
             if (res.data.id) {
                 setUserId(res.data.id)
                 setAuthSuccess(true); 
@@ -59,7 +56,7 @@ export function Login() {
                 setAuthFail(true)}
              )
         .catch(err => {
-            if (err.response.status == 500)
+            if (err.response.status === 500)
                 return;
             setAuthFail(true)});
     }

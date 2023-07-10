@@ -14,5 +14,4 @@ module.exports = (app, passport) => {
     router.post("/register", hashPasswordRoute, controller.register); // registration endpoint    
     router.post("/login", passport.authenticate("local",{ passReqToCallback: true }), controller.login);
  
-
 }
