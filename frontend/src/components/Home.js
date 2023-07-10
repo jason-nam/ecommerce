@@ -1,18 +1,41 @@
 import React, { useState, useEffect } from "react";
 import Cookies from 'js-cookie';
+import axios from "axios";
+import { Link } from "react-router-dom";
+
 
 
 export function Home() {
 
+    const [loggedIn, setLoggedIn] = useState(false);
+    const [id, setId] = useState(null);
+    const [error, setError] = useState(false)
+
     useEffect(() => {
-        // console.log(Cookies.get("authenticated"));
+        axios.get("/api/login")
+        .then((res) => {
+            if (res.data.loggedIn) {
+                setId(res.data.user.id)
+                setLoggedIn(res.data.loggedIn)
+            } else 
+                return;
+        })
+        .catch(err => console.log("Session Error"));        
 
       }, []);
-  
-
-
     
-    const [loggedIn, setLoggedIn] = useState(false);
+
+      const logout = () => {
+        axios.get("/api/logout")
+        .then((res) => {
+            if (res.data.loggedOut)
+                window.location.reload();
+            else
+                console.log("log-out error")
+        })
+        .catch(err => console.log(err));        
+      }
+
 
     const linksShow = () => {
         if (!loggedIn){
@@ -26,23 +49,17 @@ export function Home() {
             return (
                 <div>
                 <a href={`/users/${id}`}><div className="profile-link">Profile</div></a>
-                <a href={`/`}><div className="signout-link">Sign Out</div></a>
+                <Link to="/">
+                <button className="logout-button" onClick={logout}>
+                    Sign Out
+                </button>
+                </Link>
                 </div>
             )
         }
     }
 
-    //session
-    const id = 1;
+    return linksShow();
 
-        return (
-                <div className="App">
-                    <a href="/products"><div className="products-link">Products</div></a>
-                    {linksShow()}
-                    {/* <a href={`/login`}><div>Sign In</div></a>
-                    <a href={`/register`}><div>Sign Up</div></a>
-                    <a href={`/users/${id}`}><div>Profile</div></a> */}
-                </div>);
-        
 }
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, Navigate} from "react-router-dom";
 import axios from "axios";
 
 
@@ -14,42 +14,54 @@ export function Login() {
     const navigate = useNavigate();
    
     useEffect(() => {
-      if (!authSuccess) {
-        navigate("");
-      } else {
-        navigate("/users/" + userId);
-      }
-    }, [navigate, authSuccess, userId]);
-  
-
-    const doLogin = (e) => {
-        e.preventDefault();
-        fetch("http://localhost:4000/api/login", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({
-                email, password
-            }),
-            credentials: "include"
+        axios.get("/api/login")
+        .then((res) => {
+            if (res.data.loggedIn) {
+                navigate("/")
+            }
+            else
+                return
         })
-        .then(res => {
-            if (!res.ok)
-                throw Error(res.status)
-            return res.json()
-        })
-        .then(data => {setUserId(data.id); setAuthSuccess(true); })
-        .catch(err => {console.log(err); setAuthFail(true)});
-    }
+        .catch(err => console.log(err.response, "Session Error"));        
 
-    // if (auth) {
+    }, [userId]);
+
+    //   if (!authSuccess) {
+    //     navigate("");
+    //   } else {
+    //     navigate("/users/" + userId);
+    //   }
+    // }, [navigate, authSuccess, userId]);
+
+      // if (auth) {
     //     const path = "/users/" + auth
     //     console.log(path)
     //     return <Navigate replace to={path} />;
     // };      
 
-    return (
+
+    const doLogin = (e) => {
+        e.preventDefault();
+        axios.post("/api/login", {
+            email, password
+        },
+        {
+            headers: { "Content-Type" : "application/json" },
+            withCredentials: true,
+        }).then(res => { 
+            if (res.data.id) {
+                setUserId(res.data.id)
+                setAuthSuccess(true); 
+             } else
+                setAuthFail(true)}
+             )
+        .catch(err => {
+            if (err.response.status === 500)
+                return;
+            setAuthFail(true)});
+    }
+
+    return ( 
             <div className="App">
                 <div className="pw-container">
                     <form onSubmit={doLogin}>  
@@ -76,11 +88,12 @@ export function Login() {
                             ></input>
                         </div>  
                         <button type="submit">Login</button>  
+                        <Link to="/register"><div>Create Account</div></Link>
                     </form>
                 </div>
                 {
                     authFail && (
-                        <div className="authFail">
+                        <div className="warning">
                             Wrong email or password!
                         </div>)
                 }

@@ -5,6 +5,10 @@ const cors = require('cors');
 const passport = require('passport');
 const cookieParser = require('cookie-parser')
 
+
+var { Issuer } = require('openid-client');
+
+
 module.exports = (app) => {
 
     // cross origin resource sharing to all origins 
@@ -22,7 +26,6 @@ module.exports = (app) => {
     // create proxy
     app.set('trust proxy', 1);
 
-    //passport
 
     app.use(cookieParser());
 
