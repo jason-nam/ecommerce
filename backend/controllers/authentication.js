@@ -44,8 +44,8 @@ module.exports = {
     },
 
     logout: async (req, res, next) => {
-        
-                /* another way*/
+
+        /* another way*/
         // if (req.isAuthenticated()) {
         //     req.session.destroy();
         //     res.status(200).send({loggedOut: true, message: "Logged Out"});

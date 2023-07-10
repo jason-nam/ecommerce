@@ -11,20 +11,28 @@ module.exports = class ProductModel {
      * Get list of products
      * @return {Array} array of products
      */
-    async getProducts(page, limit) {
+    async getProducts(page, limit, search) {
 
         try {
             
             // select list of all products in ascending id order
-            const statement = `SELECT *
-                               FROM products
-                               ORDER BY id ASC
-                               LIMIT $1
-                               OFFSET $2
-                               `;
-            const values = [limit, (page - 1) * limit];
+            var statement = `SELECT *
+                            FROM products
+                            WHERE name LIKE $1
+                            ORDER BY id ASC
+                            LIMIT $2
+                            OFFSET $3
+                            `;
+
+            var values = [limit, (page - 1) * limit];
+            if (search != null) {
+                values.unshift(`%${search}%`)
+            } else 
+                values.unshift(`%%`)
+
 
             const result = await db.query(statement, values);
+
 
             // return result array if result.rows not null and has length property
             if (result.rows?.length) {
@@ -38,14 +46,19 @@ module.exports = class ProductModel {
         }
     }
 
-    async getProductsCount () {
+    async getProductsCount (search) {
         try {
             const statement = `SELECT COUNT(*) 
-                                FROM products  `
-                    //             WHERE
-                    //             NAME LIKE %${query}%;
-                    //    `;
+                                FROM products  
+                                WHERE
+                                NAME LIKE $1`;
+
             const values = [];
+            if (search != null) {
+                values.unshift(`%${search}%`)
+            } else 
+                values.unshift(`%%`)
+
 
             const result = await db.query(statement, values);
 
