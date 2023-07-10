@@ -22,67 +22,41 @@ module.exports = {
     },
 
     login: async (req, res, next) => {
-        if (req.session.authenticated) {
-            return res.status(403).send({ message : 'Already logged in' }); 
-        }
+        if (req.isAuthenticated())
+            res.status(200).send(req.user);
+        else
+            res.status(401).send({message : 'Authentication Fail'})
 
-        passport.authenticate('local', (err, user) => {
-            if (err) {
-                if (err.status == 500) return res.status(500).send({ message : 'Server Error' });
-                return res.status(err.status).send({message: 'Something went wrong'})
-            }
-            if (!user) { 
-                return res.status(401).send({ message : 'Authentication Fail' });
-            }
-            req.session.user = user;
-            return res.status(200).send(user); 
-        })(req, res, next);
-              
-        
         /* another way */
-
-        // router.post("/login", passport.authenticate('local'), (req, res, err) => {
+        /* custom callback - not working */
+        // ,(err, user) => {
         //     if (err) {
-        //         console.log(err)
-        //         return;
+        //         if (err.status == 500) return res.status(500).send({ message : 'Server Error' });
+        //         return res.status(err.status).send({message: 'Something went wrong'})
         //     }
-        //     if(req.user)  return res.status(200).send(req.user);
-        //     return res.status(404).send(res);
-        // });
-
-        /* pre-Passport */
-
-        // try {
-        //     const { username, password } = req.body;
-        //     const response = await AuthenticationServiceInstance.login({ email: username, password });
-        //     console.log(response)
-        //     res.status(200).send(response);
-        // } catch(err) {
-        //     res.status(401).send({"message": "Authentication Fail"});
-        //     // next(err);
-        // }
+        //     if (!user) { 
+        //         return res.status(401).send({ message : 'Authentication Fail' });
+        //     }
+        //     req.session.user = user;
+        //     return res.status(200).send(user); 
+        // })(req, res, next);
+              
     },
 
     logout: async (req, res, next) => {
-        if (req.session.user) {
+        if (req.isAuthenticated()) {
             req.session.destroy();
             res.status(200).send({loggedOut: true, message: "Logged Out"});
         } else 
             res.status(403).send({loggedOut: false, message: "Not Logged In"})
     },
 
-    loginPage: async (req, res, next) => {
-        if (req.session.user) {
-            res.status(200).send({loggedIn: true, user: req.session.user});
-        } else 
-            res.status(200).send({loggedIn: false})
-    },
+    checkAuth: async (req, res, next) => {
 
-    homePage: async (req, res, next) => {
-        if (req.session.user) {
-            res.status(200).send({loggedIn: true, user: req.session.user});
+        if (req.isAuthenticated()) {
+            res.status(200).send({loggedIn: true, user: req.user});
         } else 
             res.status(200).send({loggedIn: false})
-    },
+    }
 
 }

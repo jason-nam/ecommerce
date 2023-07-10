@@ -14,8 +14,11 @@ export function Home() {
     useEffect(() => {
         axios.get("/api/login")
         .then((res) => {
-            setId(res.data.user.id)
-            setLoggedIn(res.data.loggedIn)
+            if (res.data.loggedIn) {
+                setId(res.data.user.id)
+                setLoggedIn(res.data.loggedIn)
+            } else 
+                return;
         })
         .catch(err => console.log("Session Error"));        
 
@@ -25,13 +28,12 @@ export function Home() {
       const logout = () => {
         axios.get("/api/logout")
         .then((res) => {
-            console.log(res.data.loggedOut)
             if (res.data.loggedOut)
                 window.location.reload();
             else
-                console.log("sth wrong")
+                console.log("log-out error")
         })
-        .catch(err => console.log("error"));        
+        .catch(err => console.log(err));        
       }
 
 

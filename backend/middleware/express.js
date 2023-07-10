@@ -29,7 +29,7 @@ module.exports = (app) => {
     // Creates a session
     app.use(
         session({  
-            secret: SESSION_SECRET,
+            secret: "SESSION_SECRET",
             resave: false,
             saveUninitialized: false,
             cookie: {

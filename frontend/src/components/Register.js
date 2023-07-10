@@ -82,7 +82,7 @@ export function Register() {
                         <button type="submit">Create Account</button>  
                     </form>
                 </div>
-                {userExists ? <div>User Already Exists</div> : undefined}
+                {userExists ? <div className="warning">User Already Exists</div> : undefined}
             </div>
     );
 }

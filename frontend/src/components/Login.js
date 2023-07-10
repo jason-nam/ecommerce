@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, Navigate} from "react-router-dom";
 import axios from "axios";
+import Cookies from 'js-cookie'
 
 
 export function Login() {
@@ -16,12 +17,13 @@ export function Login() {
     useEffect(() => {
         axios.get("/api/login")
         .then((res) => {
-            if (res.data.loggedIn) 
-                navigate("/users/"+userId);
+            if (res.data.loggedIn) {
+                navigate("/")
+            }
             else
-                console.log(res.data.loggedIn)
+                return
         })
-        .catch(err => console.log("Session Error"));        
+        .catch(err => console.log(err.response, "Session Error"));        
 
     }, [userId]);
 
@@ -31,36 +33,38 @@ export function Login() {
     //     navigate("/users/" + userId);
     //   }
     // }, [navigate, authSuccess, userId]);
-  
 
-    const doLogin = (e) => {
-        e.preventDefault();
-        fetch("http://localhost:4000/api/login", {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify({
-                email, password
-            }),
-            credentials: "include"
-        })
-        .then(res => {
-            if (!res.ok)
-                throw Error(res.status)
-            return res.json()
-        })
-        .then(data => {setUserId(data.id); })
-        .catch(err => {console.log(err); setAuthFail(true)});
-    }
-
-    // if (auth) {
+      // if (auth) {
     //     const path = "/users/" + auth
     //     console.log(path)
     //     return <Navigate replace to={path} />;
     // };      
 
-    return (
+
+    const doLogin = (e) => {
+        e.preventDefault();
+        axios.post("/api/login", {
+                email, password
+            },
+            {
+                headers: { "Content-Type" : "application/json" },
+                withCredentials: true,
+            }        
+            )
+        .then(res => { 
+            if (res.data.id) {
+                setUserId(res.data.id)
+                setAuthSuccess(true); 
+             } else
+                setAuthFail(true)}
+             )
+        .catch(err => {
+            if (err.response.status == 500)
+                return;
+            setAuthFail(true)});
+    }
+
+    return ( 
             <div className="App">
                 <div className="pw-container">
                     <form onSubmit={doLogin}>  
@@ -92,7 +96,7 @@ export function Login() {
                 </div>
                 {
                     authFail && (
-                        <div className="authFail">
+                        <div className="warning">
                             Wrong email or password!
                         </div>)
                 }
