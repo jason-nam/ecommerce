@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router-dom';
 
 export function ProductsList() {
 
@@ -14,10 +14,11 @@ export function ProductsList() {
     const page = searchParams.get("page");
     const limit = searchParams.get("limit");
     const search = searchParams.get("search");
+    const category = searchParams.get("category");
 
 
     useEffect(() => {
-        axios.get(`/api/products`, { params: { page: page, limit: limit, search: search } }) //?page=${page}&limit=${limit}`)
+        axios.get(`/api/products`, { params: { page: page, limit: limit, search: search, category: category } }) //?page=${page}&limit=${limit}`)
         .then((res) => {
             setProducts(res.data.products);             
             setLoading(false);
@@ -39,12 +40,12 @@ export function ProductsList() {
 
         return (
             <div className="pagination">
-            <a href={`products?page=${prevPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}`}>
+            <a href={`products?page=${prevPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
                 <div className='prev-page' 
                 style={{display: prevPage ? 'block' :'none'}}>Prev</div>
             </a>
             <div className='cur-page'>{curPage}</div>
-            <a href={`products?page=${nextPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}`}>
+            <a href={`products?page=${nextPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
                 <div className='next-page'
                 style={{display: nextPage ? 'block' : 'none'}}>Next</div>
             </a>
@@ -72,7 +73,9 @@ export function ProductsList() {
                             <div className="name" >{product.name}</div>
                             <div className="price" >${product.price}</div>
                             <div className="desc" >{product.description}</div>
-                            <div className="desc" >{product.category}</div>
+                            </a>
+                            <a href={`/products?category=${product.category}`}>
+                                <div className="desc" >{product.category}</div>
                             </a>
                         </div> 
                     )
