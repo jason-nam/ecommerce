@@ -12,6 +12,8 @@ export function Home() {
     const [error, setError] = useState(false)
 
     useEffect(() => {
+
+        // check if client is logged in
         axios.get("/api/login")
         .then((res) => {
             if (res.data.loggedIn) {
@@ -25,6 +27,7 @@ export function Home() {
       }, []);
     
 
+      //log out
       const logout = () => {
         axios.get("/api/logout")
         .then((res) => {

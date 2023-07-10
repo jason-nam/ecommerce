@@ -11,25 +11,29 @@ module.exports = class ProductModel {
      * Get list of products
      * @return {Array} array of products
      */
-    async getProducts(page, limit, search) {
+    async getProducts(page, limit, search, category) {
 
         try {
             
             // select list of all products in ascending id order
-            var statement = `SELECT *
+            const statement = `SELECT *
                             FROM products
-                            WHERE name LIKE $1
+                            WHERE name LIKE $1 
+                            AND category like $2
                             ORDER BY id ASC
-                            LIMIT $2
-                            OFFSET $3
+                            LIMIT $3
+                            OFFSET $4
                             `;
 
-            var values = [limit, (page - 1) * limit];
-            if (search != null) {
-                values.unshift(`%${search}%`)
-            } else 
-                values.unshift(`%%`)
+            if (search == null) {
+                search = "";
+            } 
 
+            if (category == null) {
+                category = "";
+            }
+
+            const values = [`%${search}%`, `%${category}%`, limit, (page - 1) * limit];            
 
             const result = await db.query(statement, values);
 
@@ -46,19 +50,24 @@ module.exports = class ProductModel {
         }
     }
 
-    async getProductsCount (search) {
+    async getProductsCount (search, category) {
         try {
             const statement = `SELECT COUNT(*) 
                                 FROM products  
                                 WHERE
-                                NAME LIKE $1`;
+                                NAME LIKE $1
+                                AND category LIKE $2
+                                `;
 
-            const values = [];
-            if (search != null) {
-                values.unshift(`%${search}%`)
-            } else 
-                values.unshift(`%%`)
+            if (search == null) {
+                search = "";
+            } 
 
+            if (category == null) {
+                category = "";
+            }
+
+            const values = [`%${search}%`, `%${category}%`]
 
             const result = await db.query(statement, values);
 
