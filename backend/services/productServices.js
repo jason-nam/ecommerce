@@ -14,7 +14,7 @@ module.exports = class ProductService {
             // load products list
             const products = await ProductModelInstance.getProducts(page, limit, search, category);
             const productsCount = await ProductModelInstance.getProductsCount(search, category);
-            return {products: products, count: productsCount[0].count};
+            return {products: products, count: Number(productsCount[0].count)};
 
             // return products;
 

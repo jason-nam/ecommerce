@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import {Home} from './components/Home';
-import {Product} from './components/Product';
-import {ProductsList} from './components/ProductsList';
-import {User} from './components/User';
-import {Login} from './components/Login';
-import {Register} from './components/Register';
+import {Home} from './components/pages/Home';
+import {Product} from './components/pages/Product';
+import {ProductsList} from './components/pages/ProductsList';
+import {User} from './components/pages/User';
+import {Login} from './components/pages/Login';
+import {Register} from './components/pages/Register';
 
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';

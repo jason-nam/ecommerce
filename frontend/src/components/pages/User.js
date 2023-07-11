@@ -11,12 +11,25 @@ export function User() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        axios.get("/api/users/"+id)
+
+        let isMounted = true;
+        const controller = new AbortController();
+
+        axios.get("/api/users/"+id, 
+        { signal: controller.signal })
         .then((res) => {
-            setUser(res.data[0]);
-            setLoading(false);
+            if (isMounted) {
+                setUser(res.data[0]);
+                setLoading(false);
+            }
         })
-        .catch(err => setError(true));        
+        .catch(err => setError(true));
+        
+        return () => {
+            isMounted = false;
+            isMounted && controller.abort()
+        }
+
     }, [id]);
 
     if (error) {
