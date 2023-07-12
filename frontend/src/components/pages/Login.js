@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate} from "react-router-dom";
 import axios from "axios";
 import LoginForm from "../subcomponents/LoginForm"
+import checkIfLoggedIn from "../CheckAuth"
 
 
 export function Login() {
@@ -12,23 +13,15 @@ export function Login() {
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
+        const signal = controller.signal;
 
-        axios.get("/api/checkAuth", {signal: controller.signal})
-        .then((res) => {
-            if (isMounted) {
-                if (res.data.loggedIn) {
-                    setUserId(res.data.user.id)
-                }
-                else
-                    setUserId(-1)
-            }
-        })
-        .catch(err => console.log(err.response, "Session Error")); 
+        checkIfLoggedIn(setUserId, signal, isMounted);
         
         return () => {
             isMounted = false;
             isMounted && controller.abort()
         }
+
     }, []);
 
 

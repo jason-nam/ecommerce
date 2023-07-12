@@ -6,7 +6,6 @@ const passport = require('passport');
 const cookieParser = require('cookie-parser')
 
 
-var { Issuer } = require('openid-client');
 
 
 module.exports = (app) => {
