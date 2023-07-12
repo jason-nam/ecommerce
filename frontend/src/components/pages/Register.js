@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import RegisterForm from "../subcomponents/RegisterForm"
+import checkIfLoggedIn from "../CheckAuth"
 
 export function Register() {
 
@@ -14,19 +15,10 @@ export function Register() {
         
         let isMounted = true;
         const controller = new AbortController();
+        const signal = controller.signal;
 
-        axios.get("/api/checkAuth", {signal: controller.signal})
-        .then((res) => {
-            if (isMounted) {
-                if (res.data.loggedIn) {
-                    setUserId(res.data.user.id)
-                }
-                else
-                    setUserId(-1)
-            }
-        })
-        .catch(err => console.log(err.response, "Session Error"));        
-
+        checkIfLoggedIn(setUserId, signal, isMounted);
+        
         if (!registered) {
             navigate("");
         } else {

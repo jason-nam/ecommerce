@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-
+import checkIfLoggedIn from "../CheckAuth"
 
 export default function Header() {
     const [userId, setUserId] = useState(null);
@@ -11,25 +11,18 @@ export default function Header() {
 
 
     useEffect(() => {
+    
         let isMounted = true;
         const controller = new AbortController();
+        const signal = controller.signal;
 
-        axios.get("/api/checkAuth", {signal: controller.signal})
-        .then((res) => {
-            if (isMounted) {
-                if (res.data.loggedIn) {
-                    setUserId(res.data.user.id)
-                }
-                else
-                    setUserId(-1)
-            }
-        })
-        .catch(err => console.log(err.response, "Session Error")); 
+        checkIfLoggedIn(setUserId, signal, isMounted);
         
         return () => {
             isMounted = false;
             isMounted && controller.abort()
         }
+    
     }, []);
     
 
