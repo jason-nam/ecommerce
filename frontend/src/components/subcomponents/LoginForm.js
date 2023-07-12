@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link} from "react-router-dom";
+import { Link, useNavigate} from "react-router-dom";
 import axios from "axios";
 
 export default function LoginForm({setUserId}) {
@@ -7,6 +7,7 @@ export default function LoginForm({setUserId}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [authFail, setAuthFail] = useState(false);
+    const navigate = useNavigate();
 
 
     const doLogin = (e) => {
@@ -20,6 +21,7 @@ export default function LoginForm({setUserId}) {
         }).then(res => { 
             if (res.data.id) {
                 setUserId(res.data.id)
+                navigate("/")
              } else
                 setAuthFail(true)}
              )
@@ -28,7 +30,6 @@ export default function LoginForm({setUserId}) {
                 return;
             setAuthFail(true)});
     }
-
 
     return ( 
         <div className="login-form">
