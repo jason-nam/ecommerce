@@ -23,7 +23,7 @@ module.exports = class CartService {
         try {
 
             const cart = await CartModel.getByUser(userid);
-            const items = await CartItemModel.getCartItems(cart.rows[0].id);
+            const items = await CartItemModel.getCartItems( cart.length>0 ? cart.rows[0].id : -1 );
 
             cart.items = items;
 
