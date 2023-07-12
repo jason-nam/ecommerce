@@ -1,7 +1,7 @@
 
-import React, { useState, useEffect } from "react";
 import axios from "axios";
 
+// Check authentication status
 const checkIfLoggedIn = function (setUserId, signal, isMounted){
 
     axios.get("/api/checkAuth", {signal: signal})

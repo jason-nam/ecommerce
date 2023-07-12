@@ -18,7 +18,6 @@ module.exports = class CartModel {
      */
     async createCart(userid) {
         try {
-
             const statement = `INSERT INTO carts (created, modified, userid)
                                VALUES ($1, $2, $3)
                                RETURNING *`;
@@ -54,14 +53,15 @@ module.exports = class CartModel {
 
             const result = await db.query(statement, values);
 
-            if (result.rows?.length) {
-                return result;
+            // if (result.rows?.length) {
+            if (result.rows) {
+                return result.rows;
             }
 
             return null;
 
         } catch(err) {
-            throw new Error(err);
+            throw new Error(500, err);
         }
     }
 

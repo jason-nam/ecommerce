@@ -13,7 +13,7 @@ module.exports = async (app) => {
     // load authenticator middleware
     const passportApp = await passportMiddleware(expressApp);
 
-    // await authMiddleware(expressApp);
+    await authMiddleware(expressApp);
 
     // load API route handlers
     await routers(app, passport);
