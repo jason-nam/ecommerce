@@ -55,7 +55,7 @@ module.exports = class CartModel {
 
             // if (result.rows?.length) {
             if (result.rows) {
-                return result.rows;
+                return result;
             }
 
             return null;

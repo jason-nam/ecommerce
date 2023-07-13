@@ -9,9 +9,9 @@ const checkIfLoggedIn = function (setUserId, signal, isMounted){
         if (isMounted) {
             if (res.data.loggedIn) {
                 setUserId(res.data.user.id)
-            }
-            else
+            } else {
                 setUserId(-1)
+            }
         }
     })
     .catch(err => console.log(err.response, "Session Error")); 

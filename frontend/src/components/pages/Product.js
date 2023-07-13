@@ -33,10 +33,9 @@ export function Product() {
             isMounted = false;
             isMounted && controller.abort()
         }
-
-        
     }, [id]);
 
+    // return logic
     return error?
     (    
         <div className="App">

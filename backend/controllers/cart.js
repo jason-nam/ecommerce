@@ -17,10 +17,13 @@ module.exports = {
 
     getCart: async (req, res, next) => {
         try {
-            if (!req.user)
-                res.status(403).send({message: "Not Authorized"})
+            // if (!req.user)
+            //     res.status(403).send({message: "Not Authorized"})
             
-            const id = req.user.id;
+            // const id = req.user.id;
+
+            const id = req.body.userid;
+
             const response = await CartServiceInstance.getCart(id);
 
             res.status(200).send(response);

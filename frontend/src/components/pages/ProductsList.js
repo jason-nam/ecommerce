@@ -47,6 +47,8 @@ export function ProductsList() {
         
     }, []);
 
+
+    // return logic
     if (error) {
         return (    
             <div className="App">
