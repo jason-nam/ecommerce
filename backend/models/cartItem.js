@@ -46,9 +46,6 @@ module.exports = class CartItemModel {
     static async updateCartItem(id, data) {
         try {
 
-            // const condition = pgp.as.format('WHERE id = ${id} RETURNING *', { id });
-            // const statement = pgp.helpers.update(data, null, 'cartItems') + condition;
-
             const { qty, productid, cartid } = data;
 
             const statement = `UPDATE cartitems 
