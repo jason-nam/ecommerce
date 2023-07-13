@@ -27,15 +27,15 @@ const hashPasswordRoute = async (req, res, next) => {
 
 const hashPassword = async (password) => {
     try {
-      // Generate a salt for hashing
-      const salt = await bcrypt.genSalt(10);
-  
-      // Hash the password using the generated salt
-      const hashedPassword = await bcrypt.hash(password, salt);
-  
-      return hashedPassword;
+        // Generate a salt for hashing
+        const salt = await bcrypt.genSalt(10);
+    
+        // Hash the password using the generated salt
+        const hashedPassword = await bcrypt.hash(password, salt);
+    
+        return hashedPassword;
     } catch (err) {
-      throw new Error('Password hashing failed');
+        throw new Error('Password hashing failed');
     }
   };
 

@@ -13,6 +13,7 @@ module.exports = class OrderModel {
         this.userid = data.userid || null;
     }
 
+    // TODO
     addItems(items) {
         this.items = items.map(item => new OrderItemModel(item));
     }
