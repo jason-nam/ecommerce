@@ -3,7 +3,7 @@ import Cookies from 'js-cookie';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import checkIfLoggedIn from "../CheckAuth";
+import checkIfLoggedIn from "../checkAuth";
 
 export default function Header() {
     const [ userId, setUserId ] = useState(null);

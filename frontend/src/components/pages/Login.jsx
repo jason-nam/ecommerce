@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useNavigate} from "react-router-dom";
 import axios from "axios";
 import LoginForm from "../subcomponents/LoginForm"
-import checkIfLoggedIn from "../CheckAuth"
+import checkIfLoggedIn from "../checkAuth"
 
 
 export function Login() {
