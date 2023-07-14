@@ -22,7 +22,7 @@
     "express-openid-connect": "^2.16.0",
     "express-session": "^1.17.3",
     "moment": "^2.29.4",
-    "nodemon": "^2.0.22",
+    "nodemon": "^3.0.1",
     "passport": "^0.6.0",
     "passport-local": "^1.0.0",
     "pg": "^8.11.1",
