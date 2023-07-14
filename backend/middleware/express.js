@@ -5,9 +5,6 @@ const cors = require('cors');
 const passport = require('passport');
 const cookieParser = require('cookie-parser')
 
-
-
-
 module.exports = (app) => {
 
     // cross origin resource sharing to all origins 

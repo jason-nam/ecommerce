@@ -6,13 +6,14 @@ const controller = require("../controllers/cart");
 module.exports = (app) => {
 
     app.use("/api/carts", router);
-    app.use(express.urlencoded({ extended: false }));
 
     router.post("/mycart", controller.create);
-    router.post("/mycart/items", controller.addItem);
-    router.post("/mycart/checkout", controller.checkout);
     router.get("/mycart", controller.getCart);
+
+    router.post("/mycart/items", controller.addItem);
     router.put("/mycart/items/:cartitemid", controller.updateItem);
     router.delete("/mycart/items/:cartitemid", controller.removeItem);
+
+    router.post("/mycart/checkout", controller.checkout);
 
 }

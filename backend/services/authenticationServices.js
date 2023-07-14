@@ -10,7 +10,6 @@ module.exports = class AuthenticationService {
         const { email } = data;
 
         try {
-            
             const existingUser = await UserModelInstance.getUserByEmail(email);
 
             if (existingUser != null) {
@@ -19,7 +18,6 @@ module.exports = class AuthenticationService {
             }
 
             const user = await UserModelInstance.createUser(data);
-
             const { password, ...censoredUser } = user;
 
             return censoredUser;
@@ -35,7 +33,6 @@ module.exports = class AuthenticationService {
         const { email, password } = data;
 
         try {
-
             const user = await UserModelInstance.getUserByEmail(email);
 
             if (!user) {

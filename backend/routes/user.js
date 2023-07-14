@@ -7,7 +7,7 @@ module.exports = (app) => {
 
     app.use("/api/users", router);
 
-    router.get("/:userid", controller.get);
-    router.put("/:userid", controller.update);
+    router.get("/:userid", controller.get); // get user
+    router.put("/:userid", controller.update); // update user information
 
 }

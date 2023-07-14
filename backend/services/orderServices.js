@@ -8,7 +8,6 @@ module.exports = class OrderService {
         const { userid } = data;
 
         try {
-
             const Order = new OrderModel();
             const order = await Order.createOrder({ userid, total });
 
@@ -22,7 +21,6 @@ module.exports = class OrderService {
     async list(userid) {
 
         try {
-
             const orders = await OrderModel.getOrderByUser(userid);
 
             return orders;
@@ -35,7 +33,6 @@ module.exports = class OrderService {
     async get(orderid) {
 
         try {
-
             const order = await OrderModel.getOrderById(orderid);
 
             return order;

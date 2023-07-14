@@ -24,16 +24,6 @@ module.exports = {
 
     login: async (req, res, next) => {
 
-        // try {
-        //     const { username, password } = req.body;
-        
-        //     const response = await AuthenticationServiceInstance.login({ email: username, password});
-        
-        //     res.status(200).send(response);
-        // } catch(err) {
-        //     next(err);
-        // }
-
         if (req.isAuthenticated()) {
             res.status(200).send(req.user);
         } else {
@@ -50,14 +40,6 @@ module.exports = {
                 res.status(200).send({loggedOut: true, message: "Logged Out"});
             }
         });
-
-        /* another way*/
-        // if (req.isAuthenticated()) {
-        //     req.session.destroy();
-        //     res.status(200).send({loggedOut: true, message: "Logged Out"});
-        // } else 
-        //     res.status(403).send({loggedOut: false, message: "Not Logged In"})
-
     },
 
     checkAuth: async (req, res, next) => {
