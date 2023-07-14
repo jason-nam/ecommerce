@@ -13,7 +13,6 @@ module.exports = class OrderModel {
         this.userid = data.userid || null;
     }
 
-    // TODO
     addItems(items) {
         this.items = items.map(item => new OrderItemModel(item));
     }
@@ -36,6 +35,7 @@ module.exports = class OrderModel {
 
             if (result.rows?.length) {
                 Object.assign(this, result.rows[0]);
+                this.items.map((item) => item.createOrderItem(result.rows[0].id));
                 return result.rows[0];
             }
 

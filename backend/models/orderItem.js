@@ -16,11 +16,12 @@ module.exports = class OrderItemModel {
 
     /**
      * Create new order item
-     * @param {Object} data order item data
      * @return {Object|null} created order item
      */
-    static async create(data) {
+    async createOrderItem(orderid) {
         try {
+
+            this.orderid = orderid;
 
             const statement = `INSERT INTO orderitems (qty, created, price, name, description, orderid, productid)
                                VALUES ($1, $2, $3, $4, $5, $6, $7)
@@ -45,7 +46,7 @@ module.exports = class OrderItemModel {
      * @param {Object} orderid order id
      * @return {Array} created cart item
      */
-    static async getOrderItem(orderid) {
+    static async getOrderItems(orderid) {
         try {
 
             const statement = `SELECT oi.qty, oi.id AS cartitemid, p.*
