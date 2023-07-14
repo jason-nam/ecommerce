@@ -83,14 +83,10 @@ module.exports = class CartService {
             // list of cart items
             const cartItems = await CartItemModel.getCartItems(cartid);
 
-            console.log(cartItems);
-
             // generate total price from cart items
             const total = cartItems.reduce((total, item) => {
                 return total += Number(item.price * item.qty);
             }, 0);
-
-            console.log(total);
 
             const Order = new OrderModel({ total, userid });
             Order.addItems(cartItems);
