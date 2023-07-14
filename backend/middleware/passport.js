@@ -9,7 +9,13 @@ module.exports = (app) => {
     app.use(passport.initialize());
     app.use(passport.session());
 
-    passport.use(new LocalStrategy( { usernameField: 'email'},
+    // serialize data to store in cookie
+    passport.serializeUser((user, done) => { done(null, user.id) });
+
+    // deserialize data stored in cookie and attach to req.user
+    passport.deserializeUser((id, done) => { done(null, { id }) });
+
+    passport.use(new LocalStrategy( { usernameField: 'email' },
 
         async (email, password, done) => {
             try {
@@ -23,12 +29,6 @@ module.exports = (app) => {
             }
         }
     ));
-
-    // serialize data to store in cookie
-    passport.serializeUser((user, done) => { done(null, user.id) });
-
-    // deserialize data stored in cookie and attach to req.user
-    passport.deserializeUser((id, done) => { done(null, { id }) });
 
     return passport;
 

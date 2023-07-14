@@ -24,6 +24,16 @@ module.exports = {
 
     login: async (req, res, next) => {
 
+        // try {
+        //     const { username, password } = req.body;
+        
+        //     const response = await AuthenticationServiceInstance.login({ email: username, password});
+        
+        //     res.status(200).send(response);
+        // } catch(err) {
+        //     next(err);
+        // }
+
         if (req.isAuthenticated()) {
             res.status(200).send(req.user);
         } else {
