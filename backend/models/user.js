@@ -1,5 +1,4 @@
 const db = require("../db");
-const pgp = require("pg-promise");
 
 module.exports = class UserModel {
 
@@ -22,9 +21,6 @@ module.exports = class UserModel {
             const values = [email, password, firstname, lastname];
 
             const result = await db.query(statement, values);
-            
-            // const statement = pgp.helpers.insert(data, null, 'users') + `RETURNING *`;
-            // const result = await db.query(statement);
 
             if (result.rows?.length) {
                 return result.rows[0];
@@ -53,11 +49,6 @@ module.exports = class UserModel {
             const values = [email, password, firstname, lastname, userid];
 
             const result = await db.query(statement, values);
-
-            // const { userId, ...params} = data
-            // const statement = pgp.helpers.update(params, null, "users") 
-            //                 + `WHERE id = ${ userId } RETURNING *`;
-            // const result = await db.query(statement);
 
             if (result.rows?.length) {
                 return result.rows[0];

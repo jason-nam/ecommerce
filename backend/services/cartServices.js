@@ -7,7 +7,6 @@ module.exports = class CartService {
     async create(userid) {
 
         try {
-
             const CartModelInstance = new CartModel();
             const cart = await CartModelInstance.createCart(userid);
 
@@ -21,12 +20,10 @@ module.exports = class CartService {
     async getCart(userid) {
 
         try {
-
             const cart = await CartModel.getByUser(userid);
             const items = await CartItemModel.getCartItems(cart.rows[0].id);
 
             cart.items = items;
-
             return cart;
 
         } catch(err) {
@@ -37,7 +34,6 @@ module.exports = class CartService {
     async addItem(userid, item) {
 
         try {
-
             const cart = await CartModel.getByUser(userid);
             const data = { cartid: cart.rows[0].id, ...item };
 
@@ -53,7 +49,6 @@ module.exports = class CartService {
     async updateItem(cartitemid, data) {
 
         try {
-
             const cartItem = await CartItemModel.updateCartItem(cartitemid, data);
 
             return cartItem;
@@ -66,7 +61,6 @@ module.exports = class CartService {
     async removeItem(cartitemid) {
 
         try {
-
             const cartItem = await CartItemModel.deleteCartItem(cartitemid);
 
             return cartItem;
@@ -79,7 +73,6 @@ module.exports = class CartService {
     async checkout(cartid, userid, paymentinfo) {
         
         try {
-
             // list of cart items
             const cartItems = await CartItemModel.getCartItems(cartid);
 

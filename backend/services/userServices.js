@@ -7,7 +7,6 @@ module.exports = class UserService {
     async get(id) {
 
         try {
-
             const user = await UserModelInstance.getUserById(id);
 
             if (!user) {
@@ -26,7 +25,6 @@ module.exports = class UserService {
         const { userid, password: unhashedPassword, ...items } = data;
 
         try {
-
             const existingUser = await UserModelInstance.getUserById(userid);
             
             if (!existingUser) {

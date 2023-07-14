@@ -1,7 +1,7 @@
 const routers = require("../routes")
 const expressMiddleware = require("../middleware/express");
-// const authMiddleware = require("../middleware/auth");
 const passportMiddleware = require("../middleware/passport");
+// const authMiddleware = require("../middleware/auth");
 
 module.exports = async (app) => {
 
