@@ -88,6 +88,7 @@ module.exports = class CartService {
                 return total += Number(item.price * item.qty);
             }, 0);
 
+            // create new order
             const Order = new OrderModel({ total, userid });
             Order.addItems(cartItems);
             await Order.createOrder();

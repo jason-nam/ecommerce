@@ -5,8 +5,9 @@ module.exports = {
 
     create: async (req, res, next) => {
         try {
-            const { userid } = req.body;
-            const response = await CartServiceInstance.create(userid);
+
+            const { id } = req.user;
+            const response = await CartServiceInstance.create(id);
 
             res.status(200).send(response);
 
@@ -17,12 +18,8 @@ module.exports = {
 
     getCart: async (req, res, next) => {
         try {
-            // if (!req.user)
-            //     res.status(401).send({message: "Not Authorized"})
-            
-            // const id = req.user.id;
 
-            const id = req.body.userid;
+            const { id } = req.user;
 
             const response = await CartServiceInstance.getCart(id);
 
@@ -36,8 +33,9 @@ module.exports = {
     addItem: async (req, res, next) => {
         try {
             
-            const { userid, ...data } = req.body;
-            const response = await CartServiceInstance.addItem(userid, data);
+            const { id } = req.user;
+            const data = req.body;
+            const response = await CartServiceInstance.addItem(id, data);
 
             res.status(200).send(response);
 
@@ -76,8 +74,10 @@ module.exports = {
     checkout: async(req, res, next) => {
         try {
 
-            const { userid, cartid, paymentinfo } = req.body;
-            const response = await CartServiceInstance.checkout(cartid, userid, paymentinfo);
+            const { id } = req.user;
+
+            const { cartid, paymentinfo } = req.body;
+            const response = await CartServiceInstance.checkout(cartid, id, paymentinfo);
 
             res.status(200).send(response);
 
