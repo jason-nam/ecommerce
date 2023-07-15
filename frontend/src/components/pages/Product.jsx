@@ -49,7 +49,9 @@ export function Product() {
                 <div>{product.name}</div>
                 <div>${product.price}</div>
                 <div>{product.description}</div>
-                <div>{product.category}</div>
+                <Link to={`/products?category=${product.category}`}>
+                    <div>{product.category}</div>
+                </Link>
             </div>)
         : (<p>loading</p>)
     );

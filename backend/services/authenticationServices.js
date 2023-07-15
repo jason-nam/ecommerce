@@ -1,6 +1,8 @@
 const createError = require('http-errors');
 const UserModel = require("../models/user");
 const UserModelInstance = new UserModel();
+const CartModel = require("../models/cart");
+const CartModelInstance = new CartModel();
 const { verifyPassword } = require("../middleware/bcrypt") 
 
 module.exports = class AuthenticationService {
@@ -18,6 +20,8 @@ module.exports = class AuthenticationService {
             }
 
             const user = await UserModelInstance.createUser(data);
+            const cart = await CartModelInstance.createCart(user.id); // to change
+
             const { password, ...censoredUser } = user;
 
             return censoredUser;

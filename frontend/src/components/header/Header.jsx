@@ -4,6 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import checkIfLoggedIn from "../checkAuth";
+import SearchForm from "../subcomponents/SearchForm";
+
 
 export default function Header() {
     const [ userId, setUserId ] = useState(null);
@@ -20,7 +22,7 @@ export default function Header() {
             isMounted && controller.abort()
         }
     
-    }, []);
+    }, [setUserId]);
 
     // navigation
     // TODO
@@ -29,9 +31,6 @@ export default function Header() {
     // TODO
 
     // site name
-    // TODO
-
-    // search form
     // TODO
     
     //log out
@@ -49,23 +48,32 @@ export default function Header() {
 
     }
 
-    // return logic
-    if (userId === -1) {
-        return (
-            <div className="auth-container">
-                <a href={`/login`}><div className="login-link">Sign In</div></a>
-                <a href={`/register`}><div className="register-link">Sign Up</div></a>
+    // header block elements
+    return (
+        <header>
+            <Link to="/products"><div>All Products</div></Link>
+            <div className="category">
+                <div></div>
             </div>
-        )
-    } else if (userId != null) {
-        return (
-            <div>
-                <a href={`/users/${userId}`}><div className="profile-link">Profile</div></a>
-                <Link to="/">
-                    <button className="logout-button" onClick={logout}>Sign Out</button>
-                </Link>
-            </div>
-        )
-    }
+            <SearchForm />
+            { ( userId === -1) ? 
+                (
+                    <div className="auth-container">
+                        <Link to="/login"><div className="login-link">Sign In</div></Link>
+                        <Link to="/register"><div className="register-link">Sign Up</div></Link>
+                    </div>
+                )
+            : (userId != null) ?
+            (
+                <div>
+                    <Link to="/users/profile"><div className = "profile-link">Account</div></Link>
+                    <Link to="/">
+                        <button className="logout-button" onClick={logout}>Sign Out</button>
+                    </Link>
+                </div>
+            ) : null
+            }
+        </header>
+    )
 
 }

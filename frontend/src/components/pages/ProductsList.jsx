@@ -47,7 +47,6 @@ export function ProductsList() {
         
     }, []);
 
-
     // return logic
     if (error) {
         return (    

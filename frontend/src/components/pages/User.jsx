@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import axios from "axios";
 
 
@@ -15,7 +15,7 @@ export function User() {
         let isMounted = true;
         const controller = new AbortController();
 
-        axios.get("/api/users/"+id, 
+        axios.get("/api/users/profile", 
         { signal: controller.signal })
         .then((res) => {
             if (isMounted) {
@@ -34,14 +34,15 @@ export function User() {
 
     if (error) {
         return (
-        <div className="App">
-            User does not exist
+        <div className="user-page">
+            Bad Request
         </div>
     )
     } else
         return !loading ?(
-            <div className="App">
-            <div>{user.firstname} {user.lastname}</div>
+            <div className="user-page">
+                <div>{user.firstname} {user.lastname}</div>
+                <Link to="/carts/mycart">Cart</Link>
             </div>
         ) :
         (<p>loading</p>)

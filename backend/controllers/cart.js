@@ -9,21 +9,19 @@ module.exports = {
             const { id } = req.user;
             const response = await CartServiceInstance.create(id);
 
-            res.status(200).send(response);
-
         } catch(err) {
             next(err);
         }
     },
 
     getCart: async (req, res, next) => {
+
         try {
 
             const { id } = req.user;
 
             const response = await CartServiceInstance.getCart(id);
-
-            res.status(200).send(response);
+            res.status(200).send({items: response.items});
 
         } catch(err) {
             next(err);

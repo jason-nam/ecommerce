@@ -14,12 +14,16 @@ module.exports = class ProductModel {
     async getProducts(page, limit, search, category) {
 
         try {
-            
             // select list of all products in ascending id order
             const statement = `SELECT *
                             FROM products
-                            WHERE name LIKE $1 
-                            AND category like $2
+                            WHERE 
+                                (
+                                    LOWER(name) LIKE LOWER($1) 
+                                    OR 
+                                    LOWER(category) LIKE LOWER($1)
+                                )
+                            AND LOWER(category) like LOWER($2)
                             ORDER BY id ASC
                             LIMIT $3
                             OFFSET $4
@@ -32,6 +36,7 @@ module.exports = class ProductModel {
             if (category == null) {
                 category = "";
             }
+
 
             const values = [`%${search}%`, `%${category}%`, limit, (page - 1) * limit];            
 
