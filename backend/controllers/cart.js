@@ -35,7 +35,7 @@ module.exports = {
             const data = req.body;
             const response = await CartServiceInstance.addItem(id, data);
 
-            res.status(200).send(response);
+            res.status(200).send({item: response.rows[0]});
 
         } catch(err) {
             next(err);
@@ -63,6 +63,14 @@ module.exports = {
             const response = await CartServiceInstance.removeItem(cartitemid);
 
             res.status(200).send(response);
+
+        } catch(err) {
+            next(err);
+        }
+    },
+
+    addMultiItems: async(req, res, next) => {
+        try {
 
         } catch(err) {
             next(err);

@@ -36,24 +36,26 @@ export default function LoginForm({setUserId}) {
             <div className="pw-container">
                 <form onSubmit={doLogin}>  
                     <div>
-                        <label>Email</label>
+                        <label htmlFor="login-email">Email</label>
                         <input 
                             type="text" 
                             placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             // type="email"   
-                            // clearOnEscape                   
+                            // clearOnEscape  
+                            id = "login-email"                 
                             required
                         ></input>
                     </div>   
                     <div>
-                        <label>Password</label>
+                        <label htmlFor="login-password">Password</label>
                         <input 
                             type="password" 
                             placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)} 
+                            id = "login-password"                 
                             required
                         ></input>
                     </div>  

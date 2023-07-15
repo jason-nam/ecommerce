@@ -1,4 +1,3 @@
-
 import Cookies from 'js-cookie';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
@@ -7,8 +6,7 @@ import checkIfLoggedIn from "../checkAuth";
 import SearchForm from "../subcomponents/SearchForm";
 
 
-export default function Header() {
-    const [ userId, setUserId ] = useState(null);
+export default function Header({userId, setUserId}) {
     const [ error, setError ] = useState(false);
     useEffect(() => {
         let isMounted = true;

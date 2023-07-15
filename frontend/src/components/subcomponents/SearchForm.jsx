@@ -21,6 +21,9 @@ export default function SearchForm() {
                     placeholder="search for product"
                     value={searchVal}
                     onChange={e => setSearchVal(e.target.value)}
+                    id = "search-bar"
+                    type = "search"
+                    className = "search-bar"                 
                     />
                 <button type="submit">Search</button>  
             </form>
