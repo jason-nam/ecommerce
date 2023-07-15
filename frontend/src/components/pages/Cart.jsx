@@ -4,9 +4,6 @@ import axios from "axios"
 import Header from "../header/Header";
 
 
-// const localCart = JSON.parse(localStorage.getItem('ECOMMERCE_CART')? localStorage.getItem('ECOMMERCE_CART') : "[]")
-// const localCart = [{id: 1, qty: 3, productid: 1, cartid: 1}]
-
 export function Cart() {
     const [localCart, setLocalCart] = useState([]);
     const [cart, setCart] = useState([]);
@@ -19,33 +16,23 @@ export function Cart() {
     useEffect(() => {
         if (userId > 0) {
             let isMounted = true;
-
-            // localCart.forEach(item => {
-            //     axios.post(
-            //         "/api/carts/mycart/items/", 
-            //         { qty: 3, productid: item.id })    
-            //     .then(res => {
-            //         console.log(res.data)
-            //     })
-            //     .catch(err => console.log(err))
-            // })
-            // setLocalCart([])
-            // localStorage.removeItem('ECOMMERCE_CART')
-
-            axios.post(
-                "/api/carts/mycart/items", 
-                { items: localCart })
-                .then(res => {
-                    console.log(res.data)
-                    setLocalCart([])
-                    localStorage.removeItem('ECOMMERCE_CART')
-                })
-                .catch(err => console.log(err))
-            setLocalCart([])
-    
-
             const controller = new AbortController();
             const signal = controller.signal;
+
+            // move localstorage items to db cart
+            axios.post(
+                "/api/carts/mycart/items/multi", 
+                { items: localCart })
+                .then(res => {
+                    if (isMounted) {
+                        console.log(res.data.cart)
+                        setLocalCart([])
+                        localStorage.removeItem('ECOMMERCE_CART')
+                    }
+                })
+                .catch(err => console.log(err))    
+
+            // get cart from db
             axios.get("/api/carts/mycart", {signal: signal})
                 .then(res => {
                     if (isMounted) {
@@ -59,6 +46,7 @@ export function Cart() {
                 isMounted && controller.abort()
             }
         } else {
+            // get cart from local storage
             const data = localStorage.getItem('ECOMMERCE_CART')
             setLocalCart(JSON.parse(data ? data : "[]"))
             setCart(JSON.parse(data ? data : "[]"))
@@ -66,9 +54,6 @@ export function Cart() {
 
     
     }, [setCart, setLocalCart, userId])
-
-
-    console.log("cart", cart)
 
 
     return (

@@ -14,8 +14,6 @@ export function Product() {
 
     const [userId, setUserId] = useState(null);
     const [localCart, setLocalCart] = useState([]);
-    const [cart, setCart] = useState([]);
-
 
     useEffect(() => {
 
@@ -25,11 +23,10 @@ export function Product() {
             setLocalCart(JSON.parse(data ? data : "[]"))
         } 
 
-
         let isMounted = true;
         const controller = new AbortController();
 
-        fetch("/api/products/"+id, {signal: controller.signal, method: "GET", credentials: 'include' } )
+        fetch("/api/products/"+id, {signal: controller.signal} )
         .then((res) => {
             if (!res.ok) 
                 throw new Error(res.status)
@@ -48,34 +45,7 @@ export function Product() {
             isMounted = false;
             isMounted && controller.abort()
         }
-    }, [setLocalCart, id]);
-
-
-    // if ( userId > 0) {
-    //     localCart.forEach(item => {
-    //         axios.post(
-    //             "/api/carts/mycart/items/", 
-    //             { qty: 3, productid: item.id })    
-    //         .then(res => {
-    //             console.log(res.data)
-    //         })
-    //         .catch(err => console.log(err))
-    //     })
-
-    //     localStorage.removeItem('ECOMMERCE_CART')
-    // }
-
-    // useEffect(() => {
-    //     if ( userId < 0 || userId === null)
-    //     {
-    //         const data = localStorage.getItem('ECOMMERCE_CART')
-    //         setLocalCart(JSON.parse(data ? data : "[]"))
-    //     } 
-    // },[setLocalCart])
-
-    // useEffect(() => {
-    //     localStorage.setItem('ECOMMERCE_CART', JSON.stringify(localCart))
-    // },[localCart])
+    }, [setLocalCart, id, setProduct, setLoading]);
 
     const addItem = (e) => {
         e.preventDefault()
@@ -89,7 +59,7 @@ export function Product() {
             })
             .catch(err => console.log(err))
         } else {
-            setLocalCart(localCart.unshift({ ...product, qty: 4, }))
+            setLocalCart(localCart.unshift({ ...product, qty: 2, }))
             localStorage.setItem('ECOMMERCE_CART', JSON.stringify(localCart)) 
         }
     }

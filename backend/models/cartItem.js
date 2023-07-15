@@ -37,6 +37,8 @@ module.exports = class CartItemModel {
         }
     }
 
+    
+
     /**
      * Update existing cart item
      * @param {Object} data updated cart item data
