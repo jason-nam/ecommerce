@@ -42,6 +42,20 @@ module.exports = {
         }
     },
 
+    addMultiItems: async(req, res, next) => {
+        try {
+            const { id } = req.user;
+
+            const data = req.body.items;
+            const response = await CartServiceInstance.addMultiItems(id, data);
+            console.log(response)
+            res.status(200).send({cart: response});
+
+        } catch(err) {
+            next(err);
+        }
+    },
+
     updateItem: async (req, res, next) => {
         try {
 
@@ -63,14 +77,6 @@ module.exports = {
             const response = await CartServiceInstance.removeItem(cartitemid);
 
             res.status(200).send(response);
-
-        } catch(err) {
-            next(err);
-        }
-    },
-
-    addMultiItems: async(req, res, next) => {
-        try {
 
         } catch(err) {
             next(err);

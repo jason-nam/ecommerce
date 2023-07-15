@@ -102,8 +102,7 @@ const { faker } = require('@faker-js/faker');
                 faker.commerce.price({ max: 100 }),
                 faker.commerce.productDescription(),
                 faker.commerce.department(),
-                faker.image.urlLoremFlickr( {
-                    category: "food"})              
+                faker.image.urlLoremFlickr({ category: 'city' })       
             ]
             await db.query(insertProducts, values);
         }

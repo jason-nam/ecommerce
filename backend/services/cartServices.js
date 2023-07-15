@@ -46,6 +46,25 @@ module.exports = class CartService {
         }
     }
 
+    async addMultiItems(userid, items) {
+
+        try {
+            const cart = await CartModel.getByUser(userid);
+            const cartid = cart.rows[0].id;
+
+            const promises = items.map(async x => {
+                let item = { productid: x.id , ...x }
+                let data = await CartItemModel.createCartItem({ cartid, ...item });
+                return data.rows[0]
+            })
+
+            return await Promise.allSettled(promises);
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
     async updateItem(cartitemid, data) {
 
         try {

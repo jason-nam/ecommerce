@@ -11,6 +11,7 @@ module.exports = (app) => {
     router.get("/mycart", controller.getCart);
 
     router.post("/mycart/items", controller.addItem);
+    router.post("/mycart/items/multi", controller.addMultiItems);
     router.put("/mycart/items/:cartitemid", controller.updateItem);
     router.delete("/mycart/items/:cartitemid", controller.removeItem);
 
