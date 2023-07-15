@@ -6,13 +6,13 @@ module.exports = {
     get: async (req, res, next) => {
         try {
 
-            const { userid } = req.params;
-            const response = await UserServiceInstance.get(userid);
+            const { id } = req.user;
+            const response = await UserServiceInstance.get(id);
 
             res.status(200).send(response);
 
         } catch(err) {
-            res.status(404).send({"message":"User does not exist"});
+            res.status(401).send({message:"Not Authorized"});
             next(err);
         }
     },

@@ -28,40 +28,44 @@ export default function RegisterForm({setRegistered, setUserExists}) {
             <div className="reg-container">
                 <form onSubmit={register}>
                     <div>
-                        <label>First Name</label>
+                        <label htmlFor="reg-firstname">First Name</label>
                         <input 
                             type="text" 
                             value={firstname}
                             placeholder = "First Name"
-                            onChange={(e) => setFirstname(e.target.value)}                      
+                            onChange={(e) => setFirstname(e.target.value)}  
+                            id = "reg-firstname"                    
                             required
                         />
-                        <label>Last Name</label>
+                        <label htmlFor = "reg-lastname">Last Name</label>
                         <input 
                             type="text" 
                             value={lastname}
                             placeholder = "Last Name"
-                            onChange={(e) => setLastname(e.target.value)}                      
+                            onChange={(e) => setLastname(e.target.value)}  
+                            id = "reg-lastname"                    
                             required
                         />
                     </div>   
                     <div>
-                        <label>Email</label>
+                        <label htmlFor = "reg-email">Email</label>
                         <input 
                             type="text" 
                             placeholder="Email"
                             value={email}
-                            onChange={(e) => setEmail(e.target.value)}                      
+                            onChange={(e) => setEmail(e.target.value)}
+                            id = "reg-email"                      
                             required
                         ></input>
                     </div>   
                     <div>
-                        <label>Password</label>
+                        <label htmlFor = "reg-password">Password</label>
                         <input 
                             type="password" 
                             value={password}
                             placeholder = "Password"
-                            onChange={(e) => setPassword(e.target.value)}                      
+                            onChange={(e) => setPassword(e.target.value)}  
+                            id = "reg-password"                    
                             required
                         ></input>
                     </div>  

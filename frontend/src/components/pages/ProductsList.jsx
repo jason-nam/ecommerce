@@ -9,7 +9,7 @@ export function ProductsList() {
     const [productsCount, setProductsCount] = useState(0);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [imgOnLoad, setImgOnLoad] = useState(false);
+    // const [imgOnLoad, setImgOnLoad] = useState(false);
 
     const [searchParams] = useSearchParams();
     const page = searchParams.get("page"),
@@ -38,14 +38,41 @@ export function ProductsList() {
         .catch(err => {
             console.log(err)
             setError(true)
-        });         
+        });  
 
         return () => {
             isMounted = false;
             isMounted && controller.abort()
         }
         
-    }, []);
+    }, [setProducts, setProductsCount, setLoading, setError]);
+
+    // const [userId, setUserId] = useState(null);
+    // const [localCart, setLocalCart] = useState([]);
+    // const [cart, setCart] = useState([]);
+
+    // useEffect(() => {
+
+    //     let isMounted = true;
+    //     const controller = new AbortController();
+
+    //     checkIfLoggedIn(setUserId, signal, isMounted)
+          
+    //     return () => {
+    //         isMounted = false;
+    //         isMounted && controller.abort()
+    //     }
+        
+    // }, [setUserId]);
+
+    // useEffect(() => {
+    //     const data = localStorage.getItem('ECOMMERCE_CART')
+    //     setLocalCart(JSON.parse(data))
+    // },[setLocalCart])
+
+    // useEffect(() => {
+    //     localStorage.setItem('ECOMMERCE_CART', JSON.stringify(localCart))
+    // },[localCart])
 
 
     // return logic
@@ -61,18 +88,18 @@ export function ProductsList() {
                 <div className="container">{products.map( product => {
                     return (
                         <div key={product.id.toString()} id={product.id}>
-                            <a href={`/products/${product.id}`}>
-                            <img src={product.image} 
-                                className="image" 
-                                width='300px'
-                                />
-                            <div className="name" >{product.name}</div>
-                            <div className="price" >${product.price}</div>
-                            <div className="desc" >{product.description}</div>
-                            </a>
-                            <a href={`/products?category=${product.category}`}>
+                            <Link to={`/products/${product.id}`}>
+                                <img src={product.image} 
+                                    className="image" 
+                                    width='300px'
+                                    />
+                                <div className="name" >{product.name}</div>
+                                <div className="price" >${product.price}</div>
+                                <div className="desc" >{product.description}</div>
+                            </Link>
+                            <Link to={`/products?category=${product.category}`}>
                                 <div className="desc" >{product.category}</div>
-                            </a>
+                            </Link>
                         </div> 
                     )
                 }) 

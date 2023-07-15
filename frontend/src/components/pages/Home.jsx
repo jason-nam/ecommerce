@@ -6,7 +6,8 @@ import Header from "../header/Header"
 
 
 export function Home() {
+    const [ userId, setUserId ] = useState(null);
 
-    return <Header />
+    return <Header userId={userId} setUserId={setUserId}/>
 }
 

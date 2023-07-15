@@ -11,6 +11,7 @@ module.exports = (app) => {
     app.use(cors(
         {  
         origin: 'http://localhost:5173',
+        methods: 'GET, HEAD, PUT, POST, DELETE',
         credentials: true
      }
     ));
@@ -30,16 +31,19 @@ module.exports = (app) => {
         session({  
             secret: SESSION_SECRET,
             resave: false,
+            // store: sessionStore,
             saveUninitialized: false,
             cookie: {
-                secure: false,
-                maxAge: 24 * 60 * 60 * 1000
+                // secure: false,
+                // secure: true,
+                maxAge: 24 * 60 * 60 * 1000,
+                sameSite: 'Lax'
             }
         })
     );
 
     app.use((req, res, next)=> {
-        console.log("session", req.session)
+        console.log(req.session)
         next();
     } )
 
