@@ -36,8 +36,8 @@ module.exports = {
         try{
 
             const { userid } = req.params;
-            const data = req.body;
-            const response = await UserServiceInstance.update({ userid, ...data });
+            const { firstname, lastname } = req.body;
+            const response = await UserServiceInstance.update({ userid, firstname, lastname });
 
             res.status(204).send(response);
 
@@ -51,8 +51,8 @@ module.exports = {
         try{
 
             const { userid } = req.params;
-            const data = req.body;
-            const response = await UserServiceInstance.update({ userid, ...data });
+            const { email } = req.body;
+            const response = await UserServiceInstance.update({ userid, email });
 
             res.status(204).send(response);
 
@@ -66,8 +66,8 @@ module.exports = {
         try{
 
             const { userid } = req.params;
-            const data = req.body;
-            const response = await UserServiceInstance.update({ userid, ...data });
+            const { password } = req.body;
+            const response = await UserServiceInstance.updatePassword({ userid, password });
 
             res.status(204).send(response);
 

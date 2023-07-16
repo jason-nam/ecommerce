@@ -22,17 +22,46 @@ module.exports = class UserService {
 
     async update(data) {
 
-        const { userid, password: unhashedPassword, ...items } = data;
+        const { userid, ...items } = data;
 
         try {
             const existingUser = await UserModelInstance.getUserById(userid);
-            
             if (!existingUser) {
                 throw createError(404, "Not Found");
             }
 
+            const updatedData = { ...existingUser[0] };
+
+            for (let prop in items) {
+                if (existingUser[0].hasOwnProperty(prop)) {
+                    updatedData[prop] = items[prop];
+                }
+            }
+        
+            const user = await UserModelInstance.updateUser(userid, updatedData);
+
+            return user;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+
+    }
+
+    async updatePassword(data) {
+
+        const { userid, password: unhashedPassword } = data;
+
+        try {
+            const existingUser = await UserModelInstance.getUserById(userid);
+            if (!existingUser) {
+                throw createError(404, "Not Found");
+            }
+
+            const updatedData = { ...existingUser[0] };
+
             const password = await hashPassword(unhashedPassword);
-            const updatedData = { password, ...items };
+            updatedData["password"] = password;
         
             const user = await UserModelInstance.updateUser(userid, updatedData);
 
