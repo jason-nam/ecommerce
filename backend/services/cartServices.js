@@ -1,4 +1,5 @@
 const CartModel = require("../models/cart");
+const CartModelInstance = new CartModel();
 const CartItemModel = require("../models/cartItem");
 const OrderModel = require("../models/order");
 
@@ -7,10 +8,15 @@ module.exports = class CartService {
     async create(userid) {
 
         try {
-            const CartModelInstance = new CartModel();
-            const cart = await CartModelInstance.createCart(userid);
-
-            return cart;
+            // check if cart exists for user
+            const existingCart = await CartModel.getByUser(userid);
+            if (existingCart.rows[0]) {
+                console.log("User's Cart Exists");
+                return existingCart;
+            } else {
+                const cart = await CartModelInstance.createCart(userid);
+                return cart;
+            }
 
         } catch(err) {
             throw new Error(err);

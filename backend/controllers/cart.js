@@ -9,6 +9,8 @@ module.exports = {
             const { id } = req.user;
             const response = await CartServiceInstance.create(id);
 
+            res.status(200).send(response);
+
         } catch(err) {
             next(err);
         }
