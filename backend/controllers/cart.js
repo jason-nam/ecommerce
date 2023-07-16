@@ -21,7 +21,7 @@ module.exports = {
             const { id } = req.user;
 
             const response = await CartServiceInstance.getCart(id);
-            res.status(200).send({items: response.items});
+            res.status(200).send({rows: response.rows, items: response.items});
 
         } catch(err) {
             next(err);
@@ -34,7 +34,7 @@ module.exports = {
             const { id } = req.user;
             const data = req.body;
             const response = await CartServiceInstance.addItem(id, data);
-
+            
             res.status(200).send({item: response.rows[0]});
 
         } catch(err) {
@@ -48,7 +48,6 @@ module.exports = {
 
             const data = req.body.items;
             const response = await CartServiceInstance.addMultiItems(id, data);
-            console.log(response)
             res.status(200).send({cart: response});
 
         } catch(err) {
