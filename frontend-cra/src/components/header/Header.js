@@ -55,14 +55,14 @@ export default function Header() {
     if (userId === -1) {
         return (
             <div className="auth-container">
-                <a href={`/login`}><div className="login-link">Sign In</div></a>
-                <a href={`/register`}><div className="register-link">Sign Up</div></a>
+                <Link to='/login'><div className="login-link">Sign In</div></Link>
+                <Link to='/register'><div className="register-link">Sign Up</div></Link>
             </div>
         )
     } else if (userId != null) {
         return (
             <div>
-                <a href={`/users/${userId}`}><div className="profile-link">Profile</div></a>
+                <Link to={`/users/${userId}`}><div className="profile-link">Profile</div></Link>
                 <Link to="/">
                     <button className="logout-button" onClick={logout}>Sign Out</button>
                 </Link>

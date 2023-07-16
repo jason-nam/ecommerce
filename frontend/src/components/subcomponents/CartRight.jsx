@@ -1,17 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios"
-import Header from "../header/Header";
 
 
-export function Cart() {
+export default function Cart({userId}) {
     const [localCart, setLocalCart] = useState([]);
     const [cart, setCart] = useState([]);
-    const [userId, setUserId] = useState(null);
-
-    // useEffect(() => {
-    //     localStorage.setItem('ECOMMERCE_CART', JSON.stringify(localCart))
-    // },[localCart])
 
     useEffect(() => {
         if (userId > 0) {
@@ -36,7 +30,7 @@ export function Cart() {
             axios.get("/api/carts/mycart", {signal: signal})
                 .then(res => {
                     if (isMounted) {
-                        setCart(res.data.items.reverse())
+                        setCart(res.data.items)
                     }
                 })
                 .catch(err => console.log(err))
@@ -49,7 +43,7 @@ export function Cart() {
             // get cart from local storage
             const data = localStorage.getItem('ECOMMERCE_CART')
             setLocalCart(JSON.parse(data ? data : "[]"))
-            setCart(JSON.parse(data ? data : "[]").reverse())
+            setCart(JSON.parse(data ? data : "[]"))
         } 
 
     
@@ -57,31 +51,23 @@ export function Cart() {
 
     console.log(cart)
 
+
     return (
-        <div>
-        <Header userId={userId} setUserId={setUserId}/>
         <div>
             {cart.map(item => {
             return (
                 <div key={item.cartitemid}>
                     <Link to={`/products/${item.id}`}>
-                        <img src={item.image} width='300px'></img>
+                        <img src={item.image} width='150px'></img>
                         <div>{item.name}</div>
                         <div>{item.description}</div>
                     </Link>
                     <Link to={`/products?category=${item.category}`}>
                         <div>{item.category}</div>
                     </Link>
-                    <div>
-                        <button>+</button>
-                        <button>-</button>
-                        <div>Quantity: {item.qty}</div>
-                    </div>
-                    <button>Remove</button>
                 </div>
             )
         })}</div>
-        </div>
     )
 
 }

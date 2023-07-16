@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 
 export default function Pagination ({page, limit, search, category, productsCount}) {
 
@@ -13,15 +14,15 @@ export default function Pagination ({page, limit, search, category, productsCoun
 
     return (
         <div className="pagination">
-        <a href={`/products?page=${prevPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
+        <Link to={`/products?page=${prevPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
             <div className='prev-page' 
             style={{display: prevPage ? 'block' :'none'}}>Prev</div>
-        </a>
+        </Link>
         <div className='cur-page'>{curPage}</div>
-        <a href={`/products?page=${nextPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
+        <Link to={`/products?page=${nextPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
             <div className='next-page'
             style={{display: nextPage ? 'block' : 'none'}}>Next</div>
-        </a>
+        </Link>
     </div>
     )
 }

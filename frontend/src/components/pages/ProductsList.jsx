@@ -23,6 +23,7 @@ export function ProductsList() {
         let isMounted = true;
         const controller = new AbortController();
           
+        //get products
         axios.get(`/api/products`, 
         { 
             signal: controller.signal,
@@ -46,33 +47,6 @@ export function ProductsList() {
         }
         
     }, [setProducts, setProductsCount, setLoading, setError]);
-
-    // const [userId, setUserId] = useState(null);
-    // const [localCart, setLocalCart] = useState([]);
-    // const [cart, setCart] = useState([]);
-
-    // useEffect(() => {
-
-    //     let isMounted = true;
-    //     const controller = new AbortController();
-
-    //     checkIfLoggedIn(setUserId, signal, isMounted)
-          
-    //     return () => {
-    //         isMounted = false;
-    //         isMounted && controller.abort()
-    //     }
-        
-    // }, [setUserId]);
-
-    // useEffect(() => {
-    //     const data = localStorage.getItem('ECOMMERCE_CART')
-    //     setLocalCart(JSON.parse(data))
-    // },[setLocalCart])
-
-    // useEffect(() => {
-    //     localStorage.setItem('ECOMMERCE_CART', JSON.stringify(localCart))
-    // },[localCart])
 
 
     // return logic

@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom"
-import checkIfLoggedIn from "../checkAuth"
 import axios from "axios"
 import Header from "../header/Header";
-
 
 export function Product() {
 
@@ -14,9 +12,12 @@ export function Product() {
 
     const [userId, setUserId] = useState(null);
     const [localCart, setLocalCart] = useState([]);
+    const [qty, setQty] = useState(1);
+    const [inCart, setInCart] = useState(false);
 
     useEffect(() => {
 
+        // get cart from localstorage
         if ( userId < 0 || userId === null)
         {
             const data = localStorage.getItem('ECOMMERCE_CART')
@@ -26,6 +27,7 @@ export function Product() {
         let isMounted = true;
         const controller = new AbortController();
 
+        // fetch product
         fetch("/api/products/"+id, {signal: controller.signal} )
         .then((res) => {
             if (!res.ok) 
@@ -47,25 +49,27 @@ export function Product() {
         }
     }, [setLocalCart, id, setProduct, setLoading]);
 
+    // add item to cart
     const addItem = (e) => {
         e.preventDefault()
         
+        //logged in => db
         if ( userId > 0) {
             axios.post(
                 "/api/carts/mycart/items/", 
-                { qty: 2, productid: product.id })
+                { qty: qty, productid: product.id })
             .then(res => {
-                console.log(res.data.item)
+                // console.log(res.data.item)
             })
             .catch(err => console.log(err))
+        // not logged in => localstorage
         } else {
-            setLocalCart(localCart.unshift({ ...product, qty: 2, }))
+            setLocalCart(localCart.push({ ...product, 
+                qty: qty, 
+                cartitemid: localCart.length + 1 }))
             localStorage.setItem('ECOMMERCE_CART', JSON.stringify(localCart)) 
         }
     }
-
-    console.log(localCart)
-
 
     // return logic
     return (
@@ -88,9 +92,15 @@ export function Product() {
                         <div>{product.category}</div>
                     </Link>
                     <div>
-                        <button onClick={addItem}>Add Item</button>
+                        <button onClick={() => setQty(qty+1)}>+</button>
+                        <button onClick={() => qty > 1 ? setQty(qty-1) : null}>-</button>
+                        <div>Quantity: {qty}</div>
+                        {!inCart ? 
+                            <button onClick={addItem}>Add to Cart</button>
+                            : 
+                            <button onClick={addItem}>Update Cart</button>
+                        }
                     </div>
-
                 </div>)
             : (<p>loading</p>)
         )}
