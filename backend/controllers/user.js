@@ -30,5 +30,50 @@ module.exports = {
             res.status(400).send({"message":"User Info Edit Fail"});
             next(err);
         }
+    },
+
+    updateName: async (req, res, next) => {
+        try{
+
+            const { userid } = req.params;
+            const data = req.body;
+            const response = await UserServiceInstance.update({ userid, ...data });
+
+            res.status(204).send(response);
+
+        } catch(err) {
+            res.status(400).send({"message":"User Name Edit Fail"});
+            next(err);
+        }
+    },
+
+    updateEmail: async (req, res, next) => {
+        try{
+
+            const { userid } = req.params;
+            const data = req.body;
+            const response = await UserServiceInstance.update({ userid, ...data });
+
+            res.status(204).send(response);
+
+        } catch(err) {
+            res.status(400).send({"message":"User Email Edit Fail"});
+            next(err);
+        }
+    },
+
+    updatePassword: async (req, res, next) => {
+        try{
+
+            const { userid } = req.params;
+            const data = req.body;
+            const response = await UserServiceInstance.update({ userid, ...data });
+
+            res.status(204).send(response);
+
+        } catch(err) {
+            res.status(400).send({"message":"User Password Edit Fail"});
+            next(err);
+        }
     }
 }
