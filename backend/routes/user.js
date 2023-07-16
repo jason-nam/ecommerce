@@ -8,6 +8,11 @@ module.exports = (app) => {
     app.use("/api/users", router);
 
     router.get("/profile", controller.get); // get user
+
     router.put("/:userid", controller.update); // update user information
+    
+    router.put("/email/:userid", controller.updateEmail); // update user email
+    router.put("/name/:userid", controller.updateName); // update user name
+    router.put("/password/:userid", controller.updatePassword); // update user password
 
 }
