@@ -57,9 +57,9 @@ export function Product() {
         if ( userId > 0) {
             axios.post(
                 "/api/carts/mycart/items/", 
-                { qty: qty, productid: product.id })
+                { qty, productid: product.id })
             .then(res => {
-                // console.log(res.data.item)
+                console.log(res)
             })
             .catch(err => console.log(err))
         // not logged in => localstorage

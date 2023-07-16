@@ -7,7 +7,9 @@ import Header from "../header/Header";
 export function Cart() {
     const [localCart, setLocalCart] = useState([]);
     const [cart, setCart] = useState([]);
+    const [cartId, setCartId] = useState(0);
     const [userId, setUserId] = useState(null);
+
 
     // useEffect(() => {
     //     localStorage.setItem('ECOMMERCE_CART', JSON.stringify(localCart))
@@ -36,6 +38,7 @@ export function Cart() {
             axios.get("/api/carts/mycart", {signal: signal})
                 .then(res => {
                     if (isMounted) {
+                        setCartId(res.data.rows[0].id);
                         setCart(res.data.items.reverse())
                     }
                 })
@@ -51,9 +54,33 @@ export function Cart() {
             setLocalCart(JSON.parse(data ? data : "[]"))
             setCart(JSON.parse(data ? data : "[]").reverse())
         } 
-
     
     }, [setCart, setLocalCart, userId])
+
+    //remove item from cart
+    const removeItem = (cartitemid) => {
+        axios.delete(`/api/carts/mycart/items/${cartitemid}`)
+        .then(res => console.log(res.data))
+        .then(err => console.log(err))
+    }
+
+    const updateItem = (bool, cartitemid, qty, productid, cartid) => {
+        if (bool)
+            qty++;
+        else {
+            if (qty === 1)
+                return;
+            qty--
+        }
+        console.log({qty, productid, cartid})
+        axios.put(`/api/carts/mycart/items/${cartitemid}`, 
+            {qty, productid, cartid})
+        .then(res => {
+            console.log(res)
+        })
+        .catch(err => console.log(err))
+
+    }
 
     console.log(cart)
 
@@ -73,11 +100,17 @@ export function Cart() {
                         <div>{item.category}</div>
                     </Link>
                     <div>
-                        <button>+</button>
-                        <button>-</button>
+                        <button
+                            onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, cartId)}>
+                            +
+                        </button>
+                        <button
+                            onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, cartId)}>
+                            -
+                        </button>
                         <div>Quantity: {item.qty}</div>
                     </div>
-                    <button>Remove</button>
+                    <button onClick={() => removeItem(item.cartitemid)}>Remove</button>
                 </div>
             )
         })}</div>
