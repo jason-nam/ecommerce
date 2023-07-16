@@ -20,9 +20,10 @@ module.exports = class AuthenticationService {
             }
 
             const user = await UserModelInstance.createUser(data);
-            const cart = await CartModelInstance.createCart(user.id); // to change
+            const cart = await CartModelInstance.createCart(user.id);
 
             const { password, ...censoredUser } = user;
+            censoredUser.cart = cart;
 
             return censoredUser;
 
