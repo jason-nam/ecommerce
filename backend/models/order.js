@@ -128,4 +128,32 @@ module.exports = class OrderModel {
         }
     }
 
+    /**
+     * Delete a order
+     * @param {Object} id order id
+     * @return {Object|null} deleted order
+     */
+    static async deleteOrder(id) {
+        try {
+
+            const statement = `DELETE
+                               FROM orders
+                               WHERE id = $1
+                               RETURNING *`;
+            const values = [id];
+        
+            // Execute SQL statment
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+
+            return null;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
 }

@@ -14,11 +14,11 @@ module.exports = class UserModel {
     async createUser(data) {
         try {
 
-            const { email, password, firstname, lastname } = data;
-            const statement = `INSERT INTO users (email, password, firstname, lastname)
-                               VALUES ($1, $2, $3, $4)
+            const { email, password, firstname, lastname, isactive } = data;
+            const statement = `INSERT INTO users (email, password, firstname, lastname, isactive)
+                               VALUES ($1, $2, $3, $4, $5)
                                RETURNING *`;
-            const values = [email, password, firstname, lastname];
+            const values = [email, password, firstname, lastname, isactive];
 
             const result = await db.query(statement, values);
 
@@ -114,4 +114,60 @@ module.exports = class UserModel {
             throw new Error(err);
         }
     }
+
+    /**
+     * 
+     * @param {String} userid 
+     * @returns {Object|null}
+     */
+    static async deleteUser(userid) {
+        try {
+
+            const statement = `DELETE
+                               FROM users
+                               WHERE id = $1
+                               RETURNING *`;
+            const values = [userid];
+        
+            // Execute SQL statment
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+
+            return null;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    /**
+     * 
+     * @param {String} userid 
+     * @returns {Object|null}
+     */
+    async updateUserActiveStatus(userid, isactive) {
+        try {
+
+            const statement = `UPDATE users 
+                               SET isactive = $1
+                               WHERE id = $2
+                               RETURNING *`;
+            const values = [isactive, userid];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+
+            return null;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
 }

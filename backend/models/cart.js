@@ -91,4 +91,32 @@ module.exports = class CartModel {
             throw new Error(err);
         }
     }
+
+    /**
+     * Delete a cart
+     * @param {Object} id cart id
+     * @return {Object|null} deleted cart
+     */
+    static async deleteCart(id) {
+        try {
+
+            const statement = `DELETE
+                               FROM carts
+                               WHERE id = $1
+                               RETURNING *`;
+            const values = [id];
+        
+            // Execute SQL statment
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+
+            return null;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
 }
