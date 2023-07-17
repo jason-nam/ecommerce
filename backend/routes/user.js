@@ -15,4 +15,8 @@ module.exports = (app) => {
     router.put("/name/:userid", controller.updateName); // update user name
     router.put("/password/:userid", controller.updatePassword); // update user password
 
+    router.delete("/delete/:userid", controller.delete); // delete user from database
+    router.put("/deactivate/:userid", controller.deactivate); // deactivate user account
+    router.put("/restore/:userid", controller.restore); // reactivate user account
+
 }

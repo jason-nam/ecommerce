@@ -10,13 +10,17 @@ module.exports = class AuthenticationService {
     async register(data) {
         
         const { email } = data;
+        data.isactive = true;
 
         try {
             const existingUser = await UserModelInstance.getUserByEmail(email);
 
-            if (existingUser != null) {
+            if (existingUser != null && existingUser[0].isactive) {
                 console.log("Email already in use")
                 throw createError(409, "Email already in use"); // 409 create error
+            } else if (existingUser != null && !existingUser[0].isactive) {
+                console.log("Email already in use, but account deactivated");
+                throw createError(409, "Email already in use, restore account");
             }
 
             const user = await UserModelInstance.createUser(data);

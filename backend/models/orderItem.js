@@ -67,4 +67,32 @@ module.exports = class OrderItemModel {
             throw new Error(err);
         }
     }
+
+    /**
+     * Delete a order item
+     * @param {Object} id order item id
+     * @return {Object|null} deleted order item
+     */
+    static async deleteOrderItem(id) {
+        try {
+
+            const statement = `DELETE
+                               FROM orderitems
+                               WHERE id = $1
+                               RETURNING *`;
+            const values = [id];
+        
+            // Execute SQL statment
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+
+            return null;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
 }

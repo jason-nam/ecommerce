@@ -33,7 +33,7 @@ module.exports = {
     },
 
     updateName: async (req, res, next) => {
-        try{
+        try {
 
             const { userid } = req.params;
             const { firstname, lastname } = req.body;
@@ -48,7 +48,7 @@ module.exports = {
     },
 
     updateEmail: async (req, res, next) => {
-        try{
+        try {
 
             const { userid } = req.params;
             const { email } = req.body;
@@ -63,7 +63,7 @@ module.exports = {
     },
 
     updatePassword: async (req, res, next) => {
-        try{
+        try {
 
             const { userid } = req.params;
             const { password } = req.body;
@@ -73,6 +73,48 @@ module.exports = {
 
         } catch(err) {
             res.status(400).send({"message":"User Password Edit Fail"});
+            next(err);
+        }
+    },
+
+    delete: async (req, res, next) => {
+        try {
+
+            const { userid } = req.params;
+            const response = await UserServiceInstance.deleteUser({ userid });
+
+            res.status(204).send(response);
+
+        } catch(err) {
+            res.status(400).send({"message":"Failed to Delete User Account"});
+            next(err);
+        }
+    },
+
+    deactivate: async (req, res, next) => {
+        try {
+
+            const { userid } = req.params;
+            const response = await UserServiceInstance.deactivateUser({ userid });
+
+            res.status(204).send(response);
+
+        } catch(err) {
+            res.status(400).send({"message":"Failed to Deactivate User Account"});
+            next(err);
+        }
+    },
+
+    restore: async (req, res, next) => {
+        try {
+
+            const { userid } = req.params;
+            const response = await UserServiceInstance.reactivateUser({ userid });
+
+            res.status(204).send(response);
+
+        } catch(err) {
+            res.status(400).send({"message":"Failed to Restore User Account"});
             next(err);
         }
     }
