@@ -24,7 +24,15 @@ module.exports = class AuthenticationService {
             }
 
             const user = await UserModelInstance.createUser(data);
-            const cart = await CartModelInstance.createCart(user.id);
+
+            try {
+                const cart = await CartModelInstance.createCart(user.id);
+                if (cart == null) {
+                    // TODO
+                }
+            } catch(err) {
+                // TODO
+            }
 
             const { password, ...censoredUser } = user;
             censoredUser.cart = cart;
