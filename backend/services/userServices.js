@@ -114,7 +114,7 @@ module.exports = class UserService {
         try {
 
             const existingUser = await UserModelInstance.getUserById(userid);
-            if (!existingUser[0]["isActive"]) {
+            if (!existingUser[0].isactive) {
                 console.log("User Account is Already Deactivated");
                 return existingUser;
             } else {
@@ -136,7 +136,7 @@ module.exports = class UserService {
         try {
 
             const existingUser = await UserModelInstance.getUserById(userid);
-            if (existingUser[0]["isActive"]) {
+            if (existingUser[0].isactive) {
                 console.log("User Account is Already Active");
                 return existingUser;
             } else {

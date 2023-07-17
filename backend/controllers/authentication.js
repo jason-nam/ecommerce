@@ -25,6 +25,13 @@ module.exports = {
     login: async (req, res, next) => {
 
         if (req.isAuthenticated()) {
+            /** 
+             * TODO
+             * - get user profile
+             * - check if user is active
+             *  1. if active, proceed.
+             *  2. if not active, ask to restore account.
+             */
             res.status(200).send(req.user);
         } else {
             res.status(401).send({message : 'Authentication Fail'});
