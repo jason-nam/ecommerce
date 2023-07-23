@@ -19,7 +19,9 @@ module.exports = (app) => {
     // transform raw string of req.body into json format
     app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: false }));
-
+    // app.use(express.json());
+    // app.use(express.urlencoded({ extended: true }));
+    
     // create proxy
     app.set('trust proxy', 1);
 

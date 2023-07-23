@@ -10,7 +10,6 @@ export function Cart() {
     const [cartId, setCartId] = useState(0);
     const [userId, setUserId] = useState(null);
 
-
     // useEffect(() => {
     //     localStorage.setItem('ECOMMERCE_CART', JSON.stringify(localCart))
     // },[localCart])
@@ -60,7 +59,12 @@ export function Cart() {
     //remove item from cart
     const removeItem = (cartitemid) => {
         axios.delete(`/api/carts/mycart/items/${cartitemid}`)
-        .then(res => console.log(res.data))
+        .then(res => {
+            setCart(cart.filter(x=> {
+                if (x.cartitemid !== cartitemid)
+                    return x;
+            }))
+        })
         .then(err => console.log(err))
     }
 
@@ -76,7 +80,11 @@ export function Cart() {
         axios.put(`/api/carts/mycart/items/${cartitemid}`, 
             {qty, productid, cartid})
         .then(res => {
-            console.log(res)
+            setCart(cart.splice(0).map(x=> {
+                if (x.cartitemid===cartitemid)
+                    x['qty']=qty;
+                return x;
+            }))
         })
         .catch(err => console.log(err))
 
