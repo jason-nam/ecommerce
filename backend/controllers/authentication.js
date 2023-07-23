@@ -17,7 +17,7 @@ module.exports = {
                 res.status(500).send({message: "Server Error"});
             }
             if (err.status == 409) {
-                res.status(409).send({message: "User already exists"});
+                res.status(409).send({message: "Wrong credentials"});
             }
         }
     },

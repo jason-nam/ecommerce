@@ -2,32 +2,20 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import RegisterForm from "../subcomponents/RegisterForm"
-import checkIfLoggedIn from "../checkAuth"
+import checkIfLoggedIn from "../../checkAuth"
 
-export function Register() {
+export function Register({userId}) {
 
     const navigate = useNavigate();
     const [registered, setRegistered] = useState(false);
     const [userExists, setUserExists] = useState(false);
-    const [userId, setUserId] = useState(null);
 
     useEffect(() => {
-        
-        let isMounted = true;
-        const controller = new AbortController();
-        const signal = controller.signal;
-
-        checkIfLoggedIn(setUserId, signal, isMounted);
         
         if (!registered) {
             navigate("");
         } else {
             navigate("/login");
-        }
-
-        return () => {
-            isMounted = false;
-            isMounted && controller.abort()
         }
 
     }, [navigate, registered]);

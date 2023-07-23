@@ -2,25 +2,11 @@ import Cookies from 'js-cookie';
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import checkIfLoggedIn from "../checkAuth";
 import SearchForm from "../subcomponents/SearchForm";
 
 
-export default function Header({userId, setUserId}) {
+export default function Header({userId}) {
     const [ error, setError ] = useState(false);
-    useEffect(() => {
-        let isMounted = true;
-        const controller = new AbortController();
-        const signal = controller.signal;
-
-        checkIfLoggedIn(setUserId, signal, isMounted);
-        
-        return () => {
-            isMounted = false;
-            isMounted && controller.abort()
-        }
-    
-    }, [setUserId]);
 
     // navigation
     // TODO

@@ -13,7 +13,6 @@ module.exports = class UserModel {
      */
     async createUser(data) {
         try {
-
             const { email, password, firstname, lastname, isactive } = data;
             const statement = `INSERT INTO users (email, password, firstname, lastname, isactive)
                                VALUES ($1, $2, $3, $4, $5)

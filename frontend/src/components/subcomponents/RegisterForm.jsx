@@ -13,7 +13,7 @@ export default function RegisterForm({setRegistered, setUserExists}) {
     const register = (e) => {
         e.preventDefault();
         axios.post("/api/register", {
-                email, firstname, lastname, password
+                email, firstname, lastname, password, isactive:true
         })
         .then(res => 
             {setRegistered(true);}

@@ -4,17 +4,14 @@ import axios from "axios"
 import Header from "../header/Header";
 
 
-export function Cart() {
-    const [localCart, setLocalCart] = useState([]);
+export function Cart({userId}) {
     const [cart, setCart] = useState([]);
     const [cartId, setCartId] = useState(0);
-    const [userId, setUserId] = useState(null);
-
-    // useEffect(() => {
-    //     localStorage.setItem('ECOMMERCE_CART', JSON.stringify(localCart))
-    // },[localCart])
 
     useEffect(() => {
+        const ec = localStorage.getItem('ECOMMERCE_CART')
+        const ls = JSON.parse(ec ? ec : "[]")
+
         if (userId > 0) {
             let isMounted = true;
             const controller = new AbortController();
@@ -23,11 +20,9 @@ export function Cart() {
             // move localstorage items to db cart
             axios.post(
                 "/api/carts/mycart/items/multi", 
-                { items: localCart })
+                { items: ls })
                 .then(res => {
                     if (isMounted) {
-                        console.log(res.data.cart)
-                        setLocalCart([])
                         localStorage.removeItem('ECOMMERCE_CART')
                     }
                 })
@@ -38,7 +33,7 @@ export function Cart() {
                 .then(res => {
                     if (isMounted) {
                         setCartId(res.data.rows[0].id);
-                        setCart(res.data.items.reverse())
+                        setCart(res.data.items)
                     }
                 })
                 .catch(err => console.log(err))
@@ -48,24 +43,25 @@ export function Cart() {
                 isMounted && controller.abort()
             }
         } else {
-            // get cart from local storage
-            const data = localStorage.getItem('ECOMMERCE_CART')
-            setLocalCart(JSON.parse(data ? data : "[]"))
-            setCart(JSON.parse(data ? data : "[]").reverse())
+            setCart(ls)
         } 
     
-    }, [setCart, setLocalCart, userId])
+    }, [setCart, userId])
 
     //remove item from cart
     const removeItem = (cartitemid) => {
-        axios.delete(`/api/carts/mycart/items/${cartitemid}`)
-        .then(res => {
-            setCart(cart.filter(x=> {
-                if (x.cartitemid !== cartitemid)
-                    return x;
-            }))
-        })
-        .then(err => console.log(err))
+        let updatedCart = cart.filter(x=> (x.cartitemid !== cartitemid));
+        if (userId > 0) {
+            axios.delete(`/api/carts/mycart/items/${cartitemid}`)
+            .then(res => {
+                setCart(updatedCart)
+            })
+            .then(err => console.log(err))
+        } else {
+            localStorage.setItem('ECOMMERCE_CART', JSON.stringify(updatedCart))
+            setCart(updatedCart)
+        }
+
     }
 
     const updateItem = (bool, cartitemid, qty, productid, cartid) => {
@@ -76,27 +72,29 @@ export function Cart() {
                 return;
             qty--
         }
-        console.log({qty, productid, cartid})
-        axios.put(`/api/carts/mycart/items/${cartitemid}`, 
-            {qty, productid, cartid})
-        .then(res => {
-            setCart(cart.splice(0).map(x=> {
-                if (x.cartitemid===cartitemid)
-                    x['qty']=qty;
-                return x;
-            }))
+        
+        let updatedCart = cart.splice(0).map(x=> {
+            if (x.cartitemid===cartitemid)
+                x['qty']=qty;
+            return x;
         })
-        .catch(err => console.log(err))
+        if (userId > 0) {
+            axios.put(`/api/carts/mycart/items/${cartitemid}`, 
+                {qty, productid, cartid})
+            .then(res => setCart(updatedCart))
+            .catch(err => console.log(err))
+        } else {
+            localStorage.setItem('ECOMMERCE_CART', JSON.stringify(updatedCart))
+            setCart(updatedCart)
+        }
 
     }
-
-    console.log(cart)
-
+        
     return (
+        <>
+        <Header userId={userId} />
         <div>
-        <Header userId={userId} setUserId={setUserId}/>
-        <div>
-            {cart.map(item => {
+            {cart.slice(0).reverse().map(item => {
             return (
                 <div key={item.cartitemid}>
                     <Link to={`/products/${item.id}`}>
@@ -122,7 +120,7 @@ export function Cart() {
                 </div>
             )
         })}</div>
-        </div>
+        </>
     )
 
 }

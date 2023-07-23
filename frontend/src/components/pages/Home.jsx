@@ -3,15 +3,14 @@ import Cookies from 'js-cookie';
 import axios from "axios";
 import { Link } from "react-router-dom";
 import Header from "../header/Header"
-import Cart from "../subcomponents/CartRight"
+import CartRight from "../subcomponents/CartRight"
 
 
-export function Home() {
-    const [ userId, setUserId ] = useState(null);
+export function Home({userId}) {
 
     return (<div>
-        <Header userId={userId} setUserId={setUserId}/>
-        {/* <Cart userId={userId} /> */}
+        <Header userId={userId} />
+        <CartRight userId={userId} />
     </div>)
 }
 

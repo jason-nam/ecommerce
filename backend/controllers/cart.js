@@ -59,7 +59,6 @@ module.exports = {
 
     updateItem: async (req, res, next) => {
         try {
-
             const { cartitemid } = req.params;
             const data = req.body;
             const response = await CartServiceInstance.updateItem(cartitemid, data);

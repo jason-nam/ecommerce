@@ -75,7 +75,7 @@ module.exports = class CartService {
 
         try {
             const cartItem = await CartItemModel.updateCartItem(cartitemid, data);
-
+            console.log(cartItem)
             return cartItem;
 
         } catch(err) {

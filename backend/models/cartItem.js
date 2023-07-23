@@ -57,6 +57,7 @@ module.exports = class CartItemModel {
             const values = [qty, productid, cartid, id];
 
             const result = await db.query(statement, values);
+            console.log(result)
 
             if (result.rows?.length) {
                 return result;

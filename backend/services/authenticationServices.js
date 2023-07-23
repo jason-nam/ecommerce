@@ -26,8 +26,9 @@ module.exports = class AuthenticationService {
             const user = await UserModelInstance.createUser(data);
 
             // delete user if cart is null or return error
+            let cart;
             try {
-                const cart = await CartModelInstance.createCart(user.id);
+                cart = await CartModelInstance.createCart(user.id);
                 if (cart === null) {
                     await UserModel.deleteUser(user.id);
                     throw createError(500, "Cart creation failed");
@@ -37,10 +38,8 @@ module.exports = class AuthenticationService {
                 await UserModel.deleteUser(user.id);
                 throw createError(500, err);
             }
-
             const { password, ...censoredUser } = user;
             censoredUser.cart = cart;
-
             return censoredUser;
 
         } catch(err) {
