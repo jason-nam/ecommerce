@@ -1,0 +1,19 @@
+
+
+.pl-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+    grid-gap: 0.5rem;
+    max-width: 70rem;
+    width: 100%;
+    margin: auto;
+}
+
+.pl-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.pl-image {
+    width: 100%;
+}

@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom"
 import axios from "axios"
 import Header from "../header/Header";
 import CartRight from "../subcomponents/CartRight";
+import './Product.css'
 
 export function Product({userId, cart, setCart}) {
 
@@ -43,7 +44,6 @@ export function Product({userId, cart, setCart}) {
     // add item to cart
     const addItem = (e) => {
         e.preventDefault()
-
         let inCart = cart.filter(x => x.id == product.id)
         //logged in
         if ( userId > 0) {
@@ -98,12 +98,13 @@ export function Product({userId, cart, setCart}) {
                 setCart(lcCart)
             }
         }
+        setTimeout(() => document.querySelector('.cart-r')? 
+        document.querySelector('.cart-r').classList.add('active'): null, 500)
     }
 
     // return logic
     return (
         <>
-            <Header userId={userId} />
             {error?
             (    
                 <div className="product-page">
@@ -114,17 +115,19 @@ export function Product({userId, cart, setCart}) {
                 !loading ? (
                     <div className="product-page">
                         <img src={product.image}/>
-                        <div>{product.name}</div>
-                        <div>${product.price}</div>
-                        <div>{product.description}</div>
-                        <Link to={`/products?category=${product.category}`}>
-                            <div>{product.category}</div>
-                        </Link>
-                        <div>
-                            <button onClick={() => setQty(qty+1)}>+</button>
-                            <button onClick={() => qty > 1 ? setQty(qty-1) : null}>-</button>
-                            <div>Quantity: {qty}</div>
-                            <button onClick={addItem}>Add to Cart</button>
+                        <div className="product-info">
+                            <Link to={`/products?category=${product.category}`}>
+                                <div className="category">{product.category}</div>
+                            </Link>
+                            <div className="name">{product.name}</div>
+                            <div className="description">{product.description}</div>
+                            <div className="price">${product.price}</div>
+                            <div className="qty">
+                                <button onClick={() => qty > 1 ? setQty(qty-1) : null}>-</button>
+                                <div>{qty}</div>
+                                <button onClick={() => setQty(qty+1)}>+</button>
+                            </div>
+                            <button className='add-to-cart' onClick={addItem}>Add to Cart</button>
                         </div>
                     </div>)
                 : (<p>loading</p>)

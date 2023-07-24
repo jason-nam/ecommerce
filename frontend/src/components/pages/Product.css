@@ -1,0 +1,29 @@
+.product-page {
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-direction: row;
+}
+
+
+.product-page img {
+    width: 30rem;
+}
+
+.product-info {
+    width: 20rem;
+    display: flex;
+    flex-direction: column;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
+.product-info .name{
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+
+.product-info .qty {
+    display: flex;
+    flex-direction: row;
+}
