@@ -12,6 +12,7 @@ export default function SearchForm() {
     const doSearch = (e) => {
         e.preventDefault();
         navigate(`/products?search=${searchVal}`)
+        
     }
 
     return (

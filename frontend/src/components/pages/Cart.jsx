@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios"
-import Header from "../header/Header";
 
 export function Cart({userId}) {
     const [cart, setCart] = useState([]);
@@ -88,8 +87,6 @@ export function Cart({userId}) {
 
     }        
     return (
-        <>
-        <Header userId={userId} />
         <div>
             {cart.slice(0).reverse().map(item => {
             return (
@@ -117,7 +114,6 @@ export function Cart({userId}) {
                 </div>
             )
         })}</div>
-        </>
     )
 
 }

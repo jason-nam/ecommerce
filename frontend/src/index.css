@@ -1,4 +1,40 @@
-:root {
+@import url('https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100;0,200;0,400;0,500;1,100;1,200&display=swap');
+
+body, html{
+    width: 100%;
+    margin:0;
+    top: 0;
+    left: 0;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+}
+
+.all {
+  margin-top: 3rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+
+}
+
+a {
+    text-decoration: none;
+    color: black;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+form {
+  top: 50%;
+  left: 50%;
+}
+
+
+
+/* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
@@ -66,4 +102,4 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
-}
+} */

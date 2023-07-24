@@ -8,8 +8,8 @@ import {Cart} from './components/pages/Cart';
 import {Login} from './components/pages/Login';
 import {Register} from './components/pages/Register';
 import checkIfLoggedIn from "./checkAuth"
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Header from './components/header/Header'
 
 function App() {
     const [userId, setUserId] = useState(null);
@@ -28,8 +28,26 @@ function App() {
         }
     }, [setUserId]);
 
+    document.addEventListener('click', e => {
+        let cartR = document.querySelector('.cart-r');
+                let rmButton = document.querySelector('.cart-r-remove') ? 
+        document.querySelector('.cart-r-remove').toString() : '';
+
+        if (e.target !== cartR 
+        && e.target !== document.querySelector('.cart-button')
+        && cartR!==null && !cartR.contains(e.target)
+        && e.target !== document.querySelector('.add-to-cart')
+        && e.target.toString() !== document.rmButton
+        ) {
+            setTimeout(() => cartR.classList.remove('active'), 500)
+        }
+    })
+
+
     return (
         <Router>
+            <Header userId={userId} />
+            <div className="all">
             <Routes>
                 <Route exact path='/' element={<Home { ...{userId, cart, setCart} } />} />
                 {/* <Route path='/about' element={<About />} /> */}
@@ -41,6 +59,7 @@ function App() {
                 <Route path='/register' element={<Register userId={userId}/>} />
                 {/* <Route path="*" component={NotFound}  status={404} /> */}
             </Routes>
+            </div>
         </Router>
     );
 }

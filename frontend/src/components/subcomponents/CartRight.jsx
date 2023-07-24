@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios"
-
+import './CartRight.css'
 
 export default function CartRight({userId, cart, setCart}) {
 
@@ -58,6 +58,8 @@ export default function CartRight({userId, cart, setCart}) {
             localStorage.setItem('ECOMMERCE_CART', JSON.stringify(updatedCart))
             setCart(updatedCart)
         }
+        setTimeout(() => document.querySelector('.cart-r')? 
+        document.querySelector('.cart-r').classList.add('active'): null, 500)
 
     }
 
@@ -93,9 +95,8 @@ export default function CartRight({userId, cart, setCart}) {
             return (
                 <div key={item.cartitemid}>
                     <Link to={`/products/${item.id}`}>
-                        <img src={item.image} width='300px'></img>
+                        <img className='cartitem-img' src={item.image}></img>
                         <div>{item.name}</div>
-                        <div>{item.description}</div>
                     </Link>
                     <Link to={`/products?category=${item.category}`}>
                         <div>{item.category}</div>
@@ -111,7 +112,7 @@ export default function CartRight({userId, cart, setCart}) {
                         </button>
                         <div>Quantity: {item.qty}</div>
                     </div>
-                    <button onClick={() => removeItem(item.cartitemid)}>Remove</button>
+                    <button className='cart-r-remove' onClick={() => removeItem(item.cartitemid)}>Remove</button>
                 </div>
             )
         })}</div>

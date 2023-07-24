@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSearchParams, Link } from 'react-router-dom';
 import Pagination from '../subcomponents/Pagination'
+import './ProductsList.css';
 
-export function ProductsList() {
+export function ProductsList({userId}) {
 
     const [products, setProducts] = useState([]);
     const [productsCount, setProductsCount] = useState(0);
@@ -16,7 +17,6 @@ export function ProductsList() {
         limit = searchParams.get("limit"),
         search = searchParams.get("search"),
         category = searchParams.get("category");
-
 
     useEffect(() => {
 
@@ -50,40 +50,32 @@ export function ProductsList() {
 
 
     // return logic
-    if (error) {
-        return (    
-            <div className="App">
+    return <>
+        {error ?    
             404
-        </div>
-        )
-    } else
-        return (!loading ?
-            <div className="all">
-                <div className="container">{products.map( product => {
+    : (!loading ?
+        <>
+                <div className="pl-container">{products.map( product => {
                     return (
-                        <div key={product.id.toString()} id={product.id}>
-                            <Link to={`/products/${product.id}`}>
+                        <div key={product.id} className='pl-item' id={product.id}>
+                            <a href={`/products/${product.id}`}>
                                 <img src={product.image} 
-                                    className="image" 
-                                    width='300px'
+                                    className="pl-image" 
                                     />
-                                <div className="name" >{product.name}</div>
-                                <div className="price" >${product.price}</div>
-                                <div className="desc" >{product.description}</div>
-                            </Link>
-                            <Link to={`/products?category=${product.category}`}>
-                                <div className="desc" >{product.category}</div>
-                            </Link>
+                                <div className="pl-name" >{product.name}</div>
+                                <div className="pl-price" >${product.price}</div>
+                            </a>
+                            <a href={`/products?category=${product.category}`}>
+                                <div className="pl-category" >{product.category}</div>
+                            </a>
                         </div> 
                     )
                 }) 
             }</div>
-            <Pagination page = {page} 
-                        limit = {limit} 
-                        search = {search} 
-                        category = {category} 
-                        productsCount = {productsCount}/>
-        </div> : <div>...loading</div>
-        );
+            <Pagination {...{page, limit, search, category, productsCount}}/>
+        </> : <div>...loading</div>
+        )
+        }
+    </>
 }
 

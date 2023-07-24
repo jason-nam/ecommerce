@@ -1,4 +1,14 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate, createSearchParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+// navigate({
+//     pathname: '/products',
+//     search: `?${createSearchParams({ 
+//         page: prevPage, 
+//         limit: limit? limit: '', 
+//         search: search? search: '', 
+//         category: category? category: ''
+//     })}`
+// });
 
 export default function Pagination ({page, limit, search, category, productsCount}) {
 
@@ -14,15 +24,15 @@ export default function Pagination ({page, limit, search, category, productsCoun
 
     return (
         <div className="pagination">
-        <Link to={`/products?page=${prevPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
+        <a href={`/products?page=${prevPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
             <div className='prev-page' 
             style={{display: prevPage ? 'block' :'none'}}>Prev</div>
-        </Link>
+        </a>
         <div className='cur-page'>{curPage}</div>
-        <Link to={`/products?page=${nextPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
+        <a href={`/products?page=${nextPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
             <div className='next-page'
             style={{display: nextPage ? 'block' : 'none'}}>Next</div>
-        </Link>
+        </a>
     </div>
     )
 }

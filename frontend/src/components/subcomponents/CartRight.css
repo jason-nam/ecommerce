@@ -1,0 +1,17 @@
+.cart-r {
+	position: fixed;
+	right: 0;
+	top: 3rem;
+	width: 14rem;
+	background-color: white;
+	transform: translateY(-120%);
+	transition: transform 0.5s ease;
+}
+
+.cart-r.active{
+	transform: translateY(0%);
+}
+
+.cartitem-img {
+	width: 150px;
+}
