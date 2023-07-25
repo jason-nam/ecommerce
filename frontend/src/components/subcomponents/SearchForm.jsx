@@ -1,6 +1,7 @@
 
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import './SearchForm.css';
 
 
 export default function SearchForm() {
@@ -17,7 +18,7 @@ export default function SearchForm() {
 
     return (
         <div className="search-form">
-            <form onSubmit={doSearch}>
+            <form onSubmit={doSearch} id="search-form-onSubmit">
                 <input 
                     placeholder="search for product"
                     value={searchVal}
@@ -26,7 +27,7 @@ export default function SearchForm() {
                     type = "search"
                     className = "search-bar"                 
                     />
-                <button type="submit">Search</button>  
+                <button type="submit" id="search-button">Search</button>  
             </form>
         </div>
     )
