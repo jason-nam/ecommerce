@@ -1,7 +1,7 @@
 :root {
 	--base-color: #1c3d47;
-	--secondary-color: #2acc90;
-	--tertiary-color: #21a172;
+	--secondary-color: #32c1e5;
+	--tertiary-color: #2698b4;
 	--font-color: #ffffff;
 }
 
@@ -28,6 +28,10 @@
 	height: 100%;
 	width: 300px;
 }
+
+.search-bar:focus {
+	outline: 3px solid #d4ba0d;
+}
   
 .search-bar::placeholder {
 	color: #999;
@@ -53,7 +57,6 @@
 
 	position: relative;
 	left: -76px;
-	/* width: 100px; */
 }
 
 #search-button:hover {
