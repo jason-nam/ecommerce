@@ -10,12 +10,18 @@
 	justify-content: center;
 	align-items: center;
 
-	margin-right: 5px;
+	/* margin-right: 5px; */
 	height: 100%;
+	width: 100%;
 }
 
 #search-form-onSubmit {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
 	height: 100%;
+	width: 100%;
 }
   
 #search-bar {
@@ -25,8 +31,11 @@
 	border-radius: 5px;
 	font-size: 14px;
 
-	height: 100%;
-	width: 300px;
+	height: 80%;
+	width: 100%;
+	min-width: 300px;
+
+	transition: width 0.3s ease;
 }
 
 .search-bar:focus {
@@ -53,7 +62,7 @@
 	font-size: 14px;
 	text-align: center;
 
-	height: 100%;
+	height: 80%;
 
 	position: relative;
 	left: -76px;
