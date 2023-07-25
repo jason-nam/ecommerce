@@ -38,8 +38,12 @@ export default function Header({userId}) {
     return (
         <header>
             <div className="left-nav">
-                <div className="logo">logo</div>
-                <Link to="/products"><div>All Products</div></Link>
+                <div className="logo">
+                    <img className='logo-img' src="./assets/logo-generic.png" alt="Logo"></img>
+                </div>
+                <div className="products-list">
+                    <Link to="/products"><div>Products</div></Link>
+                </div>
                 <div className="category">
                     <div></div>
                 </div>
