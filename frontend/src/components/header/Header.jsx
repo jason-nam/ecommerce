@@ -37,7 +37,7 @@ export default function Header({userId}) {
     // header block elements
     return (
         <header>
-            <div>logo</div>
+            <div className="logo">logo</div>
             <Link to="/products"><div>All Products</div></Link>
             <div className="category">
                 <div></div>
@@ -45,22 +45,18 @@ export default function Header({userId}) {
             <div className="right-nav">
                 <SearchForm />
                 <button className='cart-button' 
-                onClick={()=>cartRight? cartRight.classList.add('active'): null}
-                >cart</button>
-                { ( userId === -1) ? 
-                    (
-                        <div className="auth-container">
-                            <Link to="/login"><div className="login-link">Sign In</div></Link>
-                            <Link to="/register"><div className="register-link">Sign Up</div></Link>
-                        </div>
-                    )
-                : (userId != null) ?
-                (
-                    <div>
+                    onClick={()=>cartRight? cartRight.classList.add('active'): null}
+                >Cart</button>
+                { ( userId === -1) ? (
+                    <div className="auth-container">
+                        <Link to="/login"><div className="login-link">Sign In</div></Link>
+                        <Link to="/register"><div className="register-link">Sign Up</div></Link>
+                    </div>
+                )
+                : (userId != null) ? (
+                    <div className="auth-container">
                         <Link to="/users/profile"><div className = "profile-link">Account</div></Link>
-                        <Link to="/">
-                            <button className="logout-button" onClick={logout}>Sign Out</button>
-                        </Link>
+                        <Link to="/"><button className="logout-button" onClick={logout}>Sign Out</button></Link>
                     </div>
                 ) : null
                 }

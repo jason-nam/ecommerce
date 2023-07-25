@@ -4,14 +4,17 @@
 	top: 3rem;
 	width: 14rem;
 	background-color: white;
-	transform: translateY(-120%);
+	transform: translateY(-125%);
 	transition: transform 0.5s ease;
 }
 
 .cart-r.active{
 	transform: translateY(0%);
+	background-color: grey;
+	min-height: 10rem;
 }
 
 .cartitem-img {
 	width: 150px;
+	opacity: 100%;
 }
