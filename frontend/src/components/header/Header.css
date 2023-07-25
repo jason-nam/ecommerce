@@ -4,6 +4,10 @@
 	--white-color: #ffffff;
 }
 
+body {
+	min-width: 1000px;
+}
+
 header {
 	position: fixed;
 	width: 100%;
@@ -18,26 +22,67 @@ header {
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.all {
+	position: relative;
+	top: 3rem;
+}
+
 .logo {
 	font-size: 24px;
 	font-weight: bold;
 	color: #333;
 }
-  
+
 .navbar {
 	display: flex;
 	align-items: center;
 }
   
-.nav-link {
-	margin-right: 20px;
-	color: #333;
+.products-list,
+.auth-container {
+	display: flex;
+	align-items: center;
+	/* margin-right: 10px; */
+	height: 100%;
+}
+
+.products-list a,
+.auth-container a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	margin-right: 5px;
+	color: var(--font-color);
 	text-decoration: none;
 	transition: color 0.2s;
+	background-color: var(--base-color);
+
+	border: none;
+	/* padding: 8px 16px; */
+	font-size: 14px;
+	text-align: center;
+	box-sizing: border-box;
+
+	height: 100%;
+	width: 100px;
+
+	font-weight: bold;
 }
-  
-.nav-link:hover {
-	color: #007bff;
+
+.products-list a:hover,
+.auth-container a:hover {
+	color: var(--font-color);
+	text-decoration: none;
+
+	/* padding: 8px 16px; */
+	background-color: var(--base-color);
+	border: 1px solid var(--white-color);
+	border-radius: 2px;
+	cursor: pointer;
+	font-size: 14px;
+
+	font-weight: bold;
 }
   
 .category {
@@ -52,10 +97,12 @@ header {
 }
 
 .center-nav {
+	margin-right: 10px;
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height: 100%;
+	width: 100%;
 	/* flex-grow: 1; */
 }
   
@@ -80,6 +127,8 @@ header {
 
 	height: 100%;
 	width: 100px;
+
+	font-weight: bold;
 }
 
 .cart-button:hover {
@@ -88,53 +137,10 @@ header {
 
 	padding: 8px 16px;
 	background-color: var(--base-color);
-	border: 2px solid var(--white-color);
+	border: 1px solid var(--white-color);
+	border-radius: 2px;
 	cursor: pointer;
 	font-size: 14px;
-}
-  
-.auth-container {
-	display: flex;
-	align-items: center;
-	/* margin-right: 10px; */
-	height: 100%;
-}
 
-.auth-container a {
-	/* text-decoration: none;
-	text-align: center;
-	height: 100%; */
-
-	display: flex;
-	justify-content: center;
-	align-items: center;
-
-	margin-right: 5px;
-	color: var(--font-color);
-	text-decoration: none;
-	transition: color 0.2s;
-	background-color: var(--base-color);
-
-	border: none;
-	/* padding: 8px 16px; */
-	font-size: 14px;
-	text-align: center;
-	box-sizing: border-box;
-
-	height: 100%;
-	width: 100px;
-}
-
-.auth-container a:hover {
-	/* text-decoration: none; */
-
-	color: var(--font-color);
-	text-decoration: none;
-
-	/* padding: 8px 16px; */
-	background-color: var(--base-color);
-	border: 2px solid var(--white-color);
-	/* border-radius: 4px; */
-	cursor: pointer;
-	font-size: 14px;
+	font-weight: bold;
 }
