@@ -37,16 +37,21 @@ export default function Header({userId}) {
     // header block elements
     return (
         <header>
-            <div className="logo">logo</div>
-            <Link to="/products"><div>All Products</div></Link>
-            <div className="category">
-                <div></div>
+            <div className="left-nav">
+                <div className="logo">logo</div>
+                <Link to="/products"><div>All Products</div></Link>
+                <div className="category">
+                    <div></div>
+                </div>
             </div>
-            <div className="right-nav">
+            
+
+            <div className="center-nav">
                 <SearchForm />
-                <button className='cart-button' 
-                    onClick={()=>cartRight? cartRight.classList.add('active'): null}
-                >Cart</button>
+            </div>
+
+            <div className="right-nav">
+                
                 { ( userId === -1) ? (
                     <div className="auth-container">
                         <Link to="/login"><div className="login-link">Sign In</div></Link>
@@ -60,6 +65,9 @@ export default function Header({userId}) {
                     </div>
                 ) : null
                 }
+                <button className='cart-button' 
+                    onClick={()=>cartRight? cartRight.classList.add('active'): null}
+                >Cart</button>
             </div>
         </header>
     )
