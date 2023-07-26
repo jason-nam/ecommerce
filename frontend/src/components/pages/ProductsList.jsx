@@ -4,8 +4,8 @@ import { useSearchParams, Link } from 'react-router-dom';
 import Pagination from '../subcomponents/Pagination'
 import './ProductsList.css';
 
-export function ProductsList({userId}) {
-
+export function ProductsList() {
+    
     const [products, setProducts] = useState([]);
     const [productsCount, setProductsCount] = useState(0);
     const [error, setError] = useState(false);
@@ -13,10 +13,6 @@ export function ProductsList({userId}) {
     // const [imgOnLoad, setImgOnLoad] = useState(false);
 
     const [searchParams] = useSearchParams();
-    const page = searchParams.get("page"),
-        limit = searchParams.get("limit"),
-        search = searchParams.get("search"),
-        category = searchParams.get("category");
 
     useEffect(() => {
 
@@ -27,7 +23,12 @@ export function ProductsList({userId}) {
         axios.get(`/api/products`, 
         { 
             signal: controller.signal,
-            params: { page: page, limit: limit, search: search, category: category }
+            params: { 
+                page: searchParams.get("page"), 
+                limit: searchParams.get("limit"), 
+                search: searchParams.get("search"), 
+                category: searchParams.get("category") 
+            }
             })
         .then((res) => {
             if (isMounted) {
@@ -46,7 +47,7 @@ export function ProductsList({userId}) {
             isMounted && controller.abort()
         }
         
-    }, [setProducts, setProductsCount, setLoading, setError]);
+    }, [setProducts, setProductsCount, setLoading, setError, searchParams]);
 
 
     // return logic
@@ -72,7 +73,7 @@ export function ProductsList({userId}) {
                     )
                 }) 
             }</div>
-            <Pagination {...{page, limit, search, category, productsCount}}/>
+            <Pagination {...{searchParams, productsCount}}/>
         </> : <div>...loading</div>
         )
         }

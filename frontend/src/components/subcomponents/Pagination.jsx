@@ -1,16 +1,11 @@
-import { Link, useNavigate, createSearchParams } from "react-router-dom";
-import { useState, useEffect } from "react";
-// navigate({
-//     pathname: '/products',
-//     search: `?${createSearchParams({ 
-//         page: prevPage, 
-//         limit: limit? limit: '', 
-//         search: search? search: '', 
-//         category: category? category: ''
-//     })}`
-// });
+import { useNavigate, createSearchParams } from "react-router-dom";
 
-export default function Pagination ({page, limit, search, category, productsCount}) {
+export default function Pagination ({searchParams, productsCount}) {
+    const page = searchParams.get("page"),
+    limit = searchParams.get("limit"),
+    search = searchParams.get("search"),
+    category = searchParams.get("category");
+
 
     let curPage = !page ? 1 : Number(page),
         nextPage = null,
@@ -22,17 +17,43 @@ export default function Pagination ({page, limit, search, category, productsCoun
     if (curPage > 1)
         prevPage = curPage - 1;
 
+    const navigate = useNavigate();
+
+    const prevClick = (e) => {
+        e.preventDefault()
+        navigate({
+            pathname: '/products',
+            search: `?${createSearchParams({ 
+                page: prevPage, 
+                limit: limit? limit: '', 
+                search: search? search: '', 
+                category: category? category: ''
+            })}`
+        });    
+    }
+
+    const nextClick = (e) => {
+        e.preventDefault()
+        navigate({
+            pathname: '/products',
+            search: `?${createSearchParams({ 
+                page: nextPage, 
+                limit: limit? limit: '', 
+                search: search? search: '', 
+                category: category? category: ''
+            })}`
+        });    
+    }
+
     return (
         <div className="pagination">
-        <a href={`/products?page=${prevPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
-            <div className='prev-page' 
-            style={{display: prevPage ? 'block' :'none'}}>Prev</div>
-        </a>
+            <button className='prev-page' 
+            onClick={prevClick}
+            style={{display: prevPage ? 'block' :'none'}}>Prev</button>
         <div className='cur-page'>{curPage}</div>
-        <a href={`/products?page=${nextPage}${!limit ? `` : `&limit=${limit}`}${!search ? `` : `&search=${search}`}${!category ? `` : `&category=${category}`}`}>
-            <div className='next-page'
-            style={{display: nextPage ? 'block' : 'none'}}>Next</div>
-        </a>
+            <button className='next-page' 
+            onClick={nextClick}
+            style={{display: nextPage ? 'block' : 'none'}}>Next</button>
     </div>
     )
 }

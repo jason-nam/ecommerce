@@ -8,7 +8,7 @@ module.exports = class ProductService {
         try {
             let { limit, page, search, category } = options;
 
-            if (limit == null || isNaN(limit) || limit < 1) limit = 10;
+            if (limit == null || isNaN(limit) || limit < 1) limit = 12;
             if (page == null || isNaN(page) || page < 1) page = 1;
 
             // load products list

@@ -1,4 +1,4 @@
-.product-page {
+.product-container {
     margin-left: auto;
     margin-right: auto;
     display: flex;
@@ -6,7 +6,7 @@
 }
 
 
-.product-page img {
+.product-image {
     width: 30rem;
 }
 
