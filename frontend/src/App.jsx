@@ -30,14 +30,14 @@ function App() {
 
     document.addEventListener('click', e => {
         let cartR = document.querySelector('.cart-r');
-                let rmButton = document.querySelector('.cart-r-remove') ? 
+        let rmButton = document.querySelector('.cart-r-remove') ? 
         document.querySelector('.cart-r-remove').toString() : '';
 
         if (e.target !== cartR 
         && e.target !== document.querySelector('.cart-button')
         && cartR!==null && !cartR.contains(e.target)
         && e.target !== document.querySelector('.add-to-cart')
-        && e.target.toString() !== document.rmButton
+        && e.target.toString() !== rmButton
         ) {
             setTimeout(() => cartR.classList.remove('active'), 500)
         }
@@ -46,13 +46,13 @@ function App() {
 
     return (
         <Router>
-            <Header userId={userId} />
+            <Header {...{userId, cart, setCart}} />
             <div className="all">
             <Routes>
                 <Route exact path='/' element={<Home { ...{userId, cart, setCart} } />} />
                 {/* <Route path='/about' element={<About />} /> */}
                 <Route path='/products/:id' element={<Product { ...{userId, cart, setCart} }/>} />
-                <Route path='/products' element={<ProductsList userId={userId}/>} />
+                <Route path='/products' element={<ProductsList />} />
                 <Route path='/users/profile' element={<User userId={userId}/>} />
                 <Route path='/carts/mycart' element={<Cart userId={userId}/>} />
                 <Route path='/login' element={<Login userId={userId} setUserId={setUserId}/>} />

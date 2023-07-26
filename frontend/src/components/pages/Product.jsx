@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom"
 import axios from "axios"
-import Header from "../header/Header";
 import CartRight from "../subcomponents/CartRight";
 import './Product.css'
 
@@ -105,16 +104,18 @@ export function Product({userId, cart, setCart}) {
     // return logic
     return (
         <>
-            {error?
+        <div>Back to product list</div>
+        <div className="product-container">
+        {error?
             (    
-                <div className="product-page">
+                <>
                     Product does not exist
-                </div>
+                </>
                 )
             : (
                 !loading ? (
-                    <div className="product-page">
-                        <img src={product.image}/>
+                    <>
+                        <img className="product-image" src={product.image}/>
                         <div className="product-info">
                             <Link to={`/products?category=${product.category}`}>
                                 <div className="category">{product.category}</div>
@@ -129,10 +130,11 @@ export function Product({userId, cart, setCart}) {
                             </div>
                             <button className='add-to-cart' onClick={addItem}>Add to Cart</button>
                         </div>
-                    </div>)
+                    </>)
                 : (<p>loading</p>)
             )}
-            <CartRight { ...{userId, cart, setCart} } />
+            {/* <CartRight { ...{userId, cart, setCart} } /> */}
+        </div>
         </>
     )
 }

@@ -1,3 +1,9 @@
+:root {
+	--base-color: #1c3d47;
+	--font-color: #ffffff;
+	--white-color: #ffffff;
+}
+
 header {
 	position: fixed;
 	width: 100%;
@@ -6,9 +12,132 @@ header {
 	justify-content: space-between;
 	height: 3rem;
 	z-index: 99;
+	align-items: center;
+	background-color: var(--base-color);
+	padding: 8px 0;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-header .right-nav {
+.logo {
+	font-size: 24px;
+	font-weight: bold;
+	color: #333;
+}
+
+.navbar {
 	display: flex;
+	align-items: center;
+}
+  
+.products-list,
+.auth-container {
+	display: flex;
+	align-items: center;
+	/* margin-right: 10px; */
+	height: 100%;
+	padding-left: 0.5rem;
 }
 
+.products-list a,
+.auth-container a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	color: var(--font-color);
+	text-decoration: none;
+	transition: color 0.2s;
+	background-color: var(--base-color);
+
+	border: none;
+	font-size: 14px;
+	text-align: center;
+	box-sizing: border-box;
+
+	height: 100%;
+	width: 100px;
+
+	/* font-weight: bold; */
+}
+
+.products-list a:hover,
+.auth-container a:hover {
+	color: var(--font-color);
+	text-decoration: none;
+
+	background-color: var(--base-color);
+	border: 1px solid var(--white-color);
+	border-radius: 2px;
+	cursor: pointer;
+	font-size: 14px;
+
+	font-weight: bold;
+}
+  
+.category {
+	margin-right: 20px;
+	color: #333;
+}
+
+.left-nav {
+	display: flex;
+	align-items: center;
+	height: 100%;
+}
+
+.center-nav {
+	margin-right: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	/* flex-grow: 1; */
+}
+  
+.right-nav {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+	height: 100%;
+}
+
+.cart-button-container {
+	display: flex;
+	align-items: center;
+	/* margin-right: 10px; */
+	padding: 0.5rem;
+	height: 100%;
+	width: 80px;
+}
+  
+.cart-button {
+	cursor: pointer;
+	text-align: center;
+	color: var(--font-color);
+	text-decoration: none;
+	transition: color 0.2s;
+	background-color: var(--base-color);
+
+	border: none;
+	font-size: 14px;
+	text-align: center;
+
+	height: 100%;
+	width: 100px;
+
+	/* font-weight: bold; */
+}
+
+.cart-button:hover {
+	color: var(--font-color);
+	text-decoration: none;
+
+	background-color: var(--base-color);
+	border: 1px solid var(--white-color);
+	border-radius: 2px;
+	cursor: pointer;
+	font-size: 14px;
+
+	font-weight: bold;
+}
