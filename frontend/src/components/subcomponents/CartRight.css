@@ -11,15 +11,16 @@
 	right: 0;
 	/* top: 4rem; */
 	top: 0;
+	/* max-height: calc(100% - 4rem); */
+	max-height: 100%;
+	/* min-height: 10vh; */
+	min-height: 100%;
 	width: 25rem;
 	background-color: var(--light-grey-color);
 	transform: translateX(125%);
 	transition: transform 0.5s ease;
 	z-index: 100;
-	min-height: 10vh;
 	overflow-y: scroll;
-	/* max-height: calc(100% - 4rem); */
-	max-height: 100%;
 }
 
 .cart-r.active{
