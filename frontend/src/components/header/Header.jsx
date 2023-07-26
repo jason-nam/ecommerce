@@ -4,8 +4,10 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import SearchForm from "../subcomponents/SearchForm";
 import './Header.css'
+import logo from '../../assets/logo-generic.png'
+import CartRight from "../subcomponents/CartRight";
 
-export default function Header({userId}) {
+export default function Header({userId, cart, setCart}) {
     const [ error, setError ] = useState(false);
 
     // navigation
@@ -36,11 +38,12 @@ export default function Header({userId}) {
 
     // header block elements
     return (
+        <>
         <header>
             <div className="left-nav">
-                <div className="logo">
-                    <img className='logo-img' src="./assets/logo-generic.png" alt="Logo"></img>
-                </div>
+                <Link to="/" className="logo">
+                    <img className='logo-img' src={logo} alt="Logo"></img>
+                </Link>
                 <div className="products-list">
                     <Link to="/products"><div>Products</div></Link>
                 </div>
@@ -49,31 +52,33 @@ export default function Header({userId}) {
                 </div>
             </div>
             
-
-            <div className="center-nav">
-                <SearchForm />
-            </div>
-
             <div className="right-nav">
-                
+                <SearchForm />
+                <div className="auth-container">
                 { ( userId === -1) ? (
-                    <div className="auth-container">
-                        <Link to="/login"><div className="login-link">Sign In</div></Link>
-                        <Link to="/register"><div className="register-link">Sign Up</div></Link>
-                    </div>
+                    <>
+                        <a href="/login" className="login-link">Sign In</a>
+                        <a href="/register" className="register-link">Sign Up</a>
+                    </>
                 )
                 : (userId != null) ? (
-                    <div className="auth-container">
-                        <Link to="/users/profile"><div className = "profile-link">Account</div></Link>
-                        <Link to="/"><button className="logout-button" onClick={logout}>Sign Out</button></Link>
-                    </div>
+                    <>
+                        <a href="/users/profile" className = "profile-link">Account</a>
+                        <a href="/" className="logout-button" onClick={logout}>Sign Out</a>
+                    </>
                 ) : null
                 }
+                </div>
+                <div className="cart-button-container">
                 <button className='cart-button' 
                     onClick={()=>cartRight? cartRight.classList.add('active'): null}
                 >Cart</button>
+                </div>
             </div>
         </header>
+        <CartRight { ...{userId, cart, setCart} } />
+        </>
+
     )
 
 }

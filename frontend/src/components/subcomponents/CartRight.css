@@ -9,21 +9,33 @@
 .cart-r {
 	position: fixed;
 	right: 0;
-	top: 4rem;
+	/* top: 4rem; */
+	top: 0;
 	width: 25rem;
-	background-color: white;
+	background-color: var(--light-grey-color);
 	transform: translateX(125%);
 	transition: transform 0.5s ease;
+	z-index: 100;
+	min-height: 10vh;
+	overflow-y: scroll;
+	/* max-height: calc(100% - 4rem); */
+	max-height: 100%;
 }
 
 .cart-r.active{
-	transform: translateY(0%);
+	transform: translateX(0%);
 	background-color: var(--light-grey-color);
-	border-left: 3px solid var(--base-color);
-	min-height: 100vh;
 }
 
-.cartitem-img {
+.cart-r::-webkit-scrollbar {
+    width: 0.5rem;
+}
+ 
+.cart-r::-webkit-scrollbar-thumb {
+    background-color: rgb(194, 194, 194);
+}
+
+.item-image img {
 	width: 150px;
 	opacity: 100%;
 }

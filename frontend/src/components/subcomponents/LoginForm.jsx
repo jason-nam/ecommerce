@@ -38,11 +38,10 @@ export default function LoginForm({setUserId}) {
                     <div>
                         <label htmlFor="login-email">Email</label>
                         <input 
-                            type="text" 
                             placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            // type="email"   
+                            type="email"   
                             // clearOnEscape  
                             id = "login-email"                 
                             required

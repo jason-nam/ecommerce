@@ -6,6 +6,7 @@ import './CartRight.css'
 export default function CartRight({userId, cart, setCart}) {
 
     useEffect(() => {
+
         const ec = localStorage.getItem('ECOMMERCE_CART')
         const ls = JSON.parse(ec ? ec : "[]")
 
@@ -91,6 +92,8 @@ export default function CartRight({userId, cart, setCart}) {
         
     return (
         <div className='cart-r'>
+            <div className="delete-button">&times;</div>
+
             {cart.slice(0).reverse().map(item => {
                 return (
                     <div className="item" key={item.cartitemid}>
@@ -117,11 +120,11 @@ export default function CartRight({userId, cart, setCart}) {
 
                                 <div className="item-edit-container">
                                     <div className="qty">Qty: {item.qty}</div>
-                                    <button id="qty-update" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>
-                                        +
-                                    </button>
                                     <button id="qty-update" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>
                                         -
+                                    </button>
+                                    <button id="qty-update" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>
+                                        +
                                     </button>
                                     <button className='cart-r-remove' onClick={() => removeItem(item.cartitemid)}>Remove</button>
                                 </div>
@@ -130,9 +133,17 @@ export default function CartRight({userId, cart, setCart}) {
                     </div>
                 )
             })}
-            <div className="subtotal-container">
-                Subtotal: ${}
-            </div>
+            {cart.length ? 
+            <>
+                <div className="subtotal-container">
+                    Subtotal: ${}
+                </div>
+                <Link to="/carts/mycart">
+                    View Cart
+                </Link>
+            </>
+            : <div className="cart-r-empty">Your cart is empty</div>
+            }
         </div>
     )
 }
