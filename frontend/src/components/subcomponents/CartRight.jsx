@@ -6,6 +6,7 @@ import './CartRight.css'
 export default function CartRight({userId, cart, setCart}) {
 
     useEffect(() => {
+
         const ec = localStorage.getItem('ECOMMERCE_CART')
         const ls = JSON.parse(ec ? ec : "[]")
 
@@ -91,30 +92,58 @@ export default function CartRight({userId, cart, setCart}) {
         
     return (
         <div className='cart-r'>
+            <div className="delete-button">&times;</div>
+
             {cart.slice(0).reverse().map(item => {
-            return (
-                <div key={item.cartitemid}>
-                    <Link to={`/products/${item.id}`}>
-                        <img className='cartitem-img' src={item.image}></img>
-                        <div>{item.name}</div>
-                    </Link>
-                    <Link to={`/products?category=${item.category}`}>
-                        <div>{item.category}</div>
-                    </Link>
-                    <div>
-                        <button
-                            onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>
-                            +
-                        </button>
-                        <button
-                            onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>
-                            -
-                        </button>
-                        <div>Quantity: {item.qty}</div>
+                return (
+                    <div className="item" key={item.cartitemid}>
+
+                        <div className="item-container">
+
+                            <div className="item-image">
+                                <Link to={`/products/${item.id}`}>
+                                    <img className='cartitem-img' src={item.image}></img>
+                                </Link>
+                            </div>
+
+                            <div className="item-info-container">
+
+                                <div className="item-info-text-container">
+                                    <Link to={`/products/${item.id}`}>
+                                        <div>{item.name}</div>
+                                    </Link>
+                                    <Link to={`/products?category=${item.category}`}>
+                                        <div>{item.category}</div>
+                                    </Link>
+                                    <div>${item.price}</div>
+                                </div>
+
+                                <div className="item-edit-container">
+                                    <div className="qty">Qty: {item.qty}</div>
+                                    <button id="qty-update" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>
+                                        -
+                                    </button>
+                                    <button id="qty-update" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>
+                                        +
+                                    </button>
+                                    <button className='cart-r-remove' onClick={() => removeItem(item.cartitemid)}>Remove</button>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <button className='cart-r-remove' onClick={() => removeItem(item.cartitemid)}>Remove</button>
+                )
+            })}
+            {cart.length ? 
+            <>
+                <div className="subtotal-container">
+                    Subtotal: ${}
                 </div>
-            )
-        })}</div>
+                <Link to="/carts/mycart">
+                    View Cart
+                </Link>
+            </>
+            : <div className="cart-r-empty">Your cart is empty</div>
+            }
+        </div>
     )
 }
