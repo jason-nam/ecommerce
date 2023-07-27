@@ -29,7 +29,7 @@ export default function SearchForm() {
                     />
                 <button type="submit" className="search-bar-universal" id="search-button">
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </button>  
+                </button> 
             </form>
         // </div>
     )
