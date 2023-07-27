@@ -18,7 +18,7 @@ export default function SearchForm() {
 
     return (
         // <div className="search-form">
-            <form onSubmit={doSearch} id="search-form-onSubmit">
+            <form onSubmit={doSearch} className="search-bar-universal" id="search-form-onSubmit">
                 <input 
                     placeholder="Search"
                     value={searchVal}
@@ -27,8 +27,8 @@ export default function SearchForm() {
                     type = "search"
                     className = "search-bar"                 
                     />
-                <button type="submit" id="search-button">
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
+                <button type="submit" className="search-bar-universal" id="search-button">
+                    <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>  
             </form>
         // </div>
