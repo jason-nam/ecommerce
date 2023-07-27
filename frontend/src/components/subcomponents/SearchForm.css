@@ -6,23 +6,30 @@
 	--font-color: #000000;
 
 	--search-bar-white: #ffffff;
-	--search-bar-grey-1: #dfdfdf;
-	--search-bar-grey-2: #cbc9c9;
-	--search-bar-grey-3: #5c5b5b;
+	--search-bar-grey-1: #eeeeee;
+	--search-bar-grey-2: #e3e3e3;
+	--search-bar-grey-3: #767676;
 
+	--search-button-margin: 2px;
+	--nav-button-margin: 18px;
 }
 
 #search-form-onSubmit {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
     position:relative;
 
+	margin-right: var(--nav-button-margin);
+
 	height: 100%;
+	min-width: 5rem;
 	width: 100%;
 }
   
-#search-bar {
+#search-bar,
+#search-bar:valid {
 	padding: 8px 16px;
 	border: none;
 	border-left: 5px solid transparent; /* Transparent left border to create the semi-circle */
@@ -42,6 +49,10 @@
 	outline: none;
 }
 
+#search-bar:valid {
+	color: black;
+}
+
 .search-bar::placeholder {
 	color: #999;
 	border-radius: none;
@@ -49,7 +60,7 @@
   
 #search-button {
 	cursor: pointer;
-	right: 1px;
+	right: var(--search-button-margin);
 	position: absolute;
 	fill: var(--font-color);
 	text-decoration: none;
@@ -65,22 +76,29 @@
 	font-size: 14px;
 	text-align: center;
 
-	height: calc(80% - 2px);
-	width: 3rem;
+	height: calc(80% - var(--search-button-margin) * 2);
+	width: 2.5rem;
 
-	/* padding: 0 0; */
 }
 
 #search-bar:hover,
 #search-bar:hover + #search-button,
-#search-bar:hover::placeholder {
+#search-bar:hover:valid {
 	background-color: var(--search-bar-grey-2);
-	color: var(--search-bar-grey-3);
 	fill: var(--font-color);
 }
 
+#search-bar:hover::placeholder {
+	background-color: var(--search-bar-grey-2);
+	color: var(--search-bar-grey-3);
+}
+
+#search-bar:hover:valid {
+	color: black;
+}
+
 #search-button:hover {
-	fill: var(--font-color);
+	fill: black;
 	text-decoration: none;
 
 	background-color: var(--search-bar-grey-2);
