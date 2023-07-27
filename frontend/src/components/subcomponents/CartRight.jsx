@@ -92,8 +92,17 @@ export default function CartRight({userId, cart, setCart}) {
         
     return (
         <div className='cart-r'>
-            <div className="delete-button">&times;</div>
-
+            <div className="cart-r-header">
+                <div className="title"> Shopping Cart </div>
+                {/* <div className="delete-button">&times;</div> */}
+                <Link to="/carts/mycart">
+                    View Cart
+                </Link>
+            </div>
+            {cart.length ?
+                <></>
+                :<div className="cart-r-empty">Your cart is empty</div>
+            }
             {cart.slice(0).reverse().map(item => {
                 return (
                     <div className="item" key={item.cartitemid}>
@@ -133,17 +142,17 @@ export default function CartRight({userId, cart, setCart}) {
                     </div>
                 )
             })}
-            {cart.length ? 
-            <>
-                <div className="subtotal-container">
-                    Subtotal: ${}
+
+            <div className="cart-r-footer">
+                <div className="subtotal-name">Total</div>
+                <div className="subtotal-value">
+                    {cart.length ?
+                        <>${}</>
+                        :<div>—</div>
+                    }
                 </div>
-                <Link to="/carts/mycart">
-                    View Cart
-                </Link>
-            </>
-            : <div className="cart-r-empty">Your cart is empty</div>
-            }
+            </div>
+
         </div>
     )
 }
