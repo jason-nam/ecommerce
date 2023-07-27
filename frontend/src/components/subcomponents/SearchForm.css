@@ -3,7 +3,13 @@
 	--base-color: #1c3d47;
 	--secondary-color: #32c1e5;
 	--tertiary-color: #2698b4;
-	--font-color: #ffffff;
+	--font-color: #000000;
+
+	--search-bar-white: #ffffff;
+	--search-bar-grey-1: #dfdfdf;
+	--search-bar-grey-2: #cbc9c9;
+	--search-bar-grey-3: #5c5b5b;
+
 }
 
 #search-form-onSubmit {
@@ -19,20 +25,23 @@
 #search-bar {
 	padding: 8px 16px;
 	border: none;
-	/* border-radius: 5px; */
+	border-left: 5px solid transparent; /* Transparent left border to create the semi-circle */
+	border-right: 5px solid transparent; /* Transparent right border to create the semi-circle */
+	border-radius: 50px;
+	
 	font-size: 14px;
+
+	background-color: var(--search-bar-grey-1);
+	color: var(--search-bar-grey-2);
 
 	height: 80%;
 	width: 100%;
-	/* min-width: 300px; */
 	margin: auto;
 	transition: width 0.3s ease;
+
+	outline: none;
 }
 
-.search-bar:focus {
-	outline: 0.25rem solid #d4ba0d;
-}
-  
 .search-bar::placeholder {
 	color: #999;
 	border-radius: none;
@@ -40,28 +49,41 @@
   
 #search-button {
 	cursor: pointer;
-	right: 0;
-	width: 3rem;
+	right: 1px;
 	position: absolute;
-	color: var(--font-color);
+	fill: var(--font-color);
 	text-decoration: none;
 	transition: color 0.2s;
-	background-color: var(--secondary-color);
+
+	background-color: var(--search-bar-grey-1);
 
 	border: none;
-	/* border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px; */
+	border-left: 5px solid transparent; /* Transparent left border to create the semi-circle */
+	border-right: 5px solid transparent; /* Transparent right border to create the semi-circle */
+	border-radius: 50px;
+
 	font-size: 14px;
 	text-align: center;
 
-	height: 80%;
+	height: calc(80% - 2px);
+	width: 3rem;
+
+	/* padding: 0 0; */
+}
+
+#search-bar:hover,
+#search-bar:hover + #search-button,
+#search-bar:hover::placeholder {
+	background-color: var(--search-bar-grey-2);
+	color: var(--search-bar-grey-3);
+	fill: var(--font-color);
 }
 
 #search-button:hover {
-	color: var(--font-color);
+	fill: var(--font-color);
 	text-decoration: none;
 
-	background-color: var(--tertiary-color);
+	background-color: var(--search-bar-grey-2);
 	border: none;
 	cursor: pointer;
 	font-size: 14px;
