@@ -30,7 +30,7 @@
 
 .cart-r.active + .overlay {
 	display: block;
-	animation: fadeInOverlay 1s ease;
+	animation: fadeInOverlay 0.3s ease;
 	
 }
 
@@ -53,7 +53,7 @@
 	background-color: var(--white-color);
 
 	transform: translateX(125%);
-	transition: transform 0.5s ease;
+	transition: transform 0.3s ease;
 
 	/* max-height: calc(100% - 4rem); */
 	/* min-height: 10vh; */
