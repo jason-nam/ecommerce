@@ -85,7 +85,9 @@
 	position: sticky;
 	top: 0;
 	background-color: var(--white-color);
-	padding: 8px 16px;
+
+	margin: 0 16px;
+	padding: 8px 0;
 	z-index: 101;
 
 	border-bottom: 2px groove rgba(0, 0, 0, 0.1);
@@ -108,7 +110,9 @@
 	position: sticky;
 	bottom: 0;
 	background-color: var(--white-color);
-	padding: 16px 16px;
+
+	margin: 0 16px;
+	padding: 8px 0;
 	z-index: 101;
 
 	border-top: 2px groove rgba(0, 0, 0, 0.1);
