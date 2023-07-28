@@ -1,31 +1,15 @@
-
-:root {
-	--base-color: #1c3d47;
-	--secondary-color: #32c1e5;
-	--tertiary-color: #2698b4;
-	--font-color: #000000;
-
-	--search-bar-white: #ffffff;
-	--search-bar-grey-1: #eeeeee;
-	--search-bar-grey-2: #e3e3e3;
-	--search-bar-grey-3: #767676;
-
-	--search-button-margin: 2px;
-	--nav-button-margin: 18px;
-}
-
 #search-form-onSubmit {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 
-    position:relative;
+    position: relative;
 
 	margin-right: var(--nav-button-margin);
 
 	height: 100%;
-	min-width: 5rem;
-	width: 100%;
+	min-width: 7rem;
+	max-width: 12rem;
 }
   
 #search-bar,
@@ -41,7 +25,7 @@
 	background-color: var(--search-bar-grey-1);
 	color: var(--search-bar-grey-2);
 
-	height: 80%;
+	height: 90%;
 	width: 100%;
 	margin: auto;
 	transition: width 0.3s ease;
@@ -69,16 +53,14 @@
 	background-color: var(--search-bar-grey-1);
 
 	border: none;
-	border-left: 5px solid transparent; /* Transparent left border to create the semi-circle */
-	border-right: 5px solid transparent; /* Transparent right border to create the semi-circle */
 	border-radius: 50px;
 
-	font-size: 14px;
+	font-size: 1rem;
 	text-align: center;
 
-	height: calc(80% - var(--search-button-margin) * 2);
-	width: 2.5rem;
-
+	height: calc(90% - var(--search-button-margin) * 2);
+	width: auto;
+	aspect-ratio: 1/1;
 }
 
 #search-bar:hover,
@@ -99,10 +81,11 @@
 
 #search-button:hover {
 	fill: black;
-	text-decoration: none;
 
 	background-color: var(--search-bar-grey-2);
-	border: none;
+	/* border: none; */
 	cursor: pointer;
-	font-size: 14px;
+
+	width: auto;
+	aspect-ratio: 1/1;
 }

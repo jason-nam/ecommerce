@@ -39,45 +39,50 @@ export default function Header({userId, cart, setCart}) {
 
     }
 
+    //cart-r activate
     let cartRight = document.querySelector('.cart-r');
 
     // header block elements
     return (
         <>
         <header>
-            <div className="left-nav">
+            <div className="nav-l-logo-box">
                 <Link to="/" className="logo">
                     <img className='logo-img' src={logo} alt="Logo"></img>
                 </Link>
+            </div>
+
+            <div className="nav-c-product-category-search-box">
                 <div className="products-list">
                     <Link to="/products"><div>Products</div></Link>
                 </div>
                 <div className="category">
                     <div></div>
                 </div>
+                <SearchForm />
             </div>
             
-            <div className="right-nav">
-                <SearchForm />
+            <div className="nav-r-auth-cart-box">
                 <div className="auth-container">
                     { ( userId === -1) ? (
                         <>
-                            <a href="/login" className="login-link">
-                                <FontAwesomeIcon icon={faUser} />
-                            </a>
-                            <a href="/register" className="register-link">Sign Up</a>
+                            <a href="/login" className="login-link"><FontAwesomeIcon icon={faUser} /></a>
+                            {/* <a href="/register" className="register-link">Sign Up</a> */}
                         </>
                     )
                     : (userId != null) ? (
                         <>
-                            <a href="/users/profile" className = "profile-link">Account</a>
+                            <a href="/users/profile" className = "profile-link"><FontAwesomeIcon icon={faUser} /></a>
                             <a href="/" className="logout-button" onClick={logout}>Sign Out</a>
                         </>
                     ) : null }
                 </div>
                 <div className="cart-button-container">
-                    <button className='cart-button' onClick={()=>cartRight? cartRight.classList.add('active'): null}>
-                    <FontAwesomeIcon icon={faBasketShopping} />
+                    <button className='cart-button' onClick={(event)=>{
+                        event.stopPropagation();
+                        cartRight? cartRight.classList.toggle('active'): null;
+                    }}>
+                        <FontAwesomeIcon icon={faBasketShopping} />
                     </button>
                 </div>
             </div>
