@@ -5,12 +5,24 @@
 	--font-color: #000000;
 
 	--button-regular-white: #ffffff;
+	--search-bar-white: #ffffff;
+
 	--button-regular-grey-1: #eeeeee;
+	--search-bar-grey-1: #eeeeee;
+
 	--button-hover-grey-1: #e3e3e3;
+	--search-bar-grey-2: #e3e3e3;
+
 	--button-hover-grey-2: #767676;
+	--search-bar-grey-3: #767676;
 
 	--search-button-margin: 2px;
-	--nav-button-margin: 14px;
+	--nav-button-margin: 0.7rem;
+
+	--button-size: 90%;
+
+	--font-size: 1rem;
+	--icon-size: 1.2rem;
 }
 
 header {
@@ -98,16 +110,6 @@ header {
 
 	height: 100%;
 }
-
-.center-nav {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-
-	margin-right: 10px;
-	height: 100%;
-	width: 100%;
-}
   
 .right-nav {
 	display: flex;
@@ -123,9 +125,11 @@ header {
 .auth-container {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 
-	padding-left: 0.5rem;
+	/* margin-right: var(--nav-button-margin); */
 	height: 100%;
+	width: 80px;
 }
 
 .auth-container a {
@@ -139,18 +143,14 @@ header {
 	text-decoration: none;
 	text-align: center;
 
-	font-size: 18px;
+	font-size: var(--icon-size);
 
 	transition: color 0.2s;
 	
 	border: none;
-	border-left: 5px solid transparent; /* Transparent left border to create the semi-circle */
-	border-right: 5px solid transparent; /* Transparent right border to create the semi-circle */
-	border-radius: 50px;
+	border-radius: 50%;
 
-	margin-right: var(--nav-button-margin);
-	box-sizing: border-box;
-	height: 100%;
+	height: var(--button-size);
 	width: auto;
 	aspect-ratio: 1/1;
 }
@@ -161,15 +161,13 @@ header {
 
 	text-decoration: none;
 
-	font-size: 18px;
+	font-size: var(--icon-size);
 	font-weight: bold;
 	
 	cursor: pointer;
 	
 	border: none;
-	border-left: 5px solid transparent; /* Transparent left border to create the semi-circle */
-	border-right: 5px solid transparent; /* Transparent right border to create the semi-circle */
-	border-radius: 50px;
+	border-radius: 50%;
 }
 
 /* Cart Button */
@@ -177,8 +175,9 @@ header {
 .cart-button-container {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 
-	padding: 0.5rem;
+	/* margin-right: var(--nav-button-margin); */
 	height: 100%;
 	width: 80px;
 }
@@ -191,18 +190,16 @@ header {
 	text-align: center;
 	text-decoration: none;
 
-	font-size: 18px;
+	font-size: var(--icon-size);
 
 	cursor: pointer;
 
 	transition: color 0.2s;
 
 	border: none;
-	border-left: 5px solid transparent; /* Transparent left border to create the semi-circle */
-	border-right: 5px solid transparent; /* Transparent right border to create the semi-circle */
-	border-radius: 50px;
+	border-radius: 50%;
 
-	height: 100%;
+	height: var(--button-size);
 	width: auto;
 	aspect-ratio: 1/1;
 }
@@ -213,13 +210,11 @@ header {
 
 	text-decoration: none;
 
-	font-size: 18px;
+	font-size: var(--icon-size);
 	font-weight: bold;
 	
 	cursor: pointer;
 	
 	border: none;
-	border-left: 5px solid transparent; /* Transparent left border to create the semi-circle */
-	border-right: 5px solid transparent; /* Transparent right border to create the semi-circle */
-	border-radius: 50px;
+	border-radius: 50%;
 }

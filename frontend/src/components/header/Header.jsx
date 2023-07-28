@@ -39,6 +39,7 @@ export default function Header({userId, cart, setCart}) {
 
     }
 
+    //cart-r activate
     let cartRight = document.querySelector('.cart-r');
 
     // header block elements
@@ -62,22 +63,20 @@ export default function Header({userId, cart, setCart}) {
                 <div className="auth-container">
                     { ( userId === -1) ? (
                         <>
-                            <a href="/login" className="login-link">
-                                <FontAwesomeIcon icon={faUser} />
-                            </a>
-                            <a href="/register" className="register-link">Sign Up</a>
+                            <a href="/login" className="login-link"><FontAwesomeIcon icon={faUser} /></a>
+                            {/* <a href="/register" className="register-link">Sign Up</a> */}
                         </>
                     )
                     : (userId != null) ? (
                         <>
-                            <a href="/users/profile" className = "profile-link">Account</a>
+                            <a href="/users/profile" className = "profile-link"><FontAwesomeIcon icon={faUser} /></a>
                             <a href="/" className="logout-button" onClick={logout}>Sign Out</a>
                         </>
                     ) : null }
                 </div>
                 <div className="cart-button-container">
                     <button className='cart-button' onClick={()=>cartRight? cartRight.classList.add('active'): null}>
-                    <FontAwesomeIcon icon={faBasketShopping} />
+                        <FontAwesomeIcon icon={faBasketShopping} />
                     </button>
                 </div>
             </div>
