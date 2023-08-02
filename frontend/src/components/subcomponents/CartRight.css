@@ -15,6 +15,9 @@
 
 	--search-button-margin: 2px;
 	--nav-button-margin: 14px;
+
+	--font-size-1: 1.2rem;
+	--font-size-2: 0.8rem;
 }
 
 .overlay {
@@ -58,7 +61,7 @@
 	/* max-height: calc(100% - 4rem); */
 	/* min-height: 10vh; */
 	height: calc(100% - 4rem);
-	width: 25rem;
+	max-width: 32rem;
 }
 
 .cart-r.active {
@@ -73,6 +76,12 @@
  
 .cart-r::-webkit-scrollbar-thumb {
     background-color: var(--grey-3);
+}
+
+.cart-r-empty {
+	font-size: 1rem;
+	text-align: center;
+	padding: 64px;
 }
 
 /* Header */
@@ -93,7 +102,7 @@
 	border-bottom: 2px groove rgba(0, 0, 0, 0.1);
 }
 
-.cart-r-header .title {
+.cart-r-header #title {
 	font-weight: 500;
 	font-size: 1.5rem;
 
@@ -104,35 +113,45 @@
 
 .cart-r-footer {
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
+	flex-direction: column;
+    align-items: center;
 
 	position: sticky;
 	bottom: 0;
 	background-color: var(--white-color);
 
 	margin: 0 16px;
-	padding: 8px 0;
+	padding: 16px 0;
 	z-index: 101;
 
 	border-top: 2px groove rgba(0, 0, 0, 0.1);
 }
 
-.subtotal-name,
-.subtotal-value {
-	font-size: 1rem;
+.total {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
 
+	width: 100%;
 }
 
-.cart-r-empty {
+.total #name,
+.total #value {
 	font-size: 1rem;
-	text-align: center;
-	padding: 64px;
+
 }
 
 /* Item Container */
 
-.item-image img {
+.item-container {
+	display: flex;
+}
+
+.image {
+	margin-right: 12px;
+}
+
+.image img {
 	width: 150px;
 	opacity: 100%;
 }
@@ -142,43 +161,38 @@
 	margin: 8px 8px;
 	padding: 8px 8px;
 	background-color: var(--white);
-	/* display: flex; */
 }
 
-.item-image {
-	margin-right: 8px;
-}
-
-.item-container {
+.info-container {
 	display: flex;
 }
 
-.item-info-container {
+.info-text-container {
 	display: flex;
-	flex-wrap: wrap;
-    align-content: space-around;
-}
-
-.item-info-text-container {
-	display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
     flex-direction: column;
+    height: 100%;
+    justify-content: space-evenly;
+
+	height: 100%;
 }
 
-.item-edit-container {
+.info-container .info-text-container #name {
+	font-size: var(--font-size-1);
+	font-weight: 500;
+}
+
+.info-container .info-text-container #price {
+	font-size: var(--font-size-1);
+}
+
+.info-container .info-text-container #qty,
+.info-container .info-text-container #category {
+	font-size: var(--font-size-2);
+}
+
+.edit-container {
 	display: flex;
 
-}
-
-.qty {
-	margin-right: 10px;
-	padding: 5px 10px;
-	text-align: center;
-	background-color: var(--light-grey-color);
-	border: 1px solid var(--grey-color);
-	border-radius: 4px;
-	font-size: 14px;
 }
 
 #qty-update {
