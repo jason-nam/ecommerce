@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import SearchForm from "../subcomponents/SearchForm";
@@ -40,29 +40,37 @@ export default function Header({userId, cart, setCart}) {
     }
 
     //cart-r activate
-    let cartRight = document.querySelector('.cart-r');
+    let cartRight = document.querySelector('.cart-r');    
+
+
+    const searchRef = useRef([])
+    const addToRef = (x) => {
+        if (searchRef.current.length < 4) {
+            searchRef.current.push(x)
+        }
+    }
 
     // header block elements
     return (
         <>
         <header>
-            <div className="nav-l-logo-box">
+            <div className="nav-l-logo-box" ref={addToRef}>
                 <Link to="/" className="logo">
                     <img className='logo-img' src={logo} alt="Logo"></img>
                 </Link>
             </div>
 
             <div className="nav-c-product-category-search-box">
-                <div className="products-list">
+                <div className="products-list" ref={addToRef}>
                     <Link to="/products"><div>Products</div></Link>
                 </div>
-                <div className="category">
+                <div className="category" ref={addToRef}>
                     <div></div>
                 </div>
-                <SearchForm />
+                <SearchForm searchRef={searchRef}/>
             </div>
             
-            <div className="nav-r-auth-cart-box">
+            <div className="nav-r-auth-cart-box" ref={addToRef}>
                 <div className="auth-container">
                     { ( userId === -1) ? (
                         <>
