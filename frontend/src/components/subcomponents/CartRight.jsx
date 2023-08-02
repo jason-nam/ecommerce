@@ -93,11 +93,12 @@ export default function CartRight({userId, cart, setCart}) {
     return (
         <div className='cart-r'>
             <div className="cart-r-header">
-                <div className="title"> Shopping Cart </div>
-                {/* <div className="delete-button">&times;</div> */}
-                <Link to="/carts/mycart">
-                    View Cart
-                </Link>
+                <div id="title"> Shopping Cart </div>
+                <div id="view-cart"><Link to="/carts/mycart" onClick={(event)=>{
+                        event.stopPropagation();
+                        cartRight? cartRight.classList.toggle('active'): null;
+                    }}>View Cart</Link>
+                </div>
             </div>
             {cart.length ?
                 <></>
@@ -109,33 +110,19 @@ export default function CartRight({userId, cart, setCart}) {
 
                         <div className="item-container">
 
-                            <div className="item-image">
+                            <div className="image">
                                 <Link to={`/products/${item.id}`}>
                                     <img className='cartitem-img' src={item.image}></img>
                                 </Link>
                             </div>
 
-                            <div className="item-info-container">
+                            <div className="info-container">
 
-                                <div className="item-info-text-container">
-                                    <Link to={`/products/${item.id}`}>
-                                        <div>{item.name}</div>
-                                    </Link>
-                                    <Link to={`/products?category=${item.category}`}>
-                                        <div>{item.category}</div>
-                                    </Link>
-                                    <div>${item.price}</div>
-                                </div>
-
-                                <div className="item-edit-container">
-                                    <div className="qty">Qty: {item.qty}</div>
-                                    <button id="qty-update" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>
-                                        -
-                                    </button>
-                                    <button id="qty-update" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>
-                                        +
-                                    </button>
-                                    <button className='cart-r-remove' onClick={() => removeItem(item.cartitemid)}>Remove</button>
+                                <div className="info-text-container">
+                                    <div id="name"><Link to={`/products/${item.id}`}>{item.name}</Link></div>
+                                    <div id="price">${item.price}</div>
+                                    <div id="category">Category: <Link to={`/products?category=${item.category}`}>{item.category}</Link></div>
+                                    <div id="qty">Qty: {item.qty}</div>
                                 </div>
                             </div>
                         </div>
@@ -144,12 +131,14 @@ export default function CartRight({userId, cart, setCart}) {
             })}
 
             <div className="cart-r-footer">
-                <div className="subtotal-name">Total</div>
-                <div className="subtotal-value">
-                    {cart.length ?
-                        <>${}</>
-                        :<div>—</div>
-                    }
+                <div className="total">
+                    <div id="name">Total</div>
+                    <div id="value">
+                        {cart.length ?
+                            <>${}</>
+                            :<div>—</div>
+                        }
+                    </div>
                 </div>
             </div>
 
