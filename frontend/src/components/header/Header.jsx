@@ -39,9 +39,11 @@ export default function Header({userId, cart, setCart}) {
 
     }
 
-    //cart-r activate
-    let cartRight = document.querySelector('.cart-r');    
-
+    //cart-r active
+    let cartRight = document.querySelector('.cart-r'); 
+    
+    //cart button active
+    let cartButton = document.getElementById('cart-button');
 
     const searchRef = useRef([])
     const addToRef = (x) => {
@@ -86,11 +88,11 @@ export default function Header({userId, cart, setCart}) {
                     ) : null }
                 </div>
                 <div className="cart-button-container">
-                    <button className='cart-button' onClick={(event)=>{
+                    <button id='cart-button' onClick={(event)=>{
                         event.stopPropagation();
                         cartRight? cartRight.classList.toggle('active'): null;
                     }}>
-                        <FontAwesomeIcon icon={faBasketShopping} />
+                        <FontAwesomeIcon icon={faBasketShopping}/>
                     </button>
                 </div>
             </div>
@@ -101,5 +103,4 @@ export default function Header({userId, cart, setCart}) {
         </>
 
     )
-
 }
