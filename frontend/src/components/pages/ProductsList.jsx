@@ -60,9 +60,11 @@ export function ProductsList() {
                     return (
                         <div key={product.id} className='pl-item' id={product.id}>
                             <a href={`/products/${product.id}`}>
+                                <div className="pl-image-box">
                                 <img src={product.image} 
                                     className="pl-image" 
                                     />
+                                </div>
                                 <div className="pl-name" >{product.name}</div>
                                 <div className="pl-price" >${product.price}</div>
                             </a>
