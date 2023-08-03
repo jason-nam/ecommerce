@@ -21,7 +21,8 @@ export default function SearchForm({searchRef}) {
 
     let ref = useRef(0)
 
-    const mobileSearchOpen = () => {
+    const mobileSearchOpen = (e) => {
+        e.preventDefault()
         ref.current.classList.toggle('active') //input 
         ref.current.previousSibling.classList.add('active') // close button
         setTimeout( () => {
@@ -32,8 +33,8 @@ export default function SearchForm({searchRef}) {
         searchRef.current.forEach(x => x.style.display = "none");
     }
 
-    const mobileSearchClose = () => {
-        
+    const mobileSearchClose = (e) => {
+        e.preventDefault()
         ref.current.classList.toggle('active') //input 
         ref.current.previousSibling.classList.remove('active') // close button
         ref.current.nextSibling.classList.remove('active') //search button

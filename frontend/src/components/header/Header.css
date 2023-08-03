@@ -263,19 +263,14 @@ header {
 	}
 
 	#search-bar:not(.active), #search-button:not(.active) {
-		/* display: none; */
 		opacity: 0;
 		width: 0;
 		height: 0;
 		padding: 0;
-		/* visibility: hidden; */
 		transition: width 0.5s ease;
-
 	}	  
 
 	#search-bar.active, #search-bar.active:valid {
-		/* display: block; */
-		/* visibility: visible; */
 		opacity: 1;
 		padding: 8px 16px;
 		border: none;
