@@ -27,7 +27,7 @@
 	height: 90%;
 	width: 12rem;
 	/* margin: auto; */
-	transition: width 0.3s ease;
+	transition: width 0.5s ease;
 
 	outline: none;
 }

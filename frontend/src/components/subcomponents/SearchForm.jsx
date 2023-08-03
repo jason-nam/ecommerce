@@ -15,29 +15,32 @@ export default function SearchForm({searchRef}) {
     // redirect to search result
     const doSearch = (e) => {
         e.preventDefault();
-        navigate(`/products?search=${searchVal}`)  
+        navigate(`/products?search=${searchVal}`)
+        ref.current.blur();
     }
 
     let ref = useRef(0)
 
     const mobileSearchOpen = () => {
-        ref.current.classList.add('active') //input 
+        ref.current.classList.toggle('active') //input 
         ref.current.previousSibling.classList.add('active') // close button
-        ref.current.nextSibling.classList.add('active') //search button
+        setTimeout( () => {
+            ref.current.nextSibling.classList.add('active') //search button
+        }, 450)
         ref.current.nextSibling.nextSibling.classList.add('active') //search toggle button
         ref.current.parentElement.classList.add('active')
         searchRef.current.forEach(x => x.style.display = "none");
     }
 
     const mobileSearchClose = () => {
-        ref.current.classList.remove('active') //input 
+        
+        ref.current.classList.toggle('active') //input 
         ref.current.previousSibling.classList.remove('active') // close button
         ref.current.nextSibling.classList.remove('active') //search button
         ref.current.nextSibling.nextSibling.classList.remove('active') //search toggle button
         ref.current.parentElement.classList.remove('active')
         searchRef.current.forEach(x => x.style.display = "flex");
     }
-
 
 
     return (

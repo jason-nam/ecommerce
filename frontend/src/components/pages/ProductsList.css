@@ -12,9 +12,18 @@
     flex-direction: column;
 } 
 
+.pl-image-box {
+    overflow: hidden;
+}
+
 .pl-image {
     width: 100%;
     animation: onload 0.75s;
+    transition: all 0.3s;
+}
+
+.pl-image:hover {
+    transform: scale(1.1);
 }
 
 @keyframes onload {
