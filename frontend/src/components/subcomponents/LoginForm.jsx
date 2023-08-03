@@ -34,32 +34,33 @@ export default function LoginForm({setUserId}) {
     return ( 
         <div className="login-form">
             <div className="pw-container">
-                <form onSubmit={doLogin}>  
-                    <div>
-                        <label htmlFor="login-email">Email</label>
+                <form onSubmit={doLogin} >  
+                    <div className="input-form">
+                        <label className={`login-label ${email.length? " input" : ''}`} htmlFor="login-email">Email</label>
                         <input 
-                            placeholder="Email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             type="email"   
                             // clearOnEscape  
-                            id = "login-email"                 
+                            id = "login-email" 
+                            className = "login-input"                
                             required
+                            onInvalid={e => e.target.setCustomValidity('Not an email')}
                         ></input>
                     </div>   
-                    <div>
-                        <label htmlFor="login-password">Password</label>
+                    <div className="input-form">
+                        <label className={`login-label ${password.length? " input" : ''}`} htmlFor="login-password">Password</label>
                         <input 
                             type="password" 
-                            placeholder="Password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)} 
-                            id = "login-password"                 
+                            id = "login-password"  
+                            className = "login-input"               
                             required
                         ></input>
                     </div>  
-                    <button type="submit">Login</button>  
-                    <Link to="/register"><div>Create Account</div></Link>
+                    <button className="login-button" type="submit">Sign In</button>  
+                    <Link to="/register"><div className="link-register">Create Account</div></Link>
                 </form>
             </div>
             {
@@ -69,6 +70,7 @@ export default function LoginForm({setUserId}) {
                     </div>)
                     : null
             }
+
         </div>
     );
 
