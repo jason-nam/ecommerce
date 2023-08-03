@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate} from "react-router-dom";
 import LoginForm from "../subcomponents/LoginForm"
+import "./Login.css"
 
 
 export function Login({userId, setUserId}) {
@@ -13,10 +14,15 @@ export function Login({userId, setUserId}) {
         }, 2000)
     }
 
-    if (userId === -1) 
-        return <LoginForm setUserId = {setUserId}/>
-    else if (userId != null)
-        return <div>Already logged in. Soon to be redirected</div>
+        return  userId === -1 ?
+                <>
+                    <h1 className = "auth-title">Sign In</h1>
+                    <LoginForm setUserId = {setUserId}/>
+                </>
+            : userId != null? 
+            <div>Already logged in. Soon to be redirected</div>
+            : null
+        
 
 }
 

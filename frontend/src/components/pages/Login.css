@@ -1,0 +1,71 @@
+.login-form {
+    margin: auto;
+    width: 20rem;
+    padding: 1rem;
+}
+
+.input-form {
+    margin-bottom: 2rem;
+    position: relative;
+    box-sizing: border-box;
+
+    &:focus-within{
+        .login-label {
+            transform: translateY(0.5rem) scale(0.7);
+            margin-left: 0.5rem;
+        }
+    }
+}
+
+.login-label {
+    position: absolute;
+    cursor: text;
+    margin-left: 0.5rem;
+    text-transform: uppercase;
+    z-index: 5;
+    color: rgb(96, 96, 96);
+    transform: translateY(1rem);
+    transition: transform 0.3s ease;
+    transform-origin: top left;
+}
+
+.login-label.input {
+    transform: translateY(0.5rem) scale(0.7);
+    margin-left: 0.5rem;
+}
+
+
+.login-input{
+    box-sizing: border-box;
+    padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+    width: 100%;
+    border-radius: 0;
+    outline: none;
+    border-width: 0.1rem;
+}
+
+.login-button {
+    width: 100%;
+    height: 3rem;
+    border-radius: 0;
+    cursor: pointer;
+    border: none;
+    background-color: black;
+    color: white;
+    
+}
+
+.auth-title {
+    margin: auto;
+}
+
+.link-register{
+    margin-top: 1rem;
+    text-decoration: underline;
+}
+
+.warning {
+    margin-top: 0.5rem;
+    color: red;
+    font-size: 0.8rem;
+}
