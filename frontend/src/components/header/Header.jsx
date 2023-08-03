@@ -90,6 +90,7 @@ export default function Header({userId, cart, setCart}) {
                 <div className="cart-button-container">
                     <button id='cart-button' onClick={(event)=>{
                         event.stopPropagation();
+                        window.location.pathname === "/carts/mycart" ? null:      
                         cartRight? cartRight.classList.toggle('active'): null;
                     }}>
                         <FontAwesomeIcon icon={faBasketShopping}/>
