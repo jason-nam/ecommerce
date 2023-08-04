@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom"
+import { useParams, Link, useNavigate} from "react-router-dom"
 import axios from "axios"
-import CartRight from "../subcomponents/CartRight";
 import './Product.css'
 
 export function Product({userId, cart, setCart}) {
@@ -12,6 +11,7 @@ export function Product({userId, cart, setCart}) {
     const [loading, setLoading] = useState(true);
 
     const [qty, setQty] = useState(1);
+    const navigate = useNavigate();
 
     useEffect(() => {
 
@@ -104,7 +104,6 @@ export function Product({userId, cart, setCart}) {
     // return logic
     return (
         <>
-        <div>Back to product list</div>
         <div className="product-container">
         {error?
             (    
@@ -114,8 +113,11 @@ export function Product({userId, cart, setCart}) {
                 )
             : (
                 !loading ? (
-                    <>
-                        <img className="product-image" src={product.image}/>
+                    <> 
+                        <div className="left-container">
+                            <span className="go-back" onClick={() => navigate(-1)}>Back</span>
+                            <img className="product-image" src={product.image}/>
+                        </div>
                         <div className="product-info">
                             <Link to={`/products?category=${product.category}`}>
                                 <div className="category">{product.category}</div>

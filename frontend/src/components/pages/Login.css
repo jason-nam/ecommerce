@@ -5,9 +5,10 @@
 }
 
 .input-form {
-    margin-bottom: 2rem;
+    margin: 1rem auto;
     position: relative;
     box-sizing: border-box;
+    min-height: 4.3rem;
 
     &:focus-within{
         .login-label {
@@ -27,6 +28,7 @@
     transform: translateY(1rem);
     transition: transform 0.3s ease;
     transform-origin: top left;
+    letter-spacing: 2px;
 }
 
 .login-label.input {
@@ -52,11 +54,15 @@
     border: none;
     background-color: black;
     color: white;
-    
+    text-transform: uppercase;
+    letter-spacing: 2px;
+
 }
 
 .auth-title {
     margin: auto;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 .link-register{
@@ -65,6 +71,7 @@
 }
 
 .warning {
+    box-sizing: border-box;
     margin-top: 0.5rem;
     color: red;
     font-size: 0.8rem;
