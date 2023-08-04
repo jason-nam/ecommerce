@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios"
+import './Cart.css'
 
 export function Cart({userId}) {
     const [cart, setCart] = useState([]);
@@ -87,25 +88,25 @@ export function Cart({userId}) {
 
     }        
     return (
-        <div>
+        <div className="cart">
             {cart.slice(0).reverse().map(item => {
             return (
-                <div key={item.cartitemid}>
-                    <Link to={`/products/${item.id}`}>
-                        <img src={item.image} width='300px'></img>
-                        <div>{item.name}</div>
-                        <div>{item.description}</div>
-                    </Link>
-                    <Link to={`/products?category=${item.category}`}>
-                        <div>{item.category}</div>
-                    </Link>
-                    <div>
-                        <button
-                            onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>
+                <div className="item" key={item.cartitemid}>
+                    <div className="prod-info">
+                        <Link to={`/products/${item.id}`}>
+                            <img src={item.image} width='300px'></img>
+                            <div id="name">{item.name}</div>
+                            <div id="description">{item.description}</div>
+                        </Link>
+                        <Link to={`/products?category=${item.category}`}>
+                            <div id="category">{item.category}</div>
+                        </Link>
+                    </div>
+                    <div className="qty-edit">
+                        <button onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>
                             +
                         </button>
-                        <button
-                            onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>
+                        <button onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>
                             -
                         </button>
                         <div>Quantity: {item.qty}</div>
