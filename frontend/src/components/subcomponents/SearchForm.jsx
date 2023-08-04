@@ -45,14 +45,10 @@ export default function SearchForm({searchRef}) {
 
 
     return (
-        <>
+        <div className="search-form">
             <form onSubmit={doSearch} className="search-bar-universal" id="search-form-onSubmit">
-                <button 
-                    className="mobile-search-close" 
-                    id="mobile-search-close"
-                    onClick={mobileSearchClose}
-                >
-                <FontAwesomeIcon icon={faCircleXmark} />
+                <button className="mobile-search-close" id="mobile-search-close" onClick={mobileSearchClose}>
+                    <FontAwesomeIcon icon={faCircleXmark} />
                 </button>
                 <input 
                     placeholder="Search"
@@ -74,6 +70,6 @@ export default function SearchForm({searchRef}) {
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
             </form>
-        </>
+        </div>
     )
 } 
