@@ -59,7 +59,6 @@ export function Cart({userId}) {
             localStorage.setItem('ECOMMERCE_CART', JSON.stringify(updatedCart))
             setCart(updatedCart)
         }
-
     }
 
     const updateItem = (bool, cartitemid, qty, productid, cartid) => {
@@ -128,5 +127,4 @@ export function Cart({userId}) {
             </div>
         </div>
     )
-
 }
