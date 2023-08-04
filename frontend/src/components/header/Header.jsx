@@ -13,12 +13,12 @@ import { faUser, faBasketShopping } from '@fortawesome/free-solid-svg-icons'
 
 
 export default function Header({userId, cart, setCart}) {
+
+    let cartRight = document.querySelector('.cart-r'); 
+    const searchRef = useRef([])
     const [ error, setError ] = useState(false);
 
     // navigation
-    // TODO
-
-    // site logo
     // TODO
 
     // site name
@@ -39,13 +39,7 @@ export default function Header({userId, cart, setCart}) {
 
     }
 
-    //cart-r active
-    let cartRight = document.querySelector('.cart-r'); 
-    
-    //cart button active
-    let cartButton = document.getElementById('cart-button');
-
-    const searchRef = useRef([])
+    //mobile
     const addToRef = (x) => {
         if (searchRef.current.length < 4) {
             searchRef.current.push(x)
@@ -90,8 +84,12 @@ export default function Header({userId, cart, setCart}) {
                 <div className="cart-button-container">
                     <button id='cart-button' onClick={(event)=>{
                         event.stopPropagation();
-                        window.location.pathname === "/carts/mycart" ? null:      
-                        cartRight? cartRight.classList.toggle('active'): null;
+                        if (window.location.pathname === "/carts/mycart")
+                            return null;      
+                        else if (cartRight) {
+                            cartRight.classList.toggle('active')
+                        } else
+                            return null;
                     }}>
                         <FontAwesomeIcon icon={faBasketShopping}/>
                     </button>

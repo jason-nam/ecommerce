@@ -20,54 +20,43 @@
 	--font-size-2: 0.8rem;
 }
 
-.overlay {
+.cart-r + .overlay, .cart-r:not(.active) + .overlay{
 	position: fixed;
 	top: 0;
 	left: 0;
 	width: 100%;
 	height: 100%;
+	z-index: 101;
+	visibility: hidden;
+	opacity: 0;
 	background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black color */
-	z-index: 98;
-	display: none;
+	transition: opacity 0.5s ease-in, visibility 0s ease-in 0.5s;
 }
 
 .cart-r.active + .overlay {
-	display: block;
-	animation: fadeInOverlay 0.3s ease;
-	
+	opacity: 1;
+	visibility: visible;
+	transition: opacity 0.5s ease-out, visibility 0s ease-out 0s;
 }
 
-@keyframes fadeInOverlay {
-	from {
-		opacity: 0;
-	}
-	to {
-	  	opacity: 1;
-	}
-}
-
-.cart-r {
+.cart-r, .cart-r:not(.active) {
 	position: fixed;
 	right: 0;
-	top: 4rem;
-	z-index: 100;
-	overflow-y: scroll;
+	/* top: 4rem; */
+	z-index: 105;
 
 	background-color: var(--white-color);
 
 	transform: translateX(125%);
-	transition: transform 0.3s ease;
-
-	/* max-height: calc(100% - 4rem); */
-	/* min-height: 10vh; */
-	height: calc(100% - 4rem);
-	max-width: 32rem;
+	transition: transform 0.5s ease-in;
+	height: 100vh;
+	min-width: 25rem;
 }
 
 .cart-r.active {
 	background-color: var(--white-color);
-
 	transform: translateX(0%);
+	transition: transform 0.5s ease-out;
 }
 
 .cart-r::-webkit-scrollbar {
@@ -95,9 +84,9 @@
 	top: 0;
 	background-color: var(--white-color);
 
-	margin: 0 16px;
+	margin: 0 1rem;
 	padding: 8px 0;
-	z-index: 101;
+	z-index: 106;
 
 	border-bottom: 2px groove rgba(0, 0, 0, 0.1);
 }
@@ -105,7 +94,8 @@
 .cart-r .head #title {
 	font-weight: 500;
 	font-size: 1.5rem;
-
+	text-transform: uppercase;
+	letter-spacing: 2px;
 	margin: 8px 0;
 }
 
@@ -120,9 +110,9 @@
 	bottom: 0;
 	background-color: var(--white-color);
 
-	margin: 0 16px;
-	padding: 16px 0;
-	z-index: 101;
+	margin: 0 1rem;
+	padding: 1rem 0;
+	z-index: 106;
 
 	border-top: 2px groove rgba(0, 0, 0, 0.1);
 }
@@ -144,20 +134,28 @@
 /* Item Container */
 
 .cart-r .items {
-	margin: 0 16px;
+	padding: 0 1rem;
+	overflow-y: scroll;
+	height: calc(100% - 10rem);
 }
 
-.cart-r .items .item .item-container {
+.item-container {
 	display: flex;
+	height: 8rem;
+	position: relative;
+	align-items: flex-start;
 }
 
-.cart-r .items .item .item-container .image {
+.item-container .image {
 	margin-right: 12px;
+	height: 8rem;
+	width: 8rem;
 }
 
-.cart-r .items .item .item-container .image img {
-	width: 150px;
-	opacity: 100%;
+.item-container .image img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
 }
 
 .cart-r .items .item,
@@ -167,31 +165,26 @@
 	background-color: var(--white);
 }
 
-.cart-r .items .item .item-container .info-container {
-	display: flex;
-}
-
-.cart-r .items .item .item-container .info-container .info-text-container {
+.info-text-container {
 	display: flex;
     flex-direction: column;
-    height: 100%;
-    justify-content: space-evenly;
-
+    justify-content: space-between;
 	height: 100%;
+	flex-grow: 1;
 }
 
-.cart-r .items .item .item-container .info-container .info-text-container #name {
+.bag-name {
 	font-size: var(--font-size-1);
-	font-weight: 500;
+	font-weight: 300;
+	margin-bottom: 0.2rem;
 }
 
-.cart-r .items .item .item-container .info-container .info-text-container #price {
-	font-size: var(--font-size-1);
-}
-
-.cart-r .items .item .item-container .info-container .info-text-container #qty,
-.cart-r .items .item .item-container .info-container .info-text-container #category {
+.bag-price,
+.bag-qty,
+.bag-category {
+	margin-bottom: 0.2rem;
 	font-size: var(--font-size-2);
+	font-weight: 300;
 }
 
 .edit-container {
@@ -210,4 +203,39 @@
 	border: none;
 	background-color: white;
 	text-decoration: underline;
+}
+
+#close-cart{
+	font-size: 2rem;
+	font-weight: 300;
+	cursor: pointer;
+	position: absolute;
+	right: 1rem;
+	z-index: 107;
+	padding:0 0.5rem;
+}
+
+#view-cart{
+	/* width: calc(100% - 2rem); */
+	width: 100%;
+	padding: 1rem;
+	margin: 0 1rem;
+	margin-top: 1rem;
+	box-sizing: border-box;
+    border-radius: 0;
+    border-width: 0;
+    cursor: pointer;
+    border: none;
+    background-color: black;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: background-color 0.5s ease;
+}
+
+#view-cart a {
+	color: white;
+}
+
+#view-cart:hover {
+	background-color: rgb(60, 60, 60);
 }
