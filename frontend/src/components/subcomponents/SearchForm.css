@@ -20,7 +20,7 @@
   
 #search-bar,
 #search-bar:valid {
-	padding: 8px 16px;
+	padding: 8px 1rem;
 	border: none;
 	border-left: 5px solid transparent; /* Transparent left border to create the semi-circle */
 	border-right: 5px solid transparent; /* Transparent right border to create the semi-circle */
@@ -130,7 +130,7 @@
 	height: var(--button-size);
 	width: auto;
 	aspect-ratio: 1/1;
-	/* padding: 8px 16px; */
+	/* padding: 8px 1rem; */
 
 }
 
@@ -167,7 +167,7 @@
 		height: var(--button-size);
 		width: auto;
 		aspect-ratio: 1/1;
-		padding: 8px 16px;
+		padding: 8px 1rem;
 	}
 
 	#mobile-search-button:hover {
@@ -208,7 +208,7 @@
 
 	#search-bar.active, #search-bar.active:valid {
 		opacity: 1;
-		padding: 8px 16px;
+		padding: 8px 1rem;
 		border: none;
 		border-left: 5px solid transparent; /* Transparent left border to create the semi-circle */
 		border-right: 5px solid transparent; /* Transparent right border to create the semi-circle */

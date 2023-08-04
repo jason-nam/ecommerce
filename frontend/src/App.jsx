@@ -28,21 +28,6 @@ function App() {
         }
     }, [setUserId]);
 
-    document.addEventListener('click', e => {
-        let cartR = document.querySelector('.cart-r');
-        let rmButton = document.querySelector('.cart-r-remove') ? 
-        document.querySelector('.cart-r-remove').toString() : '';
-
-        if (e.target !== cartR 
-        && e.target !== document.querySelector('.cart-button')
-        && cartR!==null && !cartR.contains(e.target)
-        && e.target !== document.querySelector('.add-to-cart')
-        && e.target.toString() !== rmButton
-        ) {
-            setTimeout(() => cartR.classList.remove('active'), 500)
-        }
-    })
-
 
     return (
         <Router>
