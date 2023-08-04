@@ -22,24 +22,36 @@ export default function SearchForm({searchRef}) {
     let ref = useRef(0)
 
     const mobileSearchOpen = (e) => {
+        let inputBar = ref.current;
+        let closeButton = inputBar.previousSibling;
+        let searchButton = inputBar.nextSibling;
+        let searchToggle = searchButton.nextSibling;
+        let searchForm = inputBar.parentElement;
+    
         e.preventDefault()
-        ref.current.classList.toggle('active') //input 
-        ref.current.previousSibling.classList.add('active') // close button
+        inputBar.classList.add('active')
+        closeButton.classList.add('active')
         setTimeout( () => {
-            ref.current.nextSibling.classList.add('active') //search button
+            searchButton.classList.add('active')
         }, 450)
-        ref.current.nextSibling.nextSibling.classList.add('active') //search toggle button
-        ref.current.parentElement.classList.add('active')
+        searchToggle.classList.add('active')
+        searchForm.classList.add('active')
         searchRef.current.forEach(x => x.style.display = "none");
     }
 
     const mobileSearchClose = (e) => {
+        let inputBar = ref.current;
+        let closeButton = inputBar.previousSibling;
+        let searchButton = inputBar.nextSibling;
+        let searchToggle = searchButton.nextSibling;
+        let searchForm = inputBar.parentElement;
+    
         e.preventDefault()
-        ref.current.classList.toggle('active') //input 
-        ref.current.previousSibling.classList.remove('active') // close button
-        ref.current.nextSibling.classList.remove('active') //search button
-        ref.current.nextSibling.nextSibling.classList.remove('active') //search toggle button
-        ref.current.parentElement.classList.remove('active')
+        inputBar.classList.remove('active')
+        closeButton.classList.remove('active') 
+        searchButton.classList.remove('active')
+        searchToggle.classList.remove('active')
+        searchForm.classList.remove('active')
         searchRef.current.forEach(x => x.style.display = "flex");
     }
 
@@ -47,7 +59,10 @@ export default function SearchForm({searchRef}) {
     return (
         <div className="search-form">
             <form onSubmit={doSearch} className="search-bar-universal" id="search-form-onSubmit">
-                <button className="mobile-search-close" id="mobile-search-close" onClick={mobileSearchClose}>
+                <button 
+                    className="mobile-search-close" 
+                    id="mobile-search-close" 
+                    onClick={mobileSearchClose}>
                     <FontAwesomeIcon icon={faCircleXmark} />
                 </button>
                 <input 

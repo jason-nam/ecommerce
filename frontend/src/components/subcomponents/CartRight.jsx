@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios"
 import './CartRight.css'
 
-export default function CartRight({userId, cart, setCart}) {
+export default function CartRight({userId, cart, setCart, overRef}) {
+
+    const [ subtotal, setSubtotal ] = useState(0)
 
     useEffect(() => {
 
@@ -45,6 +47,27 @@ export default function CartRight({userId, cart, setCart}) {
         } 
     
     }, [setCart, userId])
+
+    //subtotal
+    useEffect( () => {
+        setSubtotal(cart.reduce((acc, item) => acc + Number.parseInt(item.price) * item.qty, 0))
+    }, [cart])
+
+    // close cart
+    const cartRef = useRef(null)
+    const closeRef = useRef(null)
+    const cartPageRef = useRef(null)
+
+    useEffect( () => {
+        document.addEventListener('click', e => {
+            if (cartRef.current && !cartRef.current.contains(e.target) ||
+            closeRef.current.contains(e.target) ||
+            cartPageRef.current.contains(e.target)
+            ) {
+                cartRef.current.classList.remove('active');
+            }
+        }, { capture: true })
+    },[])
 
     //remove item from cart
     const removeItem = (cartitemid) => {
@@ -91,14 +114,11 @@ export default function CartRight({userId, cart, setCart}) {
     }
         
     return (
-        <div className='cart-r'>
+        <div className='cart-r' ref={cartRef}>
+                            <div id="close-cart" ref={closeRef}>&times;</div>
+
             <div className="head">
-                <div id="title"> Shopping Cart </div>
-                <div id="view-cart"><Link to="/carts/mycart" onClick={(event)=>{
-                        event.stopPropagation();
-                        cartRight? cartRight.classList.toggle('active'): null;
-                    }}>View Cart</Link>
-                </div>
+                <div id="title"> Shopping Bag </div>
             </div>
 
             <div className="items">
@@ -109,22 +129,30 @@ export default function CartRight({userId, cart, setCart}) {
                 {cart.slice(0).reverse().map(item => {
                     return (
                         <div className="item" key={item.cartitemid}>
-
                             <div className="item-container">
-
                                 <div className="image">
-                                    <Link to={`/products/${item.id}`}>
+                                    <a href={`/products/${item.id}`}>
                                         <img className='cartitem-img' src={item.image}></img>
-                                    </Link>
+                                    </a>
                                 </div>
+                                <div className="info-text-container">
+                                    <div className="item-top">
+                                        <div className="bag-name">
+                                            <a href={`/products/${item.id}`}>
+                                                {item.name}
+                                            </a>
+                                        </div>
+                                        <div className="bag-category">
+                                            <a href={`/products?category=${item.category}`}>
+                                                {item.category}
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div className="item-bottom">
+                                        <div className="bag-qty">Qty: {item.qty}</div>
+                                        <div className="bag-price">${item.price}</div>
+                                        <button onClick={() => removeItem(item.cartitemid)}>Remove</button>
 
-                                <div className="info-container">
-
-                                    <div className="info-text-container">
-                                        <div id="name"><Link to={`/products/${item.id}`}>{item.name}</Link></div>
-                                        <div id="price">${item.price}</div>
-                                        <div id="category">Category: <Link to={`/products?category=${item.category}`}>{item.category}</Link></div>
-                                        <div id="qty">Qty: {item.qty}</div>
                                     </div>
                                 </div>
                             </div>
@@ -136,8 +164,11 @@ export default function CartRight({userId, cart, setCart}) {
             <div className="foot">
                 <div className="total">
                     <div id="name">Total</div>
-                    <div id="value">{cart.length ?<>${}</> :<div>—</div>}</div>
+                    <div id="value">{cart.length ? <>${subtotal}</> :<div>—</div>}</div>
                 </div>
+                <button id="view-cart" ref={cartPageRef}>
+                    <Link to="/carts/mycart">View Cart</Link>
+                </button>
             </div>
 
         </div>
