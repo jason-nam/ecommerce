@@ -92,7 +92,7 @@ export default function CartRight({userId, cart, setCart}) {
         
     return (
         <div className='cart-r'>
-            <div className="cart-r-header">
+            <div className="head">
                 <div id="title"> Shopping Cart </div>
                 <div id="view-cart"><Link to="/carts/mycart" onClick={(event)=>{
                         event.stopPropagation();
@@ -100,45 +100,43 @@ export default function CartRight({userId, cart, setCart}) {
                     }}>View Cart</Link>
                 </div>
             </div>
-            {cart.length ?
-                <></>
-                :<div className="cart-r-empty">Your cart is empty</div>
-            }
-            {cart.slice(0).reverse().map(item => {
-                return (
-                    <div className="item" key={item.cartitemid}>
 
-                        <div className="item-container">
+            <div className="items">
+                {cart.length ?
+                    <></>
+                    :<div className="cart-r-empty">Your cart is empty</div>
+                }
+                {cart.slice(0).reverse().map(item => {
+                    return (
+                        <div className="item" key={item.cartitemid}>
 
-                            <div className="image">
-                                <Link to={`/products/${item.id}`}>
-                                    <img className='cartitem-img' src={item.image}></img>
-                                </Link>
-                            </div>
+                            <div className="item-container">
 
-                            <div className="info-container">
+                                <div className="image">
+                                    <Link to={`/products/${item.id}`}>
+                                        <img className='cartitem-img' src={item.image}></img>
+                                    </Link>
+                                </div>
 
-                                <div className="info-text-container">
-                                    <div id="name"><Link to={`/products/${item.id}`}>{item.name}</Link></div>
-                                    <div id="price">${item.price}</div>
-                                    <div id="category">Category: <Link to={`/products?category=${item.category}`}>{item.category}</Link></div>
-                                    <div id="qty">Qty: {item.qty}</div>
+                                <div className="info-container">
+
+                                    <div className="info-text-container">
+                                        <div id="name"><Link to={`/products/${item.id}`}>{item.name}</Link></div>
+                                        <div id="price">${item.price}</div>
+                                        <div id="category">Category: <Link to={`/products?category=${item.category}`}>{item.category}</Link></div>
+                                        <div id="qty">Qty: {item.qty}</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                )
-            })}
+                    )
+                })}
+            </div>
 
-            <div className="cart-r-footer">
+            <div className="foot">
                 <div className="total">
                     <div id="name">Total</div>
-                    <div id="value">
-                        {cart.length ?
-                            <>${}</>
-                            :<div>—</div>
-                        }
-                    </div>
+                    <div id="value">{cart.length ?<>${}</> :<div>—</div>}</div>
                 </div>
             </div>
 

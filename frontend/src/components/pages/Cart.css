@@ -1,0 +1,38 @@
+.cart {
+    display: flex;
+    flex-direction: row;
+
+    margin: auto;
+}
+
+.cart-box {
+    display: flex;
+    flex-direction: column;
+
+    width: 70%;
+
+    margin: 0 16px;
+}
+
+.cart-box .head #title {
+    font-weight: 500;
+	font-size: 1.5rem;
+
+	margin: 8px 0;
+}
+
+.summary-box {
+    display: flex;
+    flex-direction: column;
+
+    width: 30%;
+
+    margin: 0 16px;
+}
+
+.summary-box .head #title {
+    font-weight: 500;
+	font-size: 1.5rem;
+
+	margin: 8px 0;
+}
