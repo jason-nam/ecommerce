@@ -1,6 +1,6 @@
 
 import axios from 'axios'
-import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
 export default function RegisterForm({setRegistered, setUserExists}) {
@@ -84,6 +84,7 @@ export default function RegisterForm({setRegistered, setUserExists}) {
                         {errors.password && <span role="alert" className="warning">{errors.password.message}</span>}
                     </div>  
                     <button className="auth-button" type="submit">Create Account</button>  
+                    <div className="link-register">Already have an account? <Link to="/login">Sign in.</Link></div>
                 </form>
             </div>
 );
