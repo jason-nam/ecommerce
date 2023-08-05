@@ -5,6 +5,13 @@ import './Cart.css'
 
 export function Cart({userId, cart, setCart}) {
 
+    const [ subtotal, setSubtotal ] = useState(0)
+
+    //subtotal
+    useEffect( () => {
+        setSubtotal(cart.reduce((acc, item) => acc + Number.parseInt(item.price) * item.qty, 0))
+    }, [cart])
+
     useEffect(() => {
         const ec = localStorage.getItem('ECOMMERCE_CART')
         const ls = JSON.parse(ec ? ec : "[]")
@@ -89,9 +96,13 @@ export function Cart({userId, cart, setCart}) {
         <div className="cart">
             <div className="cart-box">
                 <div className="head">
-                    <div id="title"> Cart </div>
+                    <div id="title"> CART </div>
                 </div>
                 <div className="items">
+                    {cart.length ?
+                        <></>
+                        :<div className="cart-r-empty">Your cart is empty</div>
+                    }
                     {cart.slice(0).reverse().map(item => {
                     return (
                         <div className="item" key={item.cartitemid}>
@@ -121,7 +132,27 @@ export function Cart({userId, cart, setCart}) {
             </div>
             <div className="summary-box">
                 <div className="head">
-                    <div id="title"> Summary </div>
+                    <div id="title"> SUMMARY </div>
+                </div>
+                <div className="subtotal-box">
+                    <div id="subtotal">Subtotal</div>
+                    <div id="value">{cart.length ? <>$ {subtotal}</> :<div>—</div>}</div>
+                </div>
+                <div className="shipping-handling-box">
+                    <div id="shipping-handling">Estimated Shipping & Handling</div>
+                    <div id="value">-</div>
+                </div>
+                <div className="tax-box">
+                    <div id="tax">Estimated Tax</div>
+                    <div id="value">-</div>
+                </div>
+                <div className="total-box">
+                    <div id="total">Total</div>
+                    <div id="value">-</div>
+                </div>
+
+                <div className="checkout-box">
+                <Link to={`./`}>Checkout</Link>
                 </div>
             </div>
         </div>
