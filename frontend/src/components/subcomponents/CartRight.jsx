@@ -60,9 +60,9 @@ export default function CartRight({userId, cart, setCart, overRef}) {
 
     useEffect( () => {
         document.addEventListener('click', e => {
-            if (cartRef.current && !cartRef.current.contains(e.target) ||
-                closeRef.current.contains(e.target) ||
-                cartPageRef.current.contains(e.target)) 
+            if ((cartRef.current && !cartRef.current.contains(e.target)) ||
+                (closeRef.current && closeRef.current.contains(e.target)) ||
+                (cartPageRef.current && cartPageRef.current.contains(e.target)))
             {
                 cartRef.current.classList.remove('active');
             }
@@ -161,7 +161,7 @@ export default function CartRight({userId, cart, setCart, overRef}) {
 
             <div className="foot">
                 <div className="total">
-                    <div id="name">Total</div>
+                    <div id="name">Subtotal</div>
                     <div id="value">{cart.length ? <>$ {subtotal}</> :<div>—</div>}</div>
                 </div>
                 <Link to="/carts/mycart" id="view-cart" ref={cartPageRef}>View Cart</Link>
