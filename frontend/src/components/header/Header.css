@@ -1,6 +1,6 @@
 :root {
 	--base-color: #ffffff;
-	--secondary-color: #32c1e5;
+	--secondary-color: #000000;
 	--tertiary-color: #2698b4;
 	--font-color: #000000;
 
@@ -35,7 +35,7 @@ header {
 	z-index: 99;
 
 	background-color: var(--base-color);
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	/* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
 	
 	padding: 8px 0;
 	height: 3rem;
@@ -154,7 +154,7 @@ header {
 
 	font-size: var(--icon-size);
 
-	transition: color 0.2s;
+	transition: color 0.5s, background-color 0.5s;
 	
 	border: none;
 	border-radius: 50%;
@@ -167,14 +167,8 @@ header {
 
 .auth-container a:hover,
 #cart-button:hover {
-	color: var(--font-color);
+	color: var(--secondary-color);
 	background-color: var(--button-hover-grey-1);
 
-	text-decoration: none;
-
-	font-size: var(--icon-size);
-	font-weight: bold;
-	
-	border: none;
-	border-radius: 50%;
+	/* font-size: var(--icon-size); */
 }

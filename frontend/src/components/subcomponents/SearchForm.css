@@ -160,7 +160,8 @@
 	
 		font-size: var(--icon-size);
 	
-		transition: color 0.2s;
+		transition: color 0.5s;
+		transition: background-color 0.5s;
 		
 		border: none;
 		border-radius: 50%;
@@ -172,8 +173,8 @@
 	}
 
 	#mobile-search-button:hover {
-		color: var(--font-color);
-		background-color: var(--search-bar-grey-2);
+		color: var(--base-color);
+		background-color: var(--secondary-color);
 	
 		text-decoration: none;
 	
