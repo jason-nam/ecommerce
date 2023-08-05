@@ -60,8 +60,12 @@ module.exports = class ProductModel {
             const statement = `SELECT COUNT(*) 
                                 FROM products  
                                 WHERE
-                                NAME LIKE $1
-                                AND category LIKE $2
+                                    (
+                                        LOWER(name) LIKE LOWER($1) 
+                                        OR 
+                                        LOWER(category) LIKE LOWER($1)
+                                    )
+                                AND LOWER(category) like LOWER($2)
                                 `;
 
             if (search == null) {

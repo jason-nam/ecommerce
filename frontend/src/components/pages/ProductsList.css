@@ -3,8 +3,9 @@
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     grid-gap: 0.5rem;
     max-width: 70rem;
-    width: 98%;
+    width: 95%;
     margin: auto;
+    margin-top: 3rem;
 }
 
 .pl-item {
@@ -29,8 +30,43 @@
     transform: scale(1.1);
 }
 
+.pl-price {
+    font-family: 'Inter Tight', sans-serif;
+}
+
+.pl-category {
+    font-family: 'Nunito Sans';
+}
+
 @keyframes onload {
     0% { opacity: 0; }
     100% { opacity: 1; }
 
+}
+
+.pagination {
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 95%;
+    height: 3rem;
+    align-items: center;
+}
+
+.pagination button {
+    padding: 0.3rem;
+    background-color: black;
+    color: white;
+    border-radius: 0;
+    border-width: 0.1rem;
+    border-style: solid;
+    border-color: black;
+    cursor: pointer;
+    transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+.pagination button:hover {
+    background-color: white;
+    color: black;
 }

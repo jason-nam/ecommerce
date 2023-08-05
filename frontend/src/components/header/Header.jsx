@@ -4,11 +4,11 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import SearchForm from "../subcomponents/SearchForm";
 import './Header.css'
-import logo from '../../assets/logo-generic.png'
+import logo from '../../assets/logo_transparent.png'
 import CartRight from "../subcomponents/CartRight";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faBasketShopping } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faBasketShopping, faBars } from '@fortawesome/free-solid-svg-icons'
 
 
 
@@ -57,9 +57,7 @@ export default function Header({userId, cart, setCart}) {
                 <div className="products-list" ref={addToRef}>
                     <Link to="/products"><div>Products</div></Link>
                 </div>
-                <div className="category" ref={addToRef}>
-                    <div></div>
-                </div>
+                <button className="menu" ref={addToRef}><FontAwesomeIcon icon={faBars} /></button>
                 <SearchForm searchRef={searchRef}/>
             </div>
             
