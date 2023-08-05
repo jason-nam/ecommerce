@@ -96,7 +96,7 @@
 #search-button:hover {
 	fill: black;
 
-	background-color: var(--search-bar-grey-2);
+	background-color: var(--search-bar-grey-1);
 	border: none;
 	cursor: pointer;
 
@@ -110,6 +110,7 @@
 
 #mobile-search-close.active {
 	opacity: 1;
+	cursor: pointer;
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -249,7 +250,7 @@
 	#search-button.active:hover {
 		fill: black;
 
-		background-color: var(--search-bar-grey-2);
+		background-color: var(--search-bar-grey-1);
 		border: none;
 		cursor: pointer;
 
