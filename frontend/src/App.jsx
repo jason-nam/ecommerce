@@ -39,7 +39,7 @@ function App() {
                 <Route path='/products/:id' element={<Product { ...{userId, cart, setCart} }/>} />
                 <Route path='/products' element={<ProductsList />} />
                 <Route path='/users/profile' element={<User userId={userId}/>} />
-                <Route path='/carts/mycart' element={<Cart userId={userId}/>} />
+                <Route path='/carts/mycart' element={<Cart {...{userId, cart, setCart}}/>} />
                 <Route path='/login' element={<Login userId={userId} setUserId={setUserId}/>} />
                 <Route path='/register' element={<Register userId={userId}/>} />
                 {/* <Route path="*" component={NotFound}  status={404} /> */}

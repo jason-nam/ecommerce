@@ -14,10 +14,13 @@
 
 .pl-image-box {
     overflow: hidden;
+    aspect-ratio: 1.2 / 1;
 }
 
 .pl-image {
     width: 100%;
+    height: 100%;
+    object-fit: cover;
     animation: onload 0.75s;
     transition: all 0.3s;
 }

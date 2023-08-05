@@ -79,6 +79,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
+	box-sizing: border-box;
 
 	position: sticky;
 	top: 0;
@@ -87,6 +88,7 @@
 	margin: 0 1rem;
 	padding: 8px 0;
 	z-index: 106;
+	height: 6rem;
 
 	border-bottom: 2px groove rgba(0, 0, 0, 0.1);
 }
@@ -109,10 +111,12 @@
 	position: sticky;
 	bottom: 0;
 	background-color: var(--white-color);
+	height: 8rem;
 
 	margin: 0 1rem;
 	padding: 1rem 0;
 	z-index: 106;
+	box-sizing: border-box;
 
 	border-top: 2px groove rgba(0, 0, 0, 0.1);
 }
@@ -127,8 +131,8 @@
 
 .total #name,
 .total #value {
-	font-size: 1rem;
-
+	font-size: 1.2rem;
+	text-transform: uppercase;
 }
 
 /* Item Container */
@@ -136,7 +140,7 @@
 .cart-r .items {
 	padding: 0 1rem;
 	overflow-y: scroll;
-	height: calc(100% - 10rem);
+	height: calc(100% - 14rem);
 }
 
 .item-container {
@@ -212,7 +216,7 @@
 	position: absolute;
 	right: 1rem;
 	z-index: 107;
-	padding:0 0.5rem;
+	padding:0.5rem 0.5rem;
 }
 
 #view-cart{
@@ -227,14 +231,14 @@
     cursor: pointer;
     border: none;
     background-color: black;
+	color: white;
     text-transform: uppercase;
     letter-spacing: 2px;
     transition: background-color 0.5s ease;
+	text-align: center;
+	text-decoration: none;
 }
 
-#view-cart a {
-	color: white;
-}
 
 #view-cart:hover {
 	background-color: rgb(60, 60, 60);
