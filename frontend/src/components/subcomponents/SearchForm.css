@@ -67,7 +67,7 @@
 	text-decoration: none;
 	text-align: center;
 
-	font-size: 1rem;
+	font-size: var(--icon-size);
 
 	border: none;
 	border-radius: 50%;
@@ -96,7 +96,7 @@
 #search-button:hover {
 	fill: black;
 
-	background-color: var(--search-bar-grey-1);
+	background-color: var(--search-bar-grey-2);
 	border: none;
 	cursor: pointer;
 
@@ -173,7 +173,7 @@
 
 	#mobile-search-button:hover {
 		color: var(--font-color);
-		background-color: var(--button-hover-grey-1);
+		background-color: var(--search-bar-grey-2);
 	
 		text-decoration: none;
 	
@@ -250,7 +250,7 @@
 	#search-button.active:hover {
 		fill: black;
 
-		background-color: var(--search-bar-grey-1);
+		background-color: var(--search-bar-grey-2);
 		border: none;
 		cursor: pointer;
 
