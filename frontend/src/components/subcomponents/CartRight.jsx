@@ -61,9 +61,9 @@ export default function CartRight({userId, cart, setCart, overRef}) {
     useEffect( () => {
         document.addEventListener('click', e => {
             if (cartRef.current && !cartRef.current.contains(e.target) ||
-            closeRef.current.contains(e.target) ||
-            cartPageRef.current.contains(e.target)
-            ) {
+                closeRef.current.contains(e.target) ||
+                cartPageRef.current.contains(e.target)) 
+            {
                 cartRef.current.classList.remove('active');
             }
         }, { capture: true })
@@ -74,10 +74,10 @@ export default function CartRight({userId, cart, setCart, overRef}) {
         let updatedCart = cart.filter(x=> (x.cartitemid !== cartitemid));
         if (userId > 0) {
             axios.delete(`/api/carts/mycart/items/${cartitemid}`)
-            .then(res => {
-                setCart(updatedCart)
-            })
-            .catch(err => console.log(err))
+                .then(res => {
+                    setCart(updatedCart)
+                })
+                .catch(err => console.log(err))
         } else {
             localStorage.setItem('ECOMMERCE_CART', JSON.stringify(updatedCart))
             setCart(updatedCart)
@@ -85,24 +85,25 @@ export default function CartRight({userId, cart, setCart, overRef}) {
     }
 
     const updateItem = (bool, cartitemid, qty, productid, cartid) => {
-        if (bool)
+        if (bool) {
             qty++;
-        else {
-            if (qty === 1)
+        } else {
+            if (qty === 1) {
                 return;
+            }
             qty--
         }
         
         let updatedCart = cart.splice(0).map(x=> {
-            if (x.cartitemid===cartitemid)
+            if (x.cartitemid===cartitemid) {
                 x['qty']=qty;
+            }
             return x;
         })
         if (userId > 0) {
-            axios.put(`/api/carts/mycart/items/${cartitemid}`, 
-                {qty, productid, cartid})
-            .then(res => setCart(updatedCart))
-            .catch(err => console.log(err))
+            axios.put(`/api/carts/mycart/items/${cartitemid}`, {qty, productid, cartid})
+                .then(res => setCart(updatedCart))
+                .catch(err => console.log(err))
         } else {
             localStorage.setItem('ECOMMERCE_CART', JSON.stringify(updatedCart))
             setCart(updatedCart)
@@ -112,10 +113,10 @@ export default function CartRight({userId, cart, setCart, overRef}) {
         
     return (
         <div className='cart-r' ref={cartRef}>
-                            <div id="close-cart" ref={closeRef}>&times;</div>
-
+            
             <div className="head">
                 <div id="title"> Shopping Bag </div>
+                <div id="close-cart" ref={closeRef}>&times;</div>
             </div>
 
             <div className="items">
