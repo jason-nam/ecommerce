@@ -88,3 +88,11 @@
     text-decoration: underline;
 
 }
+
+@media screen and (max-width: 769px ) {
+    .auth-form {
+        margin: auto;
+        width: 90%;
+        padding: 1rem;
+    }    
+}
