@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function LoginForm({setUserId}) {
@@ -76,7 +76,7 @@ export default function LoginForm({setUserId}) {
                         {errors.password && <span role="alert" className="warning">{errors.password.message}</span>}
                     </div>  
                     <button className="auth-button" type="submit">Sign In</button>  
-                    <Link to="/register"><div className="link-register">Create Account</div></Link>
+                    <div className="link-register"><Link to="/register">Create Account</Link></div>
                 </form>
         </div>
     );
