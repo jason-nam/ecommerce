@@ -20,9 +20,6 @@ export default function Header({userId, cart, setCart}) {
 
     // navigation
     // TODO
-
-    // site name
-    // TODO
     
     //log out
     const logout = () => {

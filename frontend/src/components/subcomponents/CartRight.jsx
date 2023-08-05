@@ -82,9 +82,6 @@ export default function CartRight({userId, cart, setCart, overRef}) {
             localStorage.setItem('ECOMMERCE_CART', JSON.stringify(updatedCart))
             setCart(updatedCart)
         }
-        setTimeout(() => document.querySelector('.cart-r')? 
-        document.querySelector('.cart-r').classList.add('active'): null, 500)
-
     }
 
     const updateItem = (bool, cartitemid, qty, productid, cartid) => {
@@ -164,11 +161,9 @@ export default function CartRight({userId, cart, setCart, overRef}) {
             <div className="foot">
                 <div className="total">
                     <div id="name">Total</div>
-                    <div id="value">{cart.length ? <>${subtotal}</> :<div>—</div>}</div>
+                    <div id="value">{cart.length ? <>$ {subtotal}</> :<div>—</div>}</div>
                 </div>
-                <button id="view-cart" ref={cartPageRef}>
-                    <Link to="/carts/mycart">View Cart</Link>
-                </button>
+                <Link to="/carts/mycart" id="view-cart" ref={cartPageRef}>View Cart</Link>
             </div>
 
         </div>

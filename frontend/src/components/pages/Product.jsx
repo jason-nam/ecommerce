@@ -135,7 +135,6 @@ export function Product({userId, cart, setCart}) {
                     </>)
                 : (<p>loading</p>)
             )}
-            {/* <CartRight { ...{userId, cart, setCart} } /> */}
         </div>
         </>
     )

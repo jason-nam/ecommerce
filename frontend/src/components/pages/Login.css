@@ -1,4 +1,4 @@
-.login-form {
+.auth-form {
     margin: auto;
     width: 20rem;
     padding: 1rem;
@@ -11,14 +11,14 @@
     min-height: 4.3rem;
 
     &:focus-within{
-        .login-label {
+        .auth-label {
             transform: translateY(0.5rem) scale(0.7);
             margin-left: 0.5rem;
         }
     }
 }
 
-.login-label {
+.auth-label {
     position: absolute;
     cursor: text;
     margin-left: 0.5rem;
@@ -31,13 +31,13 @@
     letter-spacing: 2px;
 }
 
-.login-label.input {
+.auth-label.input {
     transform: translateY(0.5rem) scale(0.7);
     margin-left: 0.5rem;
 }
 
 
-.login-input{
+.auth-input{
     box-sizing: border-box;
     padding: 1.5rem 0.5rem 0.5rem 0.5rem;
     width: 100%;
@@ -46,7 +46,16 @@
     border-width: 1px;
 }
 
-.login-button {
+
+
+.warning {
+    box-sizing: border-box;
+    margin-top: 0.5rem;
+    color: red;
+    font-size: 0.8rem;
+}
+
+.auth-button {
     width: 100%;
     height: 3rem;
     border-radius: 0;
@@ -60,7 +69,7 @@
     transition: background-color 0.5s ease;
 }
 
-.login-button:hover {
+.auth-button:hover {
     background-color: rgb(60, 60, 60);
 }
 
@@ -70,14 +79,8 @@
     text-transform: uppercase;
 }
 
+
 .link-register{
     margin-top: 1rem;
     text-decoration: underline;
-}
-
-.warning {
-    box-sizing: border-box;
-    margin-top: 0.5rem;
-    color: red;
-    font-size: 0.8rem;
 }

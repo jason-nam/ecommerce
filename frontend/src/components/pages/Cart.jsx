@@ -3,8 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from "axios"
 import './Cart.css'
 
-export function Cart({userId}) {
-    const [cart, setCart] = useState([]);
+export function Cart({userId, cart, setCart}) {
 
     useEffect(() => {
         const ec = localStorage.getItem('ECOMMERCE_CART')
