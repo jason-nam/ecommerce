@@ -82,5 +82,9 @@
 
 .link-register{
     margin-top: 1rem;
+}
+
+.link-register a{
     text-decoration: underline;
+
 }

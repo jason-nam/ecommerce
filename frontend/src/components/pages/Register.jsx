@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import RegisterForm from "../subcomponents/RegisterForm"
-import "./Login.css"
+import "./AuthPage.css"
 
 export function Register({userId}) {
 
