@@ -1,7 +1,7 @@
 import React from "react";
-import { useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import LoginForm from "../subcomponents/LoginForm"
-import "./Login.css"
+import "./AuthPage.css"
 
 
 export function Login({userId, setUserId}) {

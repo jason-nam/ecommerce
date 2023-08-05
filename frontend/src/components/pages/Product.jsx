@@ -98,7 +98,7 @@ export function Product({userId, cart, setCart}) {
             }
         }
         setTimeout(() => document.querySelector('.cart-r')? 
-        document.querySelector('.cart-r').classList.add('active'): null, 500)
+        document.querySelector('.cart-r').classList.add('active'): null, 250)
     }
 
     // return logic
