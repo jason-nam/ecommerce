@@ -18,6 +18,8 @@
 
 	--font-size-1: 1.2rem;
 	--font-size-2: 0.8rem;
+	--font-style-number: 'Inter Tight', sans-serif;
+
 }
 
 .cart-r + .overlay, .cart-r:not(.active) + .overlay{
@@ -168,6 +170,8 @@
 .total #value {
 	font-size: 1.2rem;
 	text-transform: uppercase;
+	letter-spacing: 2px;
+	font-family: var(--font-style-number);
 }
 
 /* Item Container */
@@ -224,6 +228,10 @@
 	margin-bottom: 0.2rem;
 	font-size: var(--font-size-2);
 	font-weight: 300;
+}
+
+.bag-price, .bag-qty {
+	font-family: var(--font-style-number);
 }
 
 .edit-container {
@@ -283,7 +291,6 @@
 #view-cart:hover {
 	background-color: var(--base-color);
 	color: var(--secondary-color);
-
 	font-size: 0.8rem;
 }
 

@@ -60,6 +60,7 @@ export default function SearchForm({searchRef}) {
         <div className="search-form">
             <form onSubmit={doSearch} className="search-bar-universal" id="search-form-onSubmit">
                 <button 
+                    type="button"
                     className="mobile-search-close" 
                     id="mobile-search-close" 
                     onClick={mobileSearchClose}>
@@ -78,6 +79,7 @@ export default function SearchForm({searchRef}) {
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button> 
                 <button 
+                    type="button"
                     className="mobile-search-button" 
                     id="mobile-search-button"
                     onClick={mobileSearchOpen}
