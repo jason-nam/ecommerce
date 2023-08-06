@@ -1,12 +1,6 @@
-import { useNavigate, createSearchParams } from "react-router-dom";
-import {useEffect, useState} from "react";
-
-
-export default function Pagination ({searchParams, productsCount}) {
+export default function Pagination ({searchParams, setSearchParams, productsCount}) {
     const page = searchParams.get("page"),
-    limit = searchParams.get("limit"),
-    search = searchParams.get("search"),
-    category = searchParams.get("category");
+    limit = searchParams.get("limit");
 
     let curPage = !page ? 1 : Number(page),
     nextPage = null,
@@ -18,42 +12,24 @@ export default function Pagination ({searchParams, productsCount}) {
     if (curPage > 1)
         prevPage = curPage - 1;
 
-    const navigate = useNavigate();
-
-    const prevClick = (e) => {
+    const changePage = (e, num) => {
         e.preventDefault()
-        navigate({
-            pathname: '/products',
-            search: `?${createSearchParams({ 
-                page: prevPage, 
-                limit: limit? limit: '', 
-                search: search? search: '', 
-                category: category? category: ''
-            })}`
-        });    
-    }
-
-    const nextClick = (e) => {
-        e.preventDefault()
-        navigate({
-            pathname: '/products',
-            search: `?${createSearchParams({ 
-                page: nextPage, 
-                limit: limit? limit: '', 
-                search: search? search: '', 
-                category: category? category: ''
-            })}`
-        });    
+        searchParams.delete('page')
+        if (num===0)
+            searchParams.set("page", prevPage)
+        if (num===1)
+            searchParams.set("page", nextPage)
+        setSearchParams(searchParams)
     }
 
     return (
         <div className="pagination">
             <button className='prev-page' 
-            onClick={prevClick}
+            onClick={e=> changePage(e, 0)}
             style={{visibility: prevPage ? 'visible' :'hidden'}}>Previous</button>
-            <div className='cur-page'>Page {curPage} out of {totalPage}</div>
+            <div className='cur-page'>{curPage} out of {totalPage}</div>
             <button className='next-page' 
-            onClick={nextClick}
+            onClick={e =>changePage(e, 1)}
             style={{visibility: nextPage ? 'visible' : 'hidden'}}>Next</button>
     </div>
     )

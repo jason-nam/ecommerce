@@ -12,10 +12,9 @@ export function ProductsList() {
     const [loading, setLoading] = useState(true);
     // const [imgOnLoad, setImgOnLoad] = useState(false);
 
-    const [searchParams] = useSearchParams();
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useEffect(() => {
-
         let isMounted = true;
         const controller = new AbortController();
           
@@ -55,8 +54,24 @@ export function ProductsList() {
         {error ?    
             404
     : (!loading ?
-        <>
-                <div className="pl-container">{products.map( product => {
+        <>  
+            <div className="pl-title">
+                {
+                    !searchParams.has("search") && !searchParams.has('category') ?
+                     <div>All</div> : null 
+                }
+                {
+                    searchParams.has("search") ?
+                <div>Results for "{searchParams.get("search")}" ({productsCount})</div>
+                    : null
+                }
+                {
+                    searchParams.has("category")?
+                        <button type='button'>{searchParams.get('category')} &times;</button>
+                    : null
+                }
+            </div>
+                <div className="pl-container">{products.length? products.map( product => {
                     return (
                         <div key={product.id} className='pl-item' id={product.id}>
                             <a href={`/products/${product.id}`}>
@@ -74,8 +89,10 @@ export function ProductsList() {
                         </div> 
                     )
                 }) 
+                :
+                <div>No matches for your query</div>
             }</div>
-            <Pagination {...{searchParams, productsCount}}/>
+            <Pagination {...{searchParams, setSearchParams, productsCount}}/>
         </> : <div>...loading</div>
         )
         }
