@@ -135,21 +135,17 @@ export default function CartRight({userId, cart, setCart, overRef}) {
                                 </div>
                                 <div className="info-text-container">
                                     <div className="item-top">
-                                        <div className="bag-name">
-                                            <a href={`/products/${item.id}`}>
-                                                {item.name}
-                                            </a>
-                                        </div>
-                                        <div className="bag-category">
-                                            <a href={`/products?category=${item.category}`}>
-                                                {item.category}
-                                            </a>
-                                        </div>
+                                        <a href={`/products/${item.id}`} className="bag-name">
+                                            {item.name}
+                                        </a>
+                                        <a href={`/products?category=${item.category}`} className="bag-category">
+                                            {item.category}
+                                        </a>
                                     </div>
                                     <div className="item-bottom">
                                         <div className="bag-qty">Qty: {item.qty}</div>
                                         <div className="bag-price">${item.price}</div>
-                                        <button onClick={() => removeItem(item.cartitemid)}>Remove</button>
+                                        <button className="remove-cart" onClick={() => removeItem(item.cartitemid)}>Remove</button>
 
                                     </div>
                                 </div>

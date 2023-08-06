@@ -1,11 +1,14 @@
+.pl-title, .pl-container, .pagination {
+    width: 95%;
+    margin: auto;
+    max-width: 70rem;
+    margin-top: 2rem;
+}
+
 .pl-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
     grid-gap: 0.5rem;
-    max-width: 70rem;
-    width: 95%;
-    margin: auto;
-    margin-top: 3rem;
 }
 
 .pl-item {
@@ -45,19 +48,19 @@
 }
 
 .pagination {
-    margin: 2rem auto;
+    margin-bottom: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 95%;
     height: 3rem;
     align-items: center;
 }
 
 .pagination button {
     padding: 0.3rem;
-    background-color: black;
-    color: white;
+    width: 5rem;
+    background-color: white;
+    color: black;
     border-radius: 0;
     border-width: 0.1rem;
     border-style: solid;
@@ -67,6 +70,6 @@
 }
 
 .pagination button:hover {
-    background-color: white;
-    color: black;
+    background-color: black;
+    color: white;
 }

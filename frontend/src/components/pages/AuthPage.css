@@ -103,7 +103,7 @@
 .auth-title {
     margin: auto;
     margin-top: 3rem;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
     text-transform: uppercase;
 }
 
@@ -121,7 +121,7 @@
     .auth-form {
         margin: auto;
         width: 90%;
-        padding: 1rem;
+        padding: 0;
     }    
 
     .auth-title {
