@@ -9,63 +9,71 @@ import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
 
 export default function SearchForm({searchRef}) {
 
+    let ref = useRef(0)
     const [searchVal, setSearchVal] = useState("")
     const navigate = useNavigate();
+
 
     // redirect to search result
     const doSearch = (e) => {
         e.preventDefault();
         navigate(`/products?search=${searchVal}`)
-        ref.current.blur();
-    }
-
-    let ref = useRef(0)
-
-    const mobileSearchOpen = (e) => {
+        
         let inputBar = ref.current;
         let closeButton = inputBar.previousSibling;
         let searchButton = inputBar.nextSibling;
         let searchToggle = searchButton.nextSibling;
-        let searchForm = inputBar.parentElement;
-    
-        e.preventDefault()
-        inputBar.classList.add('active')
-        closeButton.classList.add('active')
-        setTimeout( () => {
-            searchButton.classList.add('active')
-        }, 450)
-        searchToggle.classList.add('active')
-        searchForm.classList.add('active')
-        searchRef.current.forEach(x => x.style.display = "none");
-    }
-
-    const mobileSearchClose = (e) => {
-        let inputBar = ref.current;
-        let closeButton = inputBar.previousSibling;
-        let searchButton = inputBar.nextSibling;
-        let searchToggle = searchButton.nextSibling;
-        let searchForm = inputBar.parentElement;
-    
-        e.preventDefault()
+        let searchForm = inputBar.parentElement;   
         inputBar.classList.remove('active')
         closeButton.classList.remove('active') 
         searchButton.classList.remove('active')
         searchToggle.classList.remove('active')
         searchForm.classList.remove('active')
         searchRef.current.forEach(x => x.style.display = "flex");
+        ref.current.blur();
+        setSearchVal('')
+    }
+
+
+    const searchToggle = (e, num) => {
+        e.preventDefault()
+
+        let inputBar = ref.current;
+        let closeButton = inputBar.previousSibling;
+        let searchButton = inputBar.nextSibling;
+        let searchToggle = searchButton.nextSibling;
+        let searchForm = inputBar.parentElement;
+
+        if (num === 1) {
+            inputBar.classList.add('active')
+            closeButton.classList.add('active')
+            searchButton.classList.add('active')
+            searchToggle.classList.add('active')
+            searchForm.classList.add('active')
+            searchRef.current.forEach(x => x.classList.add('active'));
+            ref.current.focus()
+        } else {
+            inputBar.classList.remove('active')
+            closeButton.classList.remove('active') 
+            searchButton.classList.remove('active')
+            searchToggle.classList.remove('active')
+            searchForm.classList.remove('active')
+            searchRef.current.forEach(x => x.classList.remove('active'));
+            ref.current.blur();    
+        }
     }
 
 
     return (
         <div className="search-form">
             <form onSubmit={doSearch} className="search-bar-universal" id="search-form-onSubmit">
-                <button 
-                    type="button"
-                    className="mobile-search-close" 
-                    id="mobile-search-close" 
-                    onClick={mobileSearchClose}>
-                    <FontAwesomeIcon icon={faCircleXmark} />
-                </button>
+                <div 
+                    className="search-close" 
+                    id="search-close" 
+                    onClick={e => searchToggle(e, 0)}
+                >
+                    &times;
+                </div>
                 <input 
                     placeholder="Search"
                     value={searchVal}
@@ -80,9 +88,9 @@ export default function SearchForm({searchRef}) {
                 </button> 
                 <button 
                     type="button"
-                    className="mobile-search-button" 
-                    id="mobile-search-button"
-                    onClick={mobileSearchOpen}
+                    className="search-open" 
+                    id="search-open"
+                    onClick={e => searchToggle(e, 1)}
                     >
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button>
