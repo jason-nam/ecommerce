@@ -123,8 +123,8 @@
 	border-radius: 50%;
 	cursor: pointer;
 
-	box-sizing: border-box;
-	padding-bottom: 3.5px;
+	/* box-sizing: border-box; */
+	/* padding-bottom: 3.5px; */
 
 	height: 3rem;
 	width: auto;
