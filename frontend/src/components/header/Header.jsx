@@ -64,17 +64,27 @@ export default function Header({userId, cart, setCart}) {
             <div className="nav-r-auth-cart-box" ref={addToRef}>
                 <div className="auth-container">
                     { ( userId === -1) ? (
-                        <>
-                            <a href="/login" className="login-link"><FontAwesomeIcon icon={faUser} /></a>
-                            {/* <a href="/register" className="register-link">Sign Up</a> */}
-                        </>
+                        <a href="/login" className="auth-links"><FontAwesomeIcon icon={faUser} /></a>
                     )
-                    : (userId != null) ? (
+                    : (userId !== null) ? (
+                        <a href="/users/profile" className = "auth-links"><FontAwesomeIcon icon={faUser} /></a>
+                    ) : null }
+                    <>
+                    <div className="dropdown">
+                        {userId === -1 ?  
                         <>
-                            <a href="/users/profile" className = "profile-link"><FontAwesomeIcon icon={faUser} /></a>
+
+                        </> 
+                        : userId !==null ? 
+                        <>
+                            <a href="/users/profile"> Account </a>
+                            <a href="/#"> Setting </a>
                             <a href="/" className="logout-button" onClick={logout}>Sign Out</a>
                         </>
-                    ) : null }
+                        : null
+                    }
+                    </div>
+                    </>
                 </div>
                 <div className="cart-button-container">
                     <button id='cart-button' onClick={(event)=>{
