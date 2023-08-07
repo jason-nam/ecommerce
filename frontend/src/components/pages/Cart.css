@@ -16,6 +16,7 @@
     width: 70%;
     
     margin: 0 1rem;
+    padding-bottom: 1rem;
 }
 
 .cart-box .head #title {
@@ -71,11 +72,15 @@
     font-weight: 450;
 }
 
+.cart-box .items .item .prod-info .name-price #price {
+    white-space: nowrap;
+}
+
 .cart-box .items .item .prod-info .name-price #name,
 .cart-box .items .item .prod-info .name-price #price,
 .cart-box .items .item .prod-info #category,
 .cart-box .items .item .prod-info .qty-edit {
-    margin: 2px 0;
+    margin-bottom: 5px;
 }
 
 .cart-box .items .item .prod-info .qty-edit {
@@ -90,7 +95,6 @@
     flex-direction: column;
 
     width: 30%;
-    min-width: 20rem;
 
     margin: 0 1rem;
 }
@@ -100,6 +104,10 @@
 	font-size: 1.5rem;
 
 	margin: 1rem 0;
+}
+
+.summary-box #value {
+    white-space: nowrap;
 }
 
 .summary-box .subtotal-box,
@@ -112,6 +120,49 @@
     align-items: center;
 
     margin-top: 8px;
+}
+
+.checkout-box {
+    margin-bottom: 1rem;
+}
+
+#checkout {
+	display: flex;
+	align-items: center;
+    justify-content: center;
+
+	height: 100%;
+	width: 100%;
+
+	padding: 1rem;
+	margin-top: 1rem;
+
+	box-sizing: border-box;
+    
+    cursor: pointer;
+
+	border-radius: 0;
+    border-width: 0;
+    border: 1px solid var(--secondary-color);
+
+    background-color: var(--secondary-color);
+	color: white;
+
+    text-transform: uppercase;
+	text-align: center;
+    letter-spacing: 2px;
+
+    transition: background-color 0.5s ease, color 0.5s ease, font-size 0.5s ease;
+
+	text-align: center;
+	text-decoration: none;
+}
+
+
+#checkout:hover {
+	background-color: var(--base-color);
+	color: var(--secondary-color);
+	font-size: 0.8rem;
 }
 
 @media (max-width: 787px) {
@@ -127,11 +178,15 @@
     .cart-box {
         margin: 0 1rem;
         width: calc(100% - 2rem);
+
+        padding-bottom: 1rem;
+
+        border-bottom: 1px solid var(--grey-2);
     }
 
     .cart-box .items .item .prod-img {
-        width: 8rem;
-        height: 8rem;
+        width: 4.5rem;
+        height: 4.5rem;
     }
     
     .cart-box .items .item .prod-img img {
@@ -140,13 +195,14 @@
         object-fit: cover;
     }
 
-    .cart-box .items .item .prod-info .name-price {
-        font-size: 1rem;
-        flex-direction: column;
-    }
-
     .cart-box .items .item .prod-info {
         font-size: 0.8rem;
+        width: calc(100% - 5.5rem);
+    }
+
+    .cart-box .items .item .prod-info .name-price {
+        font-size: 0.8rem;
+        /* flex-direction: column; */
     }
 
     .summary-box {

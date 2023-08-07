@@ -56,7 +56,7 @@ export default function SearchForm({searchRef}) {
             searchRef.current.forEach(x => x.classList.add('active'));
             ref.current.focus()
         } 
-        if (num ===0 ) {
+        if (num === 0 ) {
             inputBar.classList.remove('active')
             closeButton.classList.remove('active') 
             searchButton.classList.remove('active')

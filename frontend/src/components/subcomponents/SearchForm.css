@@ -191,7 +191,7 @@
 
 @media (max-width: 899px) {
 
-	.nav-r-auth-cart-box {	
+	.nav-r-box {	
 		margin-right: 0px !important;
 	}
 
@@ -208,6 +208,7 @@
 	}
 
 	#search-close:not(.active) {
+		display: none;
 		transition:none;
 		/* transition: opacity 0.2s ease, visibility 0s ease 0.2s; */
 	}
