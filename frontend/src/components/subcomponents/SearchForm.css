@@ -179,6 +179,7 @@
 }
 
 #search-button.active {
+	font-size: var(--icon-size-small);
 	visibility: visible;
 	opacity: 1;
 	transition: visibility 0s ease 0s, opacity 0s ease 0s;

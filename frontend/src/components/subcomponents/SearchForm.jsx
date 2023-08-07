@@ -96,7 +96,6 @@ export default function SearchForm({searchRef}) {
                 </button> 
                 <button 
                     type="button"
-                    className="search-open" 
                     id="search-open"
                     onClick={e => searchToggle(e, 1)}
                     >

@@ -23,7 +23,7 @@
 
 	--font-size: 1rem;
 	--icon-size: 1.2rem;
-	--icon-size-small: 0.8rem;
+	--icon-size-small: 1rem;
 }
 
 header {
@@ -150,6 +150,7 @@ header {
 	width: auto;
 }
 
+#search-open,
 .auth-links,
 #cart-button, 
 #menu-button {
@@ -173,6 +174,7 @@ header {
 	/* padding: 8px 1rem; */
 }
 
+#search-open:hover,
 .auth-links:hover,
 #cart-button:hover,
 #menu-button:hover {
