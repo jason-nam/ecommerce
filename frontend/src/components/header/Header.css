@@ -134,6 +134,12 @@ header {
 	height: 100%;
 }
 
+@media screen and (max-width: 1154px) {
+	.nav-l-box.active {
+		visibility: hidden;
+	}
+}
+
 .auth-box,
 .cart-button-box,
 .menu-button-box {

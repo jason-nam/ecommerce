@@ -136,6 +136,7 @@ export function Product({userId, cart, setCart}) {
                 : (<p>loading</p>)
             )}
         </div>
+        <div>You May Also Like</div>
         </>
     )
 }
