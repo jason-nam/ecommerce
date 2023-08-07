@@ -4,8 +4,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import SearchForm from "../subcomponents/SearchForm";
 import './Header.css'
-import logo from '../../assets/logo_transparent.png'
+import logo from '../../assets/logo2.png'
 import CartRight from "../subcomponents/CartRight";
+import Menu from "../subcomponents/Menu";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faBasketShopping, faBars } from '@fortawesome/free-solid-svg-icons'
@@ -15,6 +16,7 @@ import { faUser, faBasketShopping, faBars } from '@fortawesome/free-solid-svg-ic
 export default function Header({userId, cart, setCart}) {
 
     let cartRight = document.querySelector('.cart-r'); 
+    let menu = document.querySelector('.menu');
     const searchRef = useRef([])
     const [ error, setError ] = useState(false);
 
@@ -63,20 +65,21 @@ export default function Header({userId, cart, setCart}) {
     return (
         <>
         <header>
-            <div className="nav-l-logo-box" ref={addToRef}>
-                <Link to="/" className="logo">
+            <div className="nav-l-box" ref={addToRef}>
+                <Link to="/" className="logo-link">
                     <img className='logo-img' src={logo} alt="Logo"></img>
                 </Link>
             </div>
 
-            <div className="nav-c-product-category-search-box">
-                <div className="products-list" ref={addToRef}>
+            <div className="nav-c-box">
+                {/* <div className="products-list" ref={addToRef}>
                     <Link to="/products"><div>Products</div></Link>
-                </div>
+                </div> */}
                 <SearchForm searchRef={searchRef}/>
             </div>
             
-            <div className="nav-r-auth-cart-box" ref={addToRef}>
+            <div className="nav-r-box" ref={addToRef}>
+                
                 <div className="auth-box">
                     <a className = "auth-links" onClick={dropDownToggle}><FontAwesomeIcon icon={faUser} /></a>
                     <div className="dropdown" ref={dropRef}>
@@ -109,12 +112,22 @@ export default function Header({userId, cart, setCart}) {
                     </button>
                 </div>
                 <div className='menu-button-box'>
-                    <button id="menu-button" ref={addToRef}><FontAwesomeIcon icon={faBars} /></button>
+                    <button id="menu-button" ref={addToRef} onClick={(event)=>{
+                        event.stopPropagation();
+                        if (menu) {
+                            menu.classList.toggle('active')
+                        } else
+                            return null;
+                    }}>
+                        <FontAwesomeIcon icon={faBars}/>
+                    </button>
                 </div>
             </div>
         </header>
         
+
         <CartRight { ...{userId, cart, setCart} } />
+        <Menu { ...{} } />
         <div className="overlay"></div>
         </>
 
