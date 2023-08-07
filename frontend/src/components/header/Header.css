@@ -170,13 +170,22 @@ header {
 	/* padding: 8px 1rem; */
 }
 
-#search-open:hover,
 .auth-links:hover,
 #cart-button:hover,
 #menu-button:hover {
 	color: var(--base-color);
 	background-color: var(--secondary-color);
 	font-size: var(--icon-size-small);
+}
+
+#search-open:hover {
+	color: var(--base-color);
+	background-color: var(--secondary-color);
+}
+
+#search-open:hover {
+	color: var(--base-color);
+	background-color: var(--secondary-color);
 }
 
 .dropdown {
@@ -191,6 +200,8 @@ header {
 	padding: 1rem;
 	box-sizing: border-box;
 	border: 1px solid black;
+	z-index: 100;
+	background-color: white;
 }
 
 .dropdown.show

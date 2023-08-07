@@ -1,4 +1,4 @@
-.search-form {
+.search-container {
 	margin-right: var(--nav-button-margin);
 	height: 100%;
 	width: 100%;
@@ -179,7 +179,6 @@
 }
 
 #search-button.active {
-	font-size: var(--icon-size-small);
 	visibility: visible;
 	opacity: 1;
 	transition: visibility 0s ease 0s, opacity 0s ease 0s;
