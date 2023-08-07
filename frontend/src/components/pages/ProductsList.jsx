@@ -58,7 +58,7 @@ export function ProductsList() {
             <div className="pl-title">
                 {
                     !searchParams.has("search") && !searchParams.has('category') ?
-                     <div>All</div> : null 
+                     <div>Viewing All ({productsCount})</div> : null 
                 }
                 {
                     searchParams.has("search") ?
@@ -74,7 +74,7 @@ export function ProductsList() {
                 <div className="pl-container">{products.length? products.map( product => {
                     return (
                         <div key={product.id} className='pl-item' id={product.id}>
-                            <a href={`/products/${product.id}`}>
+                            <a href={`/products/${product.id}`} className='item-link'>
                                 <div className="pl-image-box">
                                 <img src={product.image} 
                                     className="pl-image" 

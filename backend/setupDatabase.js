@@ -98,12 +98,12 @@ const { faker } = require('@faker-js/faker');
         await db.query(cartItemsTableStatement);
 
         // await db.query(insertProducts);
-        for (let i=0; i<20; i++) {
+        for (let i=0; i<60; i++) {
             const values = [faker.commerce.productName(), 
                 faker.commerce.price({ max: 100 }),
                 faker.commerce.productDescription(),
                 faker.commerce.department(),
-                faker.image.urlLoremFlickr({ category: 'city' })       
+                faker.image.urlLoremFlickr({ category: 'dog', randomize: false})       
             ]
             await db.query(insertProducts, values);
         }
