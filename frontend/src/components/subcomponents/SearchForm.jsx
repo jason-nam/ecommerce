@@ -10,6 +10,8 @@ import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
 export default function SearchForm({searchRef}) {
 
     let ref = useRef(0)
+    let formRef = useRef(0)
+
     const [searchVal, setSearchVal] = useState("")
     const navigate = useNavigate();
 
@@ -17,21 +19,23 @@ export default function SearchForm({searchRef}) {
     // redirect to search result
     const doSearch = (e) => {
         e.preventDefault();
-        navigate(`/products?search=${searchVal}`)
-        
-        let inputBar = ref.current;
-        let closeButton = inputBar.previousSibling;
-        let searchButton = inputBar.nextSibling;
-        let searchToggle = searchButton.nextSibling;
-        let searchForm = inputBar.parentElement;   
-        inputBar.classList.remove('active')
-        closeButton.classList.remove('active') 
-        searchButton.classList.remove('active')
-        searchToggle.classList.remove('active')
-        searchForm.classList.remove('active')
-        searchRef.current.forEach(x => x.style.display = "flex");
-        ref.current.blur();
-        setSearchVal('')
+        if (searchVal.length){
+            navigate(`/products?search=${searchVal}`)
+            
+            let inputBar = ref.current;
+            let closeButton = inputBar.previousSibling;
+            let searchButton = inputBar.nextSibling;
+            let searchOpen = searchButton.nextSibling;
+            let searchForm = inputBar.parentElement;   
+            inputBar.classList.remove('active')
+            closeButton.classList.remove('active') 
+            searchButton.classList.remove('active')
+            searchOpen.classList.remove('active')
+            searchForm.classList.remove('active')
+            searchRef.current.forEach(x => x.classList.remove('active'));
+            ref.current.blur();
+            setSearchVal('')
+        }
     }
 
 
@@ -41,32 +45,36 @@ export default function SearchForm({searchRef}) {
         let inputBar = ref.current;
         let closeButton = inputBar.previousSibling;
         let searchButton = inputBar.nextSibling;
-        let searchToggle = searchButton.nextSibling;
+        let searchOpen = searchButton.nextSibling;
         let searchForm = inputBar.parentElement;
-
         if (num === 1) {
             inputBar.classList.add('active')
             closeButton.classList.add('active')
             searchButton.classList.add('active')
-            searchToggle.classList.add('active')
+            searchOpen.classList.add('active')
             searchForm.classList.add('active')
             searchRef.current.forEach(x => x.classList.add('active'));
             ref.current.focus()
-        } else {
+        } 
+        if (num ===0 ) {
             inputBar.classList.remove('active')
             closeButton.classList.remove('active') 
             searchButton.classList.remove('active')
-            searchToggle.classList.remove('active')
-            searchForm.classList.remove('active')
+            searchOpen.classList.remove('active')
             searchRef.current.forEach(x => x.classList.remove('active'));
+            searchForm.classList.remove('active')
             ref.current.blur();    
         }
     }
 
 
     return (
-        <div className="search-form">
-            <form onSubmit={doSearch} className="search-bar-universal" id="search-form-onSubmit">
+        <div className="search-form" >
+            <form onSubmit={doSearch} 
+                className="search-bar-universal" 
+                id="search-form-onSubmit"
+                ref={formRef}
+            >
                 <div 
                     className="search-close" 
                     id="search-close" 
@@ -92,7 +100,7 @@ export default function SearchForm({searchRef}) {
                     id="search-open"
                     onClick={e => searchToggle(e, 1)}
                     >
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                    <FontAwesomeIcon icon={faMagnifyingGlass} className="search-open-icon" />
                 </button>
             </form>
         </div>

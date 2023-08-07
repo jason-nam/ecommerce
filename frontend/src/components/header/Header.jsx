@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import SearchForm from "../subcomponents/SearchForm";
@@ -43,6 +43,22 @@ export default function Header({userId, cart, setCart}) {
         }
     }
 
+    const dropRef = useRef(null)
+    const dropDownToggle = (e) => {
+        e.preventDefault();
+        dropRef.current.classList.toggle('show')
+    }
+
+    useEffect( () => {
+        document.addEventListener('click', e => {
+            if (dropRef.current && !dropRef.current.contains(e.target) 
+            && !dropRef.current.previousSibling.contains(e.target))
+            {
+                dropRef.current.classList.remove('show');
+            }
+        }, { capture: true })
+    },[])
+
     // header block elements
     return (
         <>
@@ -62,28 +78,22 @@ export default function Header({userId, cart, setCart}) {
             
             <div className="nav-r-auth-cart-box" ref={addToRef}>
                 <div className="auth-box">
-                    { ( userId === -1) ? (
-                        <a href="/login" className="auth-links"><FontAwesomeIcon icon={faUser} /></a>
-                    )
-                    : (userId !== null) ? (
-                        <a href="/users/profile" className = "auth-links"><FontAwesomeIcon icon={faUser} /></a>
-                    ) : null }
-                    <>
-                    <div className="dropdown">
+                    <a className = "auth-links" onClick={dropDownToggle}><FontAwesomeIcon icon={faUser} /></a>
+                    <div className="dropdown" ref={dropRef}>
                         {userId === -1 ?  
                         <>
-
+                            <a href="/login">Sign In</a>
+                            <a href="/register">Join</a>
                         </> 
                         : userId !==null ? 
                         <>
-                            <a href="/users/profile"> Account </a>
-                            <a href="/#"> Setting </a>
+                            <a href="/users/profile">Account</a>
+                            <a href="/#">Setting</a>
                             <a href="/" className="logout-button" onClick={logout}>Sign Out</a>
                         </>
                         : null
                     }
                     </div>
-                    </>
                 </div>
                 <div className="cart-button-box">
                     <button id='cart-button' onClick={(event)=>{
