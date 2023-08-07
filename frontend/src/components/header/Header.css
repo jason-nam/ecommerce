@@ -201,9 +201,9 @@ header {
 
 @media screen and (max-width: 769px) {
 
-	.nav-l-box {
+	/* .nav-l-box {
 		display: none;
-	}
+	} */
 	
 	.nav-c-box {
 		flex-direction: row;
@@ -211,6 +211,8 @@ header {
 	}
 
 	.logo-link {
+		position: static;
+		transform: none;
 		height: 2rem;
 	}
 	
