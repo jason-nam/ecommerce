@@ -124,9 +124,6 @@
 	border-radius: 50%;
 	cursor: pointer;
 
-	/* box-sizing: border-box; */
-	/* padding-bottom: 3.5px; */
-
 	height: 3rem;
 	width: auto;
 	aspect-ratio: 1/1;
@@ -136,7 +133,7 @@
 	color: var(--base-color);
 	background-color: var(--secondary-color);
 
-	/* font-size: 2rem; */
+	font-size: 2rem;
 }
 
 /* Footer */
