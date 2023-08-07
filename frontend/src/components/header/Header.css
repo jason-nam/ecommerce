@@ -183,6 +183,11 @@ header {
 	background-color: var(--secondary-color);
 }
 
+#search-open:hover {
+	color: var(--base-color);
+	background-color: var(--secondary-color);
+}
+
 .dropdown {
 	opacity: 0;
 	visibility: hidden;
