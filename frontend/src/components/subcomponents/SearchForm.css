@@ -134,8 +134,7 @@
 	text-decoration: none;
 	text-align: center;
 	font-size: var(--icon-size);
-	transition: color 0.5s;
-	transition: background-color 0.5s;
+	transition: color 0.5s, background-color 0.5s, font-size 0.5s ease;
 	border: none;
 	border-radius: 50%;
 	height: var(--button-size);
@@ -147,13 +146,7 @@
 #search-open:hover {
 	color: var(--base-color);
 	background-color: var(--secondary-color);
-	text-decoration: none;
-	font-size: var(--icon-size);
-	font-weight: bold;
-	cursor: pointer;
-	border: none;
-	border-radius: 50%;
-
+	font-size: var(--icon-size-small);
 }
 
 #search-open.active {
@@ -208,7 +201,8 @@
 	color: black;
 }
 
-#search-button, #search-button:not(.active) {
+#search-button,
+#search-button:not(.active) {
 	visibility: hidden;
 	opacity: 0;
 	/* transition: visibility 0s ease 0s, opacity 0.5s ease 0.3s; */
