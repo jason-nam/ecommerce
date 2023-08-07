@@ -155,7 +155,7 @@ export function Cart({userId, cart, setCart}) {
                 </div>
 
                 <div className="checkout-box">
-                <Link to={`./`}>Checkout</Link>
+                    <Link id="checkout" to={`./`}>Checkout</Link>
                 </div>
             </div>
         </div>
