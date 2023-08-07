@@ -106,26 +106,29 @@ export function Cart({userId, cart, setCart}) {
                     {cart.slice(0).reverse().map(item => {
                     return (
                         <div className="item" key={item.cartitemid}>
-                            <div className="prod-info">
+                            <div className="prod-img">
                                 <Link to={`/products/${item.id}`}>
-                                    <img src={item.image} width='300px'></img>
-                                    <div id="name">{item.name}</div>
-                                    <div id="description">{item.description}</div>
+                                    <img src={item.image}></img>
                                 </Link>
-                                <Link to={`/products?category=${item.category}`}>
+                            </div>
+                            <div className="prod-info">
+                                <div className="info">
+                                    <div className="name-price">
+                                        <Link to={`/products/${item.id}`}>
+                                            <div id="name">{item.name}</div>
+                                        </Link>
+                                        <div id="price">$ {item.price}</div>
+                                    </div>
+                                    {/* <div id="description">{item.description}</div> */}
                                     <div id="category">{item.category}</div>
-                                </Link>
+                                    <div className="qty-edit">
+                                        <div id="qty">Qty {item.qty}</div>
+                                        <button id="add-button" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>+</button>
+                                        <button id="sub-button" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>-</button>
+                                    </div>
+                                </div>
+                                <button id="remove-button" onClick={() => removeItem(item.cartitemid)}>Remove</button>
                             </div>
-                            <div className="qty-edit">
-                                <button onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>
-                                    +
-                                </button>
-                                <button onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>
-                                    -
-                                </button>
-                                <div>Quantity: {item.qty}</div>
-                            </div>
-                            <button onClick={() => removeItem(item.cartitemid)}>Remove</button>
                         </div>
                     )})}
                 </div>
@@ -140,15 +143,15 @@ export function Cart({userId, cart, setCart}) {
                 </div>
                 <div className="shipping-handling-box">
                     <div id="shipping-handling">Estimated Shipping & Handling</div>
-                    <div id="value">-</div>
+                    <div id="value">—</div>
                 </div>
                 <div className="tax-box">
                     <div id="tax">Estimated Tax</div>
-                    <div id="value">-</div>
+                    <div id="value">—</div>
                 </div>
                 <div className="total-box">
                     <div id="total">Total</div>
-                    <div id="value">-</div>
+                    <div id="value">—</div>
                 </div>
 
                 <div className="checkout-box">
