@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from "axios"
 import './CartRight.css'
 
-export default function CartRight({userId, cart, setCart, overRef}) {
+export default function CartRight({userId, cart, setCart}) {
 
     const [ subtotal, setSubtotal ] = useState(0)
 

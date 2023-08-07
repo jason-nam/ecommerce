@@ -65,6 +65,18 @@ export default function Header({userId, cart, setCart}) {
     return (
         <>
         <header>
+            {/* <div className='menu-button-box'>
+                    <button id="menu-button" ref={addToRef} onClick={(event)=>{
+                        event.stopPropagation();
+                        if (menu) {
+                            menu.classList.toggle('active')
+                        } else
+                            return null;
+                    }}>
+                        <FontAwesomeIcon icon={faBars}/>
+                    </button>
+                </div> */}
+
             <div className="nav-l-box" ref={addToRef}>
                 <Link to="/" className="logo-link">
                     <img className='logo-img' src={logo} alt="Logo"></img>
