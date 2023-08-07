@@ -207,7 +207,8 @@
 		transition: opacity 0.5s ease;
 	}
 
-	#search-close:not(.active) {
+	#search-close:not(.active),
+	#search-close:not(.active) + .logo-link {
 		display: none;
 		transition:none;
 		/* transition: opacity 0.2s ease, visibility 0s ease 0.2s; */

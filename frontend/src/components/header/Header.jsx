@@ -66,12 +66,12 @@ export default function Header({userId, cart, setCart}) {
         <>
         <header>
             <div className="nav-l-box" ref={addToRef}>
-            </div>
-
-            <div className="nav-c-box">
                 <Link to="/" className="logo-link">
                     <img className='logo-img' src={logo} alt="Logo"></img>
                 </Link>
+            </div>
+
+            <div className="nav-c-box">
                 {/* <div className="products-list" ref={addToRef}>
                     <Link to="/products"><div>Products</div></Link>
                 </div> */}
