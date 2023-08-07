@@ -57,12 +57,11 @@ export default function Header({userId, cart, setCart}) {
                 <div className="products-list" ref={addToRef}>
                     <Link to="/products"><div>Products</div></Link>
                 </div>
-                <button className="menu" ref={addToRef}><FontAwesomeIcon icon={faBars} /></button>
                 <SearchForm searchRef={searchRef}/>
             </div>
             
             <div className="nav-r-auth-cart-box" ref={addToRef}>
-                <div className="auth-container">
+                <div className="auth-box">
                     { ( userId === -1) ? (
                         <a href="/login" className="auth-links"><FontAwesomeIcon icon={faUser} /></a>
                     )
@@ -86,7 +85,7 @@ export default function Header({userId, cart, setCart}) {
                     </div>
                     </>
                 </div>
-                <div className="cart-button-container">
+                <div className="cart-button-box">
                     <button id='cart-button' onClick={(event)=>{
                         event.stopPropagation();
                         if (window.location.pathname === "/carts/mycart")
@@ -98,6 +97,9 @@ export default function Header({userId, cart, setCart}) {
                     }}>
                         <FontAwesomeIcon icon={faBasketShopping}/>
                     </button>
+                </div>
+                <div className='menu-button-box'>
+                    <button id="menu-button" ref={addToRef}><FontAwesomeIcon icon={faBars} /></button>
                 </div>
             </div>
         </header>

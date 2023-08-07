@@ -22,7 +22,8 @@
 	--button-size: 90%;
 
 	--font-size: 1rem;
-	--icon-size: 1rem;
+	--icon-size: 1.2rem;
+	--icon-size-small: 0.8rem;
 }
 
 header {
@@ -137,8 +138,9 @@ header {
 	height: 100%;
 }
 
-.auth-container,
-.cart-button-container {
+.auth-box,
+.cart-button-box,
+.menu-button-box {
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -149,7 +151,8 @@ header {
 }
 
 .auth-links,
-#cart-button, .menu {
+#cart-button, 
+#menu-button {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -162,7 +165,7 @@ header {
 
 	font-size: var(--icon-size);
 
-	transition: color 0.5s, background-color 0.5s;
+	transition: color 0.5s, background-color 0.5s, font-size 0.5s ease;
 	
 	border: none;
 	border-radius: 50%;
@@ -174,10 +177,12 @@ header {
 }
 
 .auth-links:hover,
-#cart-button:hover, .menu:hover {
-	color: var(--secondary-color);
-	background-color: var(--button-hover-grey-1);
-}
+#cart-button:hover,
+#menu-button:hover {
+	color: var(--base-color);
+	background-color: var(--secondary-color);
+	font-size: var(--icon-size-small);
+}	
 
 .dropdown {
 	height: 0;
