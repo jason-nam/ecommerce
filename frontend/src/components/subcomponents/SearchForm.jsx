@@ -1,5 +1,5 @@
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import './SearchForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -53,7 +53,7 @@ export default function SearchForm({searchRef}) {
             searchButton.classList.add('active')
             searchOpen.classList.add('active')
             searchForm.classList.add('active')
-            searchRef.current.forEach(x => x.classList.add('active'));
+            searchRef.current.forEach(x => x? x.classList.add('active') : null);
             ref.current.focus()
         } 
         if (num ===0 ) {
@@ -61,18 +61,27 @@ export default function SearchForm({searchRef}) {
             closeButton.classList.remove('active') 
             searchButton.classList.remove('active')
             searchOpen.classList.remove('active')
-            searchRef.current.forEach(x => x.classList.remove('active'));
+            searchRef.current.forEach(x => x? x.classList.remove('active') : null);
             searchForm.classList.remove('active')
             ref.current.blur();    
         }
     }
 
+    useEffect( () => {
+        document.addEventListener('click', e => {
+            if (formRef.current && !formRef.current.contains(e.target))
+            {
+                searchToggle(e, 0)
+            }
+        }, { capture: true })
+    },[])
+
 
     return (
-        <div className="search-form" >
+        <div className="search-container" >
             <form onSubmit={doSearch} 
                 className="search-bar-universal" 
-                id="search-form-onSubmit"
+                id="search-form"
                 ref={formRef}
             >
                 <div 
