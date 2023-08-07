@@ -1,4 +1,4 @@
-.pl-title, .pl-container, .pagination {
+.pl-title, .pl-container {
     width: 95%;
     margin: auto;
     max-width: 70rem;
@@ -44,18 +44,19 @@
 @keyframes onload {
     0% { opacity: 0; }
     100% { opacity: 1; }
-
 }
 
 .pagination {
-    margin-bottom: 2rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     height: 3rem;
     align-items: center;
+    margin: 2rem auto;
 }
-
+.cur-page {
+    padding: 0 1rem;
+}
 .pagination button {
     padding: 0.3rem;
     width: 5rem;
@@ -72,4 +73,18 @@
 .pagination button:hover {
     background-color: black;
     color: white;
+}
+
+
+@media screen and (max-width: 599px) {
+    .pagination {
+        width: 95%;
+        margin: auto;
+        max-width: 70rem;
+        margin-top: 2rem;
+    }
+
+    .cur-page {
+        padding: 0 0.5rem;
+    }
 }
