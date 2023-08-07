@@ -17,7 +17,6 @@ export default function RegisterForm({setRegistered, setUserExists}) {
     const lastname = watch('lastname')
 
     const createAccount = (e) => {
-        e.preventDefault();
         axios.post("/api/register", {
                 email, firstname, lastname, password, isactive:true
         })
