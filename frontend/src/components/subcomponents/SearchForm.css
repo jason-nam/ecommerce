@@ -76,8 +76,8 @@
 	transition: width 0.5s ease, visibility 0s ease 0s, opacity 0s ease 0s;
 	visibility: visible;
 	opacity: 1;
-	width: 20rem;
-	max-width: 50rem;
+	width: 17rem;
+	/* max-width: 50rem; */
 	padding: 8px 1rem;
 	color: var(--search-bar-grey-2);
 	/* background-color: var(--search-bar-grey-1); */
@@ -188,9 +188,9 @@
 
 /* Mobile Header View */
 
-@media (max-width: 787px) {
+@media (max-width: 899px) {
 
-	.nav-r-box {	
+	.nav-r-auth-cart-box {	
 		margin-right: 0px !important;
 	}
 
@@ -206,9 +206,7 @@
 		transition: opacity 0.5s ease;
 	}
 
-	#search-close:not(.active),
-	#search-close:not(.active) + .logo-link {
-		display: none;
+	#search-close:not(.active) {
 		transition:none;
 		/* transition: opacity 0.2s ease, visibility 0s ease 0.2s; */
 	}

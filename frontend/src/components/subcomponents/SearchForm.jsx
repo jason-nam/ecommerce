@@ -40,7 +40,7 @@ export default function SearchForm({searchRef}) {
 
 
     const searchToggle = (e, num) => {
-        e.preventDefault()
+        // e.preventDefault()
 
         let inputBar = ref.current;
         let closeButton = inputBar.previousSibling;
@@ -48,6 +48,7 @@ export default function SearchForm({searchRef}) {
         let searchOpen = searchButton.nextSibling;
         let searchForm = inputBar.parentElement;
         if (num === 1) {
+            formRef.current.classList.add('active')
             inputBar.classList.add('active')
             closeButton.classList.add('active')
             searchButton.classList.add('active')
@@ -57,12 +58,13 @@ export default function SearchForm({searchRef}) {
             ref.current.focus()
         } 
         if (num === 0 ) {
+            formRef.current.classList.remove('active')
             inputBar.classList.remove('active')
             closeButton.classList.remove('active') 
             searchButton.classList.remove('active')
             searchOpen.classList.remove('active')
-            searchRef.current.forEach(x => x? x.classList.remove('active') : null);
             searchForm.classList.remove('active')
+            searchRef.current.forEach(x => x? x.classList.remove('active') : null);
             ref.current.blur();    
         }
     }
@@ -72,8 +74,9 @@ export default function SearchForm({searchRef}) {
             if (formRef.current && !formRef.current.contains(e.target))
             {
                 searchToggle(e, 0)
+                formRef.current.classList.remove('active')
             }
-        }, { capture: true })
+        }, { })
     },[])
 
 
