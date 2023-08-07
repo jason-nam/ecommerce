@@ -46,3 +46,11 @@
 .menu::-webkit-scrollbar-thumb {
     background-color: var(--grey-3);
 }
+
+@media (max-width: 787px) {
+
+	.menu {
+		width: 100%;
+	}
+
+}

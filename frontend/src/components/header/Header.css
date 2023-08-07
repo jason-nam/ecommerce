@@ -24,6 +24,8 @@
 	--font-size: 1rem;
 	--icon-size: 1.2rem;
 	--icon-size-small: 1rem;
+
+	--mobile-view-width: 787px;
 }
 
 header {
@@ -199,7 +201,7 @@ header {
 }
 
 
-@media screen and (max-width: 769px) {
+@media screen and (max-width: 787px) {
 
 	/* .nav-l-box {
 		display: none;
