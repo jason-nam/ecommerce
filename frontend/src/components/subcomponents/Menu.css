@@ -2,7 +2,6 @@
 .menu:not(.active) {
 	position: fixed;
 	right: 0;
-	/* top: 4rem; */
 	z-index: 105;
 
 	background-color: var(--white-color);
@@ -25,6 +24,65 @@
  
 .menu::-webkit-scrollbar-thumb {
     background-color: var(--grey-3);
+}
+
+/* Header */
+
+.menu .head {
+    position: sticky;
+    right: 1rem;
+    top: 1rem;
+    z-index: 110;
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+}
+
+#close-menu {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	color: var(--font-color);
+	background-color: var(--base-color);
+
+	text-decoration: none;
+	text-align: center;
+
+	font-size: 3rem;
+	font-weight: 100;
+
+	transition: color 0.5s ease, background-color 0.5s ease, font-size 0.5s ease;
+	
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+
+	height: 3rem;
+	width: auto;
+	aspect-ratio: 1/1;
+}
+
+#close-menu:hover {
+	color: var(--base-color);
+	background-color: var(--secondary-color);
+
+	font-size: 2rem;
+}
+
+.menu .main {
+    position: absolute;
+    top: 0;
+
+    padding: 4rem 0;
+
+	overflow-y: scroll;
+	height: 100%;
+    width: 100%;
+}
+
+.menu .main .products-item {
+    height: 2rem;
 }
 
 @media (max-width: 787px) {
