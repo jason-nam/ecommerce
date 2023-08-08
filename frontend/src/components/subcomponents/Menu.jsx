@@ -8,6 +8,13 @@ export default function Menu({userId, cart, setCart, overRef}) {
     // close menu
     const menuRef = useRef(null)
     const menuCloseRef = useRef(null)
+    const searchRef = useRef([])
+
+    const addToRef = (x) => {
+        if (searchRef.current.length < 4) {
+            searchRef.current.push(x)
+        }
+    }
 
     useEffect( () => {
         document.addEventListener('click', e => {
@@ -21,10 +28,20 @@ export default function Menu({userId, cart, setCart, overRef}) {
         
     return (
         <div className='menu' ref={menuRef}>
+
             <div className="head">
-                <div id="title"> Menu </div>
-                <div id="close-cart" ref={menuCloseRef}>&times;</div>
+                <div id="close-menu" ref={menuCloseRef}>&times;</div>
             </div>
+
+            <div className="main">
+                <div className="products-item" ref={addToRef}>
+                    <Link to="/products">Products</Link>
+                </div>
+                <div className="products-item" ref={addToRef}>
+                    <Link to="/products">Products</Link>
+                </div>
+            </div>
+
         </div>
     )
 }
