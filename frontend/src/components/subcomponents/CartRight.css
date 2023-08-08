@@ -27,7 +27,6 @@
 .cart-r:not(.active) {
 	position: fixed;
 	right: 0;
-	/* top: 4rem; */
 	z-index: 105;
 
 	background-color: var(--white-color);

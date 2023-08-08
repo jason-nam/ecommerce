@@ -11,8 +11,6 @@ import Menu from "../subcomponents/Menu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faBasketShopping, faBars } from '@fortawesome/free-solid-svg-icons'
 
-
-
 export default function Header({userId, cart, setCart}) {
 
     let cartRight = document.querySelector('.cart-r'); 
