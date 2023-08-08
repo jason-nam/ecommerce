@@ -117,7 +117,7 @@
 	border: none;
 	border-radius: 50%;
 	height: var(--button-size);
-	width: auto;
+	width: 1rem;
 	aspect-ratio: 1/1;
 	/* padding: 8px 1rem; */
 	font-size: 2.5rem;
@@ -128,29 +128,41 @@
 }
 
 #search-close.active {
+	/* position: absolute;
+	right: var(--search-button-margin); */
 	visibility: visible;
 	opacity: 1;
 	transition: visibility 0s ease 0s, opacity 0.5s ease 0.3s;
 }
 
-#search-open:not(.active) {
+#search-open.not-active {
 	animation: animate-display 0.5s;
+	transition: transform 0s ease 0.5s, visibility 0s ease 0.5s;
+	visibility: visible;
+}
+
+#search-open.active {
+	transform: translateY(30000px);
+	width: 0;
+	padding: 0;
+	visibility: hidden;
+	/* display: none; */ /* not working for Safari */
 }
 
 @keyframes animate-display {
 	0% {
 		display: none;
+		width: 0;
+		padding: 0;
 	}
-	99.9999% {
+	99.99999% {
 		display: none;
+		width: 0;
+		padding: 0;
 	}
 	100% {
 		display: flex;
 	}
-}
-
-#search-open.active {
-	display: none;
 }
 
 #search-button, #search-button:not(.active) {
@@ -172,8 +184,7 @@
 	font-size: var(--icon-size);
 	border: none;
 	height: calc(90% - var(--search-button-margin) * 2);
-	/* width: auto; */
-	width: auto;
+	width: calc(3rem * 0.9 - var(--search-button-margin) * 2);
 	aspect-ratio: 1/1;
 	cursor: pointer;
 }
@@ -192,6 +203,11 @@
 
 	.nav-r-auth-cart-box {	
 		margin-right: 0px !important;
+	}
+
+	.search-bar-universal.active {
+		max-width: 90%;
+		margin: auto;
 	}
 
 	#search-bar:not(.active) {
@@ -226,6 +242,7 @@
 
 	#search-open:not(.active) {
 		animation: none;
+		transition: none;
 	}	
 	
 }

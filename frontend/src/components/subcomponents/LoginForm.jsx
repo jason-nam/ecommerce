@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -46,7 +46,6 @@ export default function LoginForm({setUserId}) {
             }
                 <form onSubmit={handleSubmit(doLogin)} >  
                     <div className="input-form">
-                        <label className={`auth-label ${email.length? " input" : ''}`} htmlFor="login-email">Email</label>
                         <input 
                             { ...register("email", { 
                                 required: "Email is required", 
@@ -58,10 +57,10 @@ export default function LoginForm({setUserId}) {
                             id = "login-email" 
                             className = "auth-input"                
                         ></input>
-                         <span role="alert" className="warning">{errors.email && errors.email.message}</span>
+                        <label className={`auth-label ${email.length? " input" : ''}`} htmlFor="login-email">Email</label>
+                        <span role="alert" className="warning">{errors.email && errors.email.message}</span>
                     </div>   
                     <div className="input-form">
-                        <label className={`auth-label ${password.length? " input" : ''}`} htmlFor="login-password">Password</label>
                         <input 
                             { ...register("password", { required: "Password is required",
                                 minLength: { 
@@ -73,6 +72,7 @@ export default function LoginForm({setUserId}) {
                             id = "login-password"  
                             className = "auth-input"               
                         ></input>
+                        <label className={`auth-label ${password.length? " input" : ''}`} htmlFor="login-password">Password</label>
                         {errors.password && <span role="alert" className="warning">{errors.password.message}</span>}
                     </div>  
                     <button className="auth-button" type="submit">Sign In</button>  
