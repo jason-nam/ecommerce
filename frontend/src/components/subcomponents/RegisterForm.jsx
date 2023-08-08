@@ -33,27 +33,26 @@ export default function RegisterForm({setRegistered, setUserExists}) {
             <div className="auth-form">
                 <form onSubmit={handleSubmit(createAccount)}>
                     <div className="input-form">
-                        <label className={`auth-label ${firstname.length? " input" : ''}`} htmlFor="reg-firstname">First Name</label>
                         <input 
                             { ...register("firstname", { required: "First name is required"})}                     
                             type="text" 
                             id = "reg-firstname" 
                             className = "auth-input"                                   
                         />
+                        <label className={`auth-label ${firstname.length? " input" : ''}`} htmlFor="reg-firstname">First Name</label>
                         {errors.firstname && <span role="alert" className="warning">{errors.firstname.message}</span>}
                     </div>
                     <div className="input-form">
-                        <label className={`auth-label ${lastname.length? " input" : ''}`} htmlFor = "reg-lastname">Last Name</label>
                         <input 
                             { ...register("lastname", { required: "Last name is required"})}                     
                             type="text" 
                             id = "reg-lastname"
                             className = "auth-input"                                    
                         />
+                        <label className={`auth-label ${lastname.length? " input" : ''}`} htmlFor = "reg-lastname">Last Name</label>
                         {errors.lastname && <span role="alert" className="warning">{errors.lastname.message}</span>}
                     </div>   
                     <div className="input-form">
-                        <label className={`auth-label ${email.length? " input" : ''}`} htmlFor = "reg-email">Email</label>
                         <input 
                             { ...register("email", { 
                                 required: "Email is required", 
@@ -65,10 +64,10 @@ export default function RegisterForm({setRegistered, setUserExists}) {
                             id = "reg-email"  
                             className = "auth-input"                                    
                         ></input>
+                        <label className={`auth-label ${email.length? " input" : ''}`} htmlFor = "reg-email">Email</label>
                         <span role="alert" className="warning">{errors.email && errors.email.message}</span>
                     </div>   
                     <div className="input-form">
-                        <label className={`auth-label ${password.length? " input" : ''}`} htmlFor = "reg-password">Password</label>
                         <input
                             { ...register("password", { required: "Password is required",
                                 minLength: { 
@@ -80,6 +79,7 @@ export default function RegisterForm({setRegistered, setUserExists}) {
                             id = "reg-password" 
                             className = "auth-input"                                   
                         ></input>
+                        <label className={`auth-label ${password.length? " input" : ''}`} htmlFor = "reg-password">Password</label>
                         {errors.password && <span role="alert" className="warning">{errors.password.message}</span>}
                     </div>  
                     <button className="auth-button" type="submit">Create Account</button>  

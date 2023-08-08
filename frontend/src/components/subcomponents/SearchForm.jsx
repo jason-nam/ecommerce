@@ -53,6 +53,7 @@ export default function SearchForm({searchRef}) {
             closeButton.classList.add('active')
             searchButton.classList.add('active')
             searchOpen.classList.add('active')
+            searchOpen.classList.remove('not-active')
             searchForm.classList.add('active')
             searchRef.current.forEach(x => x? x.classList.add('active') : null);
             ref.current.focus()
@@ -62,7 +63,7 @@ export default function SearchForm({searchRef}) {
             inputBar.classList.remove('active')
             closeButton.classList.remove('active') 
             searchButton.classList.remove('active')
-            searchOpen.classList.remove('active')
+            searchOpen.classList.replace('active' , 'not-active')
             searchForm.classList.remove('active')
             searchRef.current.forEach(x => x? x.classList.remove('active') : null);
             ref.current.blur();    
