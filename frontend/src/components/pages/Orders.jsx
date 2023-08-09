@@ -8,7 +8,10 @@ export function Orders({userId, cart, setCart}) {
           
     return (
         <div className="orders">
-            Orders Page
+            
+            <div className="head">
+                <h1 id="title">My Orders</h1>
+            </div>
 
             {userId === -1 ?  
                 <>

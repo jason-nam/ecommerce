@@ -83,11 +83,11 @@ export default function Menu({userId}) {
                 }
 
                 <div className="item" id="my-orders-item">
-                    <Link to="/" ref={ordersPageRef}>My Orders</Link>
+                    <Link to="/orders/myorders" ref={ordersPageRef}>My Orders</Link>
                 </div>
 
                 <div className="item" id="contact-item">
-                    <Link to="/" ref={contactPageRef}>Contact Us</Link>
+                    <Link to="/contacts" ref={contactPageRef}>Contact Us</Link>
                 </div>
                 
             </div>

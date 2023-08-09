@@ -1,0 +1,10 @@
+.contact {
+    margin: 0 auto;
+}
+
+.contact .head #title {
+    margin: 0 auto;
+    margin-top: 3rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
