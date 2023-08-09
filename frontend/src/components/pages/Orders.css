@@ -1,3 +1,10 @@
 .orders {
     margin: 0 auto;
 }
+
+.orders .head #title {
+    margin: 0 auto;
+    margin-top: 3rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
