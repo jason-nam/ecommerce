@@ -6,12 +6,14 @@
 
 
 .product-image {
-    width: 30rem;
+    /* width: 30rem; */
+    width: 100%;
 }
 
 .left-container{
     display: flex;
     flex-direction: column;
+    width: 45vw;
 }
 
 .product-info {
@@ -21,6 +23,7 @@
     flex-direction: column;
     padding-right: 1rem;
     padding-left: 1rem;
+    width: 45vw;
 }
 
 .product-info .name{
@@ -74,9 +77,12 @@
         margin: 0 0 2rem 0;
     }
 
+    .left-container {
+        width: 100%;
+    }
+
     .product-image {
         /* max-width: 30rem; */
-        width: 100%;
         object-fit:fill;
     }
 
