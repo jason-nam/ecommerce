@@ -9,7 +9,7 @@
 	transform: translateX(125%);
 	transition: transform 0.3s ease-in;
 	height: 100vh;
-	width: 30rem;
+	width: 40rem;
 }
 
 .menu.active {
@@ -90,11 +90,17 @@
 	text-transform: uppercase;
 	letter-spacing: 1px;
 
+	transition: letter-spacing 0.5s ease;
+
     margin: 2rem 0;
 }
 
+.menu .main .item:hover {
+	letter-spacing: 5px;
+}
+
 .menu .main .separator {
-    border-top: 2px groove rgba(0, 0, 0, 0.1);
+    border-top: 2px groove black;
 }
 
 @media (max-width: 787px) {

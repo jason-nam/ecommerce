@@ -110,7 +110,7 @@ export default function CartRight({userId, cart, setCart}) {
             <div className="items">
                 {cart.length ?
                     <></>
-                    :<div className="cart-r-empty">Your cart is empty</div>
+                    :<div className="cart-r-empty">Your bag is empty</div>
                 }
                 {cart.slice(0).reverse().map(item => {
                     return (

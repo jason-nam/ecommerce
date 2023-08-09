@@ -1,28 +1,3 @@
-:root {
-	--white-color: #ffffff;
-	--light-grey-color: rgb(206, 206, 206);
-	--grey-color: #bababa;
-
-	--base-color: #ffffff;
-	--secondary-color: #32c1e5;
-	--tertiary-color: #2698b4;
-	--font-color: #000000;
-
-	--white: #ffffff;
-	--grey-1: #eeeeee;
-	--grey-2: #e3e3e3;
-	--grey-3: #767676;
-
-	--search-button-margin: 2px;
-	--nav-button-margin: 14px;
-
-	--font-size-1: 1rem;
-	--font-size-2: 0.8rem;
-	--font-style-number: 'Inter Tight', sans-serif;
-
-}
-
-
 .cart-r, 
 .cart-r:not(.active) {
 	position: fixed;
@@ -148,7 +123,7 @@
 .total #value {
 	font-size: 1.2rem;
 	text-transform: uppercase;
-	letter-spacing: 2px;
+	letter-spacing: 1px;
 	font-family: var(--font-style-number);
 }
 
@@ -208,7 +183,7 @@
 	font-weight: 500;
 	text-overflow: ellipsis;
 	overflow: hidden;
-	text-transform: uppercase; 
+	/* text-transform: uppercase;  */
 }
 
 .bag-price,
@@ -257,8 +232,10 @@
 	align-items: center;
     justify-content: center;
 
-	height: 100%;
+	height: 60px;
 	width: 100%;
+
+	font-size: 1rem;
 
 	padding: 1rem;
 
