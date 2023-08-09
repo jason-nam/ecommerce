@@ -138,14 +138,21 @@ export function Cart({userId, cart, setCart}) {
                     <div id="tax">Estimated Tax</div>
                     <div id="value">—</div>
                 </div>
+
+                <div className="separator"></div>
+
                 <div className="total-box">
                     <div id="total">Total</div>
                     <div id="value">—</div>
                 </div>
 
                 <div className="checkout-box">
+                {cart.length ? 
                     <Link id="checkout" to={`./`}>Checkout</Link>
+                    :<div id="checkout-empty-cart">Checkout</div>
+                }
                 </div>
+                
             </div>
         </div>
     )

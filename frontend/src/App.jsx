@@ -7,6 +7,9 @@ import {User} from './components/pages/User';
 import {Cart} from './components/pages/Cart';
 import {Login} from './components/pages/Login';
 import {Register} from './components/pages/Register';
+import {Orders} from './components/pages/Orders';
+import {Contact} from './components/pages/Contact';
+
 import checkIfLoggedIn from "./checkAuth"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/header/Header'
@@ -43,6 +46,8 @@ function App() {
                 <Route path='/products' element={<ProductsList />} />
                 <Route path='/users/profile' element={<User userId={userId}/>} />
                 <Route path='/carts/mycart' element={<Cart {...{userId, cart, setCart}}/>} />
+                <Route path='/orders/myorders' element={<Orders {...{userId}}/>}></Route>
+                <Route path='/contacts' element={<Contact {...{}}/>}></Route>
                 <Route path='/login' element={<Login {...{userId, setUserId, setCart, auth, setAuth}} />} />
                 <Route path='/register' element={<Register {...{userId}}/>} />
                 {/* <Route path="*" component={NotFound}  status={404} /> */}

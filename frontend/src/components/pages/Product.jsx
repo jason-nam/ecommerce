@@ -104,39 +104,42 @@ export function Product({userId, cart, setCart}) {
     // return logic
     return (
         <>
-        <div className="product-container">
-        {error?
-            (    
-                <>
-                    Product does not exist
-                </>
-                )
-            : (
-                !loading ? (
-                    <> 
-                        <div className="left-container">
-                            <span className="go-back" onClick={() => navigate(-1)}>Back</span>
-                            <img className="product-image" src={product.image}/>
-                        </div>
-                        <div className="product-info">
-                            <Link to={`/products?category=${product.category}`}>
-                                <div className="category">{product.category}</div>
-                            </Link>
-                            <div className="name">{product.name}</div>
-                            <div className="description">{product.description}</div>
-                            <div className="price">${product.price}</div>
-                            <div className="qty">
-                                <button onClick={() => qty > 1 ? setQty(qty-1) : null}>-</button>
-                                <div>{qty}</div>
-                                <button onClick={() => setQty(qty+1)}>+</button>
+        <div className="product">
+            <div className="product-container">
+            {error?
+                (    
+                    <>
+                        Product does not exist
+                    </>
+                    )
+                : (
+                    !loading ? (
+                        <> 
+                            <div className="left-container">
+                                <span className="go-back" onClick={() => navigate(-1)}>Back</span>
+                                <img className="product-image" src={product.image}/>
                             </div>
-                            <button className='add-to-cart' onClick={addItem}>Add to Cart</button>
-                        </div>
-                    </>)
-                : (<p>loading</p>)
-            )}
+                            <div className="product-info">
+                                <Link to={`/products?category=${product.category}`}>
+                                    <div className="category">{product.category}</div>
+                                </Link>
+                                <div className="name">{product.name}</div>
+                                <div className="description">{product.description}</div>
+                                <div className="price">${product.price}</div>
+                                <div className="qty">
+                                    <button onClick={() => qty > 1 ? setQty(qty-1) : null}>-</button>
+                                    <div>{qty}</div>
+                                    <button onClick={() => setQty(qty+1)}>+</button>
+                                </div>
+                                <button className='add-to-cart' onClick={addItem}>Add to Cart</button>
+                            </div>
+                        </>)
+                    : (<p>loading</p>)
+                )}
+            </div>
+            <div>You May Also Like</div>
         </div>
-        <div>You May Also Like</div>
+        
         </>
     )
 }
