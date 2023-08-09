@@ -11,21 +11,19 @@ export function Register({userId}) {
 
     useEffect(() => {
         
-        if (!registered) {
-            navigate("");
-        } else {
+        if (registered) {
             navigate("/login");
         }
 
     }, [navigate, registered]);
 
-
-    if (userId > 0 && userId != null) {
-        setTimeout(() => {
-            navigate("/")
-        }, 2000)
-
-    }
+    useEffect( () => {
+        if (userId > 0 && userId !== null) {
+            setTimeout(() => {
+                navigate("/")
+            }, 2000)
+        }
+    }, [userId] )
 
 
     if (userId === -1) 
