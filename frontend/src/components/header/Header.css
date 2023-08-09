@@ -288,6 +288,7 @@ header {
 		display: none;
 	}
 
+	.search-container,
 	.auth-box,
 	.cart-button-box,
 	.menu-button-box {

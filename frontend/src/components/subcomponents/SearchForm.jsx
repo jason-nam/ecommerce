@@ -21,20 +21,6 @@ export default function SearchForm({searchRef}) {
         e.preventDefault();
         if (searchVal.length){
             navigate(`/products?search=${searchVal}`)
-            
-            let inputBar = ref.current;
-            let closeButton = inputBar.previousSibling;
-            let searchButton = inputBar.nextSibling;
-            let searchOpen = searchButton.nextSibling;
-            let searchForm = inputBar.parentElement;   
-            // inputBar.classList.remove('active')
-            // closeButton.classList.remove('active') 
-            // searchButton.classList.remove('active')
-            // searchOpen.classList.remove('active')
-            // searchForm.classList.remove('active')
-            // searchRef.current.forEach(x => x.classList.remove('active'));
-            // ref.current.blur();
-            // setSearchVal('')
         }
     }
 
@@ -44,8 +30,8 @@ export default function SearchForm({searchRef}) {
 
         let inputBar = ref.current;
         let closeButton = inputBar.nextSibling;
-        let searchOpen = inputBar.previousSibling;
-        let searchButton = searchOpen.previousSibling;
+        let searchButton = closeButton.nextSibling;
+        let searchOpen = searchButton.nextSibling;
         let searchForm = inputBar.parentElement;
         if (num === 1) {
             formRef.current.classList.add('active')
@@ -89,16 +75,6 @@ export default function SearchForm({searchRef}) {
                 id="search-form"
                 ref={formRef}
             >
-                <button type="submit" className="search-bar-universal" id="search-button">
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </button> 
-                <button 
-                    type="button"
-                    id="search-open"
-                    onClick={e => searchToggle(e, 1)}
-                    >
-                    <FontAwesomeIcon icon={faMagnifyingGlass} className="search-open-icon" />
-                </button>
                 <input 
                     placeholder="Search"
                     value={searchVal}
@@ -115,6 +91,17 @@ export default function SearchForm({searchRef}) {
                 >
                 &times;
                 </div>
+                <button type="submit" className="search-bar-universal" id="search-button">
+                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </button> 
+                <button 
+                    type="button"
+                    id="search-open"
+                    onClick={e => searchToggle(e, 1)}
+                    >
+                    <FontAwesomeIcon icon={faMagnifyingGlass} className="search-open-icon" />
+                </button>
+
             </form>
         </div>
     )

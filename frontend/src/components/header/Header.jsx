@@ -44,6 +44,7 @@ export default function Header({userId, cart, setCart}) {
         }
     }
 
+    // click to toggle
     const dropRef = useRef(null)
     const dropDownToggle = (e) => {
         e.preventDefault();
@@ -80,8 +81,8 @@ export default function Header({userId, cart, setCart}) {
                     <div className="dropdown" ref={dropRef}>
                         {userId === -1 ?  
                         <>
-                            <Link to="/login">Sign In</Link>
-                            <Link to="/register">Join Us</Link>
+                            <a href="/login">Sign In</a>
+                            <a href="/register">Join Us</a>
                         </> 
                         : userId !==null ? 
                         <>
