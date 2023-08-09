@@ -10,6 +10,12 @@ export default function Menu({userId}) {
     const menuCloseRef = useRef(null)
     const searchRef = useRef([])
     const productPageRef = useRef(null)
+    const loginPageRef = useRef(null)
+    const registerPageRef = useRef(null)
+    const accountPageRef = useRef(null)
+    const signOutPageRef = useRef(null)
+    const ordersPageRef = useRef(null)
+    const contactPageRef = useRef(null)
 
     //log out
     const logout = () => {
@@ -36,7 +42,13 @@ export default function Menu({userId}) {
         document.addEventListener('click', e => {
             if ((menuRef.current && !menuRef.current.contains(e.target)) ||
                 (menuCloseRef.current && menuCloseRef.current.contains(e.target)) ||
-                (productPageRef.current && productPageRef.current.contains(e.target)))
+                (productPageRef.current && productPageRef.current.contains(e.target)) ||
+                (loginPageRef.current && loginPageRef.current.contains(e.target)) ||
+                (registerPageRef.current && registerPageRef.current.contains(e.target)) ||
+                (accountPageRef.current && accountPageRef.current.contains(e.target)) ||
+                (signOutPageRef.current && signOutPageRef.current.contains(e.target)) ||
+                (ordersPageRef.current && ordersPageRef.current.contains(e.target)) ||
+                (contactPageRef.current && contactPageRef.current.contains(e.target)))
             {
                 menuRef.current.classList.remove('active');
             }
@@ -59,23 +71,23 @@ export default function Menu({userId}) {
 
                 {userId === -1 ?  
                 <>
-                    <div class="item"><a href="/login">Sign In</a></div>
-                    <div class="item"><a href="/register">Join Us</a></div> 
+                    <div className="item"><Link to="/login" ref={loginPageRef}>Sign In</Link></div>
+                    <div className="item"><Link to="/register" ref={registerPageRef}>Register</Link></div> 
                 </>
                 : userId !== null ? 
                 <>
-                    <div class="item"><a href="/users/profile">Account</a></div>
-                    <div class="item"><a href="/" className="logout-button" onClick={logout}>Sign Out</a></div>
+                    <div className="item"><Link to="/users/profile" ref={accountPageRef}>Account</Link></div>
+                    <div className="item"><Link to="/" ref={signOutPageRef} className="logout-button" onClick={logout}>Sign Out</Link></div>
                 </>
                 : null
                 }
 
                 <div className="item" id="my-orders-item">
-                    <Link to="/">My Orders</Link>
+                    <Link to="/" ref={ordersPageRef}>My Orders</Link>
                 </div>
 
                 <div className="item" id="contact-item">
-                    <Link to="/">Contact Us</Link>
+                    <Link to="/" ref={contactPageRef}>Contact Us</Link>
                 </div>
                 
             </div>
