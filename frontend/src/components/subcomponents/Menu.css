@@ -94,7 +94,7 @@
 }
 
 .menu .main .separator {
-    border-top: 2px groove rgba(0, 0, 0, 0.1);
+    border-top: 2px groove black;
 }
 
 @media (max-width: 787px) {

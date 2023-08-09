@@ -79,7 +79,7 @@ export default function Header({userId, cart, setCart}) {
                         {userId === -1 ?  
                         <>
                             <Link to="/login">Sign In</Link>
-                            <Link to="/register">Join</Link>
+                            <Link to="/register">Join Us</Link>
                         </> 
                         : userId !==null ? 
                         <>
