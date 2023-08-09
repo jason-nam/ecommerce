@@ -5,7 +5,7 @@
 
 
 .auth-form {
-    margin: auto;
+    margin: 0 auto;
     width: 20rem;
     padding: 1rem;
 }
@@ -108,7 +108,7 @@
 }
 
 .auth-title {
-    margin: auto;
+    margin: 0 auto;
     margin-top: 3rem;
     letter-spacing: 3px;
     text-transform: uppercase;
@@ -126,12 +126,13 @@
 
 @media screen and (max-width: 769px ) {
     .auth-form {
-        margin: auto;
+        margin: 0 auto;
         width: 90%;
         padding: 0;
     }    
 
     .auth-title {
         margin-top: 2rem;
+        margin-bottom: 1rem;
     }
 }

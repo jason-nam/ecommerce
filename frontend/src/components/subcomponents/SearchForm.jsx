@@ -27,14 +27,14 @@ export default function SearchForm({searchRef}) {
             let searchButton = inputBar.nextSibling;
             let searchOpen = searchButton.nextSibling;
             let searchForm = inputBar.parentElement;   
-            inputBar.classList.remove('active')
-            closeButton.classList.remove('active') 
-            searchButton.classList.remove('active')
-            searchOpen.classList.remove('active')
-            searchForm.classList.remove('active')
-            searchRef.current.forEach(x => x.classList.remove('active'));
-            ref.current.blur();
-            setSearchVal('')
+            // inputBar.classList.remove('active')
+            // closeButton.classList.remove('active') 
+            // searchButton.classList.remove('active')
+            // searchOpen.classList.remove('active')
+            // searchForm.classList.remove('active')
+            // searchRef.current.forEach(x => x.classList.remove('active'));
+            // ref.current.blur();
+            // setSearchVal('')
         }
     }
 
@@ -43,9 +43,9 @@ export default function SearchForm({searchRef}) {
         // e.preventDefault()
 
         let inputBar = ref.current;
-        let closeButton = inputBar.previousSibling;
-        let searchButton = inputBar.nextSibling;
-        let searchOpen = searchButton.nextSibling;
+        let closeButton = inputBar.nextSibling;
+        let searchOpen = inputBar.previousSibling;
+        let searchButton = searchOpen.previousSibling;
         let searchForm = inputBar.parentElement;
         if (num === 1) {
             formRef.current.classList.add('active')
@@ -67,6 +67,7 @@ export default function SearchForm({searchRef}) {
             searchForm.classList.remove('active')
             searchRef.current.forEach(x => x? x.classList.remove('active') : null);
             ref.current.blur();    
+            setSearchVal('')
         }
     }
 
@@ -88,22 +89,6 @@ export default function SearchForm({searchRef}) {
                 id="search-form"
                 ref={formRef}
             >
-                <div 
-                    className="search-close" 
-                    id="search-close" 
-                    onClick={e => searchToggle(e, 0)}
-                >
-                    &times;
-                </div>
-                <input 
-                    placeholder="Search"
-                    value={searchVal}
-                    onChange={e => setSearchVal(e.target.value)}
-                    id = "search-bar"
-                    type = "search"
-                    className = "search-bar"
-                    ref={ref}
-                    />
                 <button type="submit" className="search-bar-universal" id="search-button">
                     <FontAwesomeIcon icon={faMagnifyingGlass} />
                 </button> 
@@ -114,6 +99,22 @@ export default function SearchForm({searchRef}) {
                     >
                     <FontAwesomeIcon icon={faMagnifyingGlass} className="search-open-icon" />
                 </button>
+                <input 
+                    placeholder="Search"
+                    value={searchVal}
+                    onChange={e => setSearchVal(e.target.value)}
+                    id = "search-bar"
+                    type = "search"
+                    className = "search-bar"
+                    ref={ref}
+                    />
+                <div 
+                    className="search-close" 
+                    id="search-close" 
+                    onClick={e => searchToggle(e, 0)}
+                >
+                &times;
+                </div>
             </form>
         </div>
     )

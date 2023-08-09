@@ -10,7 +10,8 @@ import {Register} from './components/pages/Register';
 import checkIfLoggedIn from "./checkAuth"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/header/Header'
-// import Footer from './components/footer/Footer'
+import Footer from './components/footer/Footer'
+import  ScrollOnChange  from './components/subcomponents/ScrollOnChange'
 
 function App() {
     const [userId, setUserId] = useState(null);
@@ -27,7 +28,7 @@ function App() {
             isMounted = false;
             isMounted && controller.abort()
         }
-    }, [setUserId]);
+    }, [setUserId]);  
 
 
     return (
@@ -46,6 +47,8 @@ function App() {
                 {/* <Route path="*" component={NotFound}  status={404} /> */}
             </Routes>
             </div>
+            <Footer />
+            <ScrollOnChange />
         </Router>
     );
 }
