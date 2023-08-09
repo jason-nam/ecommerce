@@ -12,7 +12,8 @@ export default function Menu({userId}) {
     const productPageRef = useRef(null)
 
     //log out
-    const logout = () => {
+    const logout = (e) => {
+        e.preventDefault();
 
         axios.get("/api/logout")
         .then((res) => {

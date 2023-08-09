@@ -16,6 +16,7 @@ import  ScrollOnChange  from './components/subcomponents/ScrollOnChange'
 function App() {
     const [userId, setUserId] = useState(null);
     const [cart, setCart] = useState([]);
+    const [ auth, setAuth ] = useState(false)
 
     useEffect(() => {
         let isMounted = true;
@@ -42,8 +43,8 @@ function App() {
                 <Route path='/products' element={<ProductsList />} />
                 <Route path='/users/profile' element={<User userId={userId}/>} />
                 <Route path='/carts/mycart' element={<Cart {...{userId, cart, setCart}}/>} />
-                <Route path='/login' element={<Login userId={userId} setUserId={setUserId}/>} />
-                <Route path='/register' element={<Register userId={userId}/>} />
+                <Route path='/login' element={<Login {...{userId, setUserId, setCart, auth, setAuth}} />} />
+                <Route path='/register' element={<Register {...{userId}}/>} />
                 {/* <Route path="*" component={NotFound}  status={404} /> */}
             </Routes>
             </div>

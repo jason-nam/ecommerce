@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import React, { useState, useRef, useEffect} from "react";
+import React, { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import SearchForm from "../subcomponents/SearchForm";
@@ -22,7 +22,8 @@ export default function Header({userId, cart, setCart}) {
     // TODO
     
     //log out
-    const logout = () => {
+    const logout = (e) => {
+        e.preventDefault();
 
         axios.get("/api/logout")
         .then((res) => {
@@ -58,6 +59,7 @@ export default function Header({userId, cart, setCart}) {
             }
         }, { capture: true })
     },[])
+
 
     // header block elements
     return (
@@ -119,7 +121,7 @@ export default function Header({userId, cart, setCart}) {
         </header>
         
 
-        <CartRight { ...{userId, cart, setCart} } />
+        <CartRight { ...{userId, cart, setCart} }/>
         <div className="overlay-cart"></div>
         <Menu { ...{userId} } />
         <div className="overlay-menu"></div>
