@@ -9,6 +9,7 @@ export default function Menu({userId, cart, setCart, overRef}) {
     const menuRef = useRef(null)
     const menuCloseRef = useRef(null)
     const searchRef = useRef([])
+    const productPageRef = useRef(null)
 
     const addToRef = (x) => {
         if (searchRef.current.length < 4) {
@@ -19,7 +20,8 @@ export default function Menu({userId, cart, setCart, overRef}) {
     useEffect( () => {
         document.addEventListener('click', e => {
             if ((menuRef.current && !menuRef.current.contains(e.target)) ||
-                (menuCloseRef.current && menuCloseRef.current.contains(e.target)))
+                (menuCloseRef.current && menuCloseRef.current.contains(e.target)) ||
+                (productPageRef.current && productPageRef.current.contains(e.target)))
             {
                 menuRef.current.classList.remove('active');
             }
@@ -34,12 +36,16 @@ export default function Menu({userId, cart, setCart, overRef}) {
             </div>
 
             <div className="main">
-                <div className="products-item" ref={addToRef}>
-                    <Link to="/products">Products</Link>
+                <div className="item" id="products-item" ref={addToRef}>
+                    <Link to="/products" ref={productPageRef}>Products</Link>
                 </div>
-                <div className="products-item" ref={addToRef}>
-                    <Link to="/products">Products</Link>
+
+                <div className="separator"></div>
+
+                <div className="item" id="auth-item" ref={addToRef}>
+                    
                 </div>
+                
             </div>
 
         </div>
