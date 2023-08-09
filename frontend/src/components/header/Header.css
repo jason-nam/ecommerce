@@ -26,6 +26,22 @@
 	--icon-size-small: 1rem;
 
 	--mobile-view-width: 787px;
+
+	--white-color: #ffffff;
+	--light-grey-color: rgb(206, 206, 206);
+	--grey-color: #bababa;
+
+	--white: #ffffff;
+	--grey-1: #eeeeee;
+	--grey-2: #e3e3e3;
+	--grey-3: #767676;
+
+	--search-button-margin: 2px;
+	--nav-button-margin: 14px;
+
+	--font-size-1: 1rem;
+	--font-size-2: 0.8rem;
+	--font-style-number: 'Inter Tight', sans-serif;
 }
 
 header {
