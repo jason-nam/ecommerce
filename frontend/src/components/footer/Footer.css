@@ -1,0 +1,50 @@
+
+
+footer {
+    margin-top: 4rem;
+    padding-bottom: 50vh;
+}
+
+.footer {
+    height: 60vh;
+    min-width: 100%;
+    position: fixed;
+    z-index: 0;
+    bottom: 0;
+    overflow: hidden;
+    background-color: black;
+
+}
+
+.footer-container {
+    position: relative;
+    height: 100%;
+    margin: 1rem;
+}
+
+.footer-pages {
+    bottom: calc(50vh - 10vh);
+    position: absolute;
+    list-style-type: none;
+}
+
+.footer-pages li {
+    color: white;
+    transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+.footer-pages li:hover {
+    color: black;
+    background-color: white;
+}
+
+.coders {
+    bottom: calc(50vh - 20rem);
+    position: absolute;   
+    text-align: center;
+    width: 100%;
+}
+
+.coders a, .coders span {
+    color: white;
+}
