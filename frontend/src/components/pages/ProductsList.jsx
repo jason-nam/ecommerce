@@ -58,11 +58,11 @@ export function ProductsList() {
             <div className="pl-title">
                 {
                     !searchParams.has("search") && !searchParams.has('category') ?
-                     <div>Viewing All ({productsCount})</div> : null 
+                     <div>All Products</div> : null 
                 }
                 {
                     searchParams.has("search") ?
-                <div>Results for "{searchParams.get("search")}" ({productsCount})</div>
+                <div>Results for "{searchParams.get("search")}"</div>
                     : null
                 }
                 {
@@ -70,11 +70,12 @@ export function ProductsList() {
                         <button type='button'>{searchParams.get('category')} &times;</button>
                     : null
                 }
+                <div>({productsCount})</div>
             </div>
                 <div className="pl-container">{products.length? products.map( product => {
                     return (
                         <div key={product.id} className='pl-item' id={product.id}>
-                            <a href={`/products/${product.id}`} className='item-link'>
+                            <Link to={`/products/${product.id}`} className='item-link'>
                                 <div className="pl-image-box">
                                 <img src={product.image} 
                                     className="pl-image" 
@@ -82,10 +83,10 @@ export function ProductsList() {
                                 </div>
                                 <div className="pl-name" >{product.name}</div>
                                 <div className="pl-price" >${product.price}</div>
-                            </a>
-                            <a href={`/products?category=${product.category}`}>
+                            </Link>
+                            <Link to={`/products?category=${product.category}`}>
                                 <div className="pl-category" >{product.category}</div>
-                            </a>
+                            </Link>
                         </div> 
                     )
                 }) 

@@ -1,14 +1,14 @@
 .pl-title, .pl-container {
     width: 95%;
     margin: auto;
-    max-width: 70rem;
+    max-width: 80rem;
     margin-top: 2rem;
 }
 
 .pl-container {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-    grid-gap: 0.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
+    grid-gap: 1rem;
 }
 
 .pl-item {
@@ -79,7 +79,6 @@
 @media screen and (max-width: 599px) {
     .pagination {
         width: 95%;
-        margin: auto;
         max-width: 70rem;
         margin-top: 2rem;
     }

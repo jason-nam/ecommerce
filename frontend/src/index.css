@@ -9,15 +9,20 @@ body, html{
     top: 0;
     left: 0;
     -webkit-font-smoothing: antialiased;
+    /* overscroll-behavior: none; */
+    scroll-behavior: smooth;
 }
+
 
 .all {
   width: 100%;
   display: flex;
-  justify-content: center;
   flex-direction: column;
 	position: relative;
 	top: 4rem;
+  z-index: 1;
+  min-height: calc(100vh - 4rem);
+  background-color: white;
 }
 
 button, input {
@@ -33,9 +38,10 @@ a {
     color: black;
 }
 
-
-
-
+input[type=search] {
+  -moz-appearance:none;
+  -webkit-appearance:none;
+}
 
 /* :root {
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;

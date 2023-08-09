@@ -96,8 +96,9 @@ header {
 .nav-l-box {
 	display: flex;
 	align-items: center;
-	margin-left: 1rem;
 	/* min-width: 20%; */
+	height: 100%;
+	margin-left: 1rem;
 }
 
 @media screen and (max-width: 1154px) {
@@ -181,7 +182,6 @@ header {
 	width: auto;
 	aspect-ratio: 1/1;
 	cursor: pointer;
-	/* padding: 8px 1rem; */
 }
 
 .auth-links:hover,
@@ -252,9 +252,6 @@ header {
 
 @media screen and (max-width: 787px) {
 
-	/* .nav-l-box {
-		display: none;
-	} */
 	
 	.nav-c-box {
 		flex-direction: row;
@@ -275,7 +272,6 @@ header {
 		display: none;
 	}
 
-	.search-container,
 	.auth-box,
 	.cart-button-box,
 	.menu-button-box {
@@ -288,4 +284,3 @@ header {
 		display: none;
 	}
 }
-
