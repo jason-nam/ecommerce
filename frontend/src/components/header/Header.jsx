@@ -121,7 +121,7 @@ export default function Header({userId, cart, setCart}) {
 
         <CartRight { ...{userId, cart, setCart} } />
         <div className="overlay-cart"></div>
-        <Menu { ...{} } />
+        <Menu { ...{userId} } />
         <div className="overlay-menu"></div>
         </>
 
