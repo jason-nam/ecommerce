@@ -96,7 +96,7 @@ export default function Header({userId, cart, setCart}) {
                         {userId === -1 ?  
                         <>
                             <a href="/login">Sign In</a>
-                            <a href="/register">Join</a>
+                            <a href="/register">Join Us</a>
                         </> 
                         : userId !==null ? 
                         <>
@@ -138,7 +138,7 @@ export default function Header({userId, cart, setCart}) {
 
         <CartRight { ...{userId, cart, setCart} } />
         <div className="overlay-cart"></div>
-        <Menu { ...{} } />
+        <Menu { ...{userId} } />
         <div className="overlay-menu"></div>
         </>
 
