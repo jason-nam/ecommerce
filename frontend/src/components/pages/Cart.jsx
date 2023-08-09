@@ -17,21 +17,10 @@ export function Cart({userId, cart, setCart}) {
         const ls = JSON.parse(ec ? ec : "[]")
 
         if (userId > 0) {
+
             let isMounted = true;
             const controller = new AbortController();
             const signal = controller.signal;
-
-            // move localstorage items to db cart
-            axios.post(
-                "/api/carts/mycart/items/multi", 
-                { items: ls })
-                .then(res => {
-                    if (isMounted) {
-                        localStorage.removeItem('ECOMMERCE_CART')
-                        localStorage.removeItem('ECOMMERCE_ITEMID')
-                    }
-                })
-                .catch(err => console.log(err))    
 
             // get cart from db
             axios.get("/api/carts/mycart", {signal: signal})

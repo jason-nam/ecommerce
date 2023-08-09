@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios"
 import './CartRight.css'
@@ -10,34 +10,22 @@ export default function CartRight({userId, cart, setCart}) {
     useEffect(() => {
 
         const ec = localStorage.getItem('ECOMMERCE_CART')
-        const ls = JSON.parse(ec ? ec : "[]")
+        let ls = JSON.parse(ec ? ec : "[]")
 
         if (userId > 0) {
             let isMounted = true;
             const controller = new AbortController();
             const signal = controller.signal;
 
-            // move localstorage items to db cart
-            axios.post(
-                "/api/carts/mycart/items/multi", 
-                { items: ls })
-                .then(res => {
-                    if (isMounted) {
-                        localStorage.removeItem('ECOMMERCE_CART')
-                        localStorage.removeItem('ECOMMERCE_ITEMID')
-                    }
-                })
-                .catch(err => console.log(err))    
-
             // get cart from db
             axios.get("/api/carts/mycart", {signal: signal})
-                .then(res => {
-                    if (isMounted) {
-                        setCart(res.data.items)
-                    }
-                })
-                .catch(err => console.log(err))
-
+            .then(res => {
+                if (isMounted) {
+                    setCart(res.data.items)
+                }
+            })
+            .catch(err => console.log(err))
+                
             return () => {
                 isMounted = false;
                 isMounted && controller.abort()
@@ -47,7 +35,7 @@ export default function CartRight({userId, cart, setCart}) {
         } 
     
     }, [setCart, userId])
-
+    
     //subtotal
     useEffect( () => {
         setSubtotal(cart.reduce((acc, item) => acc + Number.parseInt(item.price) * item.qty, 0))
