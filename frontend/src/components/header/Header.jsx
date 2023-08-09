@@ -38,7 +38,7 @@ export default function Header({userId, cart, setCart}) {
 
     //mobile
     const addToRef = (x) => {
-        if (searchRef.current.length < 4) {
+        if (searchRef.current.length < 5) {
             searchRef.current.push(x)
         }
     }
@@ -63,31 +63,14 @@ export default function Header({userId, cart, setCart}) {
     return (
         <>
         <header>
-            {/* <div className='menu-button-box'>
-                    <button id="menu-button" ref={addToRef} onClick={(event)=>{
-                        event.stopPropagation();
-                        if (menu) {
-                            menu.classList.toggle('active')
-                        } else
-                            return null;
-                    }}>
-                        <FontAwesomeIcon icon={faBars}/>
-                    </button>
-                </div> */}
-
             <div className="nav-l-box" ref={addToRef}>
                 <Link to="/" className="logo-link">
                     <img className='logo-img' src={logo} alt="Logo"></img>
                 </Link>
             </div>
-
-            <div className="nav-c-box">
-                {/* <div className="products-list" ref={addToRef}>
-                    <Link to="/products"><div>Products</div></Link>
-                </div> */}
+            <div className="nav-c-box" ref={addToRef}>
                 <SearchForm searchRef={searchRef}/>
             </div>
-            
             <div className="nav-r-box" ref={addToRef}>
                 
                 <div className="auth-box">
@@ -95,8 +78,8 @@ export default function Header({userId, cart, setCart}) {
                     <div className="dropdown" ref={dropRef}>
                         {userId === -1 ?  
                         <>
-                            <a href="/login">Sign In</a>
-                            <a href="/register">Join Us</a>
+                            <Link to="/login">Sign In</Link>
+                            <Link to="/register">Join</Link>
                         </> 
                         : userId !==null ? 
                         <>
