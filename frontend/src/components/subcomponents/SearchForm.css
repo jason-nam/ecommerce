@@ -6,13 +6,13 @@
 
 .search-bar-universal {
 	display: flex;
-    justify-content: flex-start;
+    justify-content: flex-end;
 	align-items: center;
     position: relative;
 	height: 100%;
 	/* width: 100%; */
 	width: 17rem;
-	float: left;
+	float: right;
 }
 
 
@@ -117,15 +117,13 @@
 	visibility: hidden;
 	overflow: hidden;
 	z-index: 101;
+	position: absolute;
+	right: var(--search-button-margin);
 	width: calc(3rem * 0.9 - var(--search-button-margin) * 2);
 }
 
-#search-close.active {
-	position: absolute;
+#search-open {
 	right: var(--search-button-margin);
-	visibility: visible;
-	opacity: 1;
-	transition: visibility 0s ease 0s, opacity 0.5s ease 0.3s;
 }
 
 #search-open.not-active {
@@ -167,7 +165,7 @@
 	justify-content: center;
 	align-items: center;
 	position: absolute;
-	left: var(--search-button-margin);
+	right: var(--search-button-margin);
 	/* fill: var(--font-color); */
 	/* transition: color 0.2s; */
 	/* background-color: var(--search-bar-grey-1); */
@@ -229,6 +227,16 @@
 
 	#search-close.active, #search-button.active {
 		transition: opacity 0.5s ease;
+	}
+	#search-button.active {
+		left: 0;
+	}
+
+	#search-close.active {
+		position: absolute;
+		right: var(--search-button-margin);
+		visibility: visible;
+		opacity: 1;
 	}
 
 	#search-button.active {
