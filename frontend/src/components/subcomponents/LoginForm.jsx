@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function LoginForm({setUserId, setAuth}) {
+export default function LoginForm({setUserId, setCart, setAuth}) {
     const { register, watch, handleSubmit, formState: { errors } } = useForm({
         // mode: 'all',  //show warnings on input change
         defaultValues: {
@@ -13,9 +13,11 @@ export default function LoginForm({setUserId, setAuth}) {
     const email = watch('email')
     const password = watch('password')
     const [authFail, setAuthFail] = useState(false);
+    const [cartFail, setCartFail] = useState([])
     const navigate = useNavigate();
     
-    const doLogin = (data) => {
+    const doLogin = (data, e) => {
+        e.preventDefault();
         axios.post("/api/login", data,
         {
             headers: { "Content-Type" : "application/json" },
@@ -26,7 +28,6 @@ export default function LoginForm({setUserId, setAuth}) {
                 setUserId(res.data.id)
                 setAuth(true)
                 changeCart()
-                navigate(-1)
             } else
                 setAuthFail(true)
         })
@@ -42,15 +43,17 @@ export default function LoginForm({setUserId, setAuth}) {
         const ec = localStorage.getItem('ECOMMERCE_CART')
         let ls = JSON.parse(ec ? ec : "[]")
 
-            // move localstorage items to db cart
-            axios.post(
-                "/api/carts/mycart/items/multi", 
-                { items: ls })
-                .then(res => {
-                    localStorage.removeItem('ECOMMERCE_CART')
-                    localStorage.removeItem('ECOMMERCE_ITEMID')
-                })
-                .catch(err => console.log(err))   
+        // move localstorage items to db cart
+        axios.post(
+            "/api/carts/mycart/items/multi", 
+            { items: ls })
+        .then(res => {
+            localStorage.removeItem('ECOMMERCE_CART')
+            localStorage.removeItem('ECOMMERCE_ITEMID')
+            setCart(res.data.items)
+            navigate(-1)
+        })
+        .catch(err => console.log(err))   
     }
 
     return ( 

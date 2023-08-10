@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@100;200;300;400;500&family=Nunito+Sans:ital,opsz,wght@0,6..12,200;0,6..12,300;0,6..12,400;0,6..12,500;1,6..12,200;1,6..12,300;1,6..12,400;1,6..12,500&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;1,100;1,200;1,300;1,400;1,500&display=swap');
 
 body, html{
-    width: 100%;
+    /* width: 100%; */
     font-family: 'Poppins', 'Nunito Sans', sans-serif;
     font-weight: 300;
     margin:0;
@@ -10,7 +10,7 @@ body, html{
     left: 0;
     -webkit-font-smoothing: antialiased;
     /* overscroll-behavior: none; */
-    scroll-behavior: smooth;
+    /* scroll-behavior: smooth; */
 }
 
 

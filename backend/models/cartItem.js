@@ -8,7 +8,7 @@ module.exports = class CartItemModel {
     }
 
     /**
-     * Create a new cart item
+     * Create a new cart item, or update qty if already exists
      * @param {Object} data cart item data
      * @return {Object|null} created cart item
      */
@@ -20,8 +20,11 @@ module.exports = class CartItemModel {
             const { qty, productid, cartid } = data;
 
             const statement = `INSERT INTO cartitems (qty, productid, cartid)
-                               VALUES ($1, $2, $3)
-                               RETURNING *`;
+                                VALUES ($1, $2, $3)
+                                ON CONFLICT (productid)
+                                DO 
+                                    UPDATE SET qty = EXCLUDED.qty + cartitems.qty
+                                RETURNING *`;
             const values = [qty, productid, cartid];
 
             const result = await db.query(statement, values);
@@ -58,7 +61,6 @@ module.exports = class CartItemModel {
             const values = [qty, productid, cartid, id];
 
             const result = await db.query(statement, values);
-            console.log(result)
 
             if (result.rows?.length) {
                 return result;
@@ -81,7 +83,8 @@ module.exports = class CartItemModel {
 
             const statement = `SELECT ci.qty, ci.id AS cartitemid, ci.cartid, p.*
                                FROM cartitems ci INNER JOIN products p ON p.id = ci.productid
-                               WHERE cartid = $1`;
+                               WHERE cartid = $1
+                               ORDER BY ci.id ASC`;
             const values = [cartid];
 
             const result = await db.query(statement, values);

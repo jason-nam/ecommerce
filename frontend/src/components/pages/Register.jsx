@@ -30,8 +30,7 @@ export function Register({userId}) {
         return (
             <>
                 <h1 className = "auth-title">Register</h1>
-                <RegisterForm setRegistered={setRegistered} setUserExists={setUserExists}/>
-                {userExists ? <div className="warning">User Already Exists</div> : null}
+                <RegisterForm {...{setRegistered, setUserExists, userExists}}/>
             </>
         )
     else if (userId != null)

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useLayoutEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 const ScrollOnChange = () => {
@@ -7,7 +7,7 @@ const ScrollOnChange = () => {
     useEffect(() => {
         setTimeout ( () => {
             window.scrollTo(0, 0);
-        }, 1)
+        }, 0)
     }, [location]);
 }
 
