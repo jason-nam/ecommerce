@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
 
-export default function SearchForm({searchRef}) {
+export default function SearchForm({headerRef}) {
 
     let formRef = useRef(0)
 
@@ -33,14 +33,16 @@ export default function SearchForm({searchRef}) {
             formRef.current.classList.add('active')
             searchOpen.classList.add('active')
             searchOpen.classList.remove('not-active')
-            searchRef.current.forEach(x => x? x.classList.add('active') : null);
+            // searchRef.current.forEach(x => x? x.classList.add('active') : null);
+            headerRef.current.classList.add('active')
             inputBar.focus()
         } 
         if (num === 0 ) {
             formRef.current.classList.remove('active')
             searchOpen.classList.replace('active' , 'not-active')
-            searchRef.current.forEach(x => x? x.classList.remove('active') : null);
-            inputBar.blur();    
+            // searchRef.current.forEach(x => x? x.classList.remove('active') : null);
+            headerRef.current.classList.remove('active')
+            inputBar.blur();
             setSearchVal('')
         }
     }
