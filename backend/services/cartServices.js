@@ -64,7 +64,13 @@ module.exports = class CartService {
                 return data.rows[0]
             })
 
-            return await Promise.allSettled(promises);
+            const settled = await Promise.allSettled(promises);
+
+            let updatedCart = await CartModel.getByUser(userid);
+            const updatedItems = await CartItemModel.getCartItems(updatedCart.rows[0].id);
+
+            updatedCart.items = updatedItems;
+            return {settled, updatedCart};
 
         } catch(err) {
             throw new Error(err);
@@ -75,7 +81,6 @@ module.exports = class CartService {
 
         try {
             const cartItem = await CartItemModel.updateCartItem(cartitemid, data);
-            console.log(cartItem)
             return cartItem;
 
         } catch(err) {

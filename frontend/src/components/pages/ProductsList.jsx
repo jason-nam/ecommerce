@@ -53,7 +53,7 @@ export function ProductsList() {
     return <>
         {error ?    
             404
-    : (!loading ?
+    : //(!loading ?
         <>  
             <div className="pl-title">
                 {
@@ -70,9 +70,12 @@ export function ProductsList() {
                         <button type='button'>{searchParams.get('category')} &times;</button>
                     : null
                 }
-                <div>({productsCount})</div>
+                {!loading? <div>({productsCount})</div> : null}
             </div>
-                <div className="pl-container">{products.length? products.map( product => {
+                <div className="pl-container">{loading? 
+                <div>Loading...</div>
+                :
+                products.length? products.map( product => {
                     return (
                         <div key={product.id} className='pl-item' id={product.id}>
                             <Link to={`/products/${product.id}`} className='item-link'>
@@ -94,8 +97,7 @@ export function ProductsList() {
                 <div>No matches for your query</div>
             }</div>
             <Pagination {...{searchParams, setSearchParams, productsCount}}/>
-        </> : <div>...loading</div>
-        )
+        </> 
         }
     </>
 }
