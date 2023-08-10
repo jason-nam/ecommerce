@@ -9,7 +9,7 @@
 	transform: translateX(125%);
 	transition: transform 0.3s ease-in;
 	height: 100vh;
-	width: 40rem;
+	width: 30rem;
 }
 
 .menu.active {
@@ -76,6 +76,11 @@
 .menu .main {
     position: absolute;
     top: 0;
+
+	display: flex;
+	flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
 
     padding: 5rem;
 
