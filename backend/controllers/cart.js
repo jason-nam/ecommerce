@@ -50,7 +50,6 @@ module.exports = {
 
             const data = req.body.items;
             const response = await CartServiceInstance.addMultiItems(id, data);
-            // res.status(200).send({cart: response});
             res.status(200).send({settled: response.settled, rows: response.updatedCart.rows, items: response.updatedCart.items});
 
         } catch(err) {

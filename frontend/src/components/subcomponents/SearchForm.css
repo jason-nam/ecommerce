@@ -4,7 +4,7 @@
 	width: 100%;
 }
 
-.search-bar-universal {
+#sf {
 	display: flex;
     justify-content: flex-end;
 	align-items: center;
@@ -57,7 +57,7 @@
 	color: var(--search-bar-grey-3);
 } */
 
-#search-bar, .search-bar:not(.active) {
+#search-bar, #sf:not(.active) .search-bar {
 	opacity: 0;
 	width: 0;
 	height: 90%;
@@ -72,7 +72,7 @@
 	z-index: 100;
 }
 
-#search-bar.active, #search-bar.active:valid {
+#sf.active #search-bar {
 	transition: width 0.5s ease, visibility 0s ease 0s, opacity 0s ease 0s;
 	visibility: visible;
 	opacity: 1;
@@ -83,23 +83,23 @@
 	/* background-color: var(--search-bar-grey-1); */
 }
 
-#search-bar.active:valid {
+#sf.active #search-bar:valid {
 	color: black;
 }
 
-#search-bar.active:hover,
-#search-bar.active:hover + #search-button.active,
-#search-bar.active:hover:valid {
+#sf.active #search-bar:hover,
+#sf.active #search-bar:hover + #sf.active #search-button,
+#sf.active #search-bar:hover:valid {
 	/* background-color: var(--search-bar-grey-2); */
 	fill: var(--font-color);
 }
 
-#search-bar.active:hover::placeholder {
+#sf.active #search-bar:hover::placeholder {
 	/* background-color: var(--search-bar-grey-2); */
 	color: var(--search-bar-grey-3);
 }
 
-#search-close, #search-close:not(.active) {
+#search-close, #sf:not(.active) #search-close {
 	cursor: pointer;
 	display: flex;
 	justify-content: center;
@@ -156,7 +156,7 @@
 	}
 }
 
-#search-button, #search-button:not(.active) {
+#search-button, #sf:not(.active) #search-button {
 	visibility: hidden;
 	opacity: 0;
 	background-color: var(--base-color);
@@ -180,7 +180,7 @@
 	z-index: 101;
 }
 
-#search-button.active {
+#sf.active #search-button {
 	visibility: visible;
 	opacity: 1;
 	transition: visibility 0s ease 0s, opacity 0s ease 0s;
@@ -196,50 +196,48 @@
 		margin-right: 0px !important;
 	}
 
-	.search-bar-universal {
+	#sf {
 		width: 100%;
 	}
 
-	.search-bar-universal.active {
+	#sf.active {
 		width: calc(100vw - 2rem);
 		margin: 0 1rem;
 		float:none;
 	}
 
-	#search-bar:not(.active) {
+	#sf:not(.active) #search-bar {
 		opacity: 0;
 		transition:none;
-		/* transition: visibility 0s ease 0.2s, opacity 0.2s ease, width 0s ease 0.2s; */
 	}
 
-	#search-bar.active, #search-bar:valid.active{
+	#sf.active #search-bar {
 		width: 100%;
 		opacity: 1;
 		transition: opacity 0.5s ease;
 	}
 
-	#search-close:not(.active), #search-button:not(.active) {
+	#sf:not(.active) #search-close, #sf:not(.active) #search-button {
 		transition:none;
 		width: 0;
 		padding: 0;
-		/* transition: opacity 0.2s ease, visibility 0s ease 0.2s; */
 	}
 
-	#search-close.active, #search-button.active {
+	#sf.active #search-close, #sf.active #search-button {
 		transition: opacity 0.5s ease;
 	}
-	#search-button.active {
+	#sf.active #search-button {
 		left: 0;
 	}
 
-	#search-close.active {
+	#sf.active #search-close {
 		position: absolute;
 		right: var(--search-button-margin);
 		visibility: visible;
 		opacity: 1;
 	}
 
-	#search-button.active {
+	#sf.active #search-button {
 		margin: 0;
 	}
 

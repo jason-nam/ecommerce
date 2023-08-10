@@ -58,11 +58,11 @@ export function ProductsList() {
             <div className="pl-title">
                 {
                     !searchParams.has("search") && !searchParams.has('category') ?
-                     <div>All Products</div> : null 
+                     <span>All Products</span> : null 
                 }
                 {
                     searchParams.has("search") ?
-                <div>Results for "{searchParams.get("search")}"</div>
+                <span>Results for "{searchParams.get("search")}"</span>
                     : null
                 }
                 {
@@ -70,7 +70,7 @@ export function ProductsList() {
                         <button type='button'>{searchParams.get('category')} &times;</button>
                     : null
                 }
-                {!loading? <div>({productsCount})</div> : null}
+                {!loading? <span> ({productsCount})</span> : null}
             </div>
                 <div className="pl-container">{loading? 
                 <div>Loading...</div>

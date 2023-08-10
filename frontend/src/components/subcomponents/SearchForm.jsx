@@ -6,10 +6,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
 import { faCircleXmark } from '@fortawesome/free-regular-svg-icons'
 
-
 export default function SearchForm({searchRef}) {
 
-    let ref = useRef(0)
     let formRef = useRef(0)
 
     const [searchVal, setSearchVal] = useState("")
@@ -26,33 +24,23 @@ export default function SearchForm({searchRef}) {
 
 
     const searchToggle = (e, num) => {
-        // e.preventDefault()
+        e.preventDefault()
 
-        let inputBar = ref.current;
-        let closeButton = inputBar.nextSibling;
-        let searchButton = closeButton.nextSibling;
-        let searchOpen = searchButton.nextSibling;
-        let searchForm = inputBar.parentElement;
+        let form = formRef.current;
+        let inputBar = form.children[0];
+        let searchOpen = form.children[3];
         if (num === 1) {
             formRef.current.classList.add('active')
-            inputBar.classList.add('active')
-            closeButton.classList.add('active')
-            searchButton.classList.add('active')
             searchOpen.classList.add('active')
             searchOpen.classList.remove('not-active')
-            searchForm.classList.add('active')
             searchRef.current.forEach(x => x? x.classList.add('active') : null);
-            ref.current.focus()
+            inputBar.focus()
         } 
         if (num === 0 ) {
             formRef.current.classList.remove('active')
-            inputBar.classList.remove('active')
-            closeButton.classList.remove('active') 
-            searchButton.classList.remove('active')
             searchOpen.classList.replace('active' , 'not-active')
-            searchForm.classList.remove('active')
             searchRef.current.forEach(x => x? x.classList.remove('active') : null);
-            ref.current.blur();    
+            inputBar.blur();    
             setSearchVal('')
         }
     }
@@ -72,7 +60,7 @@ export default function SearchForm({searchRef}) {
         <div className="search-container" >
             <form onSubmit={doSearch} 
                 className="search-bar-universal" 
-                id="search-form"
+                id="sf"
                 ref={formRef}
             >
                 <input 
@@ -82,7 +70,7 @@ export default function SearchForm({searchRef}) {
                     id = "search-bar"
                     type = "search"
                     className = "search-bar"
-                    ref={ref}
+                    onKeyDown={ e => e.key === "Escape" ? searchToggle(e, 0) : null }
                     />
                 <div 
                     className="search-close" 
