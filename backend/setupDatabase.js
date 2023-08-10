@@ -20,7 +20,7 @@ const { faker } = require('@faker-js/faker');
     const categoriesTableStatement = `
         CREATE TABLE IF NOT EXISTS categories (
         id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
-        name            VARCHAR(50)       NOT NULL,
+        name            VARCHAR(50)       NOT NULL
         );
     `
 
@@ -167,7 +167,8 @@ const { faker } = require('@faker-js/faker');
         // await db.query(insertProducts);
         for (let i = 0; i < 60; i++) {
             const subcategoryNames = Object.keys(subcategoriesMap).flatMap(name => subcategoriesMap[name]);
-            const randomSubcategoryName = faker.random.arrayElement(subcategoryNames);
+            const randomIndex = Math.floor(Math.random() * subcategoryNames.length);
+            const randomSubcategoryName = subcategoryNames[randomIndex];
             const subcategoryId = subcategoryIdMap[randomSubcategoryName];
 
             const values = [
