@@ -15,6 +15,9 @@ export default function Header({userId, cart, setCart}) {
 
     let cartRight = document.querySelector('.cart-r'); 
     let menu = document.querySelector('.menu');
+    const mref = useRef(null)
+    const cref = useRef(null)
+
     const headerRef = useRef(null);
     const [ error, setError ] = useState(false);
 
@@ -37,7 +40,7 @@ export default function Header({userId, cart, setCart}) {
 
     }
 
-    // click to toggle
+    // click to toggle dropdown
     const dropRef = useRef(null)
     const dropDownToggle = (e) => {
         e.preventDefault();
@@ -88,20 +91,20 @@ export default function Header({userId, cart, setCart}) {
                     </div>
                 </div>
                 <div className="cart-button-box">
-                    <button id='cart-button' onClick={(event)=>{
+                    <button id='cart-button' ref={cref} onClick={(event)=>{
                         event.stopPropagation();
                         // if (window.location.pathname === "/carts/mycart")
                         //     return null;      
-                        // else if (cartRight) {
+                        if (cartRight) {
                             cartRight.classList.toggle('active')
-                        // } else
-                        //     return null;
+                        } else
+                            return null;
                     }}>
                         <FontAwesomeIcon icon={faBasketShopping}/>
                     </button>
                 </div>
                 <div className='menu-button-box'>
-                    <button id="menu-button" onClick={(event)=>{
+                    <button id="menu-button" ref={mref} onClick={(event)=>{
                         event.stopPropagation();
                         if (menu) {
                             menu.classList.toggle('active')
