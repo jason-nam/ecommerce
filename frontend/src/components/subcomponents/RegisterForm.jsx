@@ -31,7 +31,7 @@ export default function RegisterForm({setRegistered, setUserExists, userExists})
 
     return (
             <div className="auth-form">
-                {userExists ? <span role="alert" className="warning">User Already Exists</span> : null}
+                {userExists ? <span role="alert" className="warning">User with this email already exists.</span> : null}
                 <form onSubmit={handleSubmit(createAccount)}>
                     <div className="input-form">
                         <input 
