@@ -15,7 +15,7 @@ export default function Header({userId, cart, setCart}) {
 
     let cartRight = document.querySelector('.cart-r'); 
     let menu = document.querySelector('.menu');
-    const searchRef = useRef([])
+    const headerRef = useRef(null);
     const [ error, setError ] = useState(false);
 
     // navigation
@@ -35,13 +35,6 @@ export default function Header({userId, cart, setCart}) {
         })
         .catch(err => console.log(err));   
 
-    }
-
-    //mobile
-    const addToRef = (x) => {
-        if (searchRef.current.length < 5) {
-            searchRef.current.push(x)
-        }
     }
 
     // click to toggle
@@ -65,16 +58,16 @@ export default function Header({userId, cart, setCart}) {
     // header block elements
     return (
         <>
-        <header>
-            <div className="nav-l-box" ref={addToRef}>
+        <header ref={headerRef}>
+            <div className="nav-l-box">
                 <Link to="/" className="logo-link">
                     <img className='logo-img' src={logo} alt="Logo"></img>
                 </Link>
             </div>
-            <div className="nav-c-box" ref={addToRef}>
-                <SearchForm searchRef={searchRef}/>
+            <div className="nav-c-box">
+                <SearchForm headerRef={headerRef}/>
             </div>
-            <div className="nav-r-box" ref={addToRef}>
+            <div className="nav-r-box">
                 
                 <div className="auth-box">
                     <a className = "auth-links" onClick={dropDownToggle}><FontAwesomeIcon icon={faUser} /></a>
@@ -97,18 +90,18 @@ export default function Header({userId, cart, setCart}) {
                 <div className="cart-button-box">
                     <button id='cart-button' onClick={(event)=>{
                         event.stopPropagation();
-                        if (window.location.pathname === "/carts/mycart")
-                            return null;      
-                        else if (cartRight) {
+                        // if (window.location.pathname === "/carts/mycart")
+                        //     return null;      
+                        // else if (cartRight) {
                             cartRight.classList.toggle('active')
-                        } else
-                            return null;
+                        // } else
+                        //     return null;
                     }}>
                         <FontAwesomeIcon icon={faBasketShopping}/>
                     </button>
                 </div>
                 <div className='menu-button-box'>
-                    <button id="menu-button" ref={addToRef} onClick={(event)=>{
+                    <button id="menu-button" onClick={(event)=>{
                         event.stopPropagation();
                         if (menu) {
                             menu.classList.toggle('active')
