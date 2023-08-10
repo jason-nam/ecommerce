@@ -4,7 +4,7 @@ const ROLE = {
 }
 
 const checkAuth = (req, res, next) => {    
-    if (req.isAUthenticated())
+    if (req.isAuthenticated())
         next();
     else
         res.status(403).send( { message: "Not Authenticated"} )
