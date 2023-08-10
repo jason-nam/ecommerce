@@ -10,11 +10,11 @@ import {Register} from './components/pages/Register';
 import {Orders} from './components/pages/Orders';
 import {Contact} from './components/pages/Contact';
 
-import checkIfLoggedIn from "./checkAuth"
+import checkIfLoggedIn from "./utils/util"
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
-import  ScrollOnChange  from './components/subcomponents/ScrollOnChange'
+import ScrollOnChange  from './components/subcomponents/ScrollOnChange'
 
 function App() {
     const [userId, setUserId] = useState(null);

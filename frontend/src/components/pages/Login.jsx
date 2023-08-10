@@ -21,10 +21,11 @@ export function Login({userId, setUserId, setCart, auth, setAuth}) {
             <h1 className = "auth-title">Sign In</h1>
             <LoginForm {...{setUserId, setCart, setAuth}}/>
         </>
-    : userId !== null ?
+    : userId !== null && !auth ?
         <div>Already logged in. Soon to be redirected</div>
-    :
-        null
+    : userId !== null && auth ?
+        <div>...loading</div>
+    : null
         
 
 }

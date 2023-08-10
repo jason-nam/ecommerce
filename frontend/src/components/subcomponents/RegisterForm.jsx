@@ -3,7 +3,7 @@ import axios from 'axios'
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 
-export default function RegisterForm({setRegistered, setUserExists}) {
+export default function RegisterForm({setRegistered, setUserExists, userExists}) {
 
     const { register, watch, handleSubmit, formState: { errors } } = useForm({
         // mode: 'all',  //show warnings on input change
@@ -31,6 +31,7 @@ export default function RegisterForm({setRegistered, setUserExists}) {
 
     return (
             <div className="auth-form">
+                {userExists ? <span role="alert" className="warning">User Already Exists</span> : null}
                 <form onSubmit={handleSubmit(createAccount)}>
                     <div className="input-form">
                         <input 

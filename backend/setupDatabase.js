@@ -12,7 +12,8 @@ const { faker } = require('@faker-js/faker');
         password        TEXT,
         firstname       VARCHAR(50),
         lastname        VARCHAR(50),
-        isactive        BOOLEAN
+        isactive        BOOLEAN,
+        UNIQUE(email)
         );
     `
 
@@ -71,7 +72,8 @@ const { faker } = require('@faker-js/faker');
         productid       INT               NOT NULL,
         cartid          INT               NOT NULL,
         FOREIGN KEY (cartid) REFERENCES carts(id),
-        FOREIGN KEY (productid) REFERENCES products(id)
+        FOREIGN KEY (productid) REFERENCES products(id),
+        UNIQUE(productid)
         );
     `
     const insertProducts = `

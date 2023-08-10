@@ -253,7 +253,7 @@ header {
 	z-index: 101;
 	visibility: hidden;
 	opacity: 0;
-	overflow: hidden;
+	/* overflow: hidden; */
 	background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black color */
 	transition: opacity 0.3s ease-in, visibility 0s ease-in 0.3s;
 }
