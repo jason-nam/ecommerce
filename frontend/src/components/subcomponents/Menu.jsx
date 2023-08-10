@@ -8,7 +8,6 @@ export default function Menu({userId}) {
     // close menu
     const menuRef = useRef(null)
     const menuCloseRef = useRef(null)
-    const searchRef = useRef([])
     const productPageRef = useRef(null)
     const loginPageRef = useRef(null)
     const registerPageRef = useRef(null)
@@ -31,12 +30,6 @@ export default function Menu({userId}) {
         })
         .catch(err => console.log(err));   
 
-    }
-
-    const addToRef = (x) => {
-        if (searchRef.current.length < 4) {
-            searchRef.current.push(x)
-        }
     }
 
     useEffect( () => {
