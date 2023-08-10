@@ -17,14 +17,31 @@ const { faker } = require('@faker-js/faker');
         );
     `
 
+    const categoriesTableStatement = `
+        CREATE TABLE IF NOT EXISTS categories (
+        id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
+        name            VARCHAR(50)       NOT NULL
+        );
+    `
+
+    const subcategoriesTableStatement = `
+        CREATE TABLE IF NOT EXISTS subcategories (
+        id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
+        name            VARCHAR(50)       NOT NULL,
+        categoryid      INT               NOT NULL,
+        FOREIGN KEY (categoryid) REFERENCES categories(id)
+        );
+    `
+
     const productsTableStatement = `
         CREATE TABLE IF NOT EXISTS products (
         id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
         name            VARCHAR(50)       NOT NULL,
         price           DECIMAL(10,2)     NOT NULL,
         description     VARCHAR(300)      NOT NULL,
-        category        VARCHAR(50)       NOT NULL,
-        image           VARCHAR(200)      NOT NULL
+        image           VARCHAR(200)      NOT NULL,
+        subcategoryid   INT               NOT NULL,
+        FOREIGN KEY (subcategoryid) REFERENCES subcategories(id)
         );
     `
 
@@ -76,9 +93,24 @@ const { faker } = require('@faker-js/faker');
         UNIQUE(productid)
         );
     `
+    
+    const insertCategories = `
+        INSERT INTO categories (name)
+        VALUES ($1) 
+        RETURNING *
+    `;
+
+    const insertSubcategories = `
+        INSERT INTO subcategories (name, categoryid)
+        VALUES ($1, $2)
+        RETURNING *
+    `;
+
     const insertProducts = `
-        INSERT INTO products (name, price, description, category, image)
-        VALUES ($1, $2, $3, $4, $5) RETURNING *`;
+        INSERT INTO products (name, price, description, image, subcategoryid)
+        VALUES ($1, $2, $3, $4, $5) 
+        RETURNING *
+    `;
 
     try {
         const db = new Client({
@@ -93,23 +125,64 @@ const { faker } = require('@faker-js/faker');
 
         // create tables on db
         await db.query(usersTableStatement);
+        await db.query(categoriesTableStatement);
+        await db.query(subcategoriesTableStatement);
         await db.query(productsTableStatement);
         await db.query(ordersTableStatement);
         await db.query(orderItemsTableStatement);
         await db.query(cartsTableStatement);
         await db.query(cartItemsTableStatement);
 
+        // await db.query(insertCategories);
+        const categoriesList = ["Men", "Women", "Children"];
+        const insertedCategories = [];
+        // const subcategoriesList = ["Tops", "Bottoms", "Outerwear", "Innerwear", "Loungewear", "Accessories"];
+        
+        for (const categoryName of categoriesList) {
+            const categoryResult = await db.query(insertCategories, [categoryName]);
+            insertedCategories.push(categoryResult.rows[0]);
+        }
+
+        console.log('Categories inserted:', insertedCategories);
+
+        const subcategoriesMap = {
+            Men: ["Tops", "Bottoms", "Dresses and Skirts", "Outerwear", "Innerwear", "Accessories"],
+            Women: ["Tops", "Bottoms", "Outerwear", "Innerwear", "Accessories"],
+            Children: ["Tops", "Bottoms", "Dresses and Skirts", "Outerwear", "Innerwear", "Accessories"]
+        };
+
+        // Insert subcategories and build a subcategory ID map
+        const subcategoryIdMap = {};
+      
+        for (const category of insertedCategories) {
+            const subcategoriesList = subcategoriesMap[category.name];
+            for (const subcategoryName of subcategoriesList) {
+                const subcategoryResult = await db.query(insertSubcategories, [subcategoryName, category.id]);
+                subcategoryIdMap[subcategoryName] = subcategoryResult.rows[0].id;
+            }
+        }
+
+        console.log('Subcategories inserted');
+
         // await db.query(insertProducts);
-        for (let i=0; i<60; i++) {
-            const values = [faker.commerce.productName(), 
+        for (let i = 0; i < 60; i++) {
+            const subcategoryNames = Object.keys(subcategoriesMap).flatMap(name => subcategoriesMap[name]);
+            const randomIndex = Math.floor(Math.random() * subcategoryNames.length);
+            const randomSubcategoryName = subcategoryNames[randomIndex];
+            const subcategoryId = subcategoryIdMap[randomSubcategoryName];
+
+            const values = [
+                faker.commerce.productName(), 
                 faker.commerce.price({ max: 100 }),
                 faker.commerce.productDescription(),
-                faker.commerce.department(),
-                faker.image.urlLoremFlickr({ category: 'shoes,whitebackground', width: 1000, height: 1000, randomize: false})       
+                // faker.commerce.department(),
+                faker.image.urlLoremFlickr({ category: 'shoes,whitebackground', width: 1000, height: 1000, randomize: false}),
+                subcategoryId
             ]
             await db.query(insertProducts, values);
         }
-    
+
+        console.log("Products inserted");
 
         await db.end();
 
