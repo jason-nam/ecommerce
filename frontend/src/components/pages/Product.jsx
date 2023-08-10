@@ -115,29 +115,34 @@ export function Product({userId, cart, setCart}) {
                 : (
                     !loading ? (
                         <> 
-                            <div className="left-container">
-                                <span className="go-back" onClick={() => navigate(-1)}>Back</span>
+                            <div className="pi-left">
+                                <div>
+                                    <span className="go-back" onClick={() => navigate(-1)}>Back</span>
+                                    <Link to={`/products?category=${product.category}`}>
+                                        <span className="category">{product.category}</span>
+                                    </Link>
+                                </div>
                                 <img className="product-image" src={product.image}/>
                             </div>
-                            <div className="product-info">
-                                <Link to={`/products?category=${product.category}`}>
-                                    <div className="category">{product.category}</div>
-                                </Link>
-                                <div className="name">{product.name}</div>
-                                <div className="description">{product.description}</div>
-                                <div className="price">${product.price}</div>
-                                <div className="qty">
-                                    <button onClick={() => qty > 1 ? setQty(qty-1) : null}>-</button>
-                                    <div>{qty}</div>
-                                    <button onClick={() => setQty(qty+1)}>+</button>
+                            <div className="pi-right">
+                                <div className="product-info">
+                                    <div className="pi-name">{product.name}</div>
+                                    <div className="pi-price">${product.price}</div>
+                                    <div className="pi-qty">
+                                        <button onClick={() => qty > 1 ? setQty(qty-1) : null}>-</button>
+                                        <div>{qty}</div>
+                                        <button onClick={() => setQty(qty+1)}>+</button>
+                                    </div>
+                                    <button className='add-to-cart' onClick={addItem}>Add to Cart</button>
+                                    <div className="pi-desc-title">Product Description</div>
+                                    <div className="pi-desc">{product.description}</div>
                                 </div>
-                                <button className='add-to-cart' onClick={addItem}>Add to Cart</button>
                             </div>
                         </>)
                     : (<p>loading</p>)
                 )}
             </div>
-            <div>You May Also Like</div>
+            <div className="recs">You May Also Like</div>
         </div>
         
         </>
