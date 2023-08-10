@@ -6,7 +6,7 @@ export function Home({userId, cart, setCart}) {
 
     return (
     <>
-        <CartRight { ...{userId, cart, setCart} }/>
+        <div></div>
     </>)
 }
 
