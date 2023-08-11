@@ -42,14 +42,19 @@ export function Cart({userId, cart, setCart}) {
                                         <div id="price">$ {item.price}</div>
                                     </div>
                                     {/* <div id="description">{item.description}</div> */}
-                                    <div id="category">{item.subcategory}</div>
-                                    <div className="qty-edit">
-                                        <button id="sub-button" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>-</button>
-                                        <div id="qty">Qty {item.qty}</div>
-                                        <button id="add-button" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>+</button>
-                                    </div>
+                                    <div id="category">{item.category}</div>
                                 </div>
-                                <button id="remove-button" onClick={() => removeItem(item.cartitemid, cart, userId, setCart)}>Remove</button>
+                                <div className="info-qty">
+                                    <div className="qty-edit">
+                                        <div id="qty-var">Qty</div>
+                                        <div className="qty-val">
+                                            <button id="qty-button" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>+</button>
+                                            <div id="qty">{item.qty}</div>
+                                            <button id="qty-button" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>-</button>
+                                        </div>
+                                    </div>
+                                    <button id="remove-button" onClick={() => removeItem(item.cartitemid)}>Remove</button>
+                                </div>
                             </div>
                         </div>
                     )})}
