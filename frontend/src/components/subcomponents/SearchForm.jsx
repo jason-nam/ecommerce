@@ -24,23 +24,19 @@ export default function SearchForm({headerRef}) {
 
 
     const searchToggle = (e, num) => {
-        e.preventDefault()
-
         let form = formRef.current;
         let inputBar = form.children[0];
-        let searchOpen = form.children[3];
+        let searchOpen = form.children[4];
         if (num === 1) {
             formRef.current.classList.add('active')
             searchOpen.classList.add('active')
             searchOpen.classList.remove('not-active')
-            // searchRef.current.forEach(x => x? x.classList.add('active') : null);
             headerRef.current.classList.add('active')
             inputBar.focus()
         } 
         if (num === 0 ) {
             formRef.current.classList.remove('active')
             searchOpen.classList.replace('active' , 'not-active')
-            // searchRef.current.forEach(x => x? x.classList.remove('active') : null);
             headerRef.current.classList.remove('active')
             inputBar.blur();
             setSearchVal('')
@@ -57,6 +53,12 @@ export default function SearchForm({headerRef}) {
         }, { })
     },[])
 
+    useEffect( () => {
+        if (searchVal.length) 
+            formRef.current.children[1].style.display = "block";
+        else
+            formRef.current.children[1].style.display = "none";
+    }, [searchVal, formRef])
 
     return (
         <div className="search-container" >
@@ -74,6 +76,7 @@ export default function SearchForm({headerRef}) {
                     className = "search-bar"
                     onKeyDown={ e => e.key === "Escape" ? searchToggle(e, 0) : null }
                     />
+                <div className="search-clear" onClick={() => setSearchVal("")}>Clear</div>
                 <div 
                     className="search-close" 
                     id="search-close" 
@@ -91,7 +94,6 @@ export default function SearchForm({headerRef}) {
                     >
                     <FontAwesomeIcon icon={faMagnifyingGlass} className="search-open-icon" />
                 </button>
-
             </form>
         </div>
     )
