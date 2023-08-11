@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from "axios"
 import './CartRight.css'
 
-export default function CartRight({userId, cart, setCart}) {
+export default function CartRight({userId, cart, setCart, cartRef}) {
 
     const [ subtotal, setSubtotal ] = useState(0)
 
@@ -42,7 +42,6 @@ export default function CartRight({userId, cart, setCart}) {
     }, [cart])
 
     // close cart
-    const cartRef = useRef(null)
     const closeRef = useRef(null)
     const cartPageRef = useRef(null)
 
@@ -53,6 +52,7 @@ export default function CartRight({userId, cart, setCart}) {
                 (cartPageRef.current && cartPageRef.current.contains(e.target)))
             {
                 cartRef.current.classList.remove('active');
+                document.body.classList.remove('modal');
             }
         }, { capture: true })
     },[])

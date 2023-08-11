@@ -13,6 +13,9 @@ body, html{
     /* scroll-behavior: smooth; */
 }
 
+body.modal {
+  overflow: hidden;
+}
 
 .all {
   width: 100%;
@@ -38,8 +41,7 @@ a {
     color: black;
 }
 
-input[type=search] {
-  -moz-appearance:none;
+input[type="search"]::-webkit-search-cancel-button {
   -webkit-appearance:none;
 }
 
