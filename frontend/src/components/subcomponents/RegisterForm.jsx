@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
+import { changeCart } from "../../utils/util"
 
 export default function RegisterForm({setRegistered, setUserId, setCart}) {
     const [userExists, setUserExists] = useState(false);
@@ -29,10 +30,7 @@ export default function RegisterForm({setRegistered, setUserId, setCart}) {
             {
                 setUserId(res.data.id)
                 setRegistered(true)
-                localStorage.removeItem('ECOMMERCE_CART')
-                localStorage.removeItem('ECOMMERCE_ITEMID')
-                setCart(ls)    
-                navigate(-1)
+                changeCart(setCart, navigate)
             }
         )
         .catch(err => {
