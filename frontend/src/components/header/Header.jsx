@@ -1,5 +1,5 @@
 import Cookies from 'js-cookie';
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import SearchForm from "../subcomponents/SearchForm";
@@ -11,10 +11,11 @@ import Menu from "../subcomponents/Menu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faBasketShopping, faBars } from '@fortawesome/free-solid-svg-icons'
 
-export default function Header({userId, cart, setCart}) {
+export default function Header({userId, cart, setCart, mainRef}) {
 
     const menuRef = useRef(null)
     const cartRef = useRef(null)
+    const dropRef = useRef(null)
 
     const headerRef = useRef(null);
     const [ error, setError ] = useState(false);
@@ -38,44 +39,54 @@ export default function Header({userId, cart, setCart}) {
 
     }
 
-    // click to toggle dropdown
-    const dropRef = useRef(null)
     const dropDownToggle = (e) => {
         e.preventDefault();
         dropRef.current.classList.toggle('show')
     }
 
+    const dropDownClick = useCallback((e) => {
+        if (dropRef.current && !dropRef.current.contains(e.target) 
+        && !dropRef.current.previousSibling.contains(e.target)) {
+            dropRef.current.classList.remove('show');
+        }
+    }, [dropRef])
+
+    // click to toggle dropdown
     useEffect( () => {
-        document.addEventListener('click', e => {
-            if (dropRef.current && !dropRef.current.contains(e.target) 
-            && !dropRef.current.previousSibling.contains(e.target))
-            {
-                dropRef.current.classList.remove('show');
-            }
-        }, { capture: true })
-    },[])
+        document.addEventListener('click', dropDownClick, { capture: true })
+        return () => document.removeEventListener('click', dropDownClick, { capture: true })
+    },[dropDownClick])
 
     const menuToggle = (e) => {
         e.preventDefault();
-        if (menuRef.current) {
+        if (menuRef.current && mainRef.current && headerRef.current) {
             menuRef.current.classList.toggle('active')
             document.body.classList.toggle('modal')
+
+            let ah = menuRef.current.classList.contains('active')
+            menuRef.current.setAttribute('aria-hidden', !ah)
+            mainRef.current.setAttribute('aria-hidden', ah)
+            headerRef.current.setAttribute('aria-hidden', ah)
         }
         // let menu = document.querySelector('.menu');
         // (event)=>{
         //     event.stopPropagation();
         //     if (menu) {
         //         menu.classList.toggle('active')
-        //     } else
-        //         return null;
+        //     } 
         // }
     }
 
     const cartToggle = (e) => {
         e.preventDefault();
-        if (cartRef.current) {
+        if (cartRef.current && mainRef.current && headerRef.current) {
             cartRef.current.classList.toggle('active')
             document.body.classList.toggle('modal')
+
+            let ah = cartRef.current.classList.contains('active')
+            cartRef.current.setAttribute('aria-hidden', !ah)
+            mainRef.current.setAttribute('aria-hidden', ah)
+            headerRef.current.setAttribute('aria-hidden', ah)
         }
     }
 
@@ -95,7 +106,9 @@ export default function Header({userId, cart, setCart}) {
             <div className="nav-r-box">
                 
                 <div className="auth-box">
-                    <div className = "auth-links" onClick={dropDownToggle} ><FontAwesomeIcon icon={faUser} /></div>
+                    <button type="button" className = "auth-links" onClick={dropDownToggle} aria-haspopup="true" >
+                        <FontAwesomeIcon icon={faUser} />
+                    </button>
                     <div className="dropdown" ref={dropRef}>
                         {userId === -1 ?  
                         <>
@@ -113,12 +126,12 @@ export default function Header({userId, cart, setCart}) {
                     </div>
                 </div>
                 <div className="cart-button-box">
-                    <button id='cart-button' onClick={cartToggle}>
+                    <button type="button" id='cart-button' onClick={cartToggle} aria-haspopup="dialog">
                         <FontAwesomeIcon icon={faBasketShopping}/>
                     </button>
                 </div>
                 <div className='menu-button-box'>
-                    <button id="menu-button" onClick={menuToggle}>
+                    <button type="button" id="menu-button" onClick={menuToggle} aria-haspopup="dialog">
                         <FontAwesomeIcon icon={faBars}/>
                     </button>
                 </div>
@@ -126,10 +139,10 @@ export default function Header({userId, cart, setCart}) {
         </header>
         
 
-        <CartRight { ...{userId, cart, setCart, cartRef} }/>
-        <div className="overlay-cart" tabIndex="-1"></div>
-        <Menu { ...{userId, menuRef, logout} } />
-        <div className="overlay-menu" tabIndex="-1"></div>
+        <CartRight { ...{userId, cart, setCart, cartRef, mainRef, headerRef} }/>
+        <div className="overlay-cart" aria-hidden='true'></div>
+        <Menu { ...{userId, menuRef, logout, mainRef, headerRef} } />
+        <div className="overlay-menu" aria-hidden='true'></div>
         </>
 
     )

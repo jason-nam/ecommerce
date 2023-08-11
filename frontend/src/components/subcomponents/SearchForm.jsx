@@ -1,5 +1,5 @@
 
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import './SearchForm.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -23,7 +23,7 @@ export default function SearchForm({headerRef}) {
     }
 
 
-    const searchToggle = (e, num) => {
+    const searchToggle = useCallback((e, num) => {
         let form = formRef.current;
         let inputBar = form.children[0];
         let searchOpen = form.children[4];
@@ -41,17 +41,22 @@ export default function SearchForm({headerRef}) {
             inputBar.blur();
             setSearchVal('')
         }
-    }
+    }, [formRef, setSearchVal])
+
 
     useEffect( () => {
         document.addEventListener('click', e => {
-            if (formRef.current && !formRef.current.contains(e.target))
-            {
+            if (formRef.current && !formRef.current.contains(e.target)) {
                 searchToggle(e, 0)
-                formRef.current.classList.remove('active')
             }
-        }, { })
-    },[])
+        })
+
+        return () => document.removeEventListener('click', e => {
+            if (formRef.current && !formRef.current.contains(e.target)) {
+                searchToggle(e, 0)
+            }
+        })
+    },[searchToggle])
 
     useEffect( () => {
         if (searchVal.length) 

@@ -119,6 +119,7 @@
 
 .qty-edit #qty-button {
     border: 1px solid black;
+    cursor: pointer;
 }
 
 .cart-box .items .item .prod-info #remove-button {
@@ -159,6 +160,7 @@
 
 .summary-box #value {
     white-space: nowrap;
+    font-weight: 400
 }
 
 .summary-box .subtotal-box,
