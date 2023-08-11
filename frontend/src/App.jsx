@@ -49,7 +49,7 @@ function App() {
                 <Route path='/orders/myorders' element={<Orders {...{userId}}/>}></Route>
                 <Route path='/contacts' element={<Contact {...{}}/>}></Route>
                 <Route path='/login' element={<Login {...{userId, setUserId, setCart, auth, setAuth}} />} />
-                <Route path='/register' element={<Register {...{userId}}/>} />
+                <Route path='/register' element={<Register {...{userId, setUserId, setCart}}/>} />
                 {/* <Route path="*" component={NotFound}  status={404} /> */}
             </Routes>
             </div>
