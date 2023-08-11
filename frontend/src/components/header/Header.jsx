@@ -13,10 +13,8 @@ import { faUser, faBasketShopping, faBars } from '@fortawesome/free-solid-svg-ic
 
 export default function Header({userId, cart, setCart}) {
 
-    let cartRight = document.querySelector('.cart-r'); 
-    let menu = document.querySelector('.menu');
-    const mref = useRef(null)
-    const cref = useRef(null)
+    const menuRef = useRef(null)
+    const cartRef = useRef(null)
 
     const headerRef = useRef(null);
     const [ error, setError ] = useState(false);
@@ -57,6 +55,30 @@ export default function Header({userId, cart, setCart}) {
         }, { capture: true })
     },[])
 
+    const menuToggle = (e) => {
+        e.preventDefault();
+        if (menuRef.current) {
+            menuRef.current.classList.toggle('active')
+            document.body.classList.toggle('modal')
+        }
+        // let menu = document.querySelector('.menu');
+        // (event)=>{
+        //     event.stopPropagation();
+        //     if (menu) {
+        //         menu.classList.toggle('active')
+        //     } else
+        //         return null;
+        // }
+    }
+
+    const cartToggle = (e) => {
+        e.preventDefault();
+        if (cartRef.current) {
+            cartRef.current.classList.toggle('active')
+            document.body.classList.toggle('modal')
+        }
+    }
+
 
     // header block elements
     return (
@@ -73,7 +95,7 @@ export default function Header({userId, cart, setCart}) {
             <div className="nav-r-box">
                 
                 <div className="auth-box">
-                    <a className = "auth-links" onClick={dropDownToggle}><FontAwesomeIcon icon={faUser} /></a>
+                    <div className = "auth-links" onClick={dropDownToggle} ><FontAwesomeIcon icon={faUser} /></div>
                     <div className="dropdown" ref={dropRef}>
                         {userId === -1 ?  
                         <>
@@ -91,26 +113,12 @@ export default function Header({userId, cart, setCart}) {
                     </div>
                 </div>
                 <div className="cart-button-box">
-                    <button id='cart-button' ref={cref} onClick={(event)=>{
-                        event.stopPropagation();
-                        // if (window.location.pathname === "/carts/mycart")
-                        //     return null;      
-                        if (cartRight) {
-                            cartRight.classList.toggle('active')
-                        } else
-                            return null;
-                    }}>
+                    <button id='cart-button' onClick={cartToggle}>
                         <FontAwesomeIcon icon={faBasketShopping}/>
                     </button>
                 </div>
                 <div className='menu-button-box'>
-                    <button id="menu-button" ref={mref} onClick={(event)=>{
-                        event.stopPropagation();
-                        if (menu) {
-                            menu.classList.toggle('active')
-                        } else
-                            return null;
-                    }}>
+                    <button id="menu-button" onClick={menuToggle}>
                         <FontAwesomeIcon icon={faBars}/>
                     </button>
                 </div>
@@ -118,10 +126,10 @@ export default function Header({userId, cart, setCart}) {
         </header>
         
 
-        <CartRight { ...{userId, cart, setCart} }/>
-        <div className="overlay-cart"></div>
-        <Menu { ...{userId} } />
-        <div className="overlay-menu"></div>
+        <CartRight { ...{userId, cart, setCart, cartRef} }/>
+        <div className="overlay-cart" tabIndex="-1"></div>
+        <Menu { ...{userId, menuRef} } />
+        <div className="overlay-menu" tabIndex="-1"></div>
         </>
 
     )

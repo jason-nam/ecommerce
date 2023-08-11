@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import axios from "axios"
 import './Menu.css'
 
-export default function Menu({userId}) {
+export default function Menu({userId, menuRef}) {
  
     // close menu
-    const menuRef = useRef(null)
     const menuCloseRef = useRef(null)
     const productPageRef = useRef(null)
     const loginPageRef = useRef(null)
@@ -45,6 +44,7 @@ export default function Menu({userId}) {
                 (contactPageRef.current && contactPageRef.current.contains(e.target)))
             {
                 menuRef.current.classList.remove('active');
+                document.body.classList.remove('modal')
             }
         }, { capture: true })
     },[])

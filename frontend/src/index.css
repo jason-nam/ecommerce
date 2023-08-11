@@ -13,6 +13,9 @@ body, html{
     /* scroll-behavior: smooth; */
 }
 
+body.modal {
+  overflow: hidden;
+}
 
 .all {
   width: 100%;

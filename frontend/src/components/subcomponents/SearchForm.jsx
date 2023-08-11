@@ -24,8 +24,6 @@ export default function SearchForm({headerRef}) {
 
 
     const searchToggle = (e, num) => {
-        e.preventDefault()
-
         let form = formRef.current;
         let inputBar = form.children[0];
         let searchOpen = form.children[4];
@@ -40,7 +38,6 @@ export default function SearchForm({headerRef}) {
             formRef.current.classList.remove('active')
             searchOpen.classList.replace('active' , 'not-active')
             headerRef.current.classList.remove('active')
-            formRef.current.children[1].style.display = "none"
             inputBar.blur();
             setSearchVal('')
         }
