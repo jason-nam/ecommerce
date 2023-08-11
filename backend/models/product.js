@@ -95,7 +95,7 @@ module.exports = class ProductModel {
             try {
 
                 // select products with id 1 of limit 1
-                const statement = `SELECT p.*, , c.name AS category, sc.name AS subcategory
+                const statement = `SELECT p.*, c.name AS category, sc.name AS subcategory
                                    FROM products p
                                        INNER JOIN subcategories sc ON sc.id = p.subcategoryid 
                                        INNER JOIN categories c ON c.id = sc.categoryid
