@@ -12,7 +12,7 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
 
     //subtotal
     useEffect( () => {
-        setSubtotal(cart.reduce((acc, item) => acc + Number.parseInt(item.price) * item.qty, 0))
+        setSubtotal(cart.reduce((acc, item) => acc + parseFloat(item.price) * item.qty, 0).toFixed(2))
     }, [cart])
     
     useEffect(() => {
@@ -108,12 +108,16 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
                                         <a href={`/products?category=${item.subcategory}`} className="bag-category">
                                             {item.subcategory}
                                         </a>
+                                        <div className="bag-price">${(parseFloat(item.price) * item.qty).toFixed(2)}</div>
                                     </div>
                                     <div className="item-bottom">
-                                        <div className="bag-qty">Qty: {item.qty}</div>
-                                        <div className="bag-price">${item.price * item.qty}</div>
+                                        <div className="bag-qty">
+                                            <div>Qty:&nbsp;&nbsp;</div>
+                                            <button className="bag-qty-edit" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>-</button>
+                                            <div className="bag-qty-amt">{item.qty}</div>
+                                            <button className="bag-qty-edit" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>+</button>
+                                        </div>
                                         <button className="remove-cart" onClick={() => removeItem(item.cartitemid, cart, userId, setCart)}>Remove</button>
-
                                     </div>
                                 </div>
                             </div>
