@@ -9,6 +9,7 @@
     "start": "concurrently \"npm run backend\" \"npm run frontend\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "create-db": "cd backend && node -r dotenv/config setupDatabase",
+    "delete-db": "cd backend && node -r dotenv/config deleteDatabase",
     "rm-modules": "rm -rf node_modules ; rm -rf ./backend/node_modules ; rm -rf ./frontend/node_modules"
   },
   "repository": {

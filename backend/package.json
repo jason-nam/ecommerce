@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon -r dotenv/config app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "create-db": "node -r dotenv/config setupDatabase"
+    "create-db": "node -r dotenv/config setupDatabase",
+    "delete-db": "node -r dotenv/config deleteDatabase"
   },
   "keywords": [],
   "author": "Yun Jae Nam, Yun Hye Nam",
