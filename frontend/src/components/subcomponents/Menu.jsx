@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from "axios"
 import './Menu.css'
 
-export default function Menu({userId, menuRef}) {
+export default function Menu({userId, menuRef, logout}) {
  
     // close menu
     const menuCloseRef = useRef(null)
@@ -14,22 +14,6 @@ export default function Menu({userId, menuRef}) {
     const signOutPageRef = useRef(null)
     const ordersPageRef = useRef(null)
     const contactPageRef = useRef(null)
-
-    //log out
-    const logout = (e) => {
-        e.preventDefault();
-
-        axios.get("/api/logout")
-        .then((res) => {
-            if (res.data.loggedOut) {
-                window.location.reload();
-            } else {
-                console.log("log-out error");
-            }
-        })
-        .catch(err => console.log(err));   
-
-    }
 
     useEffect( () => {
         document.addEventListener('click', e => {
