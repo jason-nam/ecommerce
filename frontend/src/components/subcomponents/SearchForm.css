@@ -107,6 +107,7 @@
 	overflow: hidden;
 	z-index: 101;
 	width: 0;
+	right: 0;
 }
 
 #search-open {
@@ -186,8 +187,8 @@
 
 	#sf.active {
 		width: calc(100vw - 2rem);
-		margin: 0 1rem;
-		float:none;
+		margin: 0 auto;
+		float: none;
 	}
 
 	#sf:not(.active):after {
@@ -231,6 +232,7 @@
 	#sf.active #search-close {
 		visibility: visible;
 		opacity: 1;
+		flex: 0 0 1.5rem;
 	}
 
 	#search-open:not(.active) {

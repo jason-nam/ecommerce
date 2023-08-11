@@ -6,7 +6,7 @@ module.exports = class ProductModel {
     constructor(data = {}) {
         // TODO
     }
-    
+
     /**
      * Get list of products
      * @return {Array} array of products

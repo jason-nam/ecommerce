@@ -87,8 +87,8 @@ export function ProductsList() {
                                 <div className="pl-name" >{product.name}</div>
                                 <div className="pl-price" >${product.price}</div>
                             </Link>
-                            <Link to={`/products?category=${product.category}`}>
-                                <div className="pl-category" >{product.category}</div>
+                            <Link to={`/products?category=${product.subcategory}`}>
+                                <div className="pl-category" >{product.subcategory}</div>
                             </Link>
                         </div> 
                     )

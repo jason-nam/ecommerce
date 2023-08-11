@@ -118,8 +118,13 @@ export function Product({userId, cart, setCart}) {
                             <div className="pi-left">
                                 <div>
                                     <span className="go-back" onClick={() => navigate(-1)}>Back</span>
+                                    <span> | </span>
                                     <Link to={`/products?category=${product.category}`}>
                                         <span className="category">{product.category}</span>
+                                    </Link>
+                                    <span>&gt; </span>
+                                    <Link to={`/products?category=${product.subcategory}`}>
+                                        <span className="category">{product.subcategory}</span>
                                     </Link>
                                 </div>
                                 <img className="product-image" src={product.image}/>
