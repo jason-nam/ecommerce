@@ -8,8 +8,10 @@ module.exports = {
 
             const data = req.body;
             const response = await AuthenticationServiceInstance.register(data);
-
-            res.status(201).send(response);
+            req.login(response, function(err) {
+                if (err) { return res.status(500).send({message: "Login Error"}); }
+                res.status(201).send(response);
+            })
 
         } catch(err) {
 

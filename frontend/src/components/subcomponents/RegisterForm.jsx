@@ -1,10 +1,11 @@
-
+import React, { useState } from "react";
 import axios from 'axios'
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
-export default function RegisterForm({setRegistered, setUserExists, userExists}) {
-
+export default function RegisterForm({setRegistered, setUserId, setCart}) {
+    const [userExists, setUserExists] = useState(false);
     const { register, watch, handleSubmit, formState: { errors } } = useForm({
         // mode: 'all',  //show warnings on input change
         defaultValues: {
@@ -15,15 +16,27 @@ export default function RegisterForm({setRegistered, setUserExists, userExists})
     const password = watch('password')
     const firstname = watch('firstname')
     const lastname = watch('lastname')
+    const navigate = useNavigate();
 
     const createAccount = (e) => {
+        const ec = localStorage.getItem('ECOMMERCE_CART')
+        let ls = JSON.parse(ec ? ec : "[]")
+
         axios.post("/api/register", {
                 email, firstname, lastname, password, isactive:true
         })
         .then(res => 
-            {setRegistered(true);}
+            {
+                setUserId(res.data.id)
+                setRegistered(true)
+                localStorage.removeItem('ECOMMERCE_CART')
+                localStorage.removeItem('ECOMMERCE_ITEMID')
+                setCart(ls)    
+                navigate(-1)
+            }
         )
         .catch(err => {
+            console.log(err)
             if (err.response.status === 409)
                 setUserExists(true)
         });

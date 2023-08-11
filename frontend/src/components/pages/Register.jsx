@@ -3,22 +3,13 @@ import { useNavigate } from "react-router-dom";
 import RegisterForm from "../subcomponents/RegisterForm"
 import "./AuthPage.css"
 
-export function Register({userId}) {
+export function Register({userId, setUserId, setCart}) {
 
-    const navigate = useNavigate();
     const [registered, setRegistered] = useState(false);
-    const [userExists, setUserExists] = useState(false);
-
-    useEffect(() => {
-        
-        if (registered) {
-            navigate("/login");
-        }
-
-    }, [navigate, registered]);
+    const navigate = useNavigate();
 
     useEffect( () => {
-        if (userId > 0 && userId !== null) {
+        if (userId > 0 && userId !== null && !registered) {
             setTimeout(() => {
                 navigate("/")
             }, 2000)
@@ -30,7 +21,7 @@ export function Register({userId}) {
         return (
             <>
                 <h1 className = "auth-title">Register</h1>
-                <RegisterForm {...{setRegistered, setUserExists, userExists}}/>
+                <RegisterForm {...{setRegistered, setUserId, setCart}}/>
             </>
         )
     else if (userId != null)

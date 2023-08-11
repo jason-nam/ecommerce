@@ -41,7 +41,7 @@ module.exports = class AuthenticationService {
             const { password, ...censoredUser } = user;
             censoredUser.cart = cart;
             return censoredUser;
-
+            
         } catch(err) {
             throw createError(500, err); // 500 internal service error
         }
