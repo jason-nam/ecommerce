@@ -57,7 +57,7 @@ export default function Menu({userId}) {
             </div>
 
             <div className="main">
-                <div className="item" id="products-item" ref={addToRef}>
+                <div className="item" id="products-item">
                     <Link to="/products" ref={productPageRef}>Products</Link>
                 </div>
 
