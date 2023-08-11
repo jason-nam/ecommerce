@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios"
 import './Cart.css'
+import { removeItem, updateItem } from '../../utils/util'
 
 export function Cart({userId, cart, setCart}) {
 
@@ -13,46 +14,6 @@ export function Cart({userId, cart, setCart}) {
     }, [cart])
 
 
-    //remove item from cart
-    const removeItem = (cartitemid) => {
-        let updatedCart = cart.filter(x=> (x.cartitemid !== cartitemid));
-        if (userId > 0) {
-            axios.delete(`/api/carts/mycart/items/${cartitemid}`)
-            .then(res => {
-                setCart(updatedCart)
-            })
-            .catch(err => console.log(err))
-        } else {
-            localStorage.setItem('ECOMMERCE_CART', JSON.stringify(updatedCart))
-            setCart(updatedCart)
-        }
-    }
-
-    const updateItem = (bool, cartitemid, qty, productid, cartid) => {
-        if (bool)
-            qty++;
-        else {
-            if (qty === 1)
-                return;
-            qty--
-        }
-        
-        let updatedCart = cart.splice(0).map(x=> {
-            if (x.cartitemid===cartitemid)
-                x['qty']=qty;
-            return x;
-        })
-        if (userId > 0) {
-            axios.put(`/api/carts/mycart/items/${cartitemid}`, 
-                {qty, productid, cartid})
-            .then(res => setCart(updatedCart))
-            .catch(err => console.log(err))
-        } else {
-            localStorage.setItem('ECOMMERCE_CART', JSON.stringify(updatedCart))
-            setCart(updatedCart)
-        }
-
-    }        
     return (
         <div className="cart">
             <div className="cart-box">
@@ -81,14 +42,14 @@ export function Cart({userId, cart, setCart}) {
                                         <div id="price">$ {item.price}</div>
                                     </div>
                                     {/* <div id="description">{item.description}</div> */}
-                                    <div id="category">{item.category}</div>
+                                    <div id="category">{item.subcategory}</div>
                                     <div className="qty-edit">
+                                        <button id="sub-button" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>-</button>
                                         <div id="qty">Qty {item.qty}</div>
-                                        <button id="add-button" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>+</button>
-                                        <button id="sub-button" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>-</button>
+                                        <button id="add-button" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>+</button>
                                     </div>
                                 </div>
-                                <button id="remove-button" onClick={() => removeItem(item.cartitemid)}>Remove</button>
+                                <button id="remove-button" onClick={() => removeItem(item.cartitemid, cart, userId, setCart)}>Remove</button>
                             </div>
                         </div>
                     )})}

@@ -17,8 +17,8 @@ import Footer from './components/footer/Footer'
 import ScrollOnChange  from './components/subcomponents/ScrollOnChange'
 
 function App() {
-    const [userId, setUserId] = useState(null);
-    const [cart, setCart] = useState([]);
+    const [ userId, setUserId ] = useState(null);
+    const [ cart, setCart ] = useState([]);
     const [ auth, setAuth ] = useState(false)
 
     useEffect(() => {
