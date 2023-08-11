@@ -2,6 +2,7 @@ import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { changeCart } from "../../utils/util"
 
 export default function LoginForm({setUserId, setCart, setAuth}) {
     const { register, watch, handleSubmit, formState: { errors } } = useForm({
@@ -27,7 +28,7 @@ export default function LoginForm({setUserId, setCart, setAuth}) {
             if (res.data.id) {
                 setUserId(res.data.id)
                 setAuth(true)
-                changeCart()
+                changeCart(setCart, navigate)
             } else
                 setAuthFail(true)
         })
@@ -38,23 +39,6 @@ export default function LoginForm({setUserId, setCart, setAuth}) {
         });
     }
 
-    const changeCart = () => {
-
-        const ec = localStorage.getItem('ECOMMERCE_CART')
-        let ls = JSON.parse(ec ? ec : "[]")
-
-        // move localstorage items to db cart
-        axios.post(
-            "/api/carts/mycart/items/multi", 
-            { items: ls })
-        .then(res => {
-            localStorage.removeItem('ECOMMERCE_CART')
-            localStorage.removeItem('ECOMMERCE_ITEMID')
-            setCart(res.data.items)
-            navigate(-1)
-        })
-        .catch(err => console.log(err))   
-    }
 
     return ( 
         <div className="auth-form">
