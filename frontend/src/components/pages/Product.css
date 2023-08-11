@@ -75,18 +75,21 @@
     font-size: 0.9rem;
 }
 
-.go-back, .category{
+.go-back, .pi-category{
     cursor: pointer;
     text-decoration: underline;
     transition: color 0.5s ease, background-color 0.5s ease;
     left: 0;
     width: fit-content;
     padding: 0.2rem 0.2rem;
-    margin-bottom: 0.2rem;
     margin-right: 0.2rem;
 }
 
-.category:hover, .go-back:hover {
+.pi-left-links {
+    margin-bottom: 0.5rem;
+}
+
+.pi-category:hover, .go-back:hover {
     background-color: black;
     color: white;
 }
@@ -174,8 +177,16 @@
         margin-left: 0;
     }
 
+    .pi-left-links {
+        margin: 1rem;
+    }
+
     .product-info {
         width: 100%;
+    }
+
+    .go-back {
+        display: none;
     }
     
 }
