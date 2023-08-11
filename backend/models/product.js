@@ -15,16 +15,17 @@ module.exports = class ProductModel {
 
         try {
             // select list of all products in ascending id order
-            const statement = `SELECT p.*, c.name AS category, sc.name AS subcategory
-                               FROM products p 
-                                   INNER JOIN subcategories sc ON sc.id = p.subcategoryid 
-                                   INNER JOIN categories c ON c.id = sc.categoryid
-                               WHERE (LOWER(p.name) LIKE LOWER($1) OR LOWER(sc.name) LIKE LOWER($1) OR LOWER(c.name) LIKE LOWER($1))
-                                   AND (LOWER(c.name) LIKE LOWER($2) OR LOWER(sc.name) LIKE LOWER($2))
-                               ORDER BY p.id ASC
-                               LIMIT $3
-                               OFFSET $4
-                               `;
+            const statement =   `SELECT p.*, c.name AS category, sc.name AS subcategory
+                                    FROM products p 
+                                    INNER JOIN subcategories sc ON sc.id = p.subcategoryid 
+                                    INNER JOIN categories c ON c.id = sc.categoryid
+                                WHERE (LOWER(p.name) LIKE LOWER($1) OR LOWER(sc.name) LIKE LOWER($1) OR LOWER(c.name) LIKE LOWER($1))
+                                    AND (LOWER(c.name) = LOWER($2) OR LOWER(sc.name) = LOWER($2)
+                                    OR $2 = ''
+                                    )
+                                ORDER BY p.id ASC
+                                LIMIT $3
+                                OFFSET $4`;
 
             if (search == null) {
                 search = "";
@@ -35,7 +36,7 @@ module.exports = class ProductModel {
             }
 
 
-            const values = [`%${search}%`, `%${category}%`, limit, (page - 1) * limit];            
+            const values = [`%${search}%`, category, limit, (page - 1) * limit];            
 
             const result = await db.query(statement, values);
 
@@ -59,8 +60,9 @@ module.exports = class ProductModel {
                                    INNER JOIN subcategories sc ON sc.id = p.subcategoryid 
                                    INNER JOIN categories c ON c.id = sc.categoryid
                                WHERE (LOWER(p.name) LIKE LOWER($1) OR LOWER(sc.name) LIKE LOWER($1) OR LOWER(c.name) LIKE LOWER($1))
-                                   AND (LOWER(c.name) LIKE LOWER($2) OR LOWER(sc.name) LIKE LOWER($2))
-                               `;
+                               AND (LOWER(c.name) = LOWER($2) OR LOWER(sc.name) = LOWER($2)
+                               OR $2 = '')
+                          `;
 
             if (search == null) {
                 search = "";
@@ -70,7 +72,7 @@ module.exports = class ProductModel {
                 category = "";
             }
 
-            const values = [`%${search}%`, `%${category}%`]
+            const values = [`%${search}%`, category]
 
             const result = await db.query(statement, values);
 

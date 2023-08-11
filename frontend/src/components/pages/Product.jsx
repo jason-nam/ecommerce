@@ -50,9 +50,9 @@ export function Product({userId, cart, setCart}) {
             if (inCart.length){
                 axios.put(`/api/carts/mycart/items/${inCart[0].cartitemid}`,
                 { 
-                    qty: inCart[0].qty+qty, 
-                    productid:inCart[0].id, 
-                    cartid:inCart[0].cartid
+                    qty: inCart[0].qty + qty, 
+                    productid: inCart[0].id, 
+                    cartid: inCart[0].cartid,
                 })
                 .then(res => {
                     setCart(cart.splice(0).map(x=> {
@@ -121,7 +121,7 @@ export function Product({userId, cart, setCart}) {
                                     <Link to={`/products?category=${product.category}`}>
                                         <span className="pi-category">{product.category}</span>
                                     </Link>
-                                    <span> | </span>
+                                    <span>/</span>
                                     <Link to={`/products?category=${product.subcategory}`}>
                                         <span className="pi-category">{product.subcategory}</span>
                                     </Link>
