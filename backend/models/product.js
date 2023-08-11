@@ -15,19 +15,21 @@ module.exports = class ProductModel {
 
         try {
             // select list of all products in ascending id order
-            const statement = `SELECT *
-                            FROM products
-                            WHERE 
-                                (
-                                    LOWER(name) LIKE LOWER($1) 
-                                    OR 
-                                    LOWER(category) LIKE LOWER($1)
-                                )
-                            AND LOWER(category) like LOWER($2)
-                            ORDER BY id ASC
-                            LIMIT $3
-                            OFFSET $4
-                            `;
+            const statement = `SELECT p.*, c.name AS category, sc.name AS subcategory
+                               FROM products p 
+                                   INNER JOIN subcategories sc 
+                                   ON sc.id = p.subcategoryid 
+                                   INNER JOIN categories c 
+                                   ON c.id = sc.categoryid
+                               WHERE (LOWER(p.name) LIKE LOWER($1) 
+                                   OR LOWER(sc.name) LIKE LOWER($1)
+                                   OR LOWER(c.name) LIKE LOWER($1))
+                                   AND (LOWER(c.name) LIKE LOWER($2)
+                                   OR LOWER(sc.name) LIKE LOWER($2))
+                                   ORDER BY p.id ASC
+                                   LIMIT $3
+                                   OFFSET $4
+                               `;
 
             if (search == null) {
                 search = "";
@@ -57,16 +59,18 @@ module.exports = class ProductModel {
 
     async getProductsCount (search, category) {
         try {
-            const statement = `SELECT COUNT(*) 
-                                FROM products  
-                                WHERE
-                                    (
-                                        LOWER(name) LIKE LOWER($1) 
-                                        OR 
-                                        LOWER(category) LIKE LOWER($1)
-                                    )
-                                AND LOWER(category) like LOWER($2)
-                                `;
+            const statement = `SELECT COUNT(*)
+                               FROM products p 
+                                   INNER JOIN subcategories sc 
+                                   ON sc.id = p.subcategoryid 
+                                   INNER JOIN categories c 
+                                   ON c.id = sc.categoryid
+                               WHERE (LOWER(p.name) LIKE LOWER($1) 
+                                   OR LOWER(sc.name) LIKE LOWER($1)
+                                   OR LOWER(c.name) LIKE LOWER($1))
+                                   AND (LOWER(c.name) LIKE LOWER($2)
+                                   OR LOWER(sc.name) LIKE LOWER($2))
+                               `;
 
             if (search == null) {
                 search = "";
