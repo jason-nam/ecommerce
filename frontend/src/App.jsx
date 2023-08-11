@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {Home} from './components/pages/Home';
 import {Product} from './components/pages/Product';
 import {ProductsList} from './components/pages/ProductsList';
@@ -20,6 +20,7 @@ function App() {
     const [ userId, setUserId ] = useState(null);
     const [ cart, setCart ] = useState([]);
     const [ auth, setAuth ] = useState(false)
+    const mainRef = useRef(null)
 
     useEffect(() => {
         let isMounted = true;
@@ -37,8 +38,8 @@ function App() {
 
     return (
         <Router>
-            <Header {...{userId, cart, setCart}} />
-            <div className="all">
+            <Header {...{userId, cart, setCart, mainRef}} />
+            <main className="all" ref={mainRef}>
             <Routes>
                 <Route exact path='/' element={<Home { ...{userId, cart, setCart} } />} />
                 {/* <Route path='/about' element={<About />} /> */}
@@ -52,7 +53,7 @@ function App() {
                 <Route path='/register' element={<Register {...{userId, setUserId, setCart}}/>} />
                 {/* <Route path="*" component={NotFound}  status={404} /> */}
             </Routes>
-            </div>
+            </main>
             <Footer />
             <ScrollOnChange />
         </Router>

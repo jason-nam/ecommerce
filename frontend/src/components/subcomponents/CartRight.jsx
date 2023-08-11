@@ -4,7 +4,7 @@ import axios from "axios"
 import './CartRight.css'
 import { removeItem, updateItem } from '../../utils/util'
 
-export default function CartRight({userId, cart, setCart, cartRef}) {
+export default function CartRight({userId, cart, setCart, cartRef, mainRef, headerRef}) {
 
     const [ subtotal, setSubtotal ] = useState(0)
     const closeRef = useRef(null)
@@ -16,7 +16,6 @@ export default function CartRight({userId, cart, setCart, cartRef}) {
     }, [cart])
     
     useEffect(() => {
-
         const ec = localStorage.getItem('ECOMMERCE_CART')
         let ls = JSON.parse(ec ? ec : "[]")
 
@@ -43,26 +42,48 @@ export default function CartRight({userId, cart, setCart, cartRef}) {
         } 
     
     }, [setCart, userId])
-    
+
     // close cart
+    const cartEscape = useCallback((e) => {
+        if (e.key === "Escape") {
+            cartRef.current.classList.remove('active');
+            document.body.classList.remove('modal');
+            cartRef.current.setAttribute('aria-hidden', 'true')
+            mainRef.current.setAttribute('aria-hidden', 'false')
+            headerRef.current.setAttribute('aria-hidden', 'false')
+        }
+    }, [cartRef, mainRef, headerRef])
+
+    const cartClick = useCallback ((e) => {
+        if ((cartRef.current && !cartRef.current.contains(e.target)) ||
+        (closeRef.current && closeRef.current.contains(e.target)) ||
+        (cartPageRef.current && cartPageRef.current.contains(e.target))) {
+            cartRef.current.classList.remove('active');
+            document.body.classList.remove('modal');
+            cartRef.current.setAttribute('aria-hidden', 'true')
+            mainRef.current.setAttribute('aria-hidden', 'false')
+            headerRef.current.setAttribute('aria-hidden', 'false')
+        }
+    }, [cartRef, mainRef, headerRef])
+
+    useEffect(() => {
+        document.addEventListener('keydown', cartEscape)
+        return () => document.removeEventListener('keydown', cartEscape)
+    },[cartEscape])
+
+    
     useEffect( () => {
-        document.addEventListener('click', e => {
-            if ((cartRef.current && !cartRef.current.contains(e.target)) ||
-                (closeRef.current && closeRef.current.contains(e.target)) ||
-                (cartPageRef.current && cartPageRef.current.contains(e.target)))
-            {
-                cartRef.current.classList.remove('active');
-                document.body.classList.remove('modal');
-            }
-        }, { capture: true })
-    },[])
+        document.addEventListener('click', cartClick, { capture: true })
+        return () => document.removeEventListener('click', cartClick)
+    }, [cartClick])
+
         
     return (
-        <div className='cart-r' ref={cartRef}>
+        <div className='cart-r' ref={cartRef} role="dialog" aria-hidden="true" >
             
             <div className="head">
                 <div id="title"> Shopping Bag </div>
-                <div id="close-cart" ref={closeRef}>&times;</div>
+                <button type="button" id="close-cart" ref={closeRef}>&times;</button>
             </div>
 
             <div className="items">
@@ -90,7 +111,7 @@ export default function CartRight({userId, cart, setCart, cartRef}) {
                                     </div>
                                     <div className="item-bottom">
                                         <div className="bag-qty">Qty: {item.qty}</div>
-                                        <div className="bag-price">${item.price}</div>
+                                        <div className="bag-price">${item.price * item.qty}</div>
                                         <button className="remove-cart" onClick={() => removeItem(item.cartitemid, cart, userId, setCart)}>Remove</button>
 
                                     </div>
