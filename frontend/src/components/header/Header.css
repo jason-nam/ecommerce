@@ -79,13 +79,13 @@ header {
 	.nav-l-box, header:not(.active) .nav-l-box {
 		visibility: visible;
 		opacity: 1;
-		transition: visibility 0s ease 0s, opacity 0.5s ease;
+		transition: visibility 0s ease 0s, opacity 0.3s ease 0.2s;
 	}
 
 	header.active .nav-l-box {
 		visibility: hidden;
 		opacity: 0;
-		transition: visibility 0s ease 0.5s, opacity 0.5s ease;
+		transition: visibility 0s ease 0.5s, opacity 0.3s ease;
 	}
 }
 
@@ -136,6 +136,7 @@ header {
 }
 
 #search-open,
+#search-button,
 .auth-links,
 #cart-button, 
 #menu-button {
@@ -143,19 +144,24 @@ header {
 	justify-content: center;
 	align-items: center;
 	color: var(--font-color);
+	fill: var(--font-color);
 	background-color: var(--base-color);
 	text-decoration: none;
 	text-align: center;
-	font-size: var(--icon-size);
-
-	transition: color 0.5s, background-color 0.5s, font-size 0.5s ease;
-	
+	font-size: var(--icon-size);	
 	border: none;
-	border-radius: 50%;
 	height: var(--button-size);
 	width: auto;
 	aspect-ratio: 1/1;
 	cursor: pointer;
+}
+
+#search-open,
+.auth-links,
+#cart-button, 
+#menu-button {
+	transition: color 0.5s, background-color 0.5s, font-size 0.5s ease;
+	border-radius: 50%;
 }
 
 .auth-links:hover,
