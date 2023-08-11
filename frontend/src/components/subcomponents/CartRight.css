@@ -188,7 +188,8 @@
 
 .bag-price,
 .bag-qty,
-.bag-category {
+.bag-category,
+.remove-cart {
 	font-size: var(--font-size-2);
 	font-weight: 300;
 }
@@ -202,12 +203,20 @@
 .remove-cart {
 	height: 1.5rem;
 	box-sizing: border-box;
-	border: none;
+	border: 1px solid black;
+
+	background-color: var(--base-color);
+	color: var(--secondary-color);
+
+	text-transform: uppercase;
+	font-stretch: 1px;
+
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	cursor: pointer;
 }
+
 .edit-container {
 	display: flex;
 

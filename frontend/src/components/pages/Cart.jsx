@@ -82,13 +82,18 @@ export function Cart({userId, cart, setCart}) {
                                     </div>
                                     {/* <div id="description">{item.description}</div> */}
                                     <div id="category">{item.category}</div>
-                                    <div className="qty-edit">
-                                        <div id="qty">Qty {item.qty}</div>
-                                        <button id="add-button" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>+</button>
-                                        <button id="sub-button" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>-</button>
-                                    </div>
                                 </div>
-                                <button id="remove-button" onClick={() => removeItem(item.cartitemid)}>Remove</button>
+                                <div className="info-qty">
+                                    <div className="qty-edit">
+                                        <div id="qty-var">Qty</div>
+                                        <div className="qty-val">
+                                            <button id="qty-button" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid)}>+</button>
+                                            <div id="qty">{item.qty}</div>
+                                            <button id="qty-button" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid)}>-</button>
+                                        </div>
+                                    </div>
+                                    <button id="remove-button" onClick={() => removeItem(item.cartitemid)}>Remove</button>
+                                </div>
                             </div>
                         </div>
                     )})}
