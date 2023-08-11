@@ -146,8 +146,8 @@ const { faker } = require('@faker-js/faker');
         console.log('Categories inserted:', insertedCategories);
 
         const subcategoriesMap = {
-            Men: ["Tops", "Bottoms", "Dresses and Skirts", "Outerwear", "Innerwear", "Accessories"],
-            Women: ["Tops", "Bottoms", "Outerwear", "Innerwear", "Accessories"],
+            Men: ["Tops", "Bottoms", "Outerwear", "Innerwear", "Accessories"],
+            Women: ["Tops", "Bottoms", "Dresses and Skirts", "Outerwear", "Innerwear", "Accessories"],
             Children: ["Tops", "Bottoms", "Dresses and Skirts", "Outerwear", "Innerwear", "Accessories"]
         };
 
@@ -158,18 +158,20 @@ const { faker } = require('@faker-js/faker');
             const subcategoriesList = subcategoriesMap[category.name];
             for (const subcategoryName of subcategoriesList) {
                 const subcategoryResult = await db.query(insertSubcategories, [subcategoryName, category.id]);
-                subcategoryIdMap[subcategoryName] = subcategoryResult.rows[0].id;
+                subcategoryIdMap[subcategoryResult.rows[0].id] = [subcategoryResult.rows[0].name, category.name];
             }
         }
 
-        console.log('Subcategories inserted');
+        console.log('Subcategories inserted:', subcategoryIdMap);
+
+        const insertedProducts = [];
 
         // await db.query(insertProducts);
         for (let i = 0; i < 60; i++) {
             const subcategoryNames = Object.keys(subcategoriesMap).flatMap(name => subcategoriesMap[name]);
-            const randomIndex = Math.floor(Math.random() * subcategoryNames.length);
-            const randomSubcategoryName = subcategoryNames[randomIndex];
-            const subcategoryId = subcategoryIdMap[randomSubcategoryName];
+            const randomIndex = Math.floor(Math.random() * subcategoryNames.length) + 1;
+            // const randomSubcategoryName = subcategoryNames[randomIndex];
+            // const subcategoryId = subcategoryIdMap[randomSubcategoryName];
 
             const values = [
                 faker.commerce.productName(), 
@@ -177,12 +179,13 @@ const { faker } = require('@faker-js/faker');
                 faker.commerce.productDescription(),
                 // faker.commerce.department(),
                 faker.image.urlLoremFlickr({ category: 'shoes,whitebackground', width: 1000, height: 1000, randomize: false}),
-                subcategoryId
+                randomIndex
             ]
-            await db.query(insertProducts, values);
+            const productsResult = await db.query(insertProducts, values);
+            insertedProducts.push(productsResult.rows[0]);
         }
 
-        console.log("Products inserted");
+        console.log("Products inserted:", insertedProducts);
 
         await db.end();
 
