@@ -1,9 +1,9 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios"
 import './Menu.css'
 
-export default function Menu({userId, menuRef, logout}) {
+export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
  
     // close menu
     const menuCloseRef = useRef(null)
@@ -15,29 +15,51 @@ export default function Menu({userId, menuRef, logout}) {
     const ordersPageRef = useRef(null)
     const contactPageRef = useRef(null)
 
-    useEffect( () => {
-        document.addEventListener('click', e => {
-            if ((menuRef.current && !menuRef.current.contains(e.target)) ||
-                (menuCloseRef.current && menuCloseRef.current.contains(e.target)) ||
-                (productPageRef.current && productPageRef.current.contains(e.target)) ||
-                (loginPageRef.current && loginPageRef.current.contains(e.target)) ||
-                (registerPageRef.current && registerPageRef.current.contains(e.target)) ||
-                (accountPageRef.current && accountPageRef.current.contains(e.target)) ||
-                (signOutPageRef.current && signOutPageRef.current.contains(e.target)) ||
-                (ordersPageRef.current && ordersPageRef.current.contains(e.target)) ||
-                (contactPageRef.current && contactPageRef.current.contains(e.target)))
-            {
-                menuRef.current.classList.remove('active');
-                document.body.classList.remove('modal')
+    const menuEscape = useCallback((e) => {
+        if (e.key === "Escape") {
+            menuRef.current.classList.remove('active');
+            document.body.classList.remove('modal');
+            menuRef.current.setAttribute('aria-hidden', 'true')
+            mainRef.current.setAttribute('aria-hidden', 'false')
+            headerRef.current.setAttribute('aria-hidden', 'false')
             }
-        }, { capture: true })
-    },[])
+    }, [menuRef, mainRef, headerRef])
+
+    const menuClick = useCallback ((e) => {
+        if ((menuRef.current && !menuRef.current.contains(e.target)) ||
+        (menuCloseRef.current && menuCloseRef.current.contains(e.target)) ||
+        (productPageRef.current && productPageRef.current.contains(e.target)) ||
+        (loginPageRef.current && loginPageRef.current.contains(e.target)) ||
+        (registerPageRef.current && registerPageRef.current.contains(e.target)) ||
+        (accountPageRef.current && accountPageRef.current.contains(e.target)) ||
+        (signOutPageRef.current && signOutPageRef.current.contains(e.target)) ||
+        (ordersPageRef.current && ordersPageRef.current.contains(e.target)) ||
+        (contactPageRef.current && contactPageRef.current.contains(e.target))) {
+            menuRef.current.classList.remove('active');
+            document.body.classList.remove('modal');
+            menuRef.current.setAttribute('aria-hidden', 'true')
+            mainRef.current.setAttribute('aria-hidden', 'false')
+            headerRef.current.setAttribute('aria-hidden', 'false')
+        }
+    }, [menuRef, mainRef, headerRef])
+
+
+    useEffect( () => {
+        document.addEventListener('click', menuClick, { capture: true })
+        return () => document.removeEventListener('click', menuClick)
+    },[menuClick])
+
+    useEffect( () => {
+        document.addEventListener('keydown', menuEscape)
+        return () => document.removeEventListener('keydown', menuEscape)
+    },[menuEscape])
+
         
     return (
-        <div className='menu' ref={menuRef}>
+        <div className='menu' ref={menuRef} role="dialog" aria-hidden="true">
 
             <div className="head">
-                <div id="close-menu" ref={menuCloseRef}>&times;</div>
+                <button type="button" id="close-menu" ref={menuCloseRef}>&times;</button>
             </div>
 
             <div className="main">
