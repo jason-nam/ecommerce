@@ -15,8 +15,13 @@
 
     width: 70%;
     
-    margin: 0 1rem;
+    margin: 0 2rem 0 1rem;
     padding-bottom: 1rem;
+}
+
+.lines {
+    height: 1px;
+    background-color: rgb(191, 191, 191);
 }
 
 .cart-box .head #title {
@@ -86,12 +91,12 @@
 .cart-box .items .item .prod-info .qty-edit {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
 }
 
 .cart-box .items .item .prod-info .info-qty {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .qty-edit #qty-var {
