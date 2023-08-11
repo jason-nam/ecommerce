@@ -36,5 +36,46 @@ const changeCart = (setCart, navigate) => {
     .catch(err => console.log(err))   
 }
 
+//remove item from cart
+const removeItem = (cartitemid, cart, userId, setCart) => {
+    let updatedCart = cart.filter(x=> (x.cartitemid !== cartitemid));
+    if (userId > 0) {
+        axios.delete(`/api/carts/mycart/items/${cartitemid}`)
+            .then(res => {
+                setCart(updatedCart)
+            })
+            .catch(err => console.log(err))
+    } else {
+        localStorage.setItem('ECOMMERCE_CART', JSON.stringify(updatedCart))
+        setCart(updatedCart)
+    }
+}
 
-export { checkIfLoggedIn, changeCart };
+const updateItem = (bool, cartitemid, qty, productid, cartid, cart, userId, setCart) => {
+    if (bool) {
+        qty++;
+    } else {
+        if (qty === 1) {
+            return;
+        }
+        qty--
+    }
+    
+    let updatedCart = cart.splice(0).map(x=> {
+        if (x.cartitemid===cartitemid) {
+            x['qty']=qty;
+        }
+        return x;
+    })
+    if (userId > 0) {
+        axios.put(`/api/carts/mycart/items/${cartitemid}`, {qty, productid, cartid})
+            .then(res => setCart(updatedCart))
+            .catch(err => console.log(err))
+    } else {
+        localStorage.setItem('ECOMMERCE_CART', JSON.stringify(updatedCart))
+        setCart(updatedCart)
+    }
+
+}
+
+export { checkIfLoggedIn, changeCart, removeItem, updateItem };

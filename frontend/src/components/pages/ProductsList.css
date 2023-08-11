@@ -1,13 +1,13 @@
 .pl-title, .pl-container {
     width: 95%;
-    margin: 1rem auto;
+    margin: 1rem auto 1rem;
     max-width: 80rem;
 }
 
 .pl-container {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
-    grid-gap: 1rem;
+    grid-gap: 2rem 1rem;
 }
 
 .pl-item {
@@ -18,6 +18,7 @@
 .pl-image-box {
     overflow: hidden;
     aspect-ratio: 1 / 1;
+    margin: 0.5rem 0;
 }
 
 .pl-image {
@@ -38,6 +39,10 @@
 
 .pl-category {
     font-family: 'Nunito Sans';
+}
+
+.pl-name, .pl-price, .pl-category {
+    font-size: 0.9rem;
 }
 
 @keyframes onload {
@@ -75,7 +80,7 @@
 }
 
 
-@media screen and (max-width: 599px) {
+@media screen and (max-width: 799px) {
     .pagination {
         width: 95%;
         max-width: 70rem;
@@ -85,4 +90,16 @@
     .cur-page {
         padding: 0 0.5rem;
     }
+
+    .pl-container {
+        width: 100%;
+        display: grid;
+        grid-template-columns: 50% 50%;
+        grid-gap: 2rem 0.5rem;
+    }
+    
+    .pl-name, .pl-price, .pl-category {
+        margin: 0 0.5rem;
+    }
+
 }
