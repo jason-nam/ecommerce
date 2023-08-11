@@ -84,8 +84,8 @@ export default function CartRight({userId, cart, setCart, cartRef}) {
                                         <a href={`/products/${item.id}`} className="bag-name">
                                             {item.name}
                                         </a>
-                                        <a href={`/products?category=${item.category}`} className="bag-category">
-                                            {item.category}
+                                        <a href={`/products?category=${item.subcategory}`} className="bag-category">
+                                            {item.subcategory}
                                         </a>
                                     </div>
                                     <div className="item-bottom">
