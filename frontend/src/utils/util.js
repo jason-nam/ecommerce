@@ -16,6 +16,25 @@ const checkIfLoggedIn = function (setUserId, signal, isMounted){
     })
     .catch(err => console.log(err.response, "Session Error")); 
     
-  };
-  
-  export default checkIfLoggedIn;
+};
+
+const changeCart = (setCart, navigate) => {
+
+    const ec = localStorage.getItem('ECOMMERCE_CART')
+    let ls = JSON.parse(ec ? ec : "[]")
+
+    // move localstorage items to db cart
+    axios.post(
+        "/api/carts/mycart/items/multi", 
+        { items: ls })
+    .then(res => {
+        localStorage.removeItem('ECOMMERCE_CART')
+        localStorage.removeItem('ECOMMERCE_ITEMID')
+        setCart(res.data.items)
+        navigate(-1)
+    })
+    .catch(err => console.log(err))   
+}
+
+
+export { checkIfLoggedIn, changeCart };
