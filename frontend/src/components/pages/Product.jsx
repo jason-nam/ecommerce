@@ -129,7 +129,7 @@ export function Product({userId, cart, setCart}) {
                                     <div className="pi-name">{product.name}</div>
                                     <div className="pi-price">${product.price}</div>
                                     <div className="pi-qty">
-                                        <div>Qty: </div>
+                                        <div id="pi-qty-var">Quantity </div>
                                         <div className="pi-qty-bt">
                                             <button className="qty-change" onClick={() => qty > 1 ? setQty(qty-1) : null}>-</button>
                                             <div className="qty-num">{qty}</div>
