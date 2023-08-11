@@ -10,7 +10,7 @@ export function Cart({userId, cart, setCart}) {
 
     //subtotal
     useEffect( () => {
-        setSubtotal(cart.reduce((acc, item) => acc + Number.parseInt(item.price) * item.qty, 0))
+        setSubtotal(cart.reduce((acc, item) => acc + parseFloat(item.price) * item.qty, 0).toFixed(2))
     }, [cart])
 
 
@@ -27,6 +27,8 @@ export function Cart({userId, cart, setCart}) {
                     }
                     {cart.slice(0).reverse().map(item => {
                     return (
+                        <>
+                        <div className="lines"></div>
                         <div className="item" key={item.cartitemid}>
                             <div className="prod-img">
                                 <Link to={`/products/${item.id}`}>
@@ -39,25 +41,27 @@ export function Cart({userId, cart, setCart}) {
                                         <Link to={`/products/${item.id}`}>
                                             <div id="name">{item.name}</div>
                                         </Link>
-                                        <div id="price">$ {item.price * item.qty}</div>
+                                        <div id="price">$ {(parseFloat(item.price) * item.qty).toFixed(2)}</div>
                                     </div>
                                     {/* <div id="description">{item.description}</div> */}
                                     <div id="category">{item.category}</div>
                                 </div>
                                 <div className="info-qty">
                                     <div className="qty-edit">
-                                        <div id="qty-var">Qty</div>
+                                        <div id="qty-var">Qty:&nbsp;&nbsp;</div>
                                         <div className="qty-val">
                                             <button id="qty-button" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>-</button>
                                             <div id="qty">{item.qty}</div>
                                             <button id="qty-button" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>+</button>
                                         </div>
                                     </div>
-                                    <button id="remove-button" onClick={() => removeItem(item.cartitemid)}>Remove</button>
+                                    <button id="remove-button" onClick={() => removeItem(item.cartitemid, cart, userId, setCart)}>Remove</button>
                                 </div>
                             </div>
                         </div>
+                        </>
                     )})}
+                    <div className="lines"></div>
                 </div>
             </div>
             <div className="summary-box">
@@ -86,7 +90,7 @@ export function Cart({userId, cart, setCart}) {
 
                 <div className="checkout-box">
                 {cart.length ? 
-                    <Link id="checkout" to={`./`}>Checkout</Link>
+                    <Link to="/checkout" id="checkout">Checkout</Link>
                     :<div id="checkout-empty-cart">Checkout</div>
                 }
                 </div>
