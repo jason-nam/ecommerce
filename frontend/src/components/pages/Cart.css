@@ -281,7 +281,7 @@
 
         padding-bottom: 1rem;
 
-        border-bottom: 1px solid var(--grey-2);
+        /* border-bottom: 1px solid var(--grey-2); */
     }
 
     .cart-box .items .item .prod-img {
