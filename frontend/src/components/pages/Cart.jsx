@@ -81,7 +81,7 @@ export function Cart({userId, cart, setCart}) {
                     <div id="value">—</div>
                 </div>
 
-                <div className="separator"></div>
+                <div className="lines"></div>
 
                 <div className="total-box">
                     <div id="total">Total</div>
