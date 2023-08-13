@@ -43,7 +43,7 @@
 
 .pi-name{
     font-weight: 500;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     text-transform: uppercase;
 }
 
@@ -154,6 +154,10 @@
     margin: 2rem auto;
 }
 
+.qty-addcart {
+    display: flex;
+    flex-direction: row;
+}
 
 @media screen and (max-width: 787px ) {
     .product {

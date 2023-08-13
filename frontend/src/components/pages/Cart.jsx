@@ -23,7 +23,8 @@ export function Cart({userId, cart, setCart}) {
                 <div className="items">
                     {cart.length ?
                         <></>
-                        :<div className="cart-r-empty">Your cart is empty</div>
+                        :<div className="cart-r-empty">Your cart is empty.&nbsp;
+                        <Link to="/products" className="underline">Continue shopping.</Link></div>
                     }
                     {cart.slice(0).reverse().map(item => {
                     return (
@@ -72,15 +73,15 @@ export function Cart({userId, cart, setCart}) {
                     <div id="subtotal">Subtotal</div>
                     <div className="value">{cart.length ? <>$ {subtotal}</> :<div>—</div>}</div>
                 </div>
-                <div className="shipping-handling-box">
-                    <div id="shipping-handling">Estimated Shipping & Handling</div>
-                    <div className="value">—</div>
-                </div>
                 <div className="tax-box">
                     <div id="tax">Estimated Tax</div>
                     <div className="value">—</div>
                 </div>
 
+                <div className="shipping-handling-box">
+                    <div id="shipping-handling">Estimated Shipping & Handling</div>
+                    <div className="value">—</div>
+                </div>
                 <div className="separator"></div>
 
                 <div className="total-box">

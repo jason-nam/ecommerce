@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from 'react-router-dom';
+import { useForm } from "react-hook-form";
 import axios from "axios"
 import './Checkout.css'
 
@@ -45,62 +46,136 @@ export function Checkout({userId, cart, setCart}) {
         <div className="checkout">
             <div className="left-ch">
                 <div className="shipping">
-                    <div>Shipping Info</div>
-                    <Link to="/login" className="link">Sign in for a better experience</Link>
+                    <div className="head">
+                        <div className="title"> SHIPPING INFO </div>
+                    </div>
+                    {userId > 0 ? null: <Link to="/login" className="link">Sign in for a better experience</Link>}
                     <form className="shipping-form" >
-                        <div className="cinfo">
-                            <input ref={fnameRef} />
-                            <label>First Name</label>
+                        <div className = "cinfo-double">
+                            <div className="cinfo">
+                                <input ref={fnameRef} id="cinfo-fname" className="cinfo-input"/>
+                                <label htmlFor="cinfo-fname" className="cinfo-label">First Name</label>
+                            </div>
+                            <div className="cinfo">
+                                <input ref={lnameRef} id="cinfo-lname" className="cinfo-input"/>
+                                <label htmlFor="cinfo-lname" className="cinfo-label">Last Name</label>
+                            </div>
                         </div>
                         <div className="cinfo">
-                            <input ref={lnameRef}/>
-                            <label>Last Name</label>
+                            <input id="cinfo-address" className="cinfo-input"/>
+                            <label htmlFor="cinfo-address" className="cinfo-label">Address</label>
                         </div>
                         <div className="cinfo">
-                            <input />
-                            <label>Address</label>
+                            <input id="cinfo-address-2" className="cinfo-input"/>
+                            <label htmlFor="cinfo-address-2" className="cinfo-label">Address 2</label>
+                        </div>
+                        <div className="cinfo-double">
+                            <div className="cinfo">
+                                <input id="cinfo-city" className="cinfo-input"/>
+                                <label htmlFor="cinfo-city" className="cinfo-label">City</label>
+                            </div>
+                            <div className="cinfo">
+                                <input id="cinfo-province" className="cinfo-input"/>
+                                <label htmlFor="cinfo-province" className="cinfo-label">Province/State</label>
+                            </div>
+                        </div>
+                        <div className="cinfo-double">
+                            <div className="cinfo">
+                                <input id="cinfo-code" className="cinfo-input"/>
+                                <label htmlFor="cinfo-code" className="cinfo-label">Postal/Zip Code</label>
+                            </div>
+                            <div className="cinfo">
+                                <input id="cinfo-country" className="cinfo-input"/>
+                                <label htmlFor="cinfo-country" className="cinfo-label">Country</label>
+                            </div>
                         </div>
                         <div className="cinfo">
-                            <input />
-                            <label>City</label>
+                            <input id="cinfo-phone" className="cinfo-input"/>
+                            <label htmlFor="cinfo-phone" className="cinfo-label">Phone</label>
                         </div>
                         <div className="cinfo">
-                            <input />
-                            <label>Province/State</label>
-                        </div>
-                        <div className="cinfo">
-                            <input />
-                            <label>Postal/Zip Code</label>
-                        </div>
-                        <div className="cinfo">
-                            <input />
-                            <label>Phone</label>
-                        </div>
-                        <div className="cinfo">
-                            <input ref={emailRef}/>
-                            <label htmlFor="email">Email</label>
+                            <input id="cinfo-email" ref={emailRef} className="cinfo-input"/>
+                            <label htmlFor="cinfo-email" className="cinfo-label">Email</label>
                         </div>
                     </form>
                 </div>
                 <div className="payment">
-                    <div className="payment-title">Payment</div>
+                    <div className="head">
+                        <div className="title"> Payment </div>
+                    </div>
                     <form>
-                        <div className="checkout-input">
-                            <input placeholder="Card Number"/>
-                            <label>Card Number</label>
-                        </div>
-                        <div className="checkout-input">
-                            <input placeholder="MM/YY"/>
-                            <label>MM/YY</label>
-                        </div>
-                        <div className="checkout-input">
-                            <input placeholder="CVV"/>
-                            <label>CVV</label>
-                        </div>
-                        <input type="checkbox" defaultChecked/>
-                        <label htmlFor="checkbox">Billing Address same as shipping</label>
                         <input type="radio" defaultChecked/>
                         <label>Debit/Credit</label>
+                        <div className="debit-credit">
+                            <div className="cinfo">
+                                <input className="cinfo-input" id="cinfo-cardnum"/>
+                                <label className="cinfo-label" htmlFor="cinfo-cardnum">Card Number</label>
+                            </div>
+                            <div className="cinfo">
+                                <input className="cinfo-input" id="cinfo-cardname"/>
+                                <label className="cinfo-label" htmlFor="cinfo-cardname">Name</label>
+                            </div>
+                            <div className="cinfo-double">
+                                <div className="cinfo">
+                                    <input className="cinfo-input" id="cinfo-expdate"/>
+                                    <label className="cinfo-label" htmlFor="cinfo-expdate">MM/YY (Expiry Date)</label>
+                                </div>
+                                <div className="cinfo">
+                                    <input className="cinfo-input" id="cinfo-cvv"/>
+                                    <label className="cinfo-label" htmlFor="cinfo-cvv">CVV</label>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="checkbox" defaultChecked className="billing-checkbox"/>
+                        <label htmlFor="checkbox">Billing Address same as shipping</label>
+                        <div className="billing-form">
+                            <div className = "cinfo-double">
+                                <div className="cinfo">
+                                    <input id="binfo-fname" className="cinfo-input"/>
+                                    <label htmlFor="binfo-fname" className="cinfo-label">First Name</label>
+                                </div>
+                                <div className="cinfo">
+                                    <input id="binfo-lname" className="cinfo-input"/>
+                                    <label htmlFor="binfo-lname" className="cinfo-label">Last Name</label>
+                                </div>
+                            </div>
+                            <div className="cinfo">
+                                <input id="binfo-address" className="cinfo-input"/>
+                                <label htmlFor="binfo-address" className="cinfo-label">Address</label>
+                            </div>
+                            <div className="cinfo">
+                                <input id="binfo-address-2" className="cinfo-input"/>
+                                <label htmlFor="binfo-address-2" className="cinfo-label">Address 2</label>
+                            </div>
+                            <div className="cinfo-double">
+                                <div className="cinfo">
+                                    <input id="binfo-city" className="cinfo-input"/>
+                                    <label htmlFor="binfo-city" className="cinfo-label">City</label>
+                                </div>
+                                <div className="cinfo">
+                                    <input id="binfo-province" className="cinfo-input"/>
+                                    <label htmlFor="binfo-province" className="cinfo-label">Province/State</label>
+                                </div>
+                            </div>
+                            <div className="cinfo-double">
+                                <div className="cinfo">
+                                    <input id="binfo-code" className="cinfo-input"/>
+                                    <label htmlFor="binfo-code" className="cinfo-label">Postal/Zip Code</label>
+                                </div>
+                                <div className="cinfo">
+                                    <input id="binfo-country" className="cinfo-input"/>
+                                    <label htmlFor="binfo-country" className="cinfo-label">Country</label>
+                                </div>
+                            </div>
+                            <div className="cinfo">
+                                <input id="binfo-phone" className="cinfo-input"/>
+                                <label htmlFor="binfo-phone" className="cinfo-label">Phone</label>
+                            </div>
+                            <div className="cinfo">
+                                <input id="binfo-email" className="cinfo-input"/>
+                                <label htmlFor="binfo-email" className="cinfo-label">Email</label>
+                            </div>
+                        </div>
                     </form>
                 </div>
                 <div className="order-box">
@@ -108,11 +183,29 @@ export function Checkout({userId, cart, setCart}) {
                 </div>
             </div>
             <div className="right-ch">
-                <div className="cart-ch">
+                <div className="order-summary">
                     <div className="head">
-                        <div className="title"> SUMMARY </div>
-                        <Link to="/cart">Edit</Link>
+                        <div className="title"> ORDER SUMMARY </div>
                     </div>
+                    <div className="subtotal-box">
+                        <div id="subtotal">Subtotal</div>
+                        <div id="value">{cart.length ? <>$ {subtotal}</> :<div>—</div>}</div>
+                    </div>
+                    <div className="tax-box">
+                        <div id="tax">Tax</div>
+                        <div id="value">—</div>
+                    </div>
+                    <div className="shipping-handling-box">
+                        <div id="shipping-handling">Shipping</div>
+                        <div id="value">—</div>
+                    </div>
+                    <div className="separator"></div>
+                    <div className="total-box">
+                        <div id="total">Total</div>
+                        <div id="value">—</div>
+                    </div>                    
+                </div>
+                <div className="cart-ch">
                     <div className="items-ch">
                         {cart.slice(0).reverse().map(item => {
                         return (
@@ -124,14 +217,14 @@ export function Checkout({userId, cart, setCart}) {
                                         <img src={item.image}></img>
                                     </Link>
                                 </div>
-                                <div className="item-info">
-                                    <div className="info">
-                                        <div className="name-price">
-                                            <div className="name">{item.name}</div>
-                                            <div className="price">$ {(parseFloat(item.price) * item.qty).toFixed(2)}</div>
-                                        </div>
-                                        <div className="qty">Qty: {item.qty}</div>
+                                <div className="item-info-ch">
+                                    <div className="info-left">
+                                        <div className="name">{item.name}</div>
                                         <div className="category">{item.category}</div>
+                                        <div className="qty">Qty: {item.qty}</div>
+                                    </div>
+                                    <div className="info-right">
+                                        <div className="price">$ {(parseFloat(item.price) * item.qty).toFixed(2)}</div>
                                     </div>
                                 </div>
                             </div>
@@ -139,26 +232,6 @@ export function Checkout({userId, cart, setCart}) {
                         )})}
                         <div className="lines"></div>
                     </div>
-                </div>
-                <div className="order-summary">
-                    <div className="subtotal-box">
-                        <div id="subtotal">Subtotal</div>
-                        <div id="value">{cart.length ? <>$ {subtotal}</> :<div>—</div>}</div>
-                    </div>
-                    <div className="shipping-handling-box">
-                        <div id="shipping-handling">Shipping</div>
-                        <div id="value">—</div>
-                    </div>
-                    <div className="tax-box">
-                        <div id="tax">Tax</div>
-                        <div id="value">—</div>
-                    </div>
-
-                    <div className="separator"></div>
-                    <div className="total-box">
-                        <div id="total">Total</div>
-                        <div id="value">—</div>
-                    </div>                    
                 </div>
             </div>
         </div>

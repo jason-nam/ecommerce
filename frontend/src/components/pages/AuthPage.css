@@ -17,12 +17,12 @@
     min-height: 4.3rem;
     display: flex;
     flex-direction: column;
+}
 
-    &:focus-within{
-        .auth-label {
-            transform: translateY(0.5rem) scale(0.7);
-            margin-left: 0.5rem;
-        }
+.input-form:focus-within{
+    .auth-label {
+        transform: translateY(0.5rem) scale(0.7);
+        margin-left: 0.5rem;
     }
 }
 

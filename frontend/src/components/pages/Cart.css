@@ -1,18 +1,19 @@
 .cart {
     display: flex;
     flex-direction: row;
-    margin: 0 8%;
-    max-width: 1200px;
+    margin: 0 auto 3rem;
     width: 100%;
+    max-width: 1100px;
     height: 100%;
 }
 
 .cart-box {
     display: flex;
     flex-direction: column;
-    width: 70%;
-    margin: 0 2rem 0 1rem;
-    padding-bottom: 1rem;
+    width: 60%;
+    margin: 0;
+    padding: 0 2rem 0 1rem;
+    box-sizing: border-box;
 }
 
 .lines {
@@ -34,7 +35,6 @@
 .cart-box .items .item {
     display: flex;
     flex-direction: row;
-
     margin: 1rem 0;
 }
 
@@ -54,11 +54,8 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-
     margin-left: 1rem;
-
     width: calc(100% - 11rem);
-
     font-size: 1rem;
 }
 
@@ -66,9 +63,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
     margin: 2px 0;
-
     font-weight: 450;
 }
 
@@ -137,13 +132,19 @@
     cursor: pointer;
 }
 
+.underline {
+    text-decoration: underline;
+}
+
 /* Summary Box */
 
 .cart-summary {
     display: flex;
     flex-direction: column;
-    width: 30%;
-    margin: 0 1rem;
+    width: 40%;
+    margin: 0;
+    padding: 0 1rem 0 2rem;
+    box-sizing: border-box;
 }
 
 .cart-summary .value {
@@ -219,9 +220,11 @@
     }
 
     .cart-box {
-        margin: 0 1rem;
+        margin: auto;
         width: calc(100% - 2rem);
-        border-bottom: 1px solid var(--grey-2);
+        padding: 0;
+        /* padding-bottom: 1rem;
+        border-bottom: 1px solid var(--grey-2); */
     }
 
     .cart-prod-img {
@@ -238,6 +241,7 @@
     .cart-prod-info {
         font-size: 0.8rem;
         width: calc(100% - 7.5rem);
+        overflow: hidden;
     }
 
     .cart-prod-info .name-price {
@@ -251,6 +255,8 @@
     .cart-summary {
         width: calc(100% - 2rem);
         font-size: 0.8rem;
+        padding: 0;
+        margin: auto;
     }
 
     #total-value {
