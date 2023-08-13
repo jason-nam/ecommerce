@@ -54,7 +54,7 @@
 	/* border-bottom: 2px groove rgba(0, 0, 0, 0.1); */
 }
 
-.cart-r .head #title {
+.cart-r .head .title {
 	font-weight: 500;
 	font-size: 1.5rem;
 	text-transform: uppercase;

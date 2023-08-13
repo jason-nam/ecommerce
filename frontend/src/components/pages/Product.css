@@ -38,7 +38,7 @@
 .product-info {
     width: 25rem;
     margin: auto;
-    margin-top: 1.5rem;
+    margin-top: 2rem;
 }
 
 .pi-name{
@@ -190,6 +190,7 @@
 
     .product-info {
         width: 100%;
+        margin-top: 0;
     }
 
     .go-back {

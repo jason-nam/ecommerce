@@ -18,7 +18,7 @@ export function Cart({userId, cart, setCart}) {
         <div className="cart">
             <div className="cart-box">
                 <div className="head">
-                    <div id="title"> CART </div>
+                    <div className="title"> CART </div>
                 </div>
                 <div className="items">
                     {cart.length ?
@@ -27,65 +27,65 @@ export function Cart({userId, cart, setCart}) {
                     }
                     {cart.slice(0).reverse().map(item => {
                     return (
-                        <>
+                        <div key={item.cartitemid}>
                         <div className="lines"></div>
-                        <div className="item" key={item.cartitemid}>
-                            <div className="prod-img">
+                        <div className="item" >
+                            <div className="cart-prod-img">
                                 <Link to={`/products/${item.id}`}>
                                     <img src={item.image}></img>
                                 </Link>
                             </div>
-                            <div className="prod-info">
+                            <div className="cart-prod-info">
                                 <div className="info">
                                     <div className="name-price">
                                         <Link to={`/products/${item.id}`}>
-                                            <div id="name">{item.name}</div>
+                                            <div className="name">{item.name}</div>
                                         </Link>
-                                        <div id="price">$ {(parseFloat(item.price) * item.qty).toFixed(2)}</div>
+                                        <div className="price">$ {(parseFloat(item.price) * item.qty).toFixed(2)}</div>
                                     </div>
                                     {/* <div id="description">{item.description}</div> */}
-                                    <div id="category">{item.category}</div>
+                                    <div className="category">{item.category}</div>
                                 </div>
                                 <div className="info-qty">
                                     <div className="qty-edit">
-                                        <div id="qty-var">Qty:&nbsp;&nbsp;</div>
+                                        <div className="qty-var">Qty:&nbsp;&nbsp;</div>
                                         <div className="qty-val">
-                                            <button id="qty-button" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>-</button>
-                                            <div id="qty">{item.qty}</div>
-                                            <button id="qty-button" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>+</button>
+                                            <button className="qty-button" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>-</button>
+                                            <div className="qty">{item.qty}</div>
+                                            <button className="qty-button" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>+</button>
                                         </div>
                                     </div>
-                                    <button id="remove-button" onClick={() => removeItem(item.cartitemid, cart, userId, setCart)}>Remove</button>
+                                    <button className="remove-button" onClick={() => removeItem(item.cartitemid, cart, userId, setCart)}>Remove</button>
                                 </div>
                             </div>
                         </div>
-                        </>
-                    )})}
+                        </div>
+                        )})}
                     <div className="lines"></div>
                 </div>
             </div>
-            <div className="summary-box">
+            <div className="cart-summary">
                 <div className="head">
-                    <div id="title"> SUMMARY </div>
+                    <div className="title"> SUMMARY </div>
                 </div>
                 <div className="subtotal-box">
                     <div id="subtotal">Subtotal</div>
-                    <div id="value">{cart.length ? <>$ {subtotal}</> :<div>—</div>}</div>
+                    <div className="value">{cart.length ? <>$ {subtotal}</> :<div>—</div>}</div>
                 </div>
                 <div className="shipping-handling-box">
                     <div id="shipping-handling">Estimated Shipping & Handling</div>
-                    <div id="value">—</div>
+                    <div className="value">—</div>
                 </div>
                 <div className="tax-box">
                     <div id="tax">Estimated Tax</div>
-                    <div id="value">—</div>
+                    <div className="value">—</div>
                 </div>
 
                 <div className="separator"></div>
 
                 <div className="total-box">
                     <div id="total">Total</div>
-                    <div id="value">—</div>
+                    <div className="value" id="total-value">—</div>
                 </div>
 
                 <div className="checkout-box">

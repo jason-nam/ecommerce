@@ -14,6 +14,7 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
     const signOutPageRef = useRef(null)
     const ordersPageRef = useRef(null)
     const contactPageRef = useRef(null)
+    const cartPageRef = useRef(null)
 
     const menuEscape = useCallback((e) => {
         if (e.key === "Escape") {
@@ -33,6 +34,7 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
         (registerPageRef.current && registerPageRef.current.contains(e.target)) ||
         (accountPageRef.current && accountPageRef.current.contains(e.target)) ||
         (signOutPageRef.current && signOutPageRef.current.contains(e.target)) ||
+        (cartPageRef.current && cartPageRef.current.contains(e.target)) ||
         (ordersPageRef.current && ordersPageRef.current.contains(e.target)) ||
         (contactPageRef.current && contactPageRef.current.contains(e.target))) {
             menuRef.current.classList.remove('active');
@@ -81,6 +83,9 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
                 </>
                 : null
                 }
+                <div className="item" id="my-cart-item">
+                    <Link to="/cart" ref={cartPageRef}>My Cart</Link>
+                </div>
 
                 <div className="item" id="my-orders-item">
                     <Link to="/orders/myorders" ref={ordersPageRef}>My Orders</Link>
