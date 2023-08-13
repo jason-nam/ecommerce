@@ -6,11 +6,6 @@ import './Checkout.css'
 
 const formReducer = (state, action) => {
     switch (action.type) {
-        case "field":
-            return {
-                ...state,
-                [action.field]: action.input,
-            };
         case "calculate":
             let subtotal = action.payload.reduce((acc, item) => acc + parseFloat(item.price) * item.qty, 0).toFixed(2);
             let tax = (subtotal * 0.13).toFixed(2);
@@ -24,42 +19,34 @@ const formReducer = (state, action) => {
     }
 };  
 const initialState = {
-    firstname: '',
-    lastname: '',
-    address: '',
-    addressTwo: '',
-    city: '',
-    province: '',
-    code: '',
-    country: '',
-    email: '',
-    phone: '',
     subtotal: 0,
     tax: 0,
     shipping: 0,
     total: 0
 }
 
-/*
-<input
-    value={firstname}
-    onChange={e => dispatch({type:'field', field: 'firstname', input: e.target.value })} />
-*/
 
 export function Checkout({userId, cart, setCart}) {
-    // const [ subtotal, setSubtotal ] = useState(0)
     const [ state, dispatch ] = useReducer(formReducer, initialState);
-    const { firstname, lastname, address, addressTwo, 
-        city, province, code, country, email, phone,
-        subtotal, tax, shipping, total} = state;
+    const { subtotal, tax, shipping, total} = state;
 
+    const billingCheck = useRef(null)
         
     const { register, watch, handleSubmit, formState: { errors } } = useForm({
         defaultValues: {
+            firstname: '', lastname: '', address: '',
+            addressTwo: '', city: '', province: '', 
+            code: '', country:'', phone:'', email: '',
             cardname: '', cardnum: '', expdate: '', cvv: ''
         }
     });
-    const [cardname, cardnum, expdate, cvv] = watch(['cardname', 'cardnum', 'expdate', 'cvv'])
+    const [firstname, lastname, address, addressTwo, 
+        city, province, code, country, phone, email, 
+        cardname, cardnum, expdate, cvv] = watch([
+            'firstname', 'lastname', 'address', 'addressTwo', 
+            'city', 'province', 'code', 'country', 'phone', 'email', 
+            'cardname', 'cardnum', 'expdate', 'cvv'
+        ])
     
     subtotal
     useEffect( () => {
@@ -92,6 +79,7 @@ export function Checkout({userId, cart, setCart}) {
     }, [userId])
 
     const submitOrder = () => {
+        // if (billingCheck.current && billingCheck.current.checked)
 
     }
 
@@ -109,45 +97,39 @@ export function Checkout({userId, cart, setCart}) {
                                 <input 
                                     id="cinfo-fname" 
                                     className="cinfo-input"
-                                    value={firstname}
-                                    onChange={e => dispatch({type:'field', field: 'firstname', input: e.target.value })}
-                                />
+                                    { ...register("firstname", { required: "First name required" })}                     
+                                    />
                                 <label htmlFor="cinfo-fname" className={`cinfo-label ${firstname.length? 'active' : ''}`}>First Name</label>
                             </div>
                             <div className="cinfo">
                                 <input id="cinfo-lname" className="cinfo-input" 
-                                value={lastname}
-                                onChange={e => dispatch({type:'field', field: 'lastname', input: e.target.value })}
+                                { ...register("lastname", { required: "Last name required" })}                     
                                 />
                                 <label htmlFor="cinfo-lname" className={`cinfo-label ${lastname.length? 'active' : ''}`}>Last Name</label>
                             </div>
                         </div>
                         <div className="cinfo">
                             <input id="cinfo-address" className="cinfo-input"
-                            value={address}
-                            onChange={e => dispatch({type:'field', field: 'address', input: e.target.value })}                            
+                            { ...register("address", { required: "Address required" })}                     
                             />
                             <label htmlFor="cinfo-address" className={`cinfo-label ${address.length? 'active' : ''}`}>Address</label>
                         </div>
                         <div className="cinfo">
                             <input id="cinfo-address-2" className="cinfo-input"
-                            value={addressTwo}
-                            onChange={e => dispatch({type:'field', field: 'addressTwo', input: e.target.value })}                                                        
+                            { ...register("addressTwo", { required: false })}                     
                             />
                             <label htmlFor="cinfo-address-2" className={`cinfo-label ${addressTwo.length? 'active' : ''}`}>Address 2</label>
                         </div>
                         <div className="cinfo-double">
                             <div className="cinfo">
                                 <input id="cinfo-city" className="cinfo-input"
-                                value={city}
-                                onChange={e => dispatch({type:'field', field: 'city', input: e.target.value })}                                                                                        
+                                { ...register("city", { required: "City required"})}                     
                                 />
                                 <label htmlFor="cinfo-city" className={`cinfo-label ${city.length? 'active' : ''}`}>City</label>
                             </div>
                             <div className="cinfo">
                                 <input id="cinfo-province" className="cinfo-input"
-                                value={province}
-                                onChange={e => dispatch({type:'field', field: 'province', input: e.target.value })}                                                                                        
+                                { ...register("province", { required: "Province required"})}                     
                                 />
                                 <label htmlFor="cinfo-province" className={`cinfo-label ${province.length? 'active' : ''}`}>Province/State</label>
                             </div>
@@ -155,30 +137,26 @@ export function Checkout({userId, cart, setCart}) {
                         <div className="cinfo-double">
                             <div className="cinfo">
                                 <input id="cinfo-code" className="cinfo-input"
-                                value={code}
-                                onChange={e => dispatch({type:'field', field: 'code', input: e.target.value })}                                                                                                                        
+                                { ...register("code", { required: "Postal code required"})}                     
                                 />
                                 <label htmlFor="cinfo-code" className={`cinfo-label ${code.length? 'active' : ''}`}>Postal/Zip Code</label>
                             </div>
                             <div className="cinfo">
                                 <input id="cinfo-country" className="cinfo-input"
-                                    value={country}
-                                    onChange={e => dispatch({type:'field', field: 'country', input: e.target.value })}                                                                                                                                                        
+                                { ...register("country", { required: "Country required"})}                     
                                 />
                                 <label htmlFor="cinfo-country" className={`cinfo-label ${country.length? 'active' : ''}`}>Country</label>
                             </div>
                         </div>
                         <div className="cinfo">
                             <input id="cinfo-phone" className="cinfo-input"
-                                value={phone}
-                                onChange={e => dispatch({type:'field', field: 'phone', input: e.target.value })}                                                                                                                                                                                    
+                            { ...register("phone", { required: "Phone number required"})}                     
                             />
                             <label htmlFor="cinfo-phone" className={`cinfo-label ${phone.length? 'active' : ''}`}>Phone</label>
                         </div>
                         <div className="cinfo">
                             <input id="cinfo-email" className="cinfo-input"
-                            value={email}
-                            onChange={e => dispatch({type:'field', field: 'email', input: e.target.value })}                                                                                                                    
+                            { ...register("email", { required: "Email required"})}                     
                             />
                             <label htmlFor="cinfo-email" className={`cinfo-label ${email.length? 'active' : ''}`}>Email</label>
                         </div>
@@ -191,33 +169,37 @@ export function Checkout({userId, cart, setCart}) {
                     <label>Debit/Credit</label>
                     <div className="debit-credit">
                         <div className="cinfo">
-                            <input className="cinfo-input" id="cinfo-cardnum"
-                            { ...register("cardnum", { required: "Card Number is required"})}                     
+                            <input className="cinfo-input" id="cinfo-cardnum" type="number"
+                            { ...register("cardnum", { required: "Card Number is required", valueAsNumber: true})}                     
                             />
-                            <label className={`cinfo-label ${cardnum.length ? 'active' : ''}`} htmlFor="cinfo-cardnum">Card Number</label>
+                            <label className={`cinfo-label ${cardnum.length ? 'active' : ''}`} 
+                            htmlFor="cinfo-cardnum">Card Number</label>
                         </div>
                         <div className="cinfo">
                             <input className="cinfo-input" id="cinfo-cardname"
                             { ...register("cardname", { required: "Cardholder name is required"})}                     
                             />
-                            <label className={`cinfo-label ${cardname.length ? 'active' : ''}`} htmlFor="cinfo-cardname">Name</label>
+                            <label className={`cinfo-label ${cardname.length ? 'active' : ''}`} 
+                            htmlFor="cinfo-cardname">Name</label>
                         </div>
                         <div className="cinfo-double">
                             <div className="cinfo">
                                 <input className="cinfo-input" id="cinfo-expdate"
                                 { ...register("expdate", { required: "Card Expiry Date is required"})}                     
                                 />
-                                <label className={`cinfo-label ${expdate.length ? 'active' : ''}`} htmlFor="cinfo-expdate">MM/YY (Expiry Date)</label>
+                                <label className={`cinfo-label ${expdate.length ? 'active' : ''}`} 
+                                htmlFor="cinfo-expdate">MM/YY (Expiry Date)</label>
                             </div>
                             <div className="cinfo">
                                 <input className="cinfo-input" id="cinfo-cvv"
                                 { ...register("cvv", { required: "Card Verification Date required"})}                     
                                 />
-                                <label className={`cinfo-label ${cvv.length ? 'active' : ''}`} htmlFor="cinfo-cvv">CVV</label>
+                                <label className={`cinfo-label ${cvv.length ? 'active' : ''}`} 
+                                htmlFor="cinfo-cvv">CVV</label>
                             </div>
                         </div>
                     </div>
-                    <input type="checkbox" defaultChecked className="billing-checkbox"/>
+                    <input type="checkbox" defaultChecked className="billing-checkbox" ref={billingCheck} />
                     <label htmlFor="checkbox">Billing Address same as shipping</label>
                     <div className="billing-form">
                         <div className = "cinfo-double">
