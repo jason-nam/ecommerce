@@ -72,7 +72,7 @@
     border: 1px black solid;
 }
 .cinfo-input:focus + .cinfo-label,
-.cinfo-input.active + .cinfo-label {
+.cinfo-label.active {
     transform: translateY(0.5rem) scale(0.7);
     margin-left: 0.5rem;
 }
