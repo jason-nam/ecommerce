@@ -82,7 +82,7 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
         <div className='cart-r' ref={cartRef} role="dialog" aria-hidden="true" >
             
             <div className="head">
-                <div id="title"> Shopping Bag </div>
+                <div className="title"> Shopping Bag </div>
                 <button type="button" id="close-cart" ref={closeRef}>&times;</button>
             </div>
 
@@ -131,7 +131,7 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
                     <div id="name">Subtotal</div>
                     <div id="value">{cart.length ? <>$ {subtotal}</> :<div>—</div>}</div>
                 </div>
-                <Link to="/carts/mycart" id="view-cart" ref={cartPageRef}>View Cart</Link>
+                <Link to="/cart" id="view-cart" ref={cartPageRef}>View Cart</Link>
             </div>
 
         </div>

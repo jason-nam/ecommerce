@@ -11,13 +11,11 @@ import Menu from "../subcomponents/Menu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faBasketShopping, faBars } from '@fortawesome/free-solid-svg-icons'
 
-export default function Header({userId, cart, setCart, mainRef}) {
+export default function Header({userId, cart, setCart, mainRef, cartRef, cartToggle, headerRef}) {
 
     const menuRef = useRef(null)
-    const cartRef = useRef(null)
     const dropRef = useRef(null)
 
-    const headerRef = useRef(null);
     const [ error, setError ] = useState(false);
 
     // navigation
@@ -76,20 +74,6 @@ export default function Header({userId, cart, setCart, mainRef}) {
         //     } 
         // }
     }
-
-    const cartToggle = (e) => {
-        e.preventDefault();
-        if (cartRef.current && mainRef.current && headerRef.current) {
-            cartRef.current.classList.toggle('active')
-            document.body.classList.toggle('modal')
-
-            let ah = cartRef.current.classList.contains('active')
-            cartRef.current.setAttribute('aria-hidden', !ah)
-            mainRef.current.setAttribute('aria-hidden', ah)
-            headerRef.current.setAttribute('aria-hidden', ah)
-        }
-    }
-
 
     // header block elements
     return (
