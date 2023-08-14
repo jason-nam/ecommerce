@@ -13,10 +13,8 @@ export default function RegisterForm({setRegistered, setUserId, setCart}) {
             email: '', password: '', firstname: '', lastname: ''
         }
     });
-    const email = watch('email')
-    const password = watch('password')
-    const firstname = watch('firstname')
-    const lastname = watch('lastname')
+    const [email, password, firstname, lastname] = watch(['email', 'password', 'firstname', 'lastname'])
+
     const navigate = useNavigate();
 
     const createAccount = (e) => {
