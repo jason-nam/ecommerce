@@ -10,15 +10,15 @@ module.exports = (app) => {
 
     // Category routes
     router.get("/categories", categoryController.getAllCategories);
-    router.get("/categories/:categoryId", categoryController.getCategoryById);
+    router.get("/categories/:categoryid", categoryController.getCategoryById);
     router.post("/categories", categoryController.createCategory);
-    router.put("/categories/:categoryId", categoryController.updateCategory);
-    router.delete("/categories/:categoryId", categoryController.deleteCategory);
+    router.put("/categories/:categoryid", categoryController.updateCategory);
+    router.delete("/categories/:categoryid", categoryController.deleteCategory);
 
     // Subcategory routes
-    router.get("/categories/:categoryId/subcategories", subcategoryController.getSubcategoriesByCategoryId);
-    router.get("/subcategories/:subcategoryId", subcategoryController.getSubcategoryById);
-    router.post("/categories/:categoryId/subcategories", subcategoryController.createSubcategory);
-    router.put("/subcategories/:subcategoryId", subcategoryController.updateSubcategory);
-    router.delete("/subcategories/:subcategoryId", subcategoryController.deleteSubcategory);
+    router.get("/categories/:categoryid/subcategories", subcategoryController.getSubcategoriesByCategoryId);
+    router.get("/subcategories/:subcategoryid", subcategoryController.getSubcategoryById);
+    router.post("/categories/:categoryid/subcategories", subcategoryController.createSubcategory);
+    router.put("/subcategories/:subcategoryid", subcategoryController.updateSubcategory);
+    router.delete("/subcategories/:subcategoryid", subcategoryController.deleteSubcategory);
 }
