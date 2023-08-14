@@ -42,7 +42,7 @@ export function User() {
         return !loading ?(
             <div className="user-page">
                 <div>{user.firstname} {user.lastname}</div>
-                <Link to="/carts/mycart">Cart</Link>
+                <Link to="/cart">Cart</Link>
             </div>
         ) :
         (<p>loading</p>)

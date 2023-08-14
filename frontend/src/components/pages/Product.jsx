@@ -3,7 +3,7 @@ import { useParams, Link, useNavigate} from "react-router-dom"
 import axios from "axios"
 import './Product.css'
 
-export function Product({userId, cart, setCart}) {
+export function Product({userId, cart, setCart, cartToggle, mainRef, headerRef}) {
 
     const { id } = useParams()
     const [product, setProduct] = useState({});
@@ -97,8 +97,9 @@ export function Product({userId, cart, setCart}) {
                 setCart(lcCart)
             }
         }
-        setTimeout(() => document.querySelector('.cart-r')? 
-        document.querySelector('.cart-r').classList.add('active'): null, 250)
+        cartToggle(e);
+        // setTimeout(() => document.querySelector('.cart-r')? 
+        // document.querySelector('.cart-r').classList.add('active'): null, 250)
     }
 
     // return logic
