@@ -5,8 +5,7 @@ module.exports = {
 
     getAllCategories: async (req, res, next) => {
         try {
-            const queryParams = req.query;
-            const response = await ProductServiceInstance.list(queryParams);
+            const response = await CategoryServiceInstance.getAllCategories();
 
             res.status(200).send(response);
 
@@ -19,11 +18,10 @@ module.exports = {
     getCategoryById: async (req, res, next) => {
         try {
             
-            const { productid } = req.params;
-            const response = await ProductServiceInstance.get(productid);
+            const { categoryid } = req.params;
+            const response = await CategoryServiceInstance.getCategoryById(categoryid);
 
             res.status(200).send(response);
-
 
         } catch(err) {
             res.status(404).send({"message": "Product does not exist"});
@@ -33,6 +31,7 @@ module.exports = {
 
     createCategory: async (req, res, next) => {
         try {
+            //TODO
 
         } catch(err) {
             res.status(404).send({"message": "Product does not exist"});
@@ -42,6 +41,7 @@ module.exports = {
 
     updateCategory: async (req, res, next) => {
         try {
+            //TODO
 
         } catch(err) {
             res.status(404).send({"message": "Product does not exist"});
@@ -51,6 +51,7 @@ module.exports = {
 
     deleteCategory: async (req, res, next) => {
         try {
+            //TODO
 
         } catch(err) {
             res.status(404).send({"message": "Product does not exist"});
