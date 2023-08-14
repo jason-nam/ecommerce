@@ -23,10 +23,10 @@ module.exports = class OrderItemModel {
 
             this.orderid = orderid;
 
-            const statement = `INSERT INTO orderitems (qty, created, price, name, description, orderid, productid)
-                               VALUES ($1, $2, $3, $4, $5, $6, $7)
+            const statement = `INSERT INTO orderitems (qty, created, orderid, productid)
+                               VALUES ($1, $2, $3, $4)
                                RETURNING *`;
-            const values = [this.qty, this.created, this.price, this.name, this.description, this.orderid, this.productid];
+            const values = [this.qty, this.created, this.orderid, this.productid];
 
             const result = await db.query(statement, values);
 
