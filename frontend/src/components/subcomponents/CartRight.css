@@ -32,8 +32,10 @@
 	padding: 64px;
 }
 
-.cart-r .head, .cart-r .items, .cart-r .foot {
-	margin: 0 2rem;
+.cart-r .head, 
+.cart-r .items, 
+.cart-r .foot {
+	margin: 0 1rem;
 }
 
 
