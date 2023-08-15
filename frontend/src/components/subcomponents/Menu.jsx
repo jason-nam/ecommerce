@@ -1,9 +1,18 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect, useState, useCallback } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios"
 import './Menu.css'
 
 export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
+
+    const [ categories, setCategories ] = useState([])
+    //categories
+    useEffect(() => {
+        axios.get("/api/category/categories")
+        .then( res =>
+            setCategories(res.data.data)
+        ).catch(err => console.log(err))
+    }, [setCategories])
  
     // close menu
     const hideMenuRef = useRef([])
@@ -18,7 +27,7 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
             menuRef.current.setAttribute('aria-hidden', 'true')
             mainRef.current.setAttribute('aria-hidden', 'false')
             headerRef.current.setAttribute('aria-hidden', 'false')
-            }
+        }
     }, [menuRef, mainRef, headerRef])
 
     const menuClick = useCallback ((e) => {
@@ -32,7 +41,6 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
             headerRef.current.setAttribute('aria-hidden', 'false')
         }
     }, [menuRef, mainRef, headerRef])
-
 
     useEffect( () => {
         document.addEventListener('click', menuClick, { capture: true })
@@ -56,6 +64,19 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
                 <div className="item" id="products-item" >
                     <Link to="/products" ref={addToRef}>Products</Link>
                 </div>
+                {categories.map(c => {
+                    return <div key={c.name} className="item-group">
+                        <div className="item" >
+                            <div className="main-category">{c.name}</div>
+                        </div>
+                        <div className="subcategories">
+                            <Link to={`/${c.name}`} >All</Link>
+                        {c.sub.map( sc => {
+                            return <div key={`${c.name}-${sc}`} className="subcategory"><Link to={`/${sc}`}>{sc}</Link></div>;
+                        })}
+                        </div>
+                    </div>                   
+                })}
 
                 <div className="separator"></div>
 

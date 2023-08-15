@@ -75,6 +75,7 @@ export function ProductsList() {
                                 <div className="pl-image-box">
                                 <img src={product.image} 
                                     className="pl-image" 
+                                    alt={`${product.name}`}
                                     />
                                 </div>
                                 <div className="pl-name" >{product.name}</div>
