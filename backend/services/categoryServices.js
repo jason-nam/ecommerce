@@ -21,10 +21,8 @@ module.exports = class ProductService {
                     }
                 data.push(obj)
             }
-            // categories.subcategories = subcategories;
-            // return categories
-            // return {categories: categories.rows, subcategories:subcategories.rows};
-            return {data};
+            
+            return { data };
 
 
         } catch(err) {
@@ -32,11 +30,50 @@ module.exports = class ProductService {
         }
     }
 
-    async getCategoryById(id) {
+    async getCategoryById(categoryid) {
 
         try {
 
-            //TODO
+            const category = await CategoryModel.getCategoryById(categoryid);
+            return category;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    async createCategory(data) {
+
+        try {
+
+            const { name } = data;
+            const category = await CategoryModelInstance.createCategory(name);
+            return category;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    async updateCategory(data) {
+
+        try {
+
+            const { categoryid, name } = data;
+            const category = await CategoryModel.updateCategory(categoryid, name);
+            return category;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    async deleteCategory(categoryid) {
+
+        try {
+
+            const category = await CategoryModel.deleteCategory(categoryid);
+            return category;
 
         } catch(err) {
             throw new Error(err);
