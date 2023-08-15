@@ -91,7 +91,7 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
                             <div className="item-container">
                                 <div className="image">
                                     <a href={`/products/${item.id}`}>
-                                        <img className='cartitem-img' src={item.image}></img>
+                                        <img className='cartitem-img' src={item.image} alt={`${item.name}`}></img>
                                     </a>
                                 </div>
                                 <div className="info-text-container">

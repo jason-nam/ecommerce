@@ -5,6 +5,19 @@
 	margin: 0 auto;
 }
 
+.page-title {
+    margin: 1rem auto 0;
+    font-weight: bold;
+    font-size: 2rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: rgb(60, 60, 60);
+    padding: 0 5px;
+    border: 0.2rem black solid;
+    border-style:dotted;
+}
+
 /* .logo img {
 	width: 6rem;
 	padding: 1.5em;

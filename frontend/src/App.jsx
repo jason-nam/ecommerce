@@ -74,8 +74,8 @@ function App() {
                 {/* <Route path='/about' element={<About />} /> */}
                 <Route path='/products/:id' element={<Product { ...{userId, cart, setCart, cartToggle} }/>} />
                 <Route path='/products' element={<ProductsList />} />
-                <Route path='/products/:category' element={<ProductsList />} />
-                <Route path='/products/:category/:subcategory' element={<ProductsList />} />
+                {/* <Route path='/products/:category' element={<ProductsByCategory />} />
+                <Route path='/products/:category/:subcategory' element={<ProductsBySubcategory />} /> */}
                 <Route path='/users/profile' element={<User userId={userId}/>} />
                 <Route path='/cart' element={<Cart {...{userId, cart, setCart, subtotal}}/>} />
                 <Route path='/orders/myorders' element={<Orders {...{userId}}/>}></Route>

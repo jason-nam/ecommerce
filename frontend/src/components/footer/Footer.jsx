@@ -1,4 +1,5 @@
 import "./Footer.css"
+import { Link } from 'react-router-dom';
 
 export default function Footer() {
 
@@ -8,10 +9,10 @@ export default function Footer() {
             <div className="footer">
                 <div className='footer-container'>
                     <ul className="footer-pages">
-                        <li>About Us</li>
-                        <li>Contact Us</li>
+                        {/* <li>About Us</li> */}
+                        <Link to="/contacts"><li>Contact Us</li></Link>
                     </ul>
-                    <div className="coders"><span>By </span><a href="https://github.com/gyhn2"><span>gyhn2</span></a><span> & </span><a href="https://github.com/jason-yunjae-nam"><span>jason-yunjae-nam</span></a></div>
+                    <div className="coders"><span className="normal">By </span><a href="https://github.com/gyhn2"><span>gyhn2</span></a><span className="normal"> & </span><a href="https://github.com/jason-yunjae-nam"><span>jason-yunjae-nam</span></a></div>
                 </div>
             </div>
         </footer>
