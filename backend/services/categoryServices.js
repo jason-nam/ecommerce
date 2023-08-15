@@ -5,8 +5,9 @@ const SubcategoryModelInstance = new SubcategoryModel();
 
 module.exports = class ProductService {
 
-    async getAllCategories() {
+    // category model
 
+    async getAllCategories() {
         try {
 
             const categories = await CategoryModel.getAllCategories();
@@ -31,7 +32,6 @@ module.exports = class ProductService {
     }
 
     async getCategoryById(categoryid) {
-
         try {
 
             const category = await CategoryModel.getCategoryById(categoryid);
@@ -43,7 +43,6 @@ module.exports = class ProductService {
     }
 
     async createCategory(data) {
-
         try {
 
             const { name } = data;
@@ -56,7 +55,6 @@ module.exports = class ProductService {
     }
 
     async updateCategory(data) {
-
         try {
 
             const { categoryid, name } = data;
@@ -69,11 +67,69 @@ module.exports = class ProductService {
     }
 
     async deleteCategory(categoryid) {
-
         try {
 
             const category = await CategoryModel.deleteCategory(categoryid);
             return category;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    // subcategory model
+
+    async getSubcategoriesByCategoryId(categoryid) {
+        try {
+
+            const subcategories = await SubcategoryModel.getSubcategoriesByCategoryId(categoryid);
+            return subcategories;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    async getSubcategoryById(subcategoryid) {
+        try {
+
+            const subcategory = await SubcategoryModel.getSubcategoryById(subcategoryid);
+            return subcategory;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    async createSubcategory(data) {
+        try {
+
+            const { categoryid, name } = data;
+            const subcategory = await SubcategoryModelInstance.createSubcategory(categoryid, name);
+            return subcategory;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    async updateSubcategory(data) {
+        try {
+
+            const { subcategoryid, name } = data;
+            const subcategory = await SubcategoryModel.updateSubcategory(subcategoryid, name);
+            return subcategory;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    async deleteSubcategory(subcategoryid) {
+        try {
+
+            const subcategory = await SubcategoryModel.deleteSubcategory(subcategoryid);
+            return subcategory;
 
         } catch(err) {
             throw new Error(err);
