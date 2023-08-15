@@ -12,8 +12,20 @@ module.exports = class ProductService {
             const categories = await CategoryModel.getAllCategories();
             const subcategories = await SubcategoryModel.getAllSubcategories();
 
-            categories.subcategories = subcategories;
-            return categories;
+            let data = [];
+            for (const c of categories.rows) {
+                let obj = { name: c.name, sub: []}
+                for (const sc of subcategories.rows)
+                    if (sc.categoryid === c.id) {
+                        obj.sub.push(sc.name)
+                    }
+                data.push(obj)
+            }
+            // categories.subcategories = subcategories;
+            // return categories
+            // return {categories: categories.rows, subcategories:subcategories.rows};
+            return {data};
+
 
         } catch(err) {
             throw new Error(err);
