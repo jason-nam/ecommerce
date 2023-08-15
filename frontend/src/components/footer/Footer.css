@@ -2,16 +2,13 @@
 
 footer {
     margin-top: 4rem;
-    padding-bottom: 50vh;
 }
 
 .footer {
-    height: 60vh;
+    height: 50vh;
     min-width: 100%;
-    position: fixed;
     z-index: 0;
     bottom: 0;
-    /* overflow: hidden; */
     background-color: black;
 
 }
@@ -45,6 +42,18 @@ footer {
     width: 100%;
 }
 
-.coders a, .coders span {
+.coders span {
     color: white;
+}
+
+.coders a span {
+    background-color: rgb(82, 82, 172);
+    color: white;
+    padding: 2px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.coders a:hover span {
+    background-color: rgb(148, 227, 29);
+    color: black;
 }

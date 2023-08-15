@@ -138,6 +138,11 @@
     letter-spacing: 5px;
 }
 
+#order:disabled {
+    background-color: grey;
+    border-color: grey;
+    cursor:auto;
+}
 
 /* cart item */
 
@@ -230,36 +235,40 @@
     font-weight: bold;
 }
 
-.order-summary .total-box {
-
-}
-
 /* mobile */
 
 @media screen and (max-width: 787px) {
 
-.checkout {
-    flex-direction: column;
-}
+    .checkout {
+        flex-direction: column;
+    }
 
-.left-ch, .right-ch {
-    width: 100%;
-}
+    .left-ch, .right-ch {
+        width: 100%;
+    }
 
-.shipping, .billing, .order-box, .cart-ch, .order-summary {
-    margin: 0 1rem;
-}
+    .right-ch {
+        order: 1;
+    }
 
-.cinfo-double {
-    flex-direction: column;
-}
+    .left-ch {
+        order: 2;
+    }
 
-.cinfo-double .cinfo:first-child, .cinfo-double .cinfo:nth-child(2) {
-    width: 100%;
-}
+    .shipping, .billing, .order-box, .cart-ch, .order-summary {
+        margin: 0 1rem;
+    }
 
-.cinfo-double .cinfo:nth-child(2) {
-    margin-left: 0;
-}
+    .cinfo-double {
+        flex-direction: column;
+    }
+
+    .cinfo-double .cinfo:first-child, .cinfo-double .cinfo:nth-child(2) {
+        width: 100%;
+    }
+
+    .cinfo-double .cinfo:nth-child(2) {
+        margin-left: 0;
+    }
 
 }

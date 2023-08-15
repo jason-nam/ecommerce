@@ -4,12 +4,14 @@ import { useForm } from "react-hook-form";
 import axios from "axios"
 import './Checkout.css'
 
-
 export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total}) {
 
+    //billing checkbox
     const [ checked, setChecked ] = useState(true)
     
-    const { register, watch, handleSubmit, formState: { errors }, setValue } = useForm({
+    //form
+    const { register, watch, handleSubmit, formState: { errors }, setValue, formState } = useForm({
+        mode: "onChange",
         defaultValues: {
             firstname: '', lastname: '', address: '',
             addressTwo: '', city: '', province: '', 
@@ -32,6 +34,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total}
             'bcity', 'bprovince', 'bcode', 'bcountry', 'bphone', 'bemail'
         ])
     
+    //logged in => autofill
     useEffect(() => {
 
         let isMounted = true;
@@ -57,6 +60,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total}
 
     }, [userId])
 
+    //billing address same as shipping
     useEffect(() => {
         if (checked) {
             setValue("bfirstname", firstname)
@@ -83,6 +87,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total}
         } 
     }, [checked, firstname, lastname, address, addressTwo, city, province, code, phone, email])
 
+    //submit order
     const submitOrder = (data, e) => {
         e.preventDefault();
         let shipDetails = { 
@@ -118,6 +123,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total}
             phone: data.bphone,
         }
         console.log({shipDetails, cardDetails, billDetails})
+        // setCart([])
     }
 
     return (
@@ -313,7 +319,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total}
                     </div>
                 </div>
                 <div className="order-box">
-                    <button type="submit" id="order">Order</button>
+                    <button type="submit" id="order" disabled={!formState.isValid}>Order</button>
                 </div>
             </form>
             </div>
@@ -348,9 +354,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total}
                             <div className="lines"></div>
                             <div className="item-ch" >
                                 <div className="item-ch-img">
-                                    <Link to={`/products/${item.id}`}>
-                                        <img src={item.image}></img>
-                                    </Link>
+                                    <img src={item.image} alt={`${item.namme}`}></img>
                                 </div>
                                 <div className="item-info-ch">
                                     <div className="info-left">
