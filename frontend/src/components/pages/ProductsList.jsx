@@ -1,19 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 import { useSearchParams, Link } from 'react-router-dom';
 import Pagination from '../subcomponents/Pagination'
 import './ProductsList.css';
+import { productListReducer, productListInitialState } from '../../utils/reducer'
 
 export function ProductsList() {
-    
-    const [products, setProducts] = useState([]);
-    const [productsCount, setProductsCount] = useState(0);
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(true);
-    // const [imgOnLoad, setImgOnLoad] = useState(false);
-
     const [searchParams, setSearchParams] = useSearchParams();
-
+    const [ state, dispatch ] = useReducer(productListReducer, productListInitialState )
+    const { products, productsCount, error, loading } = state;
+    // const [imgOnLoad, setImgOnLoad] = useState(false);
+    
     useEffect(() => {
         let isMounted = true;
         const controller = new AbortController();
@@ -31,14 +28,12 @@ export function ProductsList() {
             })
         .then((res) => {
             if (isMounted) {
-                setProducts(res.data.products);             
-                setProductsCount(res.data.count);
-                setLoading(false);
+                dispatch({ type: "PL_SUCCESS", products: res.data.products, count: res.data.count})
             }
         })
         .catch(err => {
             console.log(err)
-            setError(true)
+            dispatch({ type: "PL_FAIL"})
         });  
 
         return () => {
@@ -46,14 +41,12 @@ export function ProductsList() {
             isMounted && controller.abort()
         }
         
-    }, [setProducts, setProductsCount, setLoading, setError, searchParams]);
+    }, [searchParams]);
 
-
-    // return logic
     return <>
         {error ?    
             404
-    : //(!loading ?
+    :
         <>  
             <div className="pl-title">
                 {
@@ -101,4 +94,3 @@ export function ProductsList() {
         }
     </>
 }
-

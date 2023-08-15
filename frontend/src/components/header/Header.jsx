@@ -11,13 +11,10 @@ import Menu from "../subcomponents/Menu";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUser, faBasketShopping, faBars } from '@fortawesome/free-solid-svg-icons'
 
-export default function Header({userId, cart, setCart, mainRef, cartRef, cartToggle, headerRef}) {
+export default function Header({userId, cart, setCart, mainRef, cartRef, cartToggle, headerRef, subtotal}) {
 
     const menuRef = useRef(null)
     const dropRef = useRef(null)
-
-    const [ error, setError ] = useState(false);
-
     // navigation
     // TODO
     
@@ -123,7 +120,7 @@ export default function Header({userId, cart, setCart, mainRef, cartRef, cartTog
         </header>
         
 
-        <CartRight { ...{userId, cart, setCart, cartRef, mainRef, headerRef} }/>
+        <CartRight { ...{userId, cart, setCart, cartRef, mainRef, headerRef, subtotal} }/>
         <div className="overlay-cart" aria-hidden='true'></div>
         <Menu { ...{userId, menuRef, logout, mainRef, headerRef} } />
         <div className="overlay-menu" aria-hidden='true'></div>

@@ -1,58 +1,37 @@
-import React, { useState, useEffect, useRef, useReducer } from "react";
+import React, { useState, useEffect, useCallback, useReducer } from "react";
 import { Link } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import axios from "axios"
 import './Checkout.css'
 
-const formReducer = (state, action) => {
-    switch (action.type) {
-        case "calculate":
-            let subtotal = action.payload.reduce((acc, item) => acc + parseFloat(item.price) * item.qty, 0).toFixed(2);
-            let tax = (subtotal * 0.13).toFixed(2);
-            return {
-                ...state,
-                subtotal,
-                tax,
-                shipping: 0,
-                total: parseFloat(subtotal) + parseFloat(tax) ,
-            };
-    }
-};  
-const initialState = {
-    subtotal: 0,
-    tax: 0,
-    shipping: 0,
-    total: 0
-}
 
+export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total}) {
 
-export function Checkout({userId, cart, setCart}) {
-    const [ state, dispatch ] = useReducer(formReducer, initialState);
-    const { subtotal, tax, shipping, total} = state;
-
-    const billingCheck = useRef(null)
-        
-    const { register, watch, handleSubmit, formState: { errors } } = useForm({
+    const [ checked, setChecked ] = useState(true)
+    
+    const { register, watch, handleSubmit, formState: { errors }, setValue } = useForm({
         defaultValues: {
             firstname: '', lastname: '', address: '',
             addressTwo: '', city: '', province: '', 
             code: '', country:'', phone:'', email: '',
-            cardname: '', cardnum: '', expdate: '', cvv: ''
+            cardname: '', cardnum: '', expdate: '', cvv: '',
+            bfirstname: '', blastname: '', baddress: '', baddressTwo: '', 
+            bcity: '', bprovince: '', bcode: '', bcountry: '', bphone: '', bemail: ''    
         }
     });
     const [firstname, lastname, address, addressTwo, 
         city, province, code, country, phone, email, 
-        cardname, cardnum, expdate, cvv] = watch([
+        cardname, cardnum, expdate, cvv,
+        bfirstname, blastname, baddress, baddressTwo, 
+        bcity, bprovince, bcode, bcountry, bphone, bemail
+    ] = watch([
             'firstname', 'lastname', 'address', 'addressTwo', 
             'city', 'province', 'code', 'country', 'phone', 'email', 
-            'cardname', 'cardnum', 'expdate', 'cvv'
+            'cardname', 'cardnum', 'expdate', 'cvv',
+            'bfirstname', 'blastname', 'baddress', 'baddressTwo', 
+            'bcity', 'bprovince', 'bcode', 'bcountry', 'bphone', 'bemail'
         ])
     
-    subtotal
-    useEffect( () => {
-        dispatch({ type: "calculate", payload: cart})
-    }, [cart])
-
     useEffect(() => {
 
         let isMounted = true;
@@ -63,9 +42,9 @@ export function Checkout({userId, cart, setCart}) {
             .then(res => {
                 if (isMounted) {
                     let user = res.data[0]
-                    dispatch({type:'field', field: 'firstname', input: user.firstname })
-                    dispatch({type:'field', field: 'lastname', input: user.lastname })
-                    dispatch({type:'field', field: 'email', input: user.email })
+                    setValue("firstname", user.firstname)
+                    setValue("lastname", user.lastname)
+                    setValue("email", user.email)
                 }
             })
             .catch(err => console.log(err))
@@ -78,9 +57,67 @@ export function Checkout({userId, cart, setCart}) {
 
     }, [userId])
 
-    const submitOrder = () => {
-        // if (billingCheck.current && billingCheck.current.checked)
+    useEffect(() => {
+        if (checked) {
+            setValue("bfirstname", firstname)
+            setValue("blastname", lastname)
+            setValue("baddress", address)
+            setValue("baddressTwo", addressTwo)
+            setValue("bcity", city)
+            setValue("bprovince", province)
+            setValue("bcountry", country)
+            setValue("bcode", code)
+            setValue("bphone", phone)
+            setValue("bemail", email)
+        } else {
+            setValue("bfirstname", '')
+            setValue("blastname", '')
+            setValue("baddress", '')
+            setValue("baddressTwo", '')
+            setValue("bcity", '')
+            setValue("bprovince", '')
+            setValue("bcountry", '')
+            setValue("bcode", '')
+            setValue("bphone", '')
+            setValue("bemail", '')
+        } 
+    }, [checked, firstname, lastname, address, addressTwo, city, province, code, phone, email])
 
+    const submitOrder = (data, e) => {
+        e.preventDefault();
+        let shipDetails = { 
+            firstname: data.firstname,
+            lastname: data.lastname,
+            address: data.address,
+            address2: data.addressTwo,
+            city: data.city,
+            province: data.province,
+            country: data.country,
+            code: data.code,
+            email: data.email,
+            phone: data.phone,
+        }
+
+        let cardDetails = {
+            name: data.cardname,
+            num: data.cardnum,
+            cvv: data.cvv,
+            exp: data.expdate, 
+        }
+
+        let billDetails = { 
+            firstname: data.bfirstname,
+            lastname: data.blastname,
+            address: data.baddress,
+            address2: data.baddressTwo,
+            city: data.bcity,
+            province: data.bprovince,
+            country: data.bcountry,
+            code: data.bcode,
+            email: data.bemail,
+            phone: data.bphone,
+        }
+        console.log({shipDetails, cardDetails, billDetails})
     }
 
     return (
@@ -93,160 +130,185 @@ export function Checkout({userId, cart, setCart}) {
                     </div>
                     {userId > 0 ? null: <Link to="/login" className="link">Sign in for a better experience</Link>}
                         <div className = "cinfo-double">
-                            <div className="cinfo">
+                            <div className={`cinfo ${errors.firstname? 'error' : '' }`}>
                                 <input 
                                     id="cinfo-fname" 
                                     className="cinfo-input"
                                     { ...register("firstname", { required: "First name required" })}                     
                                     />
-                                <label htmlFor="cinfo-fname" className={`cinfo-label ${firstname.length? 'active' : ''}`}>First Name</label>
+                                <label htmlFor="cinfo-fname" className={`cinfo-label ${firstname.length? 'active' : ''}`}>{errors.firstname? errors.firstname.message :'First Name'}</label>
                             </div>
-                            <div className="cinfo">
+                            <div className={`cinfo ${errors.lastname? 'error' : '' }`}>
                                 <input id="cinfo-lname" className="cinfo-input" 
                                 { ...register("lastname", { required: "Last name required" })}                     
                                 />
-                                <label htmlFor="cinfo-lname" className={`cinfo-label ${lastname.length? 'active' : ''}`}>Last Name</label>
+                                <label htmlFor="cinfo-lname" className={`cinfo-label ${lastname.length? 'active' : ''}`}>{errors.lastname? errors.lastname.message :'Last Name'}</label>
                             </div>
                         </div>
-                        <div className="cinfo">
+                        <div className={`cinfo ${errors.address? 'error' : '' }`}>
                             <input id="cinfo-address" className="cinfo-input"
                             { ...register("address", { required: "Address required" })}                     
                             />
-                            <label htmlFor="cinfo-address" className={`cinfo-label ${address.length? 'active' : ''}`}>Address</label>
+                            <label htmlFor="cinfo-address" className={`cinfo-label ${address.length? 'active' : ''}`}>{errors.address? errors.address.message :'Address'}</label>
                         </div>
-                        <div className="cinfo">
+                        <div className={`cinfo ${errors.addressTwo? 'error' : '' }`}>
                             <input id="cinfo-address-2" className="cinfo-input"
                             { ...register("addressTwo", { required: false })}                     
                             />
-                            <label htmlFor="cinfo-address-2" className={`cinfo-label ${addressTwo.length? 'active' : ''}`}>Address 2</label>
+                            <label htmlFor="cinfo-address-2" className={`cinfo-label ${addressTwo.length? 'active' : ''}`}>{errors.addressTwo? errors.addressTwo.message :'Address 2'}</label>
                         </div>
                         <div className="cinfo-double">
-                            <div className="cinfo">
+                            <div className={`cinfo ${errors.city? 'error' : '' }`}>
                                 <input id="cinfo-city" className="cinfo-input"
                                 { ...register("city", { required: "City required"})}                     
                                 />
-                                <label htmlFor="cinfo-city" className={`cinfo-label ${city.length? 'active' : ''}`}>City</label>
+                                <label htmlFor="cinfo-city" className={`cinfo-label ${city.length? 'active' : ''}`}>{errors.city? errors.city.message :'City'}</label>
                             </div>
-                            <div className="cinfo">
+                            <div className={`cinfo ${errors.province? 'error' : '' }`}>
                                 <input id="cinfo-province" className="cinfo-input"
                                 { ...register("province", { required: "Province required"})}                     
                                 />
-                                <label htmlFor="cinfo-province" className={`cinfo-label ${province.length? 'active' : ''}`}>Province/State</label>
+                                <label htmlFor="cinfo-province" className={`cinfo-label ${province.length? 'active' : ''}`}>{errors.province? errors.province.message :'Province/State'}</label>
                             </div>
                         </div>
                         <div className="cinfo-double">
-                            <div className="cinfo">
+                            <div className={`cinfo ${errors.code? 'error' : '' }`}>
                                 <input id="cinfo-code" className="cinfo-input"
                                 { ...register("code", { required: "Postal code required"})}                     
                                 />
-                                <label htmlFor="cinfo-code" className={`cinfo-label ${code.length? 'active' : ''}`}>Postal/Zip Code</label>
+                                <label htmlFor="cinfo-code" className={`cinfo-label ${code.length? 'active' : ''}`}>{errors.code? errors.code.message :'Postal/Zip Code'}</label>
                             </div>
-                            <div className="cinfo">
+                            <div className={`cinfo ${errors.country? 'error' : '' }`}>
                                 <input id="cinfo-country" className="cinfo-input"
                                 { ...register("country", { required: "Country required"})}                     
                                 />
-                                <label htmlFor="cinfo-country" className={`cinfo-label ${country.length? 'active' : ''}`}>Country</label>
+                                <label htmlFor="cinfo-country" className={`cinfo-label ${country.length? 'active' : ''}`}>{errors.country? errors.country.message :'Country'}</label>
                             </div>
                         </div>
-                        <div className="cinfo">
+                        <div className={`cinfo ${errors.phone? 'error' : '' }`}>
                             <input id="cinfo-phone" className="cinfo-input"
                             { ...register("phone", { required: "Phone number required"})}                     
                             />
-                            <label htmlFor="cinfo-phone" className={`cinfo-label ${phone.length? 'active' : ''}`}>Phone</label>
+                            <label htmlFor="cinfo-phone" className={`cinfo-label ${phone.length? 'active' : ''}`}>{errors.phone? errors.phone.message :'Phone'}</label>
                         </div>
-                        <div className="cinfo">
+                        <div className={`cinfo ${errors.email? 'error' : '' }`}>
                             <input id="cinfo-email" className="cinfo-input"
                             { ...register("email", { required: "Email required"})}                     
                             />
-                            <label htmlFor="cinfo-email" className={`cinfo-label ${email.length? 'active' : ''}`}>Email</label>
+                            <label htmlFor="cinfo-email" className={`cinfo-label ${email.length? 'active' : ''}`}>{errors.email? errors.email.message :'Email'}</label>
                         </div>
                 </div>
-                <div className="payment">
+                <div className="billing">
                     <div className="head">
                         <div className="title"> Payment </div>
                     </div>
                     <input type="radio" defaultChecked/>
                     <label>Debit/Credit</label>
                     <div className="debit-credit">
-                        <div className="cinfo">
+                        <div className={`cinfo ${errors.cardnum? 'error' : '' }`}>
                             <input className="cinfo-input" id="cinfo-cardnum" type="number"
-                            { ...register("cardnum", { required: "Card Number is required", valueAsNumber: true})}                     
+                            { ...register("cardnum", { required: "Invalid card number"})}                     
                             />
                             <label className={`cinfo-label ${cardnum.length ? 'active' : ''}`} 
-                            htmlFor="cinfo-cardnum">Card Number</label>
+                            htmlFor="cinfo-cardnum">{errors.cardnum? errors.cardnum.message : 'Card Number'}</label>
                         </div>
-                        <div className="cinfo">
+                        <div className={`cinfo ${errors.cardname? 'error' : '' }`}>
                             <input className="cinfo-input" id="cinfo-cardname"
-                            { ...register("cardname", { required: "Cardholder name is required"})}                     
+                            { ...register("cardname", { required: "Inavlid name"})}                     
                             />
                             <label className={`cinfo-label ${cardname.length ? 'active' : ''}`} 
-                            htmlFor="cinfo-cardname">Name</label>
+                            htmlFor="cinfo-cardname">{errors.cardname? errors.cardname.message : 'Name'}</label>
                         </div>
                         <div className="cinfo-double">
-                            <div className="cinfo">
+                            <div className={`cinfo ${errors.expdate? 'error' : '' }`}>
                                 <input className="cinfo-input" id="cinfo-expdate"
-                                { ...register("expdate", { required: "Card Expiry Date is required"})}                     
+                                { ...register("expdate", { required: "Invalid expiration date"})}                     
                                 />
                                 <label className={`cinfo-label ${expdate.length ? 'active' : ''}`} 
-                                htmlFor="cinfo-expdate">MM/YY (Expiry Date)</label>
+                                htmlFor="cinfo-expdate">{errors.expdate? errors.expdate.message : 'MM/YY'}</label>
                             </div>
-                            <div className="cinfo">
+                            <div className={`cinfo ${errors.cvv? 'error' : '' }`}>
                                 <input className="cinfo-input" id="cinfo-cvv"
-                                { ...register("cvv", { required: "Card Verification Date required"})}                     
+                                { ...register("cvv", { required: "Invalid security code"})}                     
                                 />
                                 <label className={`cinfo-label ${cvv.length ? 'active' : ''}`} 
-                                htmlFor="cinfo-cvv">CVV</label>
+                                htmlFor="cinfo-cvv">{errors.cvv? errors.cvv.message : 'CVV'}</label>
                             </div>
                         </div>
                     </div>
-                    <input type="checkbox" defaultChecked className="billing-checkbox" ref={billingCheck} />
+                    <input type="checkbox" 
+                    defaultChecked={checked}
+                    className="billing-checkbox" 
+                    onChange={() => setChecked(!checked)} />
                     <label htmlFor="checkbox">Billing Address same as shipping</label>
                     <div className="billing-form">
                         <div className = "cinfo-double">
-                            <div className="cinfo">
-                                <input id="binfo-fname" className="cinfo-input"/>
-                                <label htmlFor="binfo-fname" className="cinfo-label">First Name</label>
+                            <div className={`cinfo ${errors.bfirstname? 'error' : '' }`}>
+                                <input 
+                                    id="binfo-fname" 
+                                    className="cinfo-input"
+                                    { ...register("bfirstname", { required: "First name required" })}                     
+                                    />
+                                <label htmlFor="binfo-fname" className={`cinfo-label ${bfirstname.length? 'active' : ''}`}>{errors.bfirstname? errors.bfirstname.message :'First Name'}</label>
                             </div>
-                            <div className="cinfo">
-                                <input id="binfo-lname" className="cinfo-input"/>
-                                <label htmlFor="binfo-lname" className="cinfo-label">Last Name</label>
+                            <div className={`cinfo ${errors.blastname? 'error' : '' }`}>
+                                <input id="binfo-lname" className="cinfo-input" 
+                                { ...register("blastname", { required: "Last name required" })}                     
+                                />
+                                <label htmlFor="binfo-lname" className={`cinfo-label ${blastname.length? 'active' : ''}`}>{errors.blastname? errors.blastname.message :'Last Name'}</label>
                             </div>
                         </div>
-                        <div className="cinfo">
-                            <input id="binfo-address" className="cinfo-input"/>
-                            <label htmlFor="binfo-address" className="cinfo-label">Address</label>
+                        <div className={`cinfo ${errors.baddress? 'error' : '' }`}>
+                            <input id="binfo-address" className="cinfo-input"
+                            { ...register("baddress", { required: "Address required" })}                     
+                            />
+                            <label htmlFor="binfo-address" className={`cinfo-label ${baddress.length? 'active' : ''}`}>{errors.baddress? errors.baddress.message :'Address'}</label>
                         </div>
-                        <div className="cinfo">
-                            <input id="binfo-address-2" className="cinfo-input"/>
-                            <label htmlFor="binfo-address-2" className="cinfo-label">Address 2</label>
+                        <div className={`cinfo ${errors.baddressTwo? 'error' : '' }`}>
+                            <input id="binfo-address-2" className="cinfo-input"
+                            { ...register("baddressTwo", { required: false })}                     
+                            />
+                            <label htmlFor="binfo-address-2" className={`cinfo-label ${baddressTwo.length? 'active' : ''}`}>{errors.baddressTwo? errors.addressTwo.message :'Address 2'}</label>
                         </div>
                         <div className="cinfo-double">
-                            <div className="cinfo">
-                                <input id="binfo-city" className="cinfo-input"/>
-                                <label htmlFor="binfo-city" className="cinfo-label">City</label>
+                            <div className={`cinfo ${errors.bcity? 'error' : '' }`}>
+                                <input id="binfo-city" className="cinfo-input"
+                                { ...register("bcity", { required: "City required"})}                     
+                                />
+                                <label htmlFor="binfo-city" className={`cinfo-label ${bcity.length? 'active' : ''}`}>{errors.bcity? errors.bcity.message :'City'}</label>
                             </div>
-                            <div className="cinfo">
-                                <input id="binfo-province" className="cinfo-input"/>
-                                <label htmlFor="binfo-province" className="cinfo-label">Province/State</label>
+                            <div className={`cinfo ${errors.bprovince? 'error' : '' }`}>
+                                <input id="binfo-province" className="cinfo-input"
+                                { ...register("bprovince", { required: "Province required"})}                     
+                                />
+                                <label htmlFor="binfo-province" className={`cinfo-label ${bprovince.length? 'active' : ''}`}>{errors.bprovince? errors.bprovince.message :'Province/State'}</label>
                             </div>
                         </div>
                         <div className="cinfo-double">
-                            <div className="cinfo">
-                                <input id="binfo-code" className="cinfo-input"/>
-                                <label htmlFor="binfo-code" className="cinfo-label">Postal/Zip Code</label>
+                            <div className={`cinfo ${errors.bcode? 'error' : '' }`}>
+                                <input id="binfo-code" className="cinfo-input"
+                                { ...register("bcode", { required: "Postal code required"})}                     
+                                />
+                                <label htmlFor="binfo-code" className={`cinfo-label ${bcode.length? 'active' : ''}`}>{errors.bcode? errors.bcode.message :'Postal/Zip Code'}</label>
                             </div>
-                            <div className="cinfo">
-                                <input id="binfo-country" className="cinfo-input"/>
-                                <label htmlFor="binfo-country" className="cinfo-label">Country</label>
+                            <div className={`cinfo ${errors.bcountry? 'error' : '' }`}>
+                                <input id="binfo-country" className="cinfo-input"
+                                { ...register("bcountry", { required: "Country required"})}                     
+                                />
+                                <label htmlFor="binfo-country" className={`cinfo-label ${bcountry.length? 'active' : ''}`}>{errors.bcountry? errors.bcountry.message :'Country'}</label>
                             </div>
                         </div>
-                        <div className="cinfo">
-                            <input id="binfo-phone" className="cinfo-input"/>
-                            <label htmlFor="binfo-phone" className="cinfo-label">Phone</label>
+                        <div className={`cinfo ${errors.bphone? 'error' : '' }`}>
+                            <input id="binfo-phone" className="cinfo-input"
+                            { ...register("bphone", { required: "Phone number required"})}                     
+                            />
+                            <label htmlFor="binfo-phone" className={`cinfo-label ${bphone.length? 'active' : ''}`}>{errors.bphone? errors.bphone.message :'Phone'}</label>
                         </div>
-                        <div className="cinfo">
-                            <input id="binfo-email" className="cinfo-input"/>
-                            <label htmlFor="binfo-email" className="cinfo-label">Email</label>
+                        <div className={`cinfo ${errors.bemail? 'error' : '' }`}>
+                            <input id="binfo-email" className="cinfo-input"
+                            { ...register("bemail", { required: "Email required"})}                     
+                            />
+                            <label htmlFor="binfo-email" className={`cinfo-label ${bemail.length? 'active' : ''}`}>{errors.bemail? errors.bemail.message :'Email'}</label>
                         </div>
                     </div>
                 </div>

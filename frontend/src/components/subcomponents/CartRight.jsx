@@ -4,16 +4,10 @@ import axios from "axios"
 import './CartRight.css'
 import { removeItem, updateItem } from '../../utils/util'
 
-export default function CartRight({userId, cart, setCart, cartRef, mainRef, headerRef}) {
+export default function CartRight({userId, cart, setCart, cartRef, mainRef, headerRef, subtotal}) {
 
-    const [ subtotal, setSubtotal ] = useState(0)
     const closeRef = useRef(null)
     const cartPageRef = useRef(null)
-
-    //subtotal
-    useEffect( () => {
-        setSubtotal(cart.reduce((acc, item) => acc + parseFloat(item.price) * item.qty, 0).toFixed(2))
-    }, [cart])
     
     useEffect(() => {
         const ec = localStorage.getItem('ECOMMERCE_CART')

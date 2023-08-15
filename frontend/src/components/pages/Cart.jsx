@@ -4,15 +4,7 @@ import axios from "axios"
 import './Cart.css'
 import { removeItem, updateItem } from '../../utils/util'
 
-export function Cart({userId, cart, setCart}) {
-
-    const [ subtotal, setSubtotal ] = useState(0)
-
-    //subtotal
-    useEffect( () => {
-        setSubtotal(cart.reduce((acc, item) => acc + parseFloat(item.price) * item.qty, 0).toFixed(2))
-    }, [cart])
-
+export function Cart({userId, cart, setCart, subtotal}) {
 
     return (
         <div className="cart">

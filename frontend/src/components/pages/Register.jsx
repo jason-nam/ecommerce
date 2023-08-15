@@ -9,11 +9,14 @@ export function Register({userId, setUserId, setCart}) {
     const navigate = useNavigate();
 
     useEffect( () => {
+        let regTimeout;
         if (userId > 0 && userId !== null && !registered) {
-            setTimeout(() => {
+            regTimeout = setTimeout(() => {
                 navigate("/")
             }, 2000)
         }
+
+        return () => clearTimeout(regTimeout)
     }, [userId] )
 
 
@@ -25,7 +28,7 @@ export function Register({userId, setUserId, setCart}) {
             </>
         )
     else if (userId != null)
-        return <div>Already logged in. Soon to be redirected</div>
+        return <div>Logged in. Soon to be redirected</div>
 
   }
 

@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import { useParams, Link, useNavigate} from "react-router-dom"
 import axios from "axios"
 import './Product.css'
+import { productReducer, productInitialState } from '../../utils/reducer'
 
-export function Product({userId, cart, setCart, cartToggle, mainRef, headerRef}) {
+export function Product({userId, cart, setCart, cartToggle}) {
 
     const { id } = useParams()
-    const [product, setProduct] = useState({});
-    const [error, setError] = useState(false);
-    const [loading, setLoading] = useState(true);
-
+    const [ state, dispatch ] = useReducer(productReducer,productInitialState )
+    const { product, error, loading } = state;
     const [qty, setQty] = useState(1);
+
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,17 +28,16 @@ export function Product({userId, cart, setCart, cartToggle, mainRef, headerRef})
             })
         .then((data) => {
             if (isMounted) {
-                setProduct(data[0]);             
-                setLoading(false);
+                dispatch({type: 'PRODUCT_SUCCESS', payload: data[0]})
             }
         })
-        .catch(err => setError(true));  
+        .catch(err => dispatch({type: 'PRODUCT_FAIL'}));  
         
         return () => {
             isMounted = false;
             isMounted && controller.abort()
         }
-    }, [setCart, id, setProduct, setLoading]);
+    }, [setCart, id]);
 
     // add item to cart
     const addItem = (e) => {
@@ -98,8 +97,6 @@ export function Product({userId, cart, setCart, cartToggle, mainRef, headerRef})
             }
         }
         cartToggle(e);
-        // setTimeout(() => document.querySelector('.cart-r')? 
-        // document.querySelector('.cart-r').classList.add('active'): null, 250)
     }
 
     // return logic
@@ -109,9 +106,9 @@ export function Product({userId, cart, setCart, cartToggle, mainRef, headerRef})
             <div className="product-container">
             {error?
                 (    
-                    <>
-                        Product does not exist
-                    </>
+                    <div className="error">
+                        Product does not exist.
+                    </div>
                     )
                 : (
                     !loading ? (
