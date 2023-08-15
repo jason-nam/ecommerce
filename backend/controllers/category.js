@@ -5,6 +5,7 @@ module.exports = {
 
     getAllCategories: async (req, res, next) => {
         try {
+            
             const response = await CategoryServiceInstance.getAllCategories();
 
             res.status(200).send(response);
@@ -31,7 +32,11 @@ module.exports = {
 
     createCategory: async (req, res, next) => {
         try {
-            //TODO
+            
+            const data = req.body;
+            const response = await CategoryServiceInstance.createCategory({ ...data });
+
+            res.status(200).send(response);
 
         } catch(err) {
             res.status(404).send({"message": "Product does not exist"});
@@ -41,7 +46,12 @@ module.exports = {
 
     updateCategory: async (req, res, next) => {
         try {
-            //TODO
+            
+            const { categoryid } = req.params;
+            const data = req.body;
+            const response = await CategoryServiceInstance.updateCategory({ categoryid, ...data });
+
+            res.status(200).send(response);
 
         } catch(err) {
             res.status(404).send({"message": "Product does not exist"});
@@ -51,7 +61,11 @@ module.exports = {
 
     deleteCategory: async (req, res, next) => {
         try {
-            //TODO
+        
+            const { categoryid } = req.params;
+            const response = await CategoryServiceInstance.deleteCategory(categoryid);
+
+            res.status(200).send(response);
 
         } catch(err) {
             res.status(404).send({"message": "Product does not exist"});
