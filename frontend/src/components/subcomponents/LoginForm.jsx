@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { changeCart } from "../../utils/util"
 
-export default function LoginForm({setUserId, setCart, setAuth}) {
+export default function LoginForm({setUserId, setCart, setNewLogin}) {
     const { register, watch, handleSubmit, formState: { errors } } = useForm({
         // mode: 'all',  //show warnings on input change
         defaultValues: {
@@ -27,8 +27,9 @@ export default function LoginForm({setUserId, setCart, setAuth}) {
         .then(res => {
             if (res.data.id) {
                 setUserId(res.data.id)
-                setAuth(true)
+                setNewLogin(true)
                 changeCart(setCart, navigate)
+                setAuthFail(false)
             } else
                 setAuthFail(true)
         })

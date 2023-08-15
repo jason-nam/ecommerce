@@ -110,8 +110,15 @@
 
 @media (max-width: 787px) {
 
-	.menu {
+	.menu, .menu:not(.active) {
+		width: 85%;
+	}
+
+	.menu .main {
+		padding: 1rem;
 		width: 100%;
+		box-sizing: border-box;
+		height: 100%;
 	}
 
 }

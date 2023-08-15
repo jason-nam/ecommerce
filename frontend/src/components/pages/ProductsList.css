@@ -94,8 +94,9 @@
     .pl-container {
         width: 100%;
         display: grid;
-        grid-template-columns: 50% 50%;
+        grid-template-columns: calc((100% - 0.5rem)/2) calc((100% - 0.5rem)/2);
         grid-gap: 2rem 0.5rem;
+        box-sizing: border-box;
     }
     
     .pl-name, .pl-price, .pl-category {

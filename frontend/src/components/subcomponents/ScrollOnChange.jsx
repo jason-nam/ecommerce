@@ -5,9 +5,11 @@ const ScrollOnChange = () => {
     const location = useLocation();
 
     useEffect(() => {
-        setTimeout ( () => {
+        let scrollTimeout = setTimeout ( () => {
             window.scrollTo(0, 0);
         }, 0)
+
+        return () => clearTimeout(scrollTimeout)
     }, [location]);
 }
 
