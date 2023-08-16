@@ -131,7 +131,7 @@ const { faker } = require('@faker-js/faker');
         await db.query(cartItemsTableStatement);
 
         // await db.query(insertCategories);
-        const categoriesList = ["Men", "Women", "Children"];
+        const categoriesList = ["men", "women", "children"];
         const insertedCategories = [];
         // const subcategoriesList = ["Tops", "Bottoms", "Outerwear", "Innerwear", "Loungewear", "Accessories"];
         
@@ -143,9 +143,9 @@ const { faker } = require('@faker-js/faker');
         console.log('Categories inserted:', insertedCategories);
 
         const subcategoriesMap = {
-            Men: ["Tops", "Bottoms", "Outerwear", "Innerwear", "Accessories"],
-            Women: ["Tops", "Bottoms", "Dresses and Skirts", "Outerwear", "Innerwear", "Accessories"],
-            Children: ["Tops", "Bottoms", "Dresses and Skirts", "Outerwear", "Innerwear", "Accessories"]
+            men: ["tops", "bottoms", "outerwear", "innerwear", "accessories"],
+            women: ["tops", "bottoms", "dresses and skirts", "outerwear", "innerwear", "accessories"],
+            children: ["tops", "bottoms", "dresses and skirts", "outerwear", "innerwear", "accessories"]
         };
 
         // Insert subcategories and build a subcategory ID map

@@ -57,8 +57,8 @@ module.exports = class ProductModel {
         try {
             const statement = `SELECT COUNT(*)
                                FROM products p 
-                                   INNER JOIN subcategories sc ON sc.id = p.subcategoryid 
-                                   INNER JOIN categories c ON c.id = sc.categoryid
+                               INNER JOIN subcategories sc ON sc.id = p.subcategoryid 
+                               INNER JOIN categories c ON c.id = sc.categoryid
                                WHERE (LOWER(p.name) LIKE LOWER($1) OR LOWER(sc.name) LIKE LOWER($1) OR LOWER(c.name) LIKE LOWER($1))
                                AND (LOWER(c.name) = LOWER($2) OR LOWER(sc.name) = LOWER($2)
                                OR $2 = '')
@@ -99,8 +99,8 @@ module.exports = class ProductModel {
                 // select products with id 1 of limit 1
                 const statement = `SELECT p.*, c.name AS category, sc.name AS subcategory
                                    FROM products p
-                                       INNER JOIN subcategories sc ON sc.id = p.subcategoryid 
-                                       INNER JOIN categories c ON c.id = sc.categoryid
+                                   INNER JOIN subcategories sc ON sc.id = p.subcategoryid 
+                                   INNER JOIN categories c ON c.id = sc.categoryid
                                    WHERE p.id = $1
                                    LIMIT 1`;
                 const values = [id];
@@ -116,5 +116,49 @@ module.exports = class ProductModel {
             } catch(err) {
                 throw new Error(err);
             }
+    }
+
+    static async getProductsByCategory(categoryname) {
+        try{
+
+            const statement = `SELECT p.*
+                               FROM products p
+                               INNER JOIN subcategories sc ON sc.id = p.subcategoryid
+                               INNER JOIN categories c ON c.id = sc.categoryid
+                               WHERE c.name = $1`;
+            const values = [categoryname];
+
+            const result = await db.query(statement, values);
+
+            console.log(result)
+
+            if (result.rows?.length) {
+                return result.rows;
+            }
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    static async getProductsBySubcategory(categoryname, subcategoryname) {
+        try{
+
+            const statement = `SELECT p.*
+                               FROM products p
+                               INNER JOIN subcategories sc ON sc.id = p.subcategoryid
+                               INNER JOIN categories c ON c.id = sc.categoryid
+                               WHERE c.name = $1 AND sc.name = $2`;
+            const values = [categoryname, subcategoryname];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows;
+            }
+
+        } catch(err) {
+            throw new Error(err);
+        }
     }
 }
