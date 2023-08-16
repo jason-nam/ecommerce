@@ -14,7 +14,7 @@ export default function LoginForm({setUserId, setCart, setNewLogin}) {
     });
     const email = watch('email')
     const password = watch('password')
-    // const [authFail, setAuthFail] = useState(false);
+    const [authFail, setAuthFail] = useState(false);
     const [cartFail, setCartFail] = useState([])
     const navigate = useNavigate();
     const location = useLocation();
