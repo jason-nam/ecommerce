@@ -81,9 +81,11 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
                             <span className="main-category" onClick={showSubcategories}>{c.name}</span>
                         </div>
                         <div className="subcategories">
-                            <Link to={`/${c.name}`} >All</Link>
+                            <div><Link to={`/products/${c.name}`} className="subcategory">All</Link></div>
                         {c.sub.map( sc => {
-                            return <div key={`${c.name}-${sc}`} className="subcategory"><Link to={`/${sc}`}>{sc}</Link></div>;
+                            return  <div key={`${c.name}-${sc}`} className="subcategory">
+                                <Link to={`/products/${c.name}/${sc}`}>{sc}</Link>
+                            </div>;
                         })}
                         </div>
                     </div>                   
