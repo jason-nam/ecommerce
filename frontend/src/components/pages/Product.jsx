@@ -19,7 +19,7 @@ export function Product({userId, cart, setCart, cartToggle}) {
         const controller = new AbortController();
 
         // fetch product
-        fetch(`/api/products/${id}`, {signal: controller.signal} )
+        fetch(`/api/products/product/${id}`, {signal: controller.signal} )
         .then((res) => {
             if (!res.ok) 
                 throw new Error(res.status)
@@ -47,7 +47,7 @@ export function Product({userId, cart, setCart, cartToggle}) {
         if ( userId > 0) {
             //already in cart => change qty
             if (inCart.length){
-                axios.put(`/api/carts/mycart/items/${inCart[0].cartitemid}`,
+                axios.put(`/api/carts/items/${inCart[0].cartitemid}`,
                 { 
                     qty: inCart[0].qty + qty, 
                     productid: inCart[0].id, 
@@ -64,7 +64,7 @@ export function Product({userId, cart, setCart, cartToggle}) {
             // not in cart => new cartitem
             } else {
                 axios.post(
-                    "/api/carts/mycart/items/", 
+                    "/api/carts/items/", 
                     { qty, productid: product.id })
                 .then(res => {
                     let cartitem = {...product, 

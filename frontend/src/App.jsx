@@ -14,9 +14,8 @@ import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
 import ScrollOnChange  from './components/subcomponents/ScrollOnChange'
 import './App.css';
-import { checkoutReducer, checkoutInitialState } from './utils/reducer'
+import { checkoutReducer, checkoutInitialState, authReducer, authInitialState } from './utils/reducer'
 import { checkIfLoggedIn } from "./utils/util"
-
 
 function App() {
     const [ userId, setUserId ] = useState(null);
@@ -25,8 +24,8 @@ function App() {
     const cartRef = useRef(null)
     const headerRef = useRef(null);
     
-    const [ state, dispatch ] = useReducer(checkoutReducer, checkoutInitialState);
-    const { subtotal, tax, shipping, total } = state;
+    const [ stateCH, dispatchCH ] = useReducer(checkoutReducer, checkoutInitialState);
+    const { subtotal, tax, shipping, total } = stateCH;
 
     useEffect(() => {
         let isMounted = true;
@@ -43,7 +42,7 @@ function App() {
 
     //subtotal
     useEffect( () => {
-        dispatch({ type: "CALCULATE", payload: cart })
+        dispatchCH({ type: "CALCULATE", payload: cart })
     }, [cart])
     
     //login check

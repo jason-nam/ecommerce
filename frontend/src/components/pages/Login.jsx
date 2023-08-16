@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../subcomponents/LoginForm"
 import "./AuthPage.css"
-import { productReducer, productInitialState } from '../../utils/reducer'
 
 export function Login({userId, setUserId, setCart}) {
 

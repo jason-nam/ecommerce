@@ -83,20 +83,38 @@ export const authReducer = (state, action) => {
                 ...state,
                 userId: action.payload,
                 newLogin: true,
-                error: false,
+                loginError: false,
                 authFail: false,
             }
         case "LOGIN_FAIL":
             return {
                 ...state,
                 authFail: true,
-                error: false,
+                loginError: false,
                 newLogin: false,
             }
         case "LOGIN_ERROR":
             return {
                 ...state,
-                error: true,
+                loginError: true,
+            }
+        case "REG_SUCCESS":
+            return {
+                ...state,
+                userId: action.payload,
+                registered: true,
+                userExists: false,
+            }
+        case "REG_USEREXISTS":
+            return {
+                ...state,
+                userExists: true,
+            }
+        case "REG_ERROR":
+            return {
+                ...state,
+                regError: true,
+                userExists: false
             }
     }
 }
@@ -105,6 +123,8 @@ export const authInitialState = {
     userId: null,
     authFail: false,
     newLogin: false,
-    error: false,
-    setNewLogin: false,
+    loginError: false,
+    registered: false,
+    userExists: false,
+    regError: false,
 }
