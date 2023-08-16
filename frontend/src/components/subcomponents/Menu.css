@@ -107,15 +107,16 @@
 .menu .main .item-group .subcategories {
 	visibility: hidden;
 	height: 0;
-	opacity: 0;
-	transition: visibility 0s ease 0.5s, height 0.5s ease, opacity 0.5s ease;
+	/* opacity: 0; */
+	overflow: hidden;
+	transition: visibility 0s ease 0.3s, height 0.3s ease-out;
 }
 
-.menu .main .item-group:hover .subcategories{
+.menu .main .item-group .item.active + .subcategories{
 	visibility: visible;
-	height: 10rem;
-	opacity: 1;
-	transition: visibility 0s ease 0s, height 0.5s ease, opacity 0.5s ease;
+	height: 11rem;
+	/* opacity: 1; */
+	transition: visibility 0s ease 0s, height 0.3s ease-out;
 }
 
 
