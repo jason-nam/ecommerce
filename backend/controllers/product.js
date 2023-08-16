@@ -29,5 +29,33 @@ module.exports = {
             res.status(404).send({"message": "Product does not exist"});
             next(err);
         }
+    },
+
+    getProductsByCategory: async (req, res, next) => {
+        try {
+
+            const { categoryname } = req.params;
+            const response = await ProductServiceInstance.getProductsByCategory(categoryname);
+
+            res.status(200).send(response);
+
+        } catch(err) {
+            res.status(404).send({"message": "404"});
+            next(err);
+        }
+    },
+
+    getProductsBySubcategory: async (req, res, next) => {
+        try {
+
+            const { categoryname, subcategoryname } = req.params;
+            const response = await ProductServiceInstance.getProductsBySubcategory(categoryname, subcategoryname);
+
+            res.status(200).send(response);
+
+        } catch(err) {
+            res.status(404).send({"message": "404"});
+            next(err);
+        }
     }
 }

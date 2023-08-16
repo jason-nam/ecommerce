@@ -4,7 +4,6 @@ const ProductModelInstance = new ProductModel();
 module.exports = class ProductService {
 
     async list(options) {
-
         try {
             let { limit, page, search, category } = options;
 
@@ -24,7 +23,6 @@ module.exports = class ProductService {
     }
 
     async get(id) {
-
         try {
             // get product if product exists else return null
             const product = await ProductModelInstance.getProductById(id);
@@ -35,6 +33,30 @@ module.exports = class ProductService {
             }
 
             return product;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    async getProductsByCategory(categoryname) {
+        try {
+
+            const products = await ProductModel.getProductsByCategory(categoryname);
+
+            return products;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    async getProductsBySubcategory(categoryname, subcategoryname) {
+        try {
+
+            const products = await ProductModel.getProductsBySubcategory(categoryname, subcategoryname);
+
+            return products;
 
         } catch(err) {
             throw new Error(err);
