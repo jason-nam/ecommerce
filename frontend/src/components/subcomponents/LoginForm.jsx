@@ -1,10 +1,11 @@
-import React, { useState, useRef } from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { changeCart } from "../../utils/util"
 
 export default function LoginForm({setUserId, setCart, setNewLogin}) {
+
     const { register, watch, handleSubmit, formState: { errors } } = useForm({
         // mode: 'all',  //show warnings on input change
         defaultValues: {
@@ -13,9 +14,10 @@ export default function LoginForm({setUserId, setCart, setNewLogin}) {
     });
     const email = watch('email')
     const password = watch('password')
-    const [authFail, setAuthFail] = useState(false);
+    // const [authFail, setAuthFail] = useState(false);
     const [cartFail, setCartFail] = useState([])
     const navigate = useNavigate();
+    const location = useLocation();
     
     const doLogin = (data, e) => {
         e.preventDefault();
@@ -28,7 +30,7 @@ export default function LoginForm({setUserId, setCart, setNewLogin}) {
             if (res.data.id) {
                 setUserId(res.data.id)
                 setNewLogin(true)
-                changeCart(setCart, navigate)
+                changeCart(setCart, navigate, location)
                 setAuthFail(false)
             } else
                 setAuthFail(true)

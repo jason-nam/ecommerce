@@ -52,6 +52,17 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
         return () => document.removeEventListener('keydown', menuEscape)
     },[menuEscape])
 
+    //show subcategories 
+    const showSubcategories = (e) => {
+        let itemAll = document.querySelectorAll(".item")
+        if (itemAll) {
+            let itemsFiltered = Array.from(itemAll).filter(x => x != e.target.parentElement && x != e.target )
+            itemsFiltered.forEach(x => x.classList.remove('active'))
+            e.target.parentElement.classList.toggle('active')
+        }
+    }
+
+    //close subcategories
         
     return (
         <div className='menu' ref={menuRef} role="dialog" aria-hidden="true">
@@ -66,8 +77,8 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
                 </div>
                 {categories.map(c => {
                     return <div key={c.name} className="item-group">
-                        <div className="item" >
-                            <div className="main-category">{c.name}</div>
+                        <div className="item">
+                            <span className="main-category" onClick={showSubcategories}>{c.name}</span>
                         </div>
                         <div className="subcategories">
                             <Link to={`/${c.name}`} >All</Link>
