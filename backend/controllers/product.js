@@ -31,11 +31,11 @@ module.exports = {
         }
     },
 
-    getProductsBySubcategory: async (req, res, next) => {
+    getProductsByCategory: async (req, res, next) => {
         try {
 
-            const { categoryname, subcategoryname } = req.params;
-            const response = await ProductServiceInstance.getProductsBySubcategory(categoryname, subcategoryname);
+            const { categoryname } = req.params;
+            const response = await ProductServiceInstance.getProductsByCategory(categoryname);
 
             res.status(200).send(response);
 
@@ -45,11 +45,11 @@ module.exports = {
         }
     },
 
-    getProductsByCategory: async (req, res, next) => {
+    getProductsBySubcategory: async (req, res, next) => {
         try {
 
-            const { categoryname } = req.params;
-            const response = await ProductServiceInstance.getProductsByCategory(categoryname);
+            const { categoryname, subcategoryname } = req.params;
+            const response = await ProductServiceInstance.getProductsBySubcategory(categoryname, subcategoryname);
 
             res.status(200).send(response);
 

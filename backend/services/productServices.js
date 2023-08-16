@@ -39,16 +39,24 @@ module.exports = class ProductService {
         }
     }
 
-    static async getProductsBySubcategory(categoryname, subcategoryname) {
+    async getProductsByCategory(categoryname) {
         try {
+
+            const products = await ProductModel.getProductsByCategory(categoryname);
+
+            return products;
 
         } catch(err) {
             throw new Error(err);
         }
     }
 
-    static async getProductsByCategory(categoryname) {
+    async getProductsBySubcategory(categoryname, subcategoryname) {
         try {
+
+            const products = await ProductModel.getProductsBySubcategory(categoryname, subcategoryname);
+
+            return products;
 
         } catch(err) {
             throw new Error(err);
