@@ -19,7 +19,7 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
             const signal = controller.signal;
 
             // get cart from db
-            axios.get("/api/carts/mycart", {signal: signal})
+            axios.get("/api/carts", {signal: signal})
             .then(res => {
                 if (isMounted) {
                     setCart(res.data.items)
@@ -37,7 +37,7 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
     
     }, [setCart, userId])
 
-    // close cart
+    // close cart by Escape key
     const cartEscape = useCallback((e) => {
         if (e.key === "Escape") {
             cartRef.current.classList.remove('active');
@@ -48,10 +48,11 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
         }
     }, [cartRef, mainRef, headerRef])
 
+    // close cart by click
     const cartClick = useCallback ((e) => {
-        if ((cartRef.current && !cartRef.current.contains(e.target)) ||
-        (closeRef.current && closeRef.current.contains(e.target)) ||
-        (cartPageRef.current && cartPageRef.current.contains(e.target))) {
+        if (cartRef.current && !cartRef.current.contains(e.target) ||
+        closeRef.current && closeRef.current.contains(e.target) ||
+        cartPageRef.current && cartPageRef.current.contains(e.target)) {
             cartRef.current.classList.remove('active');
             document.body.classList.remove('modal');
             cartRef.current.setAttribute('aria-hidden', 'true')
