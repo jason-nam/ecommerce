@@ -3,8 +3,11 @@ import { useParams, Link, useNavigate} from "react-router-dom"
 import axios from "axios"
 import './Product.css'
 import { productReducer, productInitialState } from '../../utils/reducer'
+import { urlChange } from '../../utils/util'
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
-export function Product({userId, cart, setCart, cartToggle}) {
+export function Product({userId, cart, setCart, cartToggle, addedToast}) {
 
     const { id } = useParams()
     const [ state, dispatch ] = useReducer(productReducer,productInitialState )
@@ -19,7 +22,7 @@ export function Product({userId, cart, setCart, cartToggle}) {
         const controller = new AbortController();
 
         // fetch product
-        fetch(`/api/products/${id}`, {signal: controller.signal} )
+        fetch(`/api/products/product/${id}`, {signal: controller.signal} )
         .then((res) => {
             if (!res.ok) 
                 throw new Error(res.status)
@@ -47,7 +50,7 @@ export function Product({userId, cart, setCart, cartToggle}) {
         if ( userId > 0) {
             //already in cart => change qty
             if (inCart.length){
-                axios.put(`/api/carts/mycart/items/${inCart[0].cartitemid}`,
+                axios.put(`/api/carts/items/${inCart[0].cartitemid}`,
                 { 
                     qty: inCart[0].qty + qty, 
                     productid: inCart[0].id, 
@@ -58,13 +61,14 @@ export function Product({userId, cart, setCart, cartToggle}) {
                     if (x.cartitemid===inCart[0].cartitemid)
                         x['qty']=x.qty+qty;
                     return x;
-                }))
+                    }))
+                    addedToast(`Added to cart`)
                 })
                 .catch(err => console.log(err))
             // not in cart => new cartitem
             } else {
                 axios.post(
-                    "/api/carts/mycart/items/", 
+                    "/api/carts/items/", 
                     { qty, productid: product.id })
                 .then(res => {
                     let cartitem = {...product, 
@@ -73,6 +77,7 @@ export function Product({userId, cart, setCart, cartToggle}) {
                         qty
                     }
                     setCart([...cart, cartitem])
+                    addedToast(`Added to cart`)
                 })
                 .catch(err => console.log(err))
             }
@@ -95,6 +100,7 @@ export function Product({userId, cart, setCart, cartToggle}) {
                 localStorage.setItem('ECOMMERCE_ITEMID', lsId? lsId+1 : 1)     
                 setCart(lcCart)
             }
+            addedToast(`Added to cart`)
         }
         cartToggle(e);
     }
@@ -116,11 +122,11 @@ export function Product({userId, cart, setCart, cartToggle}) {
                             <div className="pi-left">
                                 <div className="pi-left-links">
                                     <span className="go-back" onClick={() => navigate(-1)}>Back</span>
-                                    <Link to={`/products?category=${product.category}`}>
+                                    <Link to={`/products/${urlChange(product.category)}`}>
                                         <span className="pi-category">{product.category}</span>
                                     </Link>
                                     <span>/</span>
-                                    <Link to={`/products?category=${product.subcategory}`}>
+                                    <Link to={`/products/${urlChange(product.category)}/${urlChange(product.subcategory)}`}>
                                         <span className="pi-category">{product.subcategory}</span>
                                     </Link>
                                 </div>

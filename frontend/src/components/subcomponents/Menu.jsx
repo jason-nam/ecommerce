@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState, useCallback } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios"
 import './Menu.css'
+import {urlChange} from "../../utils/util"
 
 export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
 
@@ -27,6 +28,8 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
             menuRef.current.setAttribute('aria-hidden', 'true')
             mainRef.current.setAttribute('aria-hidden', 'false')
             headerRef.current.setAttribute('aria-hidden', 'false')
+            let itemAll = document.querySelectorAll(".item")
+            itemAll.forEach(x => x.classList.remove('active'))
         }
     }, [menuRef, mainRef, headerRef])
 
@@ -39,6 +42,8 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
             menuRef.current.setAttribute('aria-hidden', 'true')
             mainRef.current.setAttribute('aria-hidden', 'false')
             headerRef.current.setAttribute('aria-hidden', 'false')
+            let itemAll = document.querySelectorAll(".item")
+            itemAll.forEach(x => x.classList.remove('active'))
         }
     }, [menuRef, mainRef, headerRef])
 
@@ -52,6 +57,17 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
         return () => document.removeEventListener('keydown', menuEscape)
     },[menuEscape])
 
+    //show subcategories 
+    const showSubcategories = (e) => {
+        let itemAll = document.querySelectorAll(".item")
+        if (itemAll) {
+            let itemsFiltered = Array.from(itemAll).filter(x => x != e.target.parentElement && x != e.target )
+            itemsFiltered.forEach(x => x.classList.remove('active'))
+            e.target.parentElement.classList.toggle('active')
+        }
+    }
+
+    //close subcategories
         
     return (
         <div className='menu' ref={menuRef} role="dialog" aria-hidden="true">
@@ -66,13 +82,15 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
                 </div>
                 {categories.map(c => {
                     return <div key={c.name} className="item-group">
-                        <div className="item" >
-                            <div className="main-category">{c.name}</div>
+                        <div className="item">
+                            <span className="main-category" onClick={showSubcategories}>{c.name}</span>
                         </div>
                         <div className="subcategories">
-                            <Link to={`/${c.name}`} >All</Link>
+                            <div><Link to={`/products/${urlChange(c.name)}`} className="subcategory" ref={addToRef}>All</Link></div>
                         {c.sub.map( sc => {
-                            return <div key={`${c.name}-${sc}`} className="subcategory"><Link to={`/${sc}`}>{sc}</Link></div>;
+                            return  <div key={`${c.name}-${sc}`} className="subcategory">
+                                <Link to={`/products/${urlChange(c.name)}/${urlChange(sc)}`} ref={addToRef}>{sc}</Link>
+                            </div>;
                         })}
                         </div>
                     </div>                   
@@ -97,7 +115,7 @@ export default function Menu({userId, menuRef, logout, mainRef, headerRef}) {
                 </div>
 
                 <div className="item" id="my-orders-item">
-                    <Link to="/orders/myorders" ref={addToRef}>My Orders</Link>
+                    <Link to="/orders" ref={addToRef}>My Orders</Link>
                 </div>
 
                 <div className="item" id="contact-item">

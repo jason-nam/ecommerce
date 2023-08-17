@@ -19,7 +19,7 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
             const signal = controller.signal;
 
             // get cart from db
-            axios.get("/api/carts/mycart", {signal: signal})
+            axios.get("/api/carts", {signal: signal})
             .then(res => {
                 if (isMounted) {
                     setCart(res.data.items)
@@ -37,7 +37,7 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
     
     }, [setCart, userId])
 
-    // close cart
+    // close cart by Escape key
     const cartEscape = useCallback((e) => {
         if (e.key === "Escape") {
             cartRef.current.classList.remove('active');
@@ -48,10 +48,11 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
         }
     }, [cartRef, mainRef, headerRef])
 
+    // close cart by click
     const cartClick = useCallback ((e) => {
-        if ((cartRef.current && !cartRef.current.contains(e.target)) ||
-        (closeRef.current && closeRef.current.contains(e.target)) ||
-        (cartPageRef.current && cartPageRef.current.contains(e.target))) {
+        if (cartRef.current && !cartRef.current.contains(e.target) ||
+        closeRef.current && closeRef.current.contains(e.target) ||
+        cartPageRef.current && cartPageRef.current.contains(e.target)) {
             cartRef.current.classList.remove('active');
             document.body.classList.remove('modal');
             cartRef.current.setAttribute('aria-hidden', 'true')
@@ -90,13 +91,13 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
                         <div className="item" key={item.cartitemid}>
                             <div className="item-container">
                                 <div className="image">
-                                    <a href={`/products/${item.id}`}>
+                                    <a href={`/products/product/${item.id}`}>
                                         <img className='cartitem-img' src={item.image} alt={`${item.name}`}></img>
                                     </a>
                                 </div>
                                 <div className="info-text-container">
                                     <div className="item-top">
-                                        <a href={`/products/${item.id}`} className="bag-name">
+                                        <a href={`/products/product/${item.id}`} className="bag-name">
                                             {item.name}
                                         </a>
                                         <a href={`/products?category=${item.subcategory}`} className="bag-category">
@@ -107,11 +108,23 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
                                     <div className="item-bottom">
                                         <div className="bag-qty">
                                             <div>Qty:&nbsp;&nbsp;</div>
-                                            <button className="bag-qty-edit" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>-</button>
+                                            <button 
+                                                className="bag-qty-edit" 
+                                                onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>
+                                                -
+                                            </button>
                                             <div className="bag-qty-amt">{item.qty}</div>
-                                            <button className="bag-qty-edit" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>+</button>
+                                            <button 
+                                                className="bag-qty-edit" 
+                                                onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart, notify)}>
+                                                +
+                                            </button>
                                         </div>
-                                        <button className="remove-cart" onClick={() => removeItem(item.cartitemid, cart, userId, setCart)}>Remove</button>
+                                        <button 
+                                            className="remove-cart" 
+                                            onClick={() => removeItem(item.cartitemid, cart, userId, setCart)}>
+                                                Remove
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -127,7 +140,6 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
                 </div>
                 <Link to="/cart" id="view-cart" ref={cartPageRef}>View Cart</Link>
             </div>
-
         </div>
     )
 }

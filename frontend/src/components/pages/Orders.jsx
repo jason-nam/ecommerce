@@ -5,6 +5,10 @@ import './Orders.css'
 
 export function Orders({userId, cart, setCart}) {
 
+    useEffect(() => {
+        axios.get('')
+    }, [])
+
           
     return (
         <div className="orders">
@@ -15,9 +19,8 @@ export function Orders({userId, cart, setCart}) {
 
             {userId === -1 ?  
                 <>
-                    Continue with:
-                    <div className="item"><Link to="/login">Sign In</Link></div>
-                    <div className="item"><Link to="/register">Register</Link></div> 
+                    <div className="item underline"><Link to="/login">Sign In</Link></div>
+                    <div className="item underline"><Link to="/register">Register</Link></div> 
                 </>
                 : userId !== null ? 
                 <>

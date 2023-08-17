@@ -8,7 +8,7 @@ module.exports = (app) => {
     app.use("/api/products", router);
 
     router.get("/", controller.list); // list all products
-    router.get("/id/:productid", controller.get); // get product
+    router.get("/product/:productid", controller.get); // get product
 
     router.get("/:categoryname", controller.getProductsByCategory);
     router.get("/:categoryname/:subcategoryname", controller.getProductsBySubcategory);

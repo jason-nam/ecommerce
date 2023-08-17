@@ -33,9 +33,9 @@ module.exports = {
 
     getProductsByCategory: async (req, res, next) => {
         try {
-
+            const queryParams = req.query;
             const { categoryname } = req.params;
-            const response = await ProductServiceInstance.getProductsByCategory(categoryname);
+            const response = await ProductServiceInstance.getProductsByCategory(categoryname, queryParams);
 
             res.status(200).send(response);
 
@@ -47,9 +47,9 @@ module.exports = {
 
     getProductsBySubcategory: async (req, res, next) => {
         try {
-
+            const queryParams = req.query;
             const { categoryname, subcategoryname } = req.params;
-            const response = await ProductServiceInstance.getProductsBySubcategory(categoryname, subcategoryname);
+            const response = await ProductServiceInstance.getProductsBySubcategory(categoryname, subcategoryname, queryParams);
 
             res.status(200).send(response);
 

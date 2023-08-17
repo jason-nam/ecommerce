@@ -25,7 +25,6 @@ module.exports = class OrderModel {
         try {
 
             const { items, ...order } = this; 
-
             const statement = `INSERT INTO orders (total, status, created, modified, userid)
                                VALUES ($1, $2, $3, $4, $5)
                                RETURNING *`;

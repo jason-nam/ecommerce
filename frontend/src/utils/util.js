@@ -1,37 +1,24 @@
 
 import axios from "axios";
 
-// Check authentication status
-const checkIfLoggedIn = function (setUserId, signal, isMounted){
-
-    axios.get("/api/checkAuth", {signal: signal})
-    .then((res) => {
-        if (isMounted) {
-            if (res.data.loggedIn) {
-                setUserId(res.data.user.id)
-            } else {
-                setUserId(-1)
-            }
-        }
-    })
-    .catch(err => console.log(err.response, "Session Error")); 
-    
-};
-
-const changeCart = (setCart, navigate) => {
+const changeCart = (setCart, navigate, location, authToast, str) => {
 
     const ec = localStorage.getItem('ECOMMERCE_CART')
     let ls = JSON.parse(ec ? ec : "[]")
 
     // move localstorage items to db cart
     axios.post(
-        "/api/carts/mycart/items/multi", 
+        "/api/carts/items/multi", 
         { items: ls })
     .then(res => {
         localStorage.removeItem('ECOMMERCE_CART')
         localStorage.removeItem('ECOMMERCE_ITEMID')
         setCart(res.data.items)
-        navigate(-1)
+        if (location.key !== "default")
+            navigate(-1)
+        else
+            navigate("/")
+        authToast(str)
     })
     .catch(err => console.log(err))   
 }
@@ -40,7 +27,7 @@ const changeCart = (setCart, navigate) => {
 const removeItem = (cartitemid, cart, userId, setCart) => {
     let updatedCart = cart.filter(x=> (x.cartitemid !== cartitemid));
     if (userId > 0) {
-        axios.delete(`/api/carts/mycart/items/${cartitemid}`)
+        axios.delete(`/api/carts/items/${cartitemid}`)
             .then(res => {
                 setCart(updatedCart)
             })
@@ -68,7 +55,7 @@ const updateItem = (bool, cartitemid, qty, productid, cartid, cart, userId, setC
         return x;
     })
     if (userId > 0) {
-        axios.put(`/api/carts/mycart/items/${cartitemid}`, {qty, productid, cartid})
+        axios.put(`/api/carts/items/${cartitemid}`, {qty, productid, cartid})
             .then(res => setCart(updatedCart))
             .catch(err => console.log(err))
     } else {
@@ -78,4 +65,8 @@ const updateItem = (bool, cartitemid, qty, productid, cartid, cart, userId, setC
 
 }
 
-export { checkIfLoggedIn, changeCart, removeItem, updateItem };
+const urlChange = (str) => {
+    return str.replaceAll(' ', '-').toLowerCase()
+}
+
+export { changeCart, removeItem, updateItem, urlChange };

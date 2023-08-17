@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import axios from 'axios'
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { changeCart } from "../../utils/util"
 
-export default function RegisterForm({setRegistered, setUserId, setCart}) {
+export default function RegisterForm({setRegistered, setUserId, setCart, authToast}) {
     const [userExists, setUserExists] = useState(false);
     const { register, watch, handleSubmit, formState: { errors } } = useForm({
         // mode: 'all',  //show warnings on input change
@@ -16,19 +16,18 @@ export default function RegisterForm({setRegistered, setUserId, setCart}) {
     const [email, password, firstname, lastname] = watch(['email', 'password', 'firstname', 'lastname'])
 
     const navigate = useNavigate();
+    const location = useLocation();
 
     const createAccount = (e) => {
-        const ec = localStorage.getItem('ECOMMERCE_CART')
-        let ls = JSON.parse(ec ? ec : "[]")
 
         axios.post("/api/register", {
-                email, firstname, lastname, password, isactive:true
+            email, firstname, lastname, password, isactive:true
         })
         .then(res => 
             {
                 setUserId(res.data.id)
                 setRegistered(true)
-                changeCart(setCart, navigate)
+                changeCart(setCart, navigate, location, authToast, `Welcome, ${firstname}`)
             }
         )
         .catch(err => {
