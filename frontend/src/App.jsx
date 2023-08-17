@@ -14,8 +14,8 @@ import Header from './components/header/Header'
 import Footer from './components/footer/Footer'
 import ScrollOnChange  from './components/subcomponents/ScrollOnChange'
 import './App.css';
-import { checkoutReducer, checkoutInitialState, authReducer, authInitialState } from './utils/reducer'
-import { checkIfLoggedIn } from "./utils/util"
+import { checkoutReducer, checkoutInitialState } from './utils/reducer'
+import axios from "axios"
 
 function App() {
     const [ userId, setUserId ] = useState(null);
@@ -32,7 +32,17 @@ function App() {
         const controller = new AbortController();
         const signal = controller.signal;
 
-        loginCheck(setUserId, signal, isMounted);
+        axios.get("/api/checkAuth", {signal: signal})
+        .then((res) => {
+            if (isMounted) {
+                if (res.data.loggedIn) {
+                    setUserId(res.data.user.id)
+                } else {
+                    setUserId(-1)
+                }
+            }
+        })
+        .catch(err => console.log(err.response, "Session Error"));     
         
         return () => {
             isMounted = false;
@@ -44,12 +54,7 @@ function App() {
     useEffect( () => {
         dispatchCH({ type: "CALCULATE", payload: cart })
     }, [cart])
-    
-    //login check
-    const loginCheck = useCallback((setUserId, signal, isMounted) => {
-        checkIfLoggedIn(setUserId, signal, isMounted);
-    }, [setUserId])
-    
+        
     //cart-right toggle
     const cartToggle = (e) => {
         e.preventDefault();
@@ -71,13 +76,13 @@ function App() {
             <Routes>
                 <Route exact path='/' element={<Home { ...{userId, cart, setCart} } />} />
                 {/* <Route path='/about' element={<About />} /> */}
-                <Route path='/products/:id' element={<Product { ...{userId, cart, setCart, cartToggle} }/>} />
+                <Route path='/products/product/:id' element={<Product { ...{userId, cart, setCart, cartToggle} }/>} />
                 <Route path='/products' element={<ProductsList />} />
-                {/* <Route path='/products/:category' element={<ProductsByCategory />} />
-                <Route path='/products/:category/:subcategory' element={<ProductsBySubcategory />} /> */}
+                <Route path='/products/:category' element={<ProductsList />} />
+                <Route path='/products/:category/:subcategory' element={<ProductsList />} />
                 <Route path='/users/profile' element={<User userId={userId}/>} />
                 <Route path='/cart' element={<Cart {...{userId, cart, setCart, subtotal}}/>} />
-                <Route path='/orders/myorders' element={<Orders {...{userId}}/>}></Route>
+                <Route path='/orders' element={<Orders {...{userId}}/>}></Route>
                 <Route path="/checkout" element={<Checkout {...{userId, cart, setCart, subtotal, tax, shipping, total}} />} />
                 <Route path='/contacts' element={<Contact {...{}}/>}></Route>
                 <Route path='/login' element={<Login {...{userId, setUserId, setCart}} />} />

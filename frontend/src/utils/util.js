@@ -1,23 +1,6 @@
 
 import axios from "axios";
 
-// Check authentication status
-const checkIfLoggedIn = function (setUserId, signal, isMounted){
-
-    axios.get("/api/checkAuth", {signal: signal})
-    .then((res) => {
-        if (isMounted) {
-            if (res.data.loggedIn) {
-                setUserId(res.data.user.id)
-            } else {
-                setUserId(-1)
-            }
-        }
-    })
-    .catch(err => console.log(err.response, "Session Error")); 
-    
-};
-
 const changeCart = (setCart, navigate, location) => {
 
     const ec = localStorage.getItem('ECOMMERCE_CART')
@@ -81,4 +64,8 @@ const updateItem = (bool, cartitemid, qty, productid, cartid, cart, userId, setC
 
 }
 
-export { checkIfLoggedIn, changeCart, removeItem, updateItem };
+const urlChange = (str) => {
+    return str.replaceAll(' ', '-').toLowerCase()
+}
+
+export { changeCart, removeItem, updateItem, urlChange };

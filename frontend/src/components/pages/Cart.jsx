@@ -24,14 +24,14 @@ export function Cart({userId, cart, setCart, subtotal}) {
                         <div className="lines"></div>
                         <div className="item" >
                             <div className="cart-prod-img">
-                                <Link to={`/products/${item.id}`}>
+                                <Link to={`/products/product/${item.id}`}>
                                     <img src={item.image} alt={`${item.namme}`}></img>
                                 </Link>
                             </div>
                             <div className="cart-prod-info">
                                 <div className="info">
                                     <div className="name-price">
-                                        <Link to={`/products/${item.id}`}>
+                                        <Link to={`/products/product/${item.id}`}>
                                             <div className="name">{item.name}</div>
                                         </Link>
                                         <div className="price">$ {(parseFloat(item.price) * item.qty).toFixed(2)}</div>
