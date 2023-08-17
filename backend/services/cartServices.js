@@ -105,7 +105,6 @@ module.exports = class CartService {
         
         try {
             // list of cart items
-            // const cartItems = await CartItemModel.getCartItems(cartid);
             const promises = cart.map(async cartitem => {
                 let ProductModelInstance = new ProductModel();
                 let product = await ProductModelInstance.getProductById(cartitem.id);
@@ -120,9 +119,8 @@ module.exports = class CartService {
             }, 0);
 
             // create new order
-            const Order = new OrderModel({ subtotal, userid });
+            const Order = new OrderModel({ total: subtotal, userid });
             Order.addItems(cartItems);
-
             await Order.createOrder();
 
             // payment method

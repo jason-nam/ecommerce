@@ -52,10 +52,10 @@ const { faker } = require('@faker-js/faker');
         status          VARCHAR(50)       NOT NULL,
         created         DATE              NOT NULL,
         modified        DATE              NOT NULL,
-        userid          INT               NOT NULL,
-        FOREIGN KEY (userid) REFERENCES users(id)
+        userid          INT               NOT NULL
         );
-    `
+    `// FOREIGN KEY (userid) REFERENCES users(id)
+
 
     const orderItemsTableStatement = `
         CREATE TABLE IF NOT EXISTS orderitems (
