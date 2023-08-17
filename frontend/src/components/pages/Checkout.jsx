@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import axios from "axios"
 import './Checkout.css'
+import Cookies from 'js-cookie';
 
 export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total, orderToast}) {
     
@@ -134,7 +135,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
         )
         .then(res => {
             setCart([])
-            navigate("/orders")
+            navigate("/guest-orders")
             orderToast("Order successful!")
         })
         .catch(err => console.log(err))
