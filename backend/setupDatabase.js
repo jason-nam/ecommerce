@@ -50,8 +50,8 @@ const { faker } = require('@faker-js/faker');
         id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
         total           DECIMAL(10,2)     NOT NULL,
         status          VARCHAR(50)       NOT NULL,
-        created         DATE              NOT NULL,
-        modified        DATE              NOT NULL,
+        created         TIMESTAMP         NOT NULL,
+        modified        TIMESTAMP         NOT NULL,
         userid          INT               NOT NULL
         );
     `// FOREIGN KEY (userid) REFERENCES users(id)
@@ -61,7 +61,7 @@ const { faker } = require('@faker-js/faker');
         CREATE TABLE IF NOT EXISTS orderitems (
         id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
         qty             INT               NOT NULL,
-        created         DATE              NOT NULL,
+        created         TIMESTAMP         NOT NULL,
         orderid         INT               NOT NULL,
         productid       INT               NOT NULL,
         FOREIGN KEY (orderid) REFERENCES orders(id),
@@ -72,8 +72,8 @@ const { faker } = require('@faker-js/faker');
     const cartsTableStatement = `
         CREATE TABLE IF NOT EXISTS carts (
         id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,       
-        created         DATE              NOT NULL,
-        modified        DATE              NOT NULL,
+        created         TIMESTAMP         NOT NULL,
+        modified        TIMESTAMP         NOT NULL,
         userid          INT               NOT NULL,
         FOREIGN KEY (userid) REFERENCES users(id)
         );
