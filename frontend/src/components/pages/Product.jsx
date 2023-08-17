@@ -4,8 +4,10 @@ import axios from "axios"
 import './Product.css'
 import { productReducer, productInitialState } from '../../utils/reducer'
 import { urlChange } from '../../utils/util'
+// import { ToastContainer, toast } from 'react-toastify';
+// import 'react-toastify/dist/ReactToastify.css';
 
-export function Product({userId, cart, setCart, cartToggle}) {
+export function Product({userId, cart, setCart, cartToggle, addedToast}) {
 
     const { id } = useParams()
     const [ state, dispatch ] = useReducer(productReducer,productInitialState )
@@ -59,7 +61,8 @@ export function Product({userId, cart, setCart, cartToggle}) {
                     if (x.cartitemid===inCart[0].cartitemid)
                         x['qty']=x.qty+qty;
                     return x;
-                }))
+                    }))
+                    addedToast(`Added to cart`)
                 })
                 .catch(err => console.log(err))
             // not in cart => new cartitem
@@ -74,6 +77,7 @@ export function Product({userId, cart, setCart, cartToggle}) {
                         qty
                     }
                     setCart([...cart, cartitem])
+                    addedToast(`Added to cart`)
                 })
                 .catch(err => console.log(err))
             }
@@ -96,6 +100,7 @@ export function Product({userId, cart, setCart, cartToggle}) {
                 localStorage.setItem('ECOMMERCE_ITEMID', lsId? lsId+1 : 1)     
                 setCart(lcCart)
             }
+            addedToast(`Added to cart`)
         }
         cartToggle(e);
     }

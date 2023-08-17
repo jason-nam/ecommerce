@@ -86,10 +86,9 @@ module.exports = {
     checkout: async(req, res, next) => {
         try {
 
-            const { id } = req.user;
-
-            const { cartid, paymentinfo } = req.body;
-            const response = await CartServiceInstance.checkout(cartid, id, paymentinfo);
+            // const { id } = req.user;
+            const { paymentinfo, cart, id } = req.body;
+            const response = await CartServiceInstance.checkout(cart, id, paymentinfo);
 
             res.status(200).send(response);
 

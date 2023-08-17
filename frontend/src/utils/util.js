@@ -1,7 +1,7 @@
 
 import axios from "axios";
 
-const changeCart = (setCart, navigate, location) => {
+const changeCart = (setCart, navigate, location, authToast, str) => {
 
     const ec = localStorage.getItem('ECOMMERCE_CART')
     let ls = JSON.parse(ec ? ec : "[]")
@@ -18,6 +18,7 @@ const changeCart = (setCart, navigate, location) => {
             navigate(-1)
         else
             navigate("/")
+        authToast(str)
     })
     .catch(err => console.log(err))   
 }
