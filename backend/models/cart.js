@@ -5,8 +5,8 @@ const pgp = require("pg-promise")({ capSQL: true });
 module.exports = class CartModel {
 
     constructor(data = {}) {
-        this.created = data.created || moment.utc().format('YYYY-MM-DD HH:mm:ss').toISOString();
-        this.modified = moment.utc().format('YYYY-MM-DD HH:mm:ss').toISOString();
+        this.created = data.created || moment.utc().toISOString();
+        this.modified = moment.utc().toISOString();
         this.converted = data.converted || null;
         this.isActive = data.isActive || true;
     }
