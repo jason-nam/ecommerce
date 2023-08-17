@@ -3,13 +3,41 @@ import { Link } from 'react-router-dom';
 import axios from "axios"
 import './Orders.css'
 
-export function Orders({userId, cart, setCart}) {
+export function Orders({userId}) {
+    const [ orders, setOrders ] = useState([])
+    const [ selectedOrder, setSelectedOrder ] = useState(null)
 
     useEffect(() => {
-        axios.get('')
-    }, [])
+        if (userId > 0) {
+            let isMounted = true;
+            const controller = new AbortController();
+            const signal = controller.signal;
 
-          
+            axios.get('/api/orders', { signal })
+            .then(res => {
+                if (isMounted) {
+                    setOrders(res.data)
+                }
+            })
+            .catch(err => console.log(err))
+
+            return () => {
+                isMounted = false;
+                isMounted && controller.abort()
+            }
+        }
+    }, [userId, setOrders])
+
+    const showOrder = (id) => {
+        if (userId > 0) {
+            axios.get(`/api/orders/${id}`)
+            .then(res => {
+                setSelectedOrder(res.data)
+            })
+            .catch(err => console.log(err))
+        }
+    }
+    
     return (
         <div className="orders">
             
@@ -24,7 +52,17 @@ export function Orders({userId, cart, setCart}) {
                 </>
                 : userId !== null ? 
                 <>
-                    Signed In
+                    {orders.length ? orders.slice(0).reverse().map(order => {
+                        return <div key={order.id}>
+                                    <div className="order" onClick={e => showOrder(order.id)}>
+                                        <div>{order.created.slice(0, 10)}</div>
+                                        <div>${order.total}</div>
+                                    </div>
+                                    {selectedOrder? 
+                                    selectedOrder[0].orderid === order.id ? 
+                                    <div>{selectedOrder[0].name}</div> : null : null}
+                                </div>
+                    }) : null}
                 </>
                 : null
                 }

@@ -28,7 +28,7 @@ function App() {
     
     const [ stateCH, dispatchCH ] = useReducer(checkoutReducer, checkoutInitialState);
     const { subtotal, tax, shipping, total } = stateCH;
-    
+
     const addedToast = (str) => toast(str);
     const authToast = (str) => toast.success(str);
     const orderToast = (str) => toast.success(str);
@@ -90,6 +90,7 @@ function App() {
                 <Route path='/users/profile' element={<User userId={userId}/>} />
                 <Route path='/cart' element={<Cart {...{userId, cart, setCart, subtotal}}/>} />
                 <Route path='/orders' element={<Orders {...{userId}}/>}></Route>
+                {/* <Route path='/orders/:id' element={<Order {...{userId}}/>}></Route> */}
                 <Route path="/checkout" element={<Checkout {...{userId, cart, setCart, subtotal, tax, shipping, total, orderToast}} />} />
                 <Route path='/contacts' element={<Contact {...{}}/>}></Route>
                 <Route path='/login' element={<Login {...{userId, setUserId, setCart, authToast}} />} />
