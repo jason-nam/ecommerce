@@ -41,7 +41,8 @@ export default function Header({userId, cart, setCart, mainRef, cartRef, cartTog
 
     const dropDownClick = useCallback((e) => {
         if (dropRef.current && !dropRef.current.contains(e.target) 
-        && !dropRef.current.previousSibling.contains(e.target)) {
+        && !dropRef.current.previousSibling.contains(e.target) || 
+        Array.from(dropRef.current.children).some( x => x.contains(e.target)) ) {
             dropRef.current.classList.remove('show');
         }
     }, [dropRef])
@@ -93,14 +94,14 @@ export default function Header({userId, cart, setCart, mainRef, cartRef, cartTog
                     <div className="dropdown" ref={dropRef}>
                         {userId === -1 ?  
                         <>
-                            <a href="/login">Sign In</a>
-                            <a href="/register">Join Us</a>
+                            <Link to="/login">Sign In</Link>
+                            <Link to="/register">Join Us</Link>
                         </> 
                         : userId !==null ? 
                         <>
-                            <a href="/users/profile">Account</a>
-                            <a href="/#">Setting</a>
-                            <a href="/" className="logout-button" onClick={logout}>Sign Out</a>
+                            <Link to="/users/profile">Account</Link>
+                            <Link to="/#">Setting</Link>
+                            <Link to="/" className="logout-button" onClick={logout}>Sign Out</Link>
                         </>
                         : null
                     }

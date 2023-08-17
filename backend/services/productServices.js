@@ -39,10 +39,14 @@ module.exports = class ProductService {
         }
     }
 
-    async getProductsByCategory(categoryname) {
+    async getProductsByCategory(categoryname, queryParams) {
         try {
 
-            const products = await ProductModel.getProductsByCategory(categoryname);
+            let { limit, page } = queryParams;
+            if (limit == null || isNaN(limit) || limit < 1) limit = 12;
+            if (page == null || isNaN(page) || page < 1) page = 1;
+
+            const products = await ProductModel.getProductsByCategory(categoryname, limit, page);
 
             return products;
 
@@ -51,10 +55,14 @@ module.exports = class ProductService {
         }
     }
 
-    async getProductsBySubcategory(categoryname, subcategoryname) {
+    async getProductsBySubcategory(categoryname, subcategoryname, queryParams) {
         try {
 
-            const products = await ProductModel.getProductsBySubcategory(categoryname, subcategoryname);
+            let { limit, page } = queryParams;
+            if (limit == null || isNaN(limit) || limit < 1) limit = 12;
+            if (page == null || isNaN(page) || page < 1) page = 1;
+
+            const products = await ProductModel.getProductsBySubcategory(categoryname, subcategoryname, limit, page);
 
             return products;
 

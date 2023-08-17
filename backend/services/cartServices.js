@@ -2,6 +2,7 @@ const CartModel = require("../models/cart");
 const CartModelInstance = new CartModel();
 const CartItemModel = require("../models/cartItem");
 const OrderModel = require("../models/order");
+const ProductModel = require("../models/product");
 
 module.exports = class CartService {
 
@@ -100,19 +101,25 @@ module.exports = class CartService {
         }
     }
 
-    async checkout(cartid, userid, paymentinfo) {
+    async checkout(cart, userid, paymentinfo) {
         
         try {
             // list of cart items
-            const cartItems = await CartItemModel.getCartItems(cartid);
+            const promises = cart.map(async cartitem => {
+                let ProductModelInstance = new ProductModel();
+                let product = await ProductModelInstance.getProductById(cartitem.id);
+                product[0].qty = cartitem.qty
+                return product;
+            })
+            const cartItems = (await Promise.allSettled(promises)).map(x => x.value[0]);
 
             // generate total price from cart items
-            const total = cartItems.reduce((total, item) => {
-                return total += Number(item.price * item.qty);
+            const subtotal = cartItems.reduce((acc, item) => {
+                return acc += Number(item.price) * item.qty;
             }, 0);
 
             // create new order
-            const Order = new OrderModel({ total, userid });
+            const Order = new OrderModel({ total: subtotal, userid });
             Order.addItems(cartItems);
             await Order.createOrder();
 

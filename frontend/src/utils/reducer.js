@@ -76,12 +76,11 @@ export const productListInitialState = {
 }
 
 //Login.jsx
-export const authReducer = (state, action) => {
+export const loginReducer = (state, action) => {
     switch (action.type) {
         case "LOGIN_SUCCESS":
             return {
                 ...state,
-                userId: action.payload,
                 newLogin: true,
                 error: false,
                 authFail: false,
@@ -97,14 +96,43 @@ export const authReducer = (state, action) => {
             return {
                 ...state,
                 error: true,
+                authFail: false,
             }
     }
 }
 
-export const authInitialState = {
-    userId: null,
+export const registerReducer = (state, action) => {
+    switch (action.type) {
+        case "REG_SUCCESS":
+            return {
+                ...state,
+                registered: true,
+                userExists: false,
+                error: false,
+            }
+        case "REG_USEREXISTS":
+            return {
+                ...state,
+                userExists: true,
+                error: false,
+            }
+        case "REG_ERROR":
+            return {
+                ...state,
+                error: true,
+                userExists: false
+            }
+    }
+}
+
+export const loginInitialState = {
     authFail: false,
     newLogin: false,
     error: false,
-    setNewLogin: false,
+}
+
+export const registerInitialState = {
+    registered: false,
+    userExists: false,
+    error: false,
 }
