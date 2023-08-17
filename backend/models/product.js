@@ -130,8 +130,6 @@ module.exports = class ProductModel {
 
             const result = await db.query(statement, values);
 
-            console.log(result)
-
             if (result.rows?.length) {
                 return result.rows;
             }
