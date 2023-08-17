@@ -9,6 +9,7 @@ module.exports = (app) => {
 
     router.post("/", controller.create);
     router.get("/", controller.getCart);
+    router.delete("/empty", controller.emptyCart);
 
     router.post("/items", controller.addItem);
     router.post("/items/multi", controller.addMultiItems);

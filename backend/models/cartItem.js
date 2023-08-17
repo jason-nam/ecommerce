@@ -127,4 +127,26 @@ module.exports = class CartItemModel {
             throw new Error(err);
         }
     }
+
+    static async emptyCartItems(cartid) {
+        try {
+
+            const statement = `DELETE
+                               FROM cartitems
+                               WHERE cartid = $1
+                               RETURNING *`;
+            const values = [cartid];
+
+            const result = await db.query(statement, values);
+
+            if (result.rows?.length) {
+                return result.rows;
+            }
+
+            return null;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
 }
