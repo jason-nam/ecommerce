@@ -55,12 +55,12 @@ export function Orders({userId}) {
                     {orders.length ? orders.slice(0).reverse().map(order => {
                         return <div key={order.id}>
                                     <div className="order" onClick={e => showOrder(order.id)}>
-                                        <div>{order.created.slice(0, 10)}</div>
+                                        <div>{order.created}</div>
                                         <div>${order.total}</div>
                                     </div>
                                     {selectedOrder? 
                                     selectedOrder[0].orderid === order.id ? 
-                                    <div>{selectedOrder[0].name}</div> : null : null}
+                                    selectedOrder.map(x => <div key={x.id}>{x.name}</div>): null : null}
                                 </div>
                     }) : null}
                 </>
