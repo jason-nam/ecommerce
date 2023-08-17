@@ -29,12 +29,13 @@ export function Orders({userId}) {
     }, [userId, setOrders])
 
     const showOrder = (id) => {
-        axios.get(`/api/orders/:${id}`)
-        .then(res => {
-            // setSelectedOrder(res.data)
-            console.log(res.data)
-        })
-        .catch(err => console.log(err))
+        if (userId > 0) {
+            axios.get(`/api/orders/${id}`)
+            .then(res => {
+                setSelectedOrder(res.data)
+            })
+            .catch(err => console.log(err))
+        }
     }
     
     return (
@@ -57,7 +58,9 @@ export function Orders({userId}) {
                                         <div>{order.created.slice(0, 10)}</div>
                                         <div>${order.total}</div>
                                     </div>
-                                    {/* {selectedOrder? <div>{selectedOrder}</div> : null} */}
+                                    {selectedOrder? 
+                                    selectedOrder[0].orderid === order.id ? 
+                                    <div>{selectedOrder[0].name}</div> : null : null}
                                 </div>
                     }) : null}
                 </>
