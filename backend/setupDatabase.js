@@ -131,7 +131,7 @@ const { faker } = require('@faker-js/faker');
         await db.query(cartItemsTableStatement);
 
         // await db.query(insertCategories);
-        const categoriesList = ["men", "women", "children"];
+        const categoriesList = ["Men", "Women", "Children"];
         const insertedCategories = [];
         // const subcategoriesList = ["Tops", "Bottoms", "Outerwear", "Innerwear", "Loungewear", "Accessories"];
         
@@ -143,9 +143,9 @@ const { faker } = require('@faker-js/faker');
         console.log('Categories inserted:', insertedCategories);
 
         const subcategoriesMap = {
-            men: ["tops", "bottoms", "outerwear", "innerwear", "accessories"],
-            women: ["tops", "bottoms", "dresses and skirts", "outerwear", "innerwear", "accessories"],
-            children: ["tops", "bottoms", "dresses and skirts", "outerwear", "innerwear", "accessories"]
+            Men: ["Tops", "Bottoms", "Outerwear", "Innerwear", "Accessories"],
+            Women: ["Tops", "Bottoms", "Dresses and Skirts", "Outerwear", "Innerwear", "Accessories"],
+            Children: ["Tops", "Bottoms", "Dresses and Skirts", "Outerwear", "Innerwear", "Accessories"]
         };
 
         // Insert subcategories and build a subcategory ID map
@@ -163,7 +163,6 @@ const { faker } = require('@faker-js/faker');
 
         const insertedProducts = [];
 
-        // await db.query(insertProducts);
         for (let i = 0; i < 60; i++) {
             const subcategoryNames = Object.keys(subcategoriesMap).flatMap(name => subcategoriesMap[name]);
             const randomIndex = Math.floor(Math.random() * subcategoryNames.length) + 1;

@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate} from "react-router-dom"
 import axios from "axios"
 import './Product.css'
 import { productReducer, productInitialState } from '../../utils/reducer'
+import { urlChange } from '../../utils/util'
 
 export function Product({userId, cart, setCart, cartToggle}) {
 
@@ -116,11 +117,11 @@ export function Product({userId, cart, setCart, cartToggle}) {
                             <div className="pi-left">
                                 <div className="pi-left-links">
                                     <span className="go-back" onClick={() => navigate(-1)}>Back</span>
-                                    <Link to={`/products?category=${product.category}`}>
+                                    <Link to={`/products/${urlChange(product.category)}`}>
                                         <span className="pi-category">{product.category}</span>
                                     </Link>
                                     <span>/</span>
-                                    <Link to={`/products?category=${product.subcategory}`}>
+                                    <Link to={`/products/${urlChange(product.category)}/${urlChange(product.subcategory)}`}>
                                         <span className="pi-category">{product.subcategory}</span>
                                     </Link>
                                 </div>
