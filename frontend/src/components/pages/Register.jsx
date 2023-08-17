@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import RegisterForm from "../subcomponents/RegisterForm"
 import "./AuthPage.css"
 
-export function Register({userId, setUserId, setCart}) {
+export function Register({userId, setUserId, setCart, authToast}) {
 
     const [registered, setRegistered] = useState(false);
     const navigate = useNavigate();
@@ -24,7 +24,7 @@ export function Register({userId, setUserId, setCart}) {
         return (
             <>
                 <h1 className = "auth-title">Register</h1>
-                <RegisterForm {...{setRegistered, setUserId, setCart}}/>
+                <RegisterForm {...{setRegistered, setUserId, setCart, authToast}}/>
             </>
         )
     else if (userId != null)

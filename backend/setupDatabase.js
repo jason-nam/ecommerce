@@ -48,7 +48,7 @@ const { faker } = require('@faker-js/faker');
     const ordersTableStatement = `
         CREATE TABLE IF NOT EXISTS orders (
         id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
-        total           INT               NOT NULL,
+        total           DECIMAL(10,2)     NOT NULL,
         status          VARCHAR(50)       NOT NULL,
         created         DATE              NOT NULL,
         modified        DATE              NOT NULL,

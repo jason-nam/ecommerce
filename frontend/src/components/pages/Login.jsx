@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import LoginForm from "../subcomponents/LoginForm"
 import "./AuthPage.css"
 
-export function Login({userId, setUserId, setCart}) {
+export function Login({userId, setUserId, setCart, authToast}) {
 
     const navigate = useNavigate();
     const [ newLogIn, setNewLogin ] = useState(false)
@@ -22,12 +22,10 @@ export function Login({userId, setUserId, setCart}) {
     return userId === -1 ?
         <>
             <h1 className = "auth-title">Sign In</h1>
-            <LoginForm {...{setUserId, setCart, setNewLogin}}/>
+            <LoginForm {...{setUserId, setCart, setNewLogin, authToast}}/>
         </>
     : userId !== null && !newLogIn ?
         <div>You are logged in. Soon to be redirected</div>
-    : userId !== null && auth ?
-        <div>...loading</div>
     : null
         
 

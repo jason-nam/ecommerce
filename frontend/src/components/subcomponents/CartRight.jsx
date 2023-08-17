@@ -108,11 +108,23 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
                                     <div className="item-bottom">
                                         <div className="bag-qty">
                                             <div>Qty:&nbsp;&nbsp;</div>
-                                            <button className="bag-qty-edit" onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>-</button>
+                                            <button 
+                                                className="bag-qty-edit" 
+                                                onClick={() => updateItem(false, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>
+                                                -
+                                            </button>
                                             <div className="bag-qty-amt">{item.qty}</div>
-                                            <button className="bag-qty-edit" onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>+</button>
+                                            <button 
+                                                className="bag-qty-edit" 
+                                                onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart, notify)}>
+                                                +
+                                            </button>
                                         </div>
-                                        <button className="remove-cart" onClick={() => removeItem(item.cartitemid, cart, userId, setCart)}>Remove</button>
+                                        <button 
+                                            className="remove-cart" 
+                                            onClick={() => removeItem(item.cartitemid, cart, userId, setCart)}>
+                                                Remove
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -128,7 +140,6 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
                 </div>
                 <Link to="/cart" id="view-cart" ref={cartPageRef}>View Cart</Link>
             </div>
-
         </div>
     )
 }
