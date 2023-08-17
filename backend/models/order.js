@@ -5,9 +5,9 @@ const OrderItemModel = require("./orderItem");
 module.exports = class OrderModel {
 
     constructor(data = {}) {
-        this.created = data.created || moment.utc().toISOString();
+        this.created = data.created || moment.utc().format('YYYY-MM-DD HH:mm:ss').toISOString();
         this.items = data.items || [];
-        this.modified = moment.utc().toISOString();
+        this.modified = moment.utc().format('YYYY-MM-DD HH:mm:ss').toISOString();
         this.status = data.status || 'PENDING';
         this.total = data.total || 0;
         this.userid = data.userid || null;
