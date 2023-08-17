@@ -6,9 +6,6 @@ module.exports = class OrderModel {
 
     constructor(data = {}) {
         this.created = data.created || moment.utc().toISOString();
-
-        console.log(this.created)
-
         this.items = data.items || [];
         this.modified = moment.utc().toISOString();
         this.status = data.status || 'PENDING';
@@ -94,7 +91,7 @@ module.exports = class OrderModel {
             const result = await db.query(statement, values);
 
             if (result.rows?.length) {
-                return result.rows[0];
+                return result.rows;
             }
 
             return null;
@@ -112,15 +109,17 @@ module.exports = class OrderModel {
     static async getOrderById(orderid) {
         try {
 
-            const statement = `SELECT *
-                               FROM orders
-                               WHERE id = $1`;
+            const statement = `SELECT oi.*, p.name, p.price
+                               FROM orders o
+                               INNER JOIN orderitems oi ON oi.orderid = o.id
+                               INNER JOIN products p ON oi.productid = p.id
+                               WHERE o.id = $1`;
             const values = [orderid];
 
             const result = await db.query(statement, values);
 
             if (result.rows?.length) {
-                return result.rows[0];
+                return result.rows;
             }
 
             return null;
