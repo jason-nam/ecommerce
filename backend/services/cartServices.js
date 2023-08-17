@@ -7,7 +7,6 @@ const ProductModel = require("../models/product");
 module.exports = class CartService {
 
     async create(userid) {
-
         try {
             // check if cart exists for user
             const existingCart = await CartModel.getByUser(userid);
@@ -25,7 +24,6 @@ module.exports = class CartService {
     }
 
     async getCart(userid) {
-
         try {
             const cart = await CartModel.getByUser(userid);
             const items = await CartItemModel.getCartItems(cart.rows[0].id);
@@ -38,8 +36,20 @@ module.exports = class CartService {
         }
     }
 
-    async addItem(userid, item) {
+    async emptyCart(userid) {
+        try {
+            const cart = await CartModel.getByUser(userid);
+            const cartid = cart.rows[0].id;
+            const deletedItems = await CartItemModel.emptyCartItems(cartid);
 
+            return deletedItems;
+
+        } catch(err) {
+            throw new Error(err);
+        }
+    }
+
+    async addItem(userid, item) {
         try {
             const cart = await CartModel.getByUser(userid);
             const data = { cartid: cart.rows[0].id, ...item };
@@ -54,7 +64,6 @@ module.exports = class CartService {
     }
 
     async addMultiItems(userid, items) {
-
         try {
             const cart = await CartModel.getByUser(userid);
             const cartid = cart.rows[0].id;
@@ -79,7 +88,6 @@ module.exports = class CartService {
     }
 
     async updateItem(cartitemid, data) {
-
         try {
             const cartItem = await CartItemModel.updateCartItem(cartitemid, data);
             return cartItem;
@@ -90,7 +98,6 @@ module.exports = class CartService {
     }
 
     async removeItem(cartitemid) {
-
         try {
             const cartItem = await CartItemModel.deleteCartItem(cartitemid);
 
@@ -102,7 +109,6 @@ module.exports = class CartService {
     }
 
     async checkout(cart, userid, paymentinfo) {
-        
         try {
             // list of cart items
             const promises = cart.map(async cartitem => {

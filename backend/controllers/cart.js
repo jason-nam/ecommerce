@@ -30,6 +30,19 @@ module.exports = {
         }
     },
 
+    emptyCart: async(req, res, next) => {
+        try {
+
+            const { id } = req.user;
+            const response = await CartServiceInstance.emptyCart(id);
+
+            res.status(200).send(response);
+
+        } catch(err) {
+            next(err);
+        }
+    },
+
     addItem: async (req, res, next) => {
         try {
             
