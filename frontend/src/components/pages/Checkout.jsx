@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import axios from "axios"
 import './Checkout.css'
 
 export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total, orderToast}) {
-
+    
+    const navigate = useNavigate()
     //billing checkbox
     const [ checked, setChecked ] = useState(true)
     
@@ -123,14 +124,20 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
             phone: data.bphone,
         }
         let paymentInfo = { shipDetails, cardDetails, billDetails }
-        console.log(paymentInfo, total, cart, userId)
 
         axios.post("/api/carts/checkout", 
-        { paymentinfo: paymentInfo, cart, id: userId })
-        .then(res => console.log(res.data))
+            {
+                paymentinfo: 'paymentInfo', 
+                cart, 
+                id: userId 
+            }
+        )
+        .then(res => {
+            setCart([])
+            navigate("/orders")
+            orderToast("Order successful!")
+        })
         .catch(err => console.log(err))
-        // setCart([])
-        orderToast("Order successful!")
     }
 
     return (
