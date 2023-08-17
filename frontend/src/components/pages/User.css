@@ -1,0 +1,54 @@
+.user-page {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1000px;
+    height: 100%;
+}
+
+.account-box {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.app-box {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+
+.account-box #greet,
+.account-box #account-firstname {
+    font-size: 5rem;
+}
+
+.account-box #account-firstname {
+    font-weight: 500;
+}
+
+.app-options {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 40px;
+}
+
+.app-options #personal-information-button,
+.app-options #billing-button,
+.app-options #cart-link,
+.app-options #orders-link {
+    text-align: left;
+    border: none;
+    padding: 0;
+    margin-top: 1rem;
+
+    font-size: 1.5rem;
+    font-weight: 300;
+
+    cursor: pointer;
+
+    color: black;
+    background-color: white;
+}
