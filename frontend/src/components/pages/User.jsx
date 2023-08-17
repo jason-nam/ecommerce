@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom"
 import axios from "axios";
+import './User.css'
 
 
 export function User() {
@@ -41,8 +42,8 @@ export function User() {
     } else
         return !loading ?(
             <div className="user-page">
-                <div>{user.firstname} {user.lastname}</div>
-                <Link to="/cart">Cart</Link>
+                <div className="cred">{user.firstname} {user.lastname}</div>
+                <div className="cart-link"><Link to="/cart">Cart</Link></div>
             </div>
         ) :
         (<p>loading</p>)

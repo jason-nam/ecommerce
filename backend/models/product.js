@@ -133,7 +133,6 @@ module.exports = class ProductModel {
             const values = [categoryname, limit, (page - 1) * limit];
 
             const result = await db.query(statement, values);
-            console.log(result)
 
             if (result.rows?.length) {
                 return result.rows;
