@@ -4,9 +4,9 @@ const moment = require("moment");
 module.exports = class OrderItemModel {
 
     constructor(data = {}) {
-        this.created = data.created || moment.utc().toISOString();
+        this.created = data.created || moment.utc().format('YYYY-MM-DD HH:mm:ss').toISOString();
         this.description = data.description;
-        this.modified = moment.utc().toISOString();
+        this.modified = moment.utc().format('YYYY-MM-DD HH:mm:ss').toISOString();
         this.name = data.name;
         this.price = data.price || 0;
         this.productid = data.id;
