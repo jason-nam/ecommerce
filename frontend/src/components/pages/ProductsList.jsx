@@ -65,7 +65,7 @@ export function ProductsList() {
             isMounted && controller.abort()
         }
         
-    }, [searchParams]);
+    }, [searchParams, cateObj]);
 
     return <>
         {error ?    
