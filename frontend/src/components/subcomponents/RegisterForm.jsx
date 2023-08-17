@@ -18,8 +18,6 @@ export default function RegisterForm({setRegistered, setUserId, setCart}) {
     const navigate = useNavigate();
 
     const createAccount = (e) => {
-        const ec = localStorage.getItem('ECOMMERCE_CART')
-        let ls = JSON.parse(ec ? ec : "[]")
 
         axios.post("/api/register", {
                 email, firstname, lastname, password, isactive:true

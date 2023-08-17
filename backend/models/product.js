@@ -118,18 +118,21 @@ module.exports = class ProductModel {
             }
     }
 
-    static async getProductsByCategory(categoryname) {
+    static async getProductsByCategory(categoryname, limit, page) {
         try{
 
-            const statement = `SELECT p.*
+            categoryname = categoryname.replaceAll('-', ' ')
+
+            const statement = `SELECT p.*, c.name as category, count(*) OVER() AS all_count
                                FROM products p
                                INNER JOIN subcategories sc ON sc.id = p.subcategoryid
                                INNER JOIN categories c ON c.id = sc.categoryid
-                               WHERE c.name = $1`;
-            const values = [categoryname];
+                               WHERE LOWER(c.name) = LOWER($1)
+                               LIMIT $2
+                               OFFSET $3`;
+            const values = [categoryname, limit, (page - 1) * limit];
 
             const result = await db.query(statement, values);
-
             console.log(result)
 
             if (result.rows?.length) {
@@ -141,15 +144,19 @@ module.exports = class ProductModel {
         }
     }
 
-    static async getProductsBySubcategory(categoryname, subcategoryname) {
+    static async getProductsBySubcategory(categoryname, subcategoryname, limit, page) {
         try{
+            categoryname = categoryname.replaceAll('-', ' ')
+            subcategoryname = subcategoryname.replaceAll('-', ' ')
 
-            const statement = `SELECT p.*
+            const statement = `SELECT p.*, sc.name as subcategory, c.name as category, count(*) OVER() AS all_count
                                FROM products p
                                INNER JOIN subcategories sc ON sc.id = p.subcategoryid
                                INNER JOIN categories c ON c.id = sc.categoryid
-                               WHERE c.name = $1 AND sc.name = $2`;
-            const values = [categoryname, subcategoryname];
+                               WHERE LOWER(c.name) = LOWER($1) AND LOWER(sc.name) = LOWER($2)
+                               LIMIT $3
+                               OFFSET $4`;
+            const values = [categoryname, subcategoryname, limit, (page - 1) * limit];
 
             const result = await db.query(statement, values);
 
