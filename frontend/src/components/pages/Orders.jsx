@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import axios from "axios"
 import './Orders.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye, faEyeSlash } from '@fortawesome/free-regular-svg-icons'
 
 export function Orders({userId}) {
     const [ orders, setOrders ] = useState([])
@@ -79,7 +81,7 @@ export function Orders({userId}) {
                                         <div className="order-total order-detail">${order.total}</div>
                                         <div className="order-view order-detail">
                                             <button type="button" className="order-detail-button" onClick={e => showOrder(order.id)}>
-                                                {clickedNum === order.id ? "Close" : "View"}
+                                                {clickedNum === order.id ? <FontAwesomeIcon icon={faEyeSlash} /> : <FontAwesomeIcon icon={faEye} />}
                                             </button>
                                         </div>
                                     </div>
