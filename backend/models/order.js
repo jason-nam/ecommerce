@@ -109,7 +109,7 @@ module.exports = class OrderModel {
     static async getOrderById(orderid) {
         try {
 
-            const statement = `SELECT oi.*, p.name, p.price
+            const statement = `SELECT oi.*, p.name, p.price, p.image
                                FROM orders o
                                INNER JOIN orderitems oi ON oi.orderid = o.id
                                INNER JOIN products p ON oi.productid = p.id
