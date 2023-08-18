@@ -42,8 +42,33 @@ export function User() {
     } else
         return !loading ?(
             <div className="user-page">
-                <div className="cred">{user.firstname} {user.lastname}</div>
-                <div className="cart-link"><Link to="/cart">Cart</Link></div>
+                <div className="account-box">
+                    <div id="greet">Hello,</div>
+                    <div id="account-firstname">{user.firstname}!</div>
+                    <div id="email">{user.email}</div>
+                    <div className="app-options">
+                        <button type="button" id='personal-information-button'>
+                            Personal Information
+                        </button>
+                        <button type="button" id="billing-payments-button">
+                            Billing & Payments
+                        </button>
+                        <div id="cart-link">
+                            <Link to="/cart">My Cart</Link>
+                        </div>
+                        <div id="orders-link">
+                            <Link to="/orders">Order History</Link>
+                        </div>
+                    </div>
+                </div>
+                <div className="app-box">
+                    <div className="personal-information-box">
+
+                    </div>
+                    <div className="billing-payments-box">
+
+                    </div>
+                </div>
             </div>
         ) :
         (<p>loading</p>)
