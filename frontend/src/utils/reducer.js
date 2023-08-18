@@ -6,13 +6,23 @@ export const checkoutReducer = (state, action) => {
         case "CALCULATE":
             let subtotal = action.payload.reduce((acc, item) => acc + parseFloat(item.price) * item.qty, 0).toFixed(2);
             let tax = (subtotal * 0.13).toFixed(2);
+            let shipping = 0;
             return {
                 ...state,
                 subtotal,
                 tax,
-                shipping: 0,
-                total: (parseFloat(subtotal) + parseFloat(tax)).toFixed(2) ,
+                shipping,
+                total: (parseFloat(subtotal) + parseFloat(tax) + parseFloat(shipping)).toFixed(2) ,
             };
+        case "RESET":
+            return {
+                ...state,
+                subtotal: 0,
+                tax: 0,
+                shipping: 0,
+                total: 0,
+            }
+
     }
 };  
 

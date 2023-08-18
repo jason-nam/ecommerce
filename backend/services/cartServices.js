@@ -123,9 +123,12 @@ module.exports = class CartService {
             const subtotal = cartItems.reduce((acc, item) => {
                 return acc += Number(item.price) * item.qty;
             }, 0);
+            const tax = (subtotal * 0.13).toFixed(2)
+            const shipping = 0;
+            const total = parseFloat(subtotal) + parseFloat(tax) + parseFloat(shipping);
 
             // create new order
-            const Order = new OrderModel({ total: subtotal, userid });
+            const Order = new OrderModel({ total, userid });
             Order.addItems(cartItems);
             await Order.createOrder();
 
@@ -133,8 +136,8 @@ module.exports = class CartService {
             // TODO
 
             // order COMPLETE after successful payment process
-            const order = Order.updateOrder({ status: "COMPLETE" });
-
+            const order = await Order.updateOrder({ status: "COMPLETE" });
+            order.cartItems = cartItems
             return order;
 
         } catch(err) {
