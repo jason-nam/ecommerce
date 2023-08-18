@@ -81,10 +81,9 @@
 }
 
 .order-item-left > img {
-    width: 4rem;
+    width: 100%;
     object-fit: cover;
     justify-content: space-around;
-
 }
 
 .oi-name {
@@ -103,9 +102,25 @@
     border: 1px black solid;
     padding: 1rem;
     margin-top: 1rem;
+    box-sizing: border-box;
 }
 .orders .underline{
     text-align: center;
+}
+
+@media screen and (max-width: 799px) {
+    .order-container {
+        font-size: 0.8rem;
+        word-break: break-word;
+    }
+
+    .order-detail {
+        padding: 1rem 0.2rem;
+    }
+
+    .auth-redirect {
+        max-width: 90%;
+    }
 }
 
 /* Guest Order */

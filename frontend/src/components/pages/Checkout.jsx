@@ -168,33 +168,34 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                             <div className={`cinfo ${errors.firstname? 'error' : '' }`}>
                                 <input 
                                     id="cinfo-fname" 
+                                    type="text"
                                     className="cinfo-input"
                                     { ...register("firstname", { required: "First name required" })}                     
                                     />
                                 <label htmlFor="cinfo-fname" className={`cinfo-label ${firstname.length? 'active' : ''}`}>{errors.firstname? errors.firstname.message :'First Name'}</label>
                             </div>
                             <div className={`cinfo ${errors.lastname? 'error' : '' }`}>
-                                <input id="cinfo-lname" className="cinfo-input" 
+                                <input id="cinfo-lname" className="cinfo-input" type="text"
                                 { ...register("lastname", { required: "Last name required" })}                     
                                 />
                                 <label htmlFor="cinfo-lname" className={`cinfo-label ${lastname.length? 'active' : ''}`}>{errors.lastname? errors.lastname.message :'Last Name'}</label>
                             </div>
                         </div>
                         <div className={`cinfo ${errors.address? 'error' : '' }`}>
-                            <input id="cinfo-address" className="cinfo-input"
+                            <input id="cinfo-address" className="cinfo-input" type="text"
                             { ...register("address", { required: "Address required" })}                     
                             />
                             <label htmlFor="cinfo-address" className={`cinfo-label ${address.length? 'active' : ''}`}>{errors.address? errors.address.message :'Address'}</label>
                         </div>
                         <div className={`cinfo ${errors.addressTwo? 'error' : '' }`}>
-                            <input id="cinfo-address-2" className="cinfo-input"
+                            <input id="cinfo-address-2" className="cinfo-input" type="text"
                             { ...register("addressTwo", { required: false })}                     
                             />
                             <label htmlFor="cinfo-address-2" className={`cinfo-label ${addressTwo.length? 'active' : ''}`}>{errors.addressTwo? errors.addressTwo.message :'Address 2'}</label>
                         </div>
                         <div className="cinfo-double">
                             <div className={`cinfo ${errors.city? 'error' : '' }`}>
-                                <input id="cinfo-city" className="cinfo-input"
+                                <input id="cinfo-city" className="cinfo-input" type="text"
                                 { ...register("city", { required: "City required"})}                     
                                 />
                                 <label htmlFor="cinfo-city" className={`cinfo-label ${city.length? 'active' : ''}`}>{errors.city? errors.city.message :'City'}</label>
@@ -228,7 +229,15 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                         </div>
                         <div className={`cinfo ${errors.email? 'error' : '' }`}>
                             <input id="cinfo-email" className="cinfo-input"
-                            { ...register("email", { required: "Email required"})}                     
+                            { ...register("email", 
+                                {
+                                    required: "Email required",
+                                    pattern: {
+                                        value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                        message: "Please enter a valid email address."
+                                    }
+                                }
+                            )}                     
                             />
                             <label htmlFor="cinfo-email" className={`cinfo-label ${email.length? 'active' : ''}`}>{errors.email? errors.email.message :'Email'}</label>
                         </div>
@@ -282,32 +291,33 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                                 <input 
                                     id="binfo-fname" 
                                     className="cinfo-input"
+                                    type="text"
                                     { ...register("bfirstname", { required: "First name required" })}                     
                                     />
                                 <label htmlFor="binfo-fname" className={`cinfo-label ${bfirstname.length? 'active' : ''}`}>{errors.bfirstname? errors.bfirstname.message :'First Name'}</label>
                             </div>
                             <div className={`cinfo ${errors.blastname? 'error' : '' }`}>
-                                <input id="binfo-lname" className="cinfo-input" 
+                                <input id="binfo-lname" className="cinfo-input" type="text"
                                 { ...register("blastname", { required: "Last name required" })}                     
                                 />
                                 <label htmlFor="binfo-lname" className={`cinfo-label ${blastname.length? 'active' : ''}`}>{errors.blastname? errors.blastname.message :'Last Name'}</label>
                             </div>
                         </div>
                         <div className={`cinfo ${errors.baddress? 'error' : '' }`}>
-                            <input id="binfo-address" className="cinfo-input"
+                            <input id="binfo-address" className="cinfo-input" type="text"
                             { ...register("baddress", { required: "Address required" })}                     
                             />
                             <label htmlFor="binfo-address" className={`cinfo-label ${baddress.length? 'active' : ''}`}>{errors.baddress? errors.baddress.message :'Address'}</label>
                         </div>
                         <div className={`cinfo ${errors.baddressTwo? 'error' : '' }`}>
-                            <input id="binfo-address-2" className="cinfo-input"
+                            <input id="binfo-address-2" className="cinfo-input" type="text"
                             { ...register("baddressTwo", { required: false })}                     
                             />
                             <label htmlFor="binfo-address-2" className={`cinfo-label ${baddressTwo.length? 'active' : ''}`}>{errors.baddressTwo? errors.addressTwo.message :'Address 2'}</label>
                         </div>
                         <div className="cinfo-double">
                             <div className={`cinfo ${errors.bcity? 'error' : '' }`}>
-                                <input id="binfo-city" className="cinfo-input"
+                                <input id="binfo-city" className="cinfo-input" type="text"
                                 { ...register("bcity", { required: "City required"})}                     
                                 />
                                 <label htmlFor="binfo-city" className={`cinfo-label ${bcity.length? 'active' : ''}`}>{errors.bcity? errors.bcity.message :'City'}</label>
@@ -341,8 +351,16 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                         </div>
                         <div className={`cinfo ${errors.bemail? 'error' : '' }`}>
                             <input id="binfo-email" className="cinfo-input"
-                            { ...register("bemail", { required: "Email required"})}                     
-                            />
+                            { ...register("bemail", 
+                            {
+                                required: "Email required",
+                                pattern: {
+                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                                    message: "Please enter a valid email address."
+                                }
+                            }
+                        )}                     
+                        />
                             <label htmlFor="binfo-email" className={`cinfo-label ${bemail.length? 'active' : ''}`}>{errors.bemail? errors.bemail.message :'Email'}</label>
                         </div>
                     </div>
