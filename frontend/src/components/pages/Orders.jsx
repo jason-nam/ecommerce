@@ -5,7 +5,8 @@ import './Orders.css'
 
 export function Orders({userId}) {
     const [ orders, setOrders ] = useState([])
-    const [ selectedOrder, setSelectedOrder ] = useState(null)
+    const [ clickedNum, setClickedNum ] = useState(null)
+    const [ selectedOrder, setSelectedOrder ] = useState([])
 
     useEffect(() => {
         if (userId > 0) {
@@ -29,12 +30,18 @@ export function Orders({userId}) {
     }, [userId, setOrders])
 
     const showOrder = (id) => {
-        if (userId > 0) {
-            axios.get(`/api/orders/${id}`)
-            .then(res => {
-                setSelectedOrder(res.data)
-            })
-            .catch(err => console.log(err))
+        if (id === clickedNum) {
+            setClickedNum(null)
+            setSelectedOrder([])
+        } else {
+            setClickedNum(id)
+            if (userId > 0) {
+                axios.get(`/api/orders/${id}`)
+                .then(res => {
+                    setSelectedOrder(res.data)
+                })
+                .catch(err => console.log(err))
+            }
         }
     }
     
@@ -47,20 +54,49 @@ export function Orders({userId}) {
 
             {userId === -1 ?  
                 <>
-                    <div className="item underline"><Link to="/login">Sign In</Link></div>
-                    <div className="item underline"><Link to="/register">Register</Link></div> 
+                    <div className="auth-redirect">
+                        <div className="item underline"><Link to="/login">Sign In</Link></div>
+                    </div>
+                    <div className="auth-redirect">
+                        <div className="item underline"><Link to="/register">Register</Link></div> 
+                    </div>
                 </>
                 : userId !== null ? 
                 <>
+                    <div className="order order-head">
+                        <div className="order-id tb-head">Order #</div>
+                        <div className="order-date tb-head">Date</div>
+                        <div className="order-status tb-head">Status</div>
+                        <div className="order-total tb-head">Order Total</div>
+                        <div className="order-view tb-head"></div>
+                    </div>
                     {orders.length ? orders.slice(0).reverse().map(order => {
-                        return <div key={order.id}>
-                                    <div className="order" onClick={e => showOrder(order.id)}>
-                                        <div>{order.created}</div>
-                                        <div>${order.total}</div>
+                        return <div key={order.id} className="order-container">
+                                    <div className="order">
+                                        <div className="order-id order-detail">{order.id}</div>
+                                        <div className="order-date order-detail">{order.created.slice(0, 10)}</div>
+                                        <div className="order-status order-detail">{order.status}</div>
+                                        <div className="order-total order-detail">${order.total}</div>
+                                        <div className="order-view order-detail">
+                                            <button type="button" className="order-detail-button" onClick={e => showOrder(order.id)}>
+                                                {clickedNum === order.id ? "Close" : "View"}
+                                            </button>
+                                        </div>
                                     </div>
-                                    {selectedOrder? 
-                                    selectedOrder[0].orderid === order.id ? 
-                                    selectedOrder.map(x => <div key={x.id}>{x.name}</div>): null : null}
+                                    {clickedNum === order.id ? 
+                                    <>
+                                        {selectedOrder.map(x =>
+                                            <div className="order-item" key={x.id}>
+                                                <div className="order-item-left">
+                                                    <img src={x.image}></img>
+                                                </div>
+                                                <div className="oi-name">{x.name}</div>
+                                                <div className="oi-price">Price: ${x.price}</div>
+                                                <div className="oi-qty">Qty: {x.qty}</div>
+                                            </div>
+                                        )}
+                                    </>
+                                    : null }
                                 </div>
                     }) : null}
                 </>
