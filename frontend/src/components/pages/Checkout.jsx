@@ -3,9 +3,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import axios from "axios"
 import './Checkout.css'
-import Cookies from 'js-cookie';
 
-export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total, orderToast}) {
+export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total, orderToast, dispatchCH}) {
     
     const navigate = useNavigate()
     //billing checkbox
@@ -134,9 +133,24 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
             }
         )
         .then(res => {
+            dispatchCH({type: "RESET"})
             setCart([])
-            navigate("/guest-orders")
-            orderToast("Order successful!")
+            if (userId > 0) {
+                axios.delete("/api/carts/empty").then(res=> {
+                    navigate("/orders")
+                    orderToast("Order successful!")    
+                })
+                .catch(err => console.log(err))
+            } else {
+                localStorage.removeItem('ECOMMERCE_CART')
+                localStorage.removeItem('ECOMMERCE_ITEMID')
+                localStorage.setItem('GUEST_ORDER_CART', JSON.stringify(res.data.cartItems))
+                localStorage.setItem('GUEST_ORDER_TOTAL', res.data.total)
+                localStorage.setItem('GUEST_ORDER_DATE', res.data.created)
+                localStorage.setItem('GUEST_ORDER_ID', res.data.id)
+                navigate("/guest-order")
+                orderToast("Order successful!")
+            }
         })
         .catch(err => console.log(err))
     }
@@ -374,7 +388,6 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                                 <div className="item-info-ch">
                                     <div className="info-left">
                                         <div className="name">{item.name}</div>
-                                        <div className="category">{item.category}</div>
                                         <div className="qty">Qty: {item.qty}</div>
                                     </div>
                                     <div className="info-right">

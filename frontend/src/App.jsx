@@ -8,6 +8,7 @@ import { Cart } from './components/pages/Cart';
 import { Login } from './components/pages/Login';
 import { Register } from './components/pages/Register';
 import { Orders } from './components/pages/Orders';
+import { GuestOrder } from './components/pages/GuestOrder';
 import { Contact } from './components/pages/Contact';
 import { Checkout } from './components/pages/Checkout';
 import Header from './components/header/Header'
@@ -90,8 +91,8 @@ function App() {
                 <Route path='/users/profile' element={<User userId={userId}/>} />
                 <Route path='/cart' element={<Cart {...{userId, cart, setCart, subtotal}}/>} />
                 <Route path='/orders' element={<Orders {...{userId}}/>}></Route>
-                {/* <Route path='/orders/:id' element={<Order {...{userId}}/>}></Route> */}
-                <Route path="/checkout" element={<Checkout {...{userId, cart, setCart, subtotal, tax, shipping, total, orderToast}} />} />
+                <Route path='/guest-order' element={<GuestOrder {...{userId}}/>}></Route>
+                <Route path="/checkout" element={<Checkout {...{userId, cart, setCart, subtotal, tax, shipping, total, orderToast, dispatchCH}} />} />
                 <Route path='/contacts' element={<Contact {...{}}/>}></Route>
                 <Route path='/login' element={<Login {...{userId, setUserId, setCart, authToast}} />} />
                 <Route path='/register' element={<Register {...{userId, setUserId, setCart, authToast}}/>} />

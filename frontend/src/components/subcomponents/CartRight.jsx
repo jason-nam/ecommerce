@@ -100,9 +100,9 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
                                         <a href={`/products/product/${item.id}`} className="bag-name">
                                             {item.name}
                                         </a>
-                                        <a href={`/products?category=${item.subcategory}`} className="bag-category">
+                                        {/* <a href={`/#`} className="bag-category">
                                             {item.subcategory}
-                                        </a>
+                                        </a> */}
                                         <div className="bag-price">${(parseFloat(item.price) * item.qty).toFixed(2)}</div>
                                     </div>
                                     <div className="item-bottom">

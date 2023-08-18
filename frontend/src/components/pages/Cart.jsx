@@ -36,8 +36,7 @@ export function Cart({userId, cart, setCart, subtotal}) {
                                         </Link>
                                         <div className="price">$ {(parseFloat(item.price) * item.qty).toFixed(2)}</div>
                                     </div>
-                                    {/* <div id="description">{item.description}</div> */}
-                                    <div className="category">{item.category}</div>
+                                    {/* <div className="category">{item.category}</div> */}
                                 </div>
                                 <div className="info-qty">
                                     <div className="qty-edit">
