@@ -202,6 +202,10 @@
     text-align: right;
 }
 
+.info-right .price {
+    white-space: nowrap;
+}
+
 /* order summary */
 
 .order-summary {
