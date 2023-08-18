@@ -7,16 +7,12 @@
     height: 100%;
 }
 
+/* Account Box */
+
 .account-box {
     display: flex;
     flex-direction: column;
     width: 30%;
-}
-
-.app-box {
-    display: flex;
-    flex-direction: column;
-    width: 70%;
 }
 
 .account-box #greet,
@@ -36,7 +32,7 @@
 }
 
 .app-options #personal-information-button,
-.app-options #billing-button,
+.app-options #billing-payments-button,
 .app-options #cart-link,
 .app-options #orders-link {
     text-align: left;
@@ -52,3 +48,12 @@
     color: black;
     background-color: white;
 }
+
+/* App Box */
+
+.app-box {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+}
+

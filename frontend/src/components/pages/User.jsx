@@ -50,11 +50,11 @@ export function User() {
                         <button type="button" id='personal-information-button'>
                             Personal Information
                         </button>
-                        <button type="button" id="billing-button">
+                        <button type="button" id="billing-payments-button">
                             Billing & Payments
                         </button>
                         <div id="cart-link">
-                            <Link to="/cart">View Cart</Link>
+                            <Link to="/cart">My Cart</Link>
                         </div>
                         <div id="orders-link">
                             <Link to="/orders">Order History</Link>
@@ -62,10 +62,10 @@ export function User() {
                     </div>
                 </div>
                 <div className="app-box">
-                    <div className="name-box">
+                    <div className="personal-information-box">
 
                     </div>
-                    <div className="country-region-box">
+                    <div className="billing-payments-box">
 
                     </div>
                 </div>
