@@ -7,87 +7,118 @@ const { faker } = require('@faker-js/faker');
 
     const usersTableStatement = `
         CREATE TABLE IF NOT EXISTS users (
-        id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
-        email           VARCHAR(50),
-        password        TEXT,
-        firstname       VARCHAR(50),
-        lastname        VARCHAR(50),
-        isactive        BOOLEAN,
-        UNIQUE(email)
+            id              SERIAL            PRIMARY KEY,
+            email           VARCHAR(50),
+            password        TEXT,
+            firstname       VARCHAR(50),
+            lastname        VARCHAR(50),
+            isactive        BOOLEAN,
+            UNIQUE(email)
+        );
+    `
+
+    const paymentsTableStatement = `
+        CREATE TABLE IF NOT EXISTS payments (
+            id              SERIAL            PRIMARY KEY,
+            userid          INT               NOT NULL,
+            name_on_card    TEXT              NOT NULL,
+            addr_line_1     TEXT              NOT NULL,
+            addr_line_2     TEXT              NOT NULL,
+            addr_city       TEXT              NOT NULL,
+            addr_province   TEXT              NOT NULL,
+            addr_postal     TEXT              NOT NULL,
+            phone_number    INT               NOT NULL,
+            encrypted_card  TEXT              NOT NULL,
+            encrypted_cvv   TEXT              NOT NULL,
+            encrypted_exp   TEXT              NOT NULL,
+            FOREIGN KEY (userid) REFERENCES users(id)
+        );
+    `
+
+    const billingTableStatement = `
+        CREATE TABLE IF NOT EXISTS billings (
+            id              SERIAL            PRIMARY KEY,
+            userid          INT               NOT NULL,
+            paymentid       INT               NOT NULL,
+            amount          DECIMAL(10, 2)    NOT NULL,
+            payment_date    TIMESTAMP         DEFAULT CURRENT_TIMESTAMP,
+            payment_status  VARCHAR(20)       NOT NULL,
+            FOREIGN KEY (userid) REFERENCES users(id),
+            FOREIGN KEY (paymentid) REFERENCES payments(id)
         );
     `
 
     const categoriesTableStatement = `
         CREATE TABLE IF NOT EXISTS categories (
-        id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
-        name            VARCHAR(50)       NOT NULL
+            id              SERIAL            PRIMARY KEY,
+            name            VARCHAR(50)       NOT NULL
         );
     `
 
     const subcategoriesTableStatement = `
         CREATE TABLE IF NOT EXISTS subcategories (
-        id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
-        name            VARCHAR(50)       NOT NULL,
-        categoryid      INT               NOT NULL,
-        FOREIGN KEY (categoryid) REFERENCES categories(id)
+            id              SERIAL            PRIMARY KEY,
+            name            VARCHAR(50)       NOT NULL,
+            categoryid      INT               NOT NULL,
+            FOREIGN KEY (categoryid) REFERENCES categories(id)
         );
     `
 
     const productsTableStatement = `
         CREATE TABLE IF NOT EXISTS products (
-        id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
-        name            VARCHAR(50)       NOT NULL,
-        price           DECIMAL(10,2)     NOT NULL,
-        description     VARCHAR(300)      NOT NULL,
-        image           VARCHAR(200)      NOT NULL,
-        subcategoryid   INT               NOT NULL,
-        FOREIGN KEY (subcategoryid) REFERENCES subcategories(id)
+            id              SERIAL            PRIMARY KEY,
+            name            VARCHAR(50)       NOT NULL,
+            price           DECIMAL(10,2)     NOT NULL,
+            description     VARCHAR(300)      NOT NULL,
+            image           VARCHAR(200)      NOT NULL,
+            subcategoryid   INT               NOT NULL,
+            FOREIGN KEY (subcategoryid) REFERENCES subcategories(id)
         );
     `
 
     const ordersTableStatement = `
         CREATE TABLE IF NOT EXISTS orders (
-        id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
-        total           DECIMAL(10,2)     NOT NULL,
-        status          VARCHAR(50)       NOT NULL,
-        created         TIMESTAMP         NOT NULL,
-        modified        TIMESTAMP         NOT NULL,
-        userid          INT               NOT NULL
+            id              SERIAL            PRIMARY KEY,
+            total           DECIMAL(10,2)     NOT NULL,
+            status          VARCHAR(50)       NOT NULL,
+            created         TIMESTAMP         NOT NULL,
+            modified        TIMESTAMP         NOT NULL,
+            userid          INT               NOT NULL
         );
     `// FOREIGN KEY (userid) REFERENCES users(id)
 
 
     const orderItemsTableStatement = `
         CREATE TABLE IF NOT EXISTS orderitems (
-        id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
-        qty             INT               NOT NULL,
-        created         TIMESTAMP         NOT NULL,
-        orderid         INT               NOT NULL,
-        productid       INT               NOT NULL,
-        FOREIGN KEY (orderid) REFERENCES orders(id),
-        FOREIGN KEY (productid) REFERENCES products(id)
+            id              SERIAL            PRIMARY KEY,
+            qty             INT               NOT NULL,
+            created         TIMESTAMP         NOT NULL,
+            orderid         INT               NOT NULL,
+            productid       INT               NOT NULL,
+            FOREIGN KEY (orderid) REFERENCES orders(id),
+            FOREIGN KEY (productid) REFERENCES products(id)
         );
     `
 
     const cartsTableStatement = `
         CREATE TABLE IF NOT EXISTS carts (
-        id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,       
-        created         TIMESTAMP         NOT NULL,
-        modified        TIMESTAMP         NOT NULL,
-        userid          INT               NOT NULL,
-        FOREIGN KEY (userid) REFERENCES users(id)
+            id              SERIAL            PRIMARY KEY,      
+            created         TIMESTAMP         NOT NULL,
+            modified        TIMESTAMP         NOT NULL,
+            userid          INT               NOT NULL,
+            FOREIGN KEY (userid) REFERENCES users(id)
         );
     `
 
     const cartItemsTableStatement = `
         CREATE TABLE IF NOT EXISTS cartitems (
-        id              INT               PRIMARY KEY GENERATED ALWAYS AS IDENTITY NOT NULL,
-        qty             INT               NOT NULL,
-        productid       INT               NOT NULL,
-        cartid          INT               NOT NULL,
-        FOREIGN KEY (cartid) REFERENCES carts(id),
-        FOREIGN KEY (productid) REFERENCES products(id),
-        UNIQUE(productid)
+            id              SERIAL            PRIMARY KEY,
+            qty             INT               NOT NULL,
+            productid       INT               NOT NULL,
+            cartid          INT               NOT NULL,
+            FOREIGN KEY (cartid) REFERENCES carts(id),
+            FOREIGN KEY (productid) REFERENCES products(id),
+            UNIQUE(productid)
         );
     `
     
@@ -122,6 +153,8 @@ const { faker } = require('@faker-js/faker');
 
         // create tables on db
         await db.query(usersTableStatement);
+        await db.query(paymentsTableStatement);
+        await db.query(billingTableStatement);
         await db.query(categoriesTableStatement);
         await db.query(subcategoriesTableStatement);
         await db.query(productsTableStatement);
