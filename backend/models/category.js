@@ -112,5 +112,4 @@ module.exports = class CategoryModel {
             throw new Error(500, err);
         }
     }
-
 }
