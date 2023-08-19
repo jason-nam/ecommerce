@@ -4,6 +4,8 @@ const authenticationRouter = require("./authentication");
 const cartRouter = require("./cart");
 const orderRouter = require("./order");
 const categoryRouter = require("./category");
+const paymentRouter = require("./payment");
+const billingRouter = require("./billing");
 
 module.exports = (app, passport) => {
     userRouter(app);
@@ -12,4 +14,6 @@ module.exports = (app, passport) => {
     cartRouter(app);
     orderRouter(app);
     categoryRouter(app);
+    paymentRouter(app);
+    billingRouter(app);
 }
