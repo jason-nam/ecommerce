@@ -63,10 +63,10 @@ export function User() {
                 </div>
                 <div className="app-box">
                     <div className="personal-information-box">
-
+                        Personal Information
                     </div>
                     <div className="billing-payments-box">
-
+                        Billing & Payments
                     </div>
                 </div>
             </div>
