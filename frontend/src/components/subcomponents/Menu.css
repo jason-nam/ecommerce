@@ -111,13 +111,13 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	transition: visibility 0s ease 0.3s, height 0.3s ease-out;
+	transition: visibility 0s ease 0.3s, height 0.3s ease-in-out;
 }
 
 .menu .main .item-group .item.active + .subcategories{
 	visibility: visible;
 	height: 11rem;
-	transition: visibility 0s ease 0s, height 0.3s ease-out;
+	transition: visibility 0s ease 0s, height 0.3s ease-in-out;
 }
 
 .menu .main .item {
