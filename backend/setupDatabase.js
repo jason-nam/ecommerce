@@ -23,13 +23,12 @@ const { faker } = require('@faker-js/faker');
             userid          INT               NOT NULL,
             name_on_card    TEXT              NOT NULL,
             addr_line_1     TEXT              NOT NULL,
-            addr_line_2     TEXT              NOT NULL,
+            addr_line_2     TEXT,
             addr_city       TEXT              NOT NULL,
             addr_province   TEXT              NOT NULL,
             addr_postal     TEXT              NOT NULL,
-            phone_number    INT               NOT NULL,
+            phone_number    INT,
             encrypted_card  TEXT              NOT NULL,
-            encrypted_cvv   TEXT              NOT NULL,
             encrypted_exp   TEXT              NOT NULL,
             FOREIGN KEY (userid) REFERENCES users(id)
         );

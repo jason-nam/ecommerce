@@ -14,7 +14,7 @@ const { DB } = require("./config");
         await db.connect();
 
         // Drop tables from db
-        await db.query('DROP TABLE IF EXISTS cartitems, orderitems, carts, orders, products, subcategories, categories, users');
+        await db.query('DROP TABLE IF EXISTS cartitems, orderitems, carts, orders, products, subcategories, categories, billings, payments, users');
 
         console.log('All tables deleted successfully');
 
