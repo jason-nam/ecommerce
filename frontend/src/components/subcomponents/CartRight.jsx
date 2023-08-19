@@ -116,7 +116,7 @@ export default function CartRight({userId, cart, setCart, cartRef, mainRef, head
                                             <div className="bag-qty-amt">{item.qty}</div>
                                             <button 
                                                 className="bag-qty-edit" 
-                                                onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart, notify)}>
+                                                onClick={() => updateItem(true, item.cartitemid, item.qty, item.id, item.cartid, cart, userId, setCart)}>
                                                 +
                                             </button>
                                         </div>
