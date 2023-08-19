@@ -86,7 +86,7 @@ export function Orders({userId}) {
                                         </div>
                                     </div>
                                     {clickedNum === order.id ? 
-                                    <>
+                                    <div className="order-item-container">
                                         {selectedOrder.map(x =>
                                             <div className="order-item" key={x.id}>
                                                 <div className="order-item-left">
@@ -97,7 +97,7 @@ export function Orders({userId}) {
                                                 <div className="oi-qty">Qty: {x.qty}</div>
                                             </div>
                                         )}
-                                    </>
+                                    </div>
                                     : null }
                                 </div>
                     }) : null}
