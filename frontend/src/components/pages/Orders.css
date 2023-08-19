@@ -1,5 +1,5 @@
 .orders {
-    margin: 0 auto;
+    margin: 0 auto 2rem;
     width: 100%;
     max-width: 50rem;
 }
@@ -53,30 +53,42 @@
     align-items: center;
     border-radius: 5px;
     background-color: rgb(183, 214, 227);
+    transition: background-color .3s ease;
 }
 
 .order-detail-button:hover {
-    background-color: rgb(180, 227, 247);
-    transition: background-color 0.3s ease;
+    background-color: rgb(194, 228, 241);
 }
 
 /* Ordered Products */
+
+.order-item-container {
+    animation: elongate 0.75s ease-out;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 20rem;
+}
+
+@keyframes elongate {
+    0% { max-height: 0; overflow-y: hidden;}
+    99.9% {overflow-y: hidden;}
+    100% { max-height: 20rem; overflow-y: scroll;}
+}
 
 .order-item {
     display: flex;
     flex-direction: row;
     background-color: rgb(247, 247, 247);
     max-height: 5rem;
-    box-sizing: border-box;
 }
 
 .order-item > div {
     padding: 0.5rem;
+    box-sizing: border-box;
 }
 
 .order-item-left {
     width: 10%;
-    height: 100%;
     align-items: center;
 }
 
