@@ -40,7 +40,7 @@ const { faker } = require('@faker-js/faker');
             userid          INT               NOT NULL,
             paymentid       INT               NOT NULL,
             amount          DECIMAL(10, 2)    NOT NULL,
-            paymsent_date   TIMESTAMP        DEFAULT CURRENT_TIMESTAMP,
+            payment_date    TIMESTAMP        DEFAULT CURRENT_TIMESTAMP,
             payment_status  VARCHAR(20)       NOT NULL,
             FOREIGN KEY (userid) REFERENCES users(id),
             FOREIGN KEY (paymentid) REFERENCES payments(id)

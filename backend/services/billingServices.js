@@ -31,20 +31,14 @@ module.exports = class BillingService {
     async createBilling(data) {
         try {
 
-            const { 
-                userid, name_on_card, addr_line_1, addr_line_2, 
-                addr_city, addr_province, addr_postal, 
-                phone_number, encrypted_card, encrypted_exp 
-            } = data;
+            const { userid, amount, payment_date, payment_status } = data;
 
             const payment = await PaymentModel.getPaymentsByUserid(userid);
             const paymentid = payment.id;
 
             const billing = await BillingModelInstance.createBilling(
-                userid, paymentid, name_on_card, addr_line_1, addr_line_2, 
-                addr_city, addr_province, addr_postal, 
-                phone_number, encrypted_card, encrypted_exp
-            );
+                userid, paymentid, amount, payment_date, payment_status);
+
             return billing;
 
         } catch(err) {
@@ -55,8 +49,8 @@ module.exports = class BillingService {
     async updateBilling(data) {
         try {
 
-            const { billingid, ...updated_data } = data;
-            const billing = await BillingModel.updateBilling(billingid, updated_data);
+            const { billingid, amount, payment_date, payment_status } = data;
+            const billing = await BillingModel.updateBilling(billingid, amount, payment_date, payment_status);
             return billing;
 
         } catch(err) {

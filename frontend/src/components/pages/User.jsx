@@ -63,7 +63,12 @@ export function User() {
                 </div>
                 <div className="app-box">
                     <div className="personal-information-box">
-                        Personal Information
+                        <div id="title">
+                            Personal Information
+                        </div> 
+                        <div id="desc">
+                            Manage your personal information, including phone numbers and email address where you can be contacted.
+                        </div>
                     </div>
                     <div className="billing-payments-box">
                         Billing & Payments
