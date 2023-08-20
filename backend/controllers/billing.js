@@ -34,7 +34,7 @@ module.exports = {
     createBilling: async (req, res, next) => {
         try {
             
-            const { id as userid } = req.user;
+            const { id: userid } = req.user;
             const data = req.body;
             const response = await BillingServiceInstance.createBilling({ userid, ...data });
 
