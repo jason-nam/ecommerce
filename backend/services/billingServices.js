@@ -31,10 +31,15 @@ module.exports = class BillingService {
     async createBilling(data) {
         try {
 
-            const { userid, amount, payment_date, payment_status } = data;
+            const { userid, paymentid, amount, payment_date, payment_status } = data;
 
-            const payment = await PaymentModel.getPaymentsByUserid(userid);
-            const paymentid = payment.id;
+            const payments = await PaymentModel.getPaymentsByUserid(userid);
+            const isPaymentidMatch = payments.some(payment => payment.id === paymentid);
+
+            if (!isPaymentidMatch) {
+                console.log("payment information does not exist for user");
+                throw err;
+            }
 
             const billing = await BillingModelInstance.createBilling(
                 userid, paymentid, amount, payment_date, payment_status);
