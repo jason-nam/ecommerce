@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import LoginForm from "../subcomponents/LoginForm"
+import { loginReducer, loginInitialState } from "../../utils/reducer";
 import "./AuthPage.css"
 
 export function Login({userId, setUserId, setCart, authToast}) {
 
     const navigate = useNavigate();
-    const [ newLogIn, setNewLogin ] = useState(false)
+    const [ loginState, loginDispatch ] = useReducer(loginReducer, loginInitialState)
+    const { newLogin } = loginState;
 
     useEffect( () => {
         // let loginTimeout;
-        if (userId > 0 && userId !== null && !newLogIn) {
+        if (userId > 0 && userId !== null && !newLogin) {
                 // loginTimeout =setTimeout(() => {
                 navigate(-1)
             // }, 2000)
@@ -21,9 +23,9 @@ export function Login({userId, setUserId, setCart, authToast}) {
     return userId === -1 ?
         <>
             <h1 className = "auth-title">Sign In</h1>
-            <LoginForm {...{setUserId, setCart, setNewLogin, authToast}}/>
+            <LoginForm {...{setUserId, setCart, authToast, loginState, loginDispatch}}/>
         </>
-    : userId !== null && !newLogIn ?
+    : userId !== null && !newLogin ?
         <div>You are logged in. Soon to be redirected</div>
     : null
         

@@ -205,7 +205,7 @@ const { faker } = require('@faker-js/faker');
                 faker.commerce.productName(), 
                 faker.commerce.price({ max: 100 }),
                 faker.commerce.productDescription(),
-                faker.image.urlLoremFlickr({ category: 'fashion,hats,whitebackground', width: 1000, height: 1000, randomize: false}),
+                faker.image.urlLoremFlickr({ category: 'hat,whitebackground', width: 1000, height: 1000, randomize: true}),
                 randomIndex
             ]
             const productsResult = await db.query(insertProducts, values);

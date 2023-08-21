@@ -187,7 +187,12 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
                     className="rec-button" 
                     id="rec-button-right"
                     onClick={e => scrollCarousel(0, e)}
-                    disabled={(rec_products.length * 380 + (rec_products.length - 1) * 16 - window.innerWidth * 0.84 <= scrollLoc+1 ) ? true : false} // carousel width - container width < scrollLeft
+                    disabled={(window.innerWidth <= 799) ?
+                        (rec_products.length * window.innerWidth + (rec_products.length - 1) * 8 - window.innerWidth <= scrollLoc+1 ) ? true 
+                        : false 
+                        : (rec_products.length * 380 + (rec_products.length - 1) * 16 - window.innerWidth * 0.84 <= scrollLoc+1 ) ? true 
+                        : false} 
+                        // carousel width - container width < scrollLeft
                 >&gt;</button>
             </div>
             <div className="product-carousel" ref={carousel} onScroll={() => setScrollLoc(carousel.current.scrollLeft)}>
