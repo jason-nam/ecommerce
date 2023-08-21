@@ -45,7 +45,7 @@ export function User() {
             <div className="user-page">
                 <div className="account-box">
                     <div id="greet">Hello,</div>
-                    <div id="account-firstname">{user.firstname}!</div>
+                    <div id="account-firstname">{user.firstname}</div>
                     <div id="email">{user.email}</div>
                     <div className="app-options">
                         <button
@@ -86,13 +86,16 @@ export function User() {
 
                         <div className="info-edit-container">
                             <div className="name-edit-box" id="edit-box">
-                                Name
+                                <div id="variable">Name:</div>
+                                <div id="name"> {user.firstname} {user.lastname}</div>
                             </div>
                             <div className="email-edit-box" id="edit-box">
-                                Email
+                                <div id="variable">Email:</div>
+                                <div id="name"> {user.email}</div>
                             </div>
                             <div className="country-region-box" id="edit-box">
-                                Country Region
+                                <div id="variable">Country Region:</div>
+                                <div id="name"> {user.region}</div>
                             </div>
                         </div>
 

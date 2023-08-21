@@ -16,15 +16,16 @@
     width: 30%;
 }
 
-.account-box #greet {
-    font-size: 5rem;
+.account-box #greet,
+.account-box #account-firstname {
+    font-size: min(max(1rem, 5vw), 4rem);
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .account-box #account-firstname {
-    display: inline-block;
-    white-space: nowrap;
-    font-size: 5rem;
-    font-size: 2vw;
     font-weight: 500;
 }
 
@@ -81,20 +82,25 @@
     font-size: 2rem;
     font-weight: 500;
     margin-bottom: 1rem;
+    text-transform: uppercase;
 }
 
 .info-edit-container {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    flex-direction: column;
     margin: 1rem 0;
-
 }
 
 #edit-box {
-    height: 125px;
-    width: 310px;
-    margin-right: 1rem;
-    margin-bottom: 1rem;
-    border: 2px solid black;
+    margin: 5px 0;
+    padding: 2rem 1rem;
+    border: 1px solid black;
+    background-color: white;
+
+    display: flex;
+    flex-direction: row;
+}
+
+#edit-box #variable {
+    font-weight: 600;
 }
