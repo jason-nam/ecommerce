@@ -133,7 +133,6 @@ select {
     margin: 1rem 0;
 }
 
-
 /* checkbox */ 
 
 input[type=checkbox] {
@@ -222,6 +221,10 @@ input[type=radio]:checked ~ .radio-button-label::after {
 .radio-button-label {
     position: relative;
     padding-left: 20px;
+}
+
+.radio-buttons-group {
+    margin-bottom: 1rem;
 }
 
 

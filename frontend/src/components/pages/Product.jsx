@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from "react";
+import React, { useState, useEffect, useReducer, useRef } from "react";
 import { useParams, Link } from "react-router-dom"
 import axios from "axios"
 import './Product.css'
@@ -14,6 +14,8 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
     const [ state, dispatch ] = useReducer(productReducer,productInitialState )
     const { product, error, loading, rec_products, rec_error, rec_loading } = state;
     const [ qty, setQty ] = useState(1);
+    const carousel = useRef(null)
+    const [ scrollLoc, setScrollLoc ] = useState(0)
 
     useEffect(() => {
 
@@ -32,7 +34,9 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
             if (isMounted) {
                 dispatch( { type: 'PRODUCT_SUCCESS', payload: data[0] } )
                 axios.get(`/api/products/${urlChange(data[0].category)}/${urlChange(data[0].subcategory)}`)
-                .then(res => {dispatch({ type: 'REC_PRODUCTS', payload:sample(res.data, 4) })})
+                .then(res => {
+                    dispatch({ type: 'REC_PRODUCTS', payload:sample(res.data.filter(x => x.id!==data[0].id), 10) })
+                })
                 .catch(err => console.log(err))
             }
         })
@@ -107,7 +111,21 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
         cartToggle(e);
     }
 
-    // return logic
+    const scrollCarousel = (bool, e) => {
+        e.preventDefault();
+        // offset: mobile vs pc
+        let offset = window.innerWidth <= 799 ? window.innerWidth + 8 : 396;
+        if (carousel.current) {
+            if (bool === 0) {
+                setScrollLoc(carousel.current.scrollLeft + offset)
+                carousel.current.scrollLeft += offset;
+            } else {
+                setScrollLoc(carousel.current.scrollLeft - offset)
+                carousel.current.scrollLeft -= offset;
+            }
+        }
+    }
+
     return (
         <>
         <div className="product">
@@ -156,8 +174,24 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
                 )}
             </div>
             <div className="recs">You May Also Like</div>
-            <div className="product-carousel">
-                <ProductCards products={rec_products} />
+            <div className='rec-button-group'>
+                <button 
+                    type="button" 
+                    className="rec-button" 
+                    id="rec-button-left"
+                    onClick={e => scrollCarousel(1, e)} 
+                    disabled={scrollLoc <= 0 ? true : false }
+                >&lt;</button>
+                <button 
+                    type="button" 
+                    className="rec-button" 
+                    id="rec-button-right"
+                    onClick={e => scrollCarousel(0, e)}
+                    disabled={(rec_products.length * 380 + (rec_products.length - 1) * 16 - window.innerWidth * 0.84 <= scrollLoc+1 ) ? true : false} // carousel width - container width < scrollLeft
+                >&gt;</button>
+            </div>
+            <div className="product-carousel" ref={carousel} onScroll={() => setScrollLoc(carousel.current.scrollLeft)}>
+                <ProductCards products={rec_products}/>
             </div>
         </div>
         
