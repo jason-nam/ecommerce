@@ -163,7 +163,7 @@ const { faker } = require('@faker-js/faker');
         await db.query(cartsTableStatement);
         await db.query(cartItemsTableStatement);
 
-        // await db.query(insertCategories);
+        // Sample Database
         const categoriesList = ["Men", "Women", "Children"];
         const insertedCategories = [];
         // const subcategoriesList = ["Tops", "Bottoms", "Outerwear", "Innerwear", "Loungewear", "Accessories"];
@@ -206,8 +206,7 @@ const { faker } = require('@faker-js/faker');
                 faker.commerce.productName(), 
                 faker.commerce.price({ max: 100 }),
                 faker.commerce.productDescription(),
-                // faker.commerce.department(),
-                faker.image.urlLoremFlickr({ category: 'shoes,whitebackground', width: 1000, height: 1000, randomize: false}),
+                faker.image.urlLoremFlickr({ category: 'hat,whitebackground', width: 1000, height: 1000, randomize: true}),
                 randomIndex
             ]
             const productsResult = await db.query(insertProducts, values);
