@@ -4,7 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import { changeCart } from "../../utils/util"
 
-export default function LoginForm({setUserId, setCart, setNewLogin, authToast}) {
+export default function LoginForm({setUserId, setCart, authToast, loginState, loginDispatch}) {
 
     const { register, watch, handleSubmit, formState: { errors } } = useForm({
         // mode: 'all',  //show warnings on input change
@@ -14,10 +14,10 @@ export default function LoginForm({setUserId, setCart, setNewLogin, authToast}) 
     });
     const email = watch('email')
     const password = watch('password')
-    const [authFail, setAuthFail] = useState(false);
-    const [cartFail, setCartFail] = useState([])
+    // const [cartFail, setCartFail] = useState([])
     const navigate = useNavigate();
     const location = useLocation();
+    const { authFail, error } = loginState;
     
     const doLogin = (data, e) => {
         e.preventDefault();
@@ -29,16 +29,17 @@ export default function LoginForm({setUserId, setCart, setNewLogin, authToast}) 
         .then(res => {
             if (res.data.id) {
                 setUserId(res.data.id)
-                setNewLogin(true)
-                setAuthFail(false)
+                loginDispatch({ type: "LOGIN_SUCCESS" })
                 changeCart(setCart, navigate, location, authToast, `Welcome back!`)
             } else
-                setAuthFail(true)
+                loginDispatch({ type: "LOGIN_FAIL" })
         })
         .catch(err => {
-            if (err.response.status === 500)
+            if (err.response.status === 500) {
+                loginDispatch({ type: "LOGIN_ERROR" })
                 return;
-            setAuthFail(true)
+            }
+        loginDispatch({ type: "LOGIN_FAIL" })
         });
     }
 

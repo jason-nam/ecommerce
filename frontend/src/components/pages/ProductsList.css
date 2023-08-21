@@ -2,7 +2,6 @@
     margin: 1rem auto 1rem;
     width: 95%;
     max-width: 80rem;
-
 }
 
 .pl-title {
@@ -20,6 +19,7 @@
     grid-gap: 2rem 1rem;
 }
 
+/* each product */
 .pl-item {
     display: flex;
     flex-direction: column;
@@ -41,6 +41,11 @@
     background:rgb(238, 238, 238);
 }
 
+@keyframes onload {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
 .pl-image:hover {
     transform: scale(1.1);
 }
@@ -57,16 +62,13 @@
     font-size: 0.9rem;
 }
 
-@keyframes onload {
-    0% { opacity: 0; }
-    100% { opacity: 1; }
-}
-
 .no-product {
     width: 100%;
     padding: 5rem 0;
     text-align: center;
 }
+
+/* pagination */
 
 .pagination {
     max-width: 20rem;
@@ -98,25 +100,56 @@
     color: white;
 }
 
+/* product recommendation carousel */
+
 .product-carousel {
     overflow-x: scroll;
-
+    scroll-behavior: smooth;
 }
 .product-carousel > .pl-container {
     padding-bottom: 1rem;
     display: grid;
     grid-auto-flow: column;
-    grid-template-columns: repeat(4, minmax(400px, 600px));
+    grid-template-columns: repeat(10, 380px);
+    /* grid-template-columns: repeat(10, calc((80rem * 0.95 - 2rem) / 3)); */
 }
 
+.rec-button-group {
+    width: 100%;
+    position: relative;
+}
+
+.rec-button {
+    position: absolute;
+    bottom: 0.5rem;
+    border-radius: 50%;
+    border: none;
+    box-sizing: border-box;
+    cursor: pointer;
+    width: 3rem;
+    height: 3rem;
+    font-size: 1.5rem;
+    font-weight: 200;
+    background-color: rgb(240, 240, 240);
+    will-change: transform;
+}
+.rec-button:disabled {
+    opacity: 0;
+    cursor: auto;
+}
+
+#rec-button-left {
+    left: 0;
+}
+
+#rec-button-right {
+    right: 0;
+}
 
 @media screen and (max-width: 799px) {
 
     .product-list {
-        /* margin: 0; */
         width: 100%;
-        /* width: 95%; */
-        /* max-width: 80rem; */
     }
         
     .pagination {
@@ -138,7 +171,7 @@
     }
 
     .product-carousel > .pl-container {
-        grid-template-columns: repeat(4, 100%);
+        grid-template-columns: repeat(10, 100%);
     }
     
     .pl-name, .pl-price, .pl-category {

@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useNavigate } from "react-router-dom";
 import RegisterForm from "../subcomponents/RegisterForm"
 import "./AuthPage.css"
+import { registerReducer, registerInitialState } from "../../utils/reducer";
 
 export function Register({userId, setUserId, setCart, authToast}) {
 
-    const [registered, setRegistered] = useState(false);
     const navigate = useNavigate();
+    const [ registerState, registerDispatch ] = useReducer(registerReducer, registerInitialState)
+    const { registered } = registerState;
 
     useEffect( () => {
         let regTimeout;
@@ -24,7 +26,7 @@ export function Register({userId, setUserId, setCart, authToast}) {
         return (
             <>
                 <h1 className = "auth-title">Register</h1>
-                <RegisterForm {...{setRegistered, setUserId, setCart, authToast}}/>
+                <RegisterForm {...{registerState, registerDispatch, setUserId, setCart, authToast}}/>
             </>
         )
     else if (userId != null)
