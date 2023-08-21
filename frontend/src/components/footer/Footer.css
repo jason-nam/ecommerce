@@ -2,21 +2,28 @@
 
 footer {
     margin-top: 4rem;
+    overflow: hidden;
 }
 
 .footer {
     height: 50vh;
     min-width: 100%;
-    z-index: 0;
+    z-index: 1;
     bottom: 0;
     background-color: black;
+}
 
+.footer-bounce {
+    z-index: 0;
+    background-color: black;
+    position: absolute;
+    height: 200px;
+    bottom: 0;
 }
 
 .footer-container {
     position: relative;
     height: 100%;
-    margin: 1rem;
 }
 
 .footer-pages {

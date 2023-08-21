@@ -1,20 +1,19 @@
 import React, { useState, useEffect, useReducer } from "react";
-import { useParams, Link, useNavigate} from "react-router-dom"
+import { useParams, Link } from "react-router-dom"
 import axios from "axios"
 import './Product.css'
+import './ProductsList.css';
+import ProductCards from '../subcomponents/ProductCards'
 import { productReducer, productInitialState } from '../../utils/reducer'
 import { urlChange } from '../../utils/util'
-// import { ToastContainer, toast } from 'react-toastify';
-// import 'react-toastify/dist/ReactToastify.css';
+import { sample } from 'underscore'
 
 export function Product({userId, cart, setCart, cartToggle, addedToast}) {
 
     const { id } = useParams()
     const [ state, dispatch ] = useReducer(productReducer,productInitialState )
-    const { product, error, loading } = state;
-    const [qty, setQty] = useState(1);
-
-    const navigate = useNavigate();
+    const { product, error, loading, rec_products, rec_error, rec_loading } = state;
+    const [ qty, setQty ] = useState(1);
 
     useEffect(() => {
 
@@ -31,7 +30,10 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
             })
         .then((data) => {
             if (isMounted) {
-                dispatch({type: 'PRODUCT_SUCCESS', payload: data[0]})
+                dispatch( { type: 'PRODUCT_SUCCESS', payload: data[0] } )
+                axios.get(`/api/products/${urlChange(data[0].category)}/${urlChange(data[0].subcategory)}`)
+                .then(res => {dispatch({ type: 'REC_PRODUCTS', payload:sample(res.data, 4) })})
+                .catch(err => console.log(err))
             }
         })
         .catch(err => dispatch({type: 'PRODUCT_FAIL'}));  
@@ -121,16 +123,16 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
                         <> 
                             <div className="pi-left">
                                 <div className="pi-left-links">
-                                    <span className="go-back" onClick={() => navigate(-1)}>Back</span>
+                                    {/* <span className="go-back" onClick={() => navigate(-1)}>Back</span> */}
                                     <Link to={`/products/${urlChange(product.category)}`}>
                                         <span className="pi-category">{product.category}</span>
                                     </Link>
-                                    <span>/</span>
+                                    <span> &gt; </span>
                                     <Link to={`/products/${urlChange(product.category)}/${urlChange(product.subcategory)}`}>
                                         <span className="pi-category">{product.subcategory}</span>
                                     </Link>
                                 </div>
-                                <img className="product-image" src={product.image} alt={`${product.namme}`}/>
+                                <img className="product-image" src={product.image} alt={`${product.name}`}/>
                             </div>
                             <div className="pi-right">
                                 <div className="product-info">
@@ -154,6 +156,9 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
                 )}
             </div>
             <div className="recs">You May Also Like</div>
+            <div className="product-carousel">
+                <ProductCards products={rec_products} />
+            </div>
         </div>
         
         </>

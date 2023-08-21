@@ -5,6 +5,7 @@
     flex-direction: column;
     padding: 0 8%;
     box-sizing: border-box;
+    width: 100%;
 }
 
 .product-container {
@@ -17,6 +18,8 @@
     width: 100%;
     margin-right: 1rem;
     margin-left: 0;
+    color: transparent;
+    background:rgb(238, 238, 238);
 }
 
 .pi-left{
@@ -26,7 +29,6 @@
 }
 
 .pi-right {
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     /* padding: 0 3rem; */

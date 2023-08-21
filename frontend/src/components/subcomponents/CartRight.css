@@ -154,6 +154,8 @@
 	width: 100%;
 	height: 100%;
 	object-fit: cover;
+	color: transparent;
+    background:rgb(238, 238, 238);
 }
 
 .cart-r .items .item,
@@ -311,8 +313,8 @@
 
 @media (max-width: 787px) {
 
-	.cart-r {
-		width: 100%;
+	.cart-r, .cart-r:not(.active) {
+		width: 85%;
 	}
 	.cart-r .head, .cart-r .items, .cart-r .foot {
 		margin: 0 1rem;

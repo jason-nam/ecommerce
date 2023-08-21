@@ -46,6 +46,8 @@
     width: 100%;
 }
 
+/* input boxes */
+
 .cinfo {
     position: relative;
     display: flex;
@@ -80,6 +82,24 @@
     margin-left: 0.5rem;
 }
 
+.cinfo-input::placeholder {
+    opacity: 0;
+    color: rgb(155, 155, 155);
+    transition: opacity 0.25s ease;
+}
+
+.cinfo-input:focus::placeholder {
+    opacity: 1;
+}
+
+select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23606060" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>')
+    98% 50% no-repeat transparent;
+}
+
 .cinfo.error {
     border-color: red;
     z-index: 10;
@@ -109,10 +129,103 @@
     width: calc(50% + 1px);
 }
 
+.debit-credit, .billing-form {
+    margin: 1rem 0;
+}
+
+
+/* checkbox */ 
+
+input[type=checkbox] {
+    display: none;
+}
+
+.billing-checkbox-box {
+    content: "";
+    background-color: white;
+    border: 1px solid rgb(60, 60, 60);
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.checkbox-label {
+    padding-left: 25px;
+    position: relative;
+    cursor: pointer;
+}
+
+.billing-checkbox ~ .faCheck {
+    display: none;
+    position: absolute;
+    cursor: pointer;
+}
+
+.billing-checkbox:checked ~.faCheck {
+    display: inline-block;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border: 3px transparent solid;
+    box-sizing: border-box;
+}
+
+.billing-checkbox:checked ~ .billing-checkbox-box {
+    background-color: rgb(60, 60, 60);
+}
 
 .billing-checkbox:checked ~ .billing-form {
     display: none;
 }
+
+/* radio button */
+
+input[type=radio] {
+    display: none;
+}
+
+.radio-button-label::after {
+    display: none;
+    content: "";
+    position: absolute;
+    background-color: rgb(60, 60, 60);
+    width: 1rem;
+    height: 1rem;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border-radius: rgb(60, 60, 60);
+    top: 3.5px;
+    left: 0px;
+}
+
+input[type=radio]:checked ~ .radio-button-label::after {
+    display: inline-block;
+}
+
+
+.radio-button-label::before {
+    content: "";
+    background-color: white;
+    width: 1rem;
+    height: 1rem;
+    border: 1px rgb(60, 60, 60) solid;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 50%;
+    top: 3.5px;
+    left: 0px;
+    display: inline-block;
+}
+
+.radio-button-label {
+    position: relative;
+    padding-left: 20px;
+}
+
+
+/* order button */
 
 #order {
     width: 100%;
@@ -141,7 +254,7 @@
 #order:disabled {
     background-color: grey;
     border-color: grey;
-    cursor:auto;
+    cursor: not-allowed;
 }
 
 /* cart item */
@@ -165,7 +278,6 @@
 .item-ch-img {
     width: 5rem;
     height: 5rem;
-    /* flex: 0 0 5rem; */
 }
 
 .item-ch-img img {
@@ -173,6 +285,8 @@
     height: 100%;
     object-fit: cover;
     justify-content: space-around;
+    color: transparent;
+    background:rgb(238, 238, 238);
 }
 
 .item-info-ch {

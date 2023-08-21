@@ -1,14 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import axios from "axios"
 import './Checkout.css'
+import DropDown from '../subcomponents/DropDown'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
 export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total, orderToast, dispatchCH}) {
     
     const navigate = useNavigate()
     //billing checkbox
-    const [ checked, setChecked ] = useState(true)
+    const [ billingChecked, setBillingChecked ] = useState(true)
+    //credit radio check
+    const [ creditChecked, setCreditChecked ] = useState("credit")
+    const creditRef = useRef(null)
     
     //form
     const { register, watch, handleSubmit, formState: { errors }, setValue, formState } = useForm({
@@ -63,7 +69,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
 
     //billing address same as shipping
     useEffect(() => {
-        if (checked) {
+        if (billingChecked) {
             setValue("bfirstname", firstname)
             setValue("blastname", lastname)
             setValue("baddress", address)
@@ -86,7 +92,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
             setValue("bphone", '')
             setValue("bemail", '')
         } 
-    }, [checked, firstname, lastname, address, addressTwo, city, province, code, phone, email])
+    }, [billingChecked, firstname, lastname, address, addressTwo, city, province, code, phone, email])
 
     //submit order
     const submitOrder = (data, e) => {
@@ -215,9 +221,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                                 <label htmlFor="cinfo-code" className={`cinfo-label ${code.length? 'active' : ''}`}>{errors.code? errors.code.message :'Postal/Zip Code'}</label>
                             </div>
                             <div className={`cinfo ${errors.country? 'error' : '' }`}>
-                                <input id="cinfo-country" className="cinfo-input"
-                                { ...register("country", { required: "Country required"})}                     
-                                />
+                                <DropDown which={'country'} register={register}/>
                                 <label htmlFor="cinfo-country" className={`cinfo-label ${country.length? 'active' : ''}`}>{errors.country? errors.country.message :'Country'}</label>
                             </div>
                         </div>
@@ -246,9 +250,28 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                     <div className="head">
                         <div className="title"> Payment </div>
                     </div>
-                    <input type="radio" defaultChecked/>
-                    <label>Debit/Credit</label>
-                    <div className="debit-credit">
+                    <div className="radio-container">
+                        <input type="radio" 
+                            name="payment-type" 
+                            id="debit-credit-radio" 
+                            className="radio-button" 
+                            value="credit" 
+                            defaultChecked={creditChecked} 
+                            onChange={e => setCreditChecked(e.target.value)} 
+                        />
+                        <label htmlFor="debit-credit-radio" className="radio-button-label">Credit</label>
+                    </div>
+                    <div className="radio-container">
+                        <input type="radio" 
+                            name="payment-type" 
+                            id="paypal-radio" 
+                            className="radio-button" 
+                            value="paypal" 
+                            onChange={e => setCreditChecked(e.target.value)} 
+                        />
+                        <label htmlFor="paypal-radio" className="radio-button-label">Paypal</label>
+                    </div>
+                    <div className="debit-credit" style={creditChecked!=="credit"? {display: 'none'} : {}}>
                         <div className={`cinfo ${errors.cardnum? 'error' : '' }`}>
                             <input className="cinfo-input" id="cinfo-cardnum" type="number"
                             { ...register("cardnum", { required: "Invalid card number"})}                     
@@ -258,22 +281,22 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                         </div>
                         <div className={`cinfo ${errors.cardname? 'error' : '' }`}>
                             <input className="cinfo-input" id="cinfo-cardname"
-                            { ...register("cardname", { required: "Inavlid name"})}                     
+                            { ...register("cardname", { required: "Invalid name"})}                     
                             />
                             <label className={`cinfo-label ${cardname.length ? 'active' : ''}`} 
-                            htmlFor="cinfo-cardname">{errors.cardname? errors.cardname.message : 'Name'}</label>
+                            htmlFor="cinfo-cardname">{errors.cardname? errors.cardname.message : 'Name on card'}</label>
                         </div>
                         <div className="cinfo-double">
                             <div className={`cinfo ${errors.expdate? 'error' : '' }`}>
-                                <input className="cinfo-input" id="cinfo-expdate"
+                                <input className="cinfo-input" id="cinfo-expdate" placeholder="MM/YY"
                                 { ...register("expdate", { required: "Invalid expiration date"})}                     
                                 />
                                 <label className={`cinfo-label ${expdate.length ? 'active' : ''}`} 
-                                htmlFor="cinfo-expdate">{errors.expdate? errors.expdate.message : 'MM/YY'}</label>
+                                htmlFor="cinfo-expdate">{errors.expdate? errors.expdate.message : 'Expiration Date'}</label>
                             </div>
                             <div className={`cinfo ${errors.cvv? 'error' : '' }`}>
                                 <input className="cinfo-input" id="cinfo-cvv"
-                                { ...register("cvv", { required: "Invalid security code"})}                     
+                                { ...register("cvv", { required: "A security code is a 3 digits security number"})}                     
                                 />
                                 <label className={`cinfo-label ${cvv.length ? 'active' : ''}`} 
                                 htmlFor="cinfo-cvv">{errors.cvv? errors.cvv.message : 'CVV'}</label>
@@ -281,10 +304,13 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                         </div>
                     </div>
                     <input type="checkbox" 
-                    defaultChecked={checked}
+                    id="billing-checkbox"
+                    defaultChecked={billingChecked}
                     className="billing-checkbox" 
-                    onChange={() => setChecked(!checked)} />
-                    <label htmlFor="checkbox">Billing Address same as shipping</label>
+                    onChange={() => setBillingChecked(!billingChecked)} />
+                    <span className="billing-checkbox-box"></span>
+                    <FontAwesomeIcon icon={faCheck} className="faCheck" />
+                    <label htmlFor="billing-checkbox" className="checkbox-label">Billing Address same as shipping</label>
                     <div className="billing-form">
                         <div className = "cinfo-double">
                             <div className={`cinfo ${errors.bfirstname? 'error' : '' }`}>
@@ -401,7 +427,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                             <div className="lines"></div>
                             <div className="item-ch" >
                                 <div className="item-ch-img">
-                                    <img src={item.image} alt={`${item.namme}`}></img>
+                                    <img src={item.image} alt={`${item.name}`}></img>
                                 </div>
                                 <div className="item-info-ch">
                                     <div className="info-left">

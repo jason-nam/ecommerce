@@ -1,7 +1,17 @@
-.pl-title, .pl-container {
-    width: 95%;
+.product-list {
     margin: 1rem auto 1rem;
+    width: 95%;
     max-width: 80rem;
+
+}
+
+.pl-title {
+    margin: 1rem auto;
+    text-align: center;
+}
+
+.pl-title span {
+    text-transform: uppercase;
 }
 
 .pl-container {
@@ -27,6 +37,8 @@
     object-fit: cover;
     animation: onload 0.75s;
     transition: all 0.3s;
+    color: transparent;
+    background:rgb(238, 238, 238);
 }
 
 .pl-image:hover {
@@ -50,7 +62,14 @@
     100% { opacity: 1; }
 }
 
+.no-product {
+    width: 100%;
+    padding: 5rem 0;
+    text-align: center;
+}
+
 .pagination {
+    max-width: 20rem;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -79,8 +98,27 @@
     color: white;
 }
 
+.product-carousel {
+    overflow-x: scroll;
+
+}
+.product-carousel > .pl-container {
+    padding-bottom: 1rem;
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: repeat(4, minmax(400px, 600px));
+}
+
 
 @media screen and (max-width: 799px) {
+
+    .product-list {
+        /* margin: 0; */
+        width: 100%;
+        /* width: 95%; */
+        /* max-width: 80rem; */
+    }
+        
     .pagination {
         width: 95%;
         max-width: 70rem;
@@ -97,6 +135,10 @@
         grid-template-columns: calc((100% - 0.5rem)/2) calc((100% - 0.5rem)/2);
         grid-gap: 2rem 0.5rem;
         box-sizing: border-box;
+    }
+
+    .product-carousel > .pl-container {
+        grid-template-columns: repeat(4, 100%);
     }
     
     .pl-name, .pl-price, .pl-category {

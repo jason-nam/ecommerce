@@ -49,6 +49,13 @@ export const productReducer = (state, action) => {
                 error: true,
                 loading: false,
             }
+        case "REC_PRODUCTS":
+            return {
+                ...state,
+                rec_products: action.payload,
+                rec_error: false,
+                rec_loading: false,
+            }
     }
 }
 
@@ -56,6 +63,9 @@ export const productInitialState = {
     product: {},
     error: false,
     loading: true,
+    rec_products: [],
+    rec_error: false,
+    rec_loading: true,
 }
 
 //ProductList.jsx
