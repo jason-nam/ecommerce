@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import axios from "axios"
@@ -14,7 +14,6 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
     const [ billingChecked, setBillingChecked ] = useState(true)
     //credit radio check
     const [ creditChecked, setCreditChecked ] = useState("credit")
-    const creditRef = useRef(null)
     
     //form
     const { register, watch, handleSubmit, formState: { errors }, setValue, formState } = useForm({
@@ -22,10 +21,10 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
         defaultValues: {
             firstname: '', lastname: '', address: '',
             addressTwo: '', city: '', province: '', 
-            code: '', country:'', phone:'', email: '',
+            code: '', country:'CA', phone:'', email: '',
             cardname: '', cardnum: '', expdate: '', cvv: '',
             bfirstname: '', blastname: '', baddress: '', baddressTwo: '', 
-            bcity: '', bprovince: '', bcode: '', bcountry: '', bphone: '', bemail: ''    
+            bcity: '', bprovince: '', bcode: '', bcountry: 'CA', bphone: '', bemail: ''    
         }
     });
     const [firstname, lastname, address, addressTwo, 
@@ -40,7 +39,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
             'bfirstname', 'blastname', 'baddress', 'baddressTwo', 
             'bcity', 'bprovince', 'bcode', 'bcountry', 'bphone', 'bemail'
         ])
-    
+
     //logged in => autofill
     useEffect(() => {
 
@@ -87,7 +86,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
             setValue("baddressTwo", '')
             setValue("bcity", '')
             setValue("bprovince", '')
-            setValue("bcountry", '')
+            setValue("bcountry", 'CA')
             setValue("bcode", '')
             setValue("bphone", '')
             setValue("bemail", '')
@@ -207,9 +206,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                                 <label htmlFor="cinfo-city" className={`cinfo-label ${city.length? 'active' : ''}`}>{errors.city? errors.city.message :'City'}</label>
                             </div>
                             <div className={`cinfo ${errors.province? 'error' : '' }`}>
-                                <input id="cinfo-province" className="cinfo-input"
-                                { ...register("province", { required: "Province required"})}                     
-                                />
+                                <DropDown which={'province'} register={register} country={country}/>
                                 <label htmlFor="cinfo-province" className={`cinfo-label ${province.length? 'active' : ''}`}>{errors.province? errors.province.message :'Province/State'}</label>
                             </div>
                         </div>
@@ -250,7 +247,8 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                     <div className="head">
                         <div className="title"> Payment </div>
                     </div>
-                    <div className="radio-container">
+                    <div className="radio-buttons-group">
+                    <div className="radio-button-container">
                         <input type="radio" 
                             name="payment-type" 
                             id="debit-credit-radio" 
@@ -261,7 +259,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                         />
                         <label htmlFor="debit-credit-radio" className="radio-button-label">Credit</label>
                     </div>
-                    <div className="radio-container">
+                    <div className="radio-button-container">
                         <input type="radio" 
                             name="payment-type" 
                             id="paypal-radio" 
@@ -270,6 +268,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                             onChange={e => setCreditChecked(e.target.value)} 
                         />
                         <label htmlFor="paypal-radio" className="radio-button-label">Paypal</label>
+                    </div>
                     </div>
                     <div className="debit-credit" style={creditChecked!=="credit"? {display: 'none'} : {}}>
                         <div className={`cinfo ${errors.cardnum? 'error' : '' }`}>
@@ -349,9 +348,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                                 <label htmlFor="binfo-city" className={`cinfo-label ${bcity.length? 'active' : ''}`}>{errors.bcity? errors.bcity.message :'City'}</label>
                             </div>
                             <div className={`cinfo ${errors.bprovince? 'error' : '' }`}>
-                                <input id="binfo-province" className="cinfo-input"
-                                { ...register("bprovince", { required: "Province required"})}                     
-                                />
+                                <DropDown which={'bprovince'} register={register} country={bcountry}/>
                                 <label htmlFor="binfo-province" className={`cinfo-label ${bprovince.length? 'active' : ''}`}>{errors.bprovince? errors.bprovince.message :'Province/State'}</label>
                             </div>
                         </div>
@@ -363,9 +360,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                                 <label htmlFor="binfo-code" className={`cinfo-label ${bcode.length? 'active' : ''}`}>{errors.bcode? errors.bcode.message :'Postal/Zip Code'}</label>
                             </div>
                             <div className={`cinfo ${errors.bcountry? 'error' : '' }`}>
-                                <input id="binfo-country" className="cinfo-input"
-                                { ...register("bcountry", { required: "Country required"})}                     
-                                />
+                                <DropDown which={'bcountry'} register={register} />
                                 <label htmlFor="binfo-country" className={`cinfo-label ${bcountry.length? 'active' : ''}`}>{errors.bcountry? errors.bcountry.message :'Country'}</label>
                             </div>
                         </div>
