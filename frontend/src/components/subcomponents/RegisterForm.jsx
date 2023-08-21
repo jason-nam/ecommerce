@@ -5,8 +5,9 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useLocation } from "react-router-dom";
 import { changeCart } from "../../utils/util"
 
-export default function RegisterForm({setRegistered, setUserId, setCart, authToast}) {
-    const [userExists, setUserExists] = useState(false);
+export default function RegisterForm({registerState, registerDispatch, setUserId, setCart, authToast}) {
+    const { userExists, error } = registerState;
+
     const { register, watch, handleSubmit, formState: { errors } } = useForm({
         // mode: 'all',  //show warnings on input change
         defaultValues: {
@@ -26,14 +27,15 @@ export default function RegisterForm({setRegistered, setUserId, setCart, authToa
         .then(res => 
             {
                 setUserId(res.data.id)
-                setRegistered(true)
+                registerDispatch({type: "REG_SUCCESS"})
                 changeCart(setCart, navigate, location, authToast, `Welcome, ${firstname}`)
             }
         )
         .catch(err => {
             console.log(err)
             if (err.response.status === 409)
-                setUserExists(true)
+                registerDispatch({type: "REG_USEREXISTS"})
+            registerDispatch({type: "REG_ERROR"})
         });
     }
 
