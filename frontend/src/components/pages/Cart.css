@@ -48,6 +48,8 @@
     height: 100%;
     object-fit: cover;
     justify-content: space-around;
+    color: transparent;
+    background:rgb(238, 238, 238);
 }
 
 .cart-prod-info {
@@ -230,12 +232,6 @@
     .cart-prod-img {
         width: 7rem;
         height: 7rem;
-    }
-    
-    .cart-prod-img img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
     }
 
     .cart-prod-info {

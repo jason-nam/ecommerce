@@ -1,0 +1,9 @@
+.homepage {
+    width: 100%
+}
+
+.homepage img {
+    width: 100%;
+    object-fit: cover;
+}
+

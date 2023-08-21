@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import CartRight from "../subcomponents/CartRight"
+import { faker } from 'https://cdn.skypack.dev/@faker-js/faker';
+import './Home.css';
 
+export function Home() {
 
-export function Home({userId}) {
-
-    return (
-    <>
-        <div></div>
-    </>)
+    return <div className="homepage">
+            <img src={faker.image.urlLoremFlickr({ category: 'coffee,whitebackground', width: 2000, height: 1000, randomize: true })}></img>
+            <img src={faker.image.urlLoremFlickr({ category: 'coffee,whitebackground', width: 2000, height: 1000, randomize: true })}></img>
+        </div>
 }
 

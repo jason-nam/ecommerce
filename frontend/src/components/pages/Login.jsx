@@ -9,14 +9,13 @@ export function Login({userId, setUserId, setCart, authToast}) {
     const [ newLogIn, setNewLogin ] = useState(false)
 
     useEffect( () => {
-        let loginTimeout;
+        // let loginTimeout;
         if (userId > 0 && userId !== null && !newLogIn) {
-                loginTimeout =setTimeout(() => {
-                navigate("/")
-            }, 2000)
+                // loginTimeout =setTimeout(() => {
+                navigate(-1)
+            // }, 2000)
         }
-
-        return () => clearTimeout(loginTimeout)
+        // return () => clearTimeout(loginTimeout)
     }, [userId])
 
     return userId === -1 ?

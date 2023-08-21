@@ -121,6 +121,8 @@ header {
 
 .logo-img {
 	height: 100%;
+	background: transparent;
+	color: transparent;
 }
 
 .auth-box,

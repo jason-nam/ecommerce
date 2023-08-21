@@ -43,6 +43,7 @@ const updateItem = (bool, cartitemid, qty, productid, cartid, cart, userId, setC
         qty++;
     } else {
         if (qty === 1) {
+            removeItem(cartitemid, cart, userId, setCart)
             return;
         }
         qty--

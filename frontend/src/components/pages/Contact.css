@@ -10,3 +10,9 @@
     text-transform: uppercase;
     text-align: center;
 }
+
+@media screen and (max-width: 799px) {
+    .contact {
+        width: 90%;
+    }
+}

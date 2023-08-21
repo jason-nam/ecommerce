@@ -63,7 +63,7 @@
 /* Ordered Products */
 
 .order-item-container {
-    animation: elongate 0.75s ease-out;
+    animation: elongate 0.5s ease-out;
     overflow-y: scroll;
     overflow-x: hidden;
     max-height: 20rem;
@@ -96,6 +96,8 @@
     width: 100%;
     object-fit: cover;
     justify-content: space-around;
+    color: transparent;
+    background:rgb(238, 238, 238);
 }
 
 .oi-name {
