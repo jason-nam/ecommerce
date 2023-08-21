@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     margin: 0 auto;
+    margin-top: 2rem;
     width: 100%;
     max-width: 1000px;
     height: 100%;
@@ -15,12 +16,15 @@
     width: 30%;
 }
 
-.account-box #greet,
-.account-box #account-firstname {
+.account-box #greet {
     font-size: 5rem;
 }
 
 .account-box #account-firstname {
+    display: inline-block;
+    white-space: nowrap;
+    font-size: 5rem;
+    font-size: 2vw;
     font-weight: 500;
 }
 
@@ -49,11 +53,48 @@
     background-color: white;
 }
 
+.app-options #personal-information-button.active,
+.app-options #billing-payments-button.active {
+    font-weight: 500;
+}
+
 /* App Box */
 
 .app-box {
     display: flex;
     flex-direction: column;
     width: 70%;
+    margin-left: 3rem;
 }
 
+.personal-information-box,
+.billing-payments-box {
+    display: none;
+}
+
+.personal-information-box.active,
+.billing-payments-box.active {
+    display: block;
+}
+
+#title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+}
+
+.info-edit-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: 1rem 0;
+
+}
+
+#edit-box {
+    height: 125px;
+    width: 310px;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+    border: 2px solid black;
+}
