@@ -4,11 +4,12 @@ import { useForm } from "react-hook-form";
 import axios from "axios"
 import './Checkout.css'
 import DropDown from '../subcomponents/DropDown'
+import CheckoutSummary from '../subcomponents/CheckoutSummary'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
-export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total, orderToast, dispatchCH}) {
-    
+export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, dispatchCH}) {
+
     const navigate = useNavigate()
     //billing checkbox
     const [ billingChecked, setBillingChecked ] = useState(true)
@@ -391,55 +392,7 @@ export function Checkout({userId, cart, setCart, subtotal, tax, shipping, total,
                 </div>
             </form>
             </div>
-            <div className="right-ch">
-                <div className="order-summary">
-                    <div className="head">
-                        <div className="title"> ORDER SUMMARY </div>
-                    </div>
-                    <div className="subtotal-box">
-                        <div id="subtotal">Subtotal</div>
-                        <div id="value">{cart.length ? <>$ {subtotal}</> :<div>—</div>}</div>
-                    </div>
-                    <div className="tax-box">
-                        <div id="tax">Tax</div>
-                        <div id="value">{tax > 0 ? <>$ {tax}</> :<div>—</div>}</div>
-                    </div>
-                    <div className="shipping-handling-box">
-                        <div id="shipping-handling">Shipping</div>
-                        <div id="value">{shipping > 0 ? <>$ {shipping}</> :<div>—</div>}</div>
-                    </div>
-                    <div className="separator"></div>
-                    <div className="total-box">
-                        <div id="total">Total</div>
-                        <div id="value">{total? <>$ {total}</> :<div>—</div>}</div>
-                    </div>                    
-                </div>
-                <div className="cart-ch">
-                    <div className="items-ch">
-                        {cart.slice(0).reverse().map(item => {
-                        return (
-                            <div key={item.cartitemid}>
-                            <div className="lines"></div>
-                            <div className="item-ch" >
-                                <div className="item-ch-img">
-                                    <img src={item.image} alt={`${item.name}`}></img>
-                                </div>
-                                <div className="item-info-ch">
-                                    <div className="info-left">
-                                        <div className="name">{item.name}</div>
-                                        <div className="qty">Qty: {item.qty}</div>
-                                    </div>
-                                    <div className="info-right">
-                                        <div className="price">$ {(parseFloat(item.price) * item.qty).toFixed(2)}</div>
-                                    </div>
-                                </div>
-                            </div>
-                            </div>
-                        )})}
-                        <div className="lines"></div>
-                    </div>
-                </div>
-            </div>
+            <CheckoutSummary {...{subtotal, stateCH, cart}} />
         </div>
     )
 }
