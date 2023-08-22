@@ -23,6 +23,7 @@ import 'react-toastify/dist/ReactToastify.css';
 function App() {
     const [ userId, setUserId ] = useState(null);
     const [ cart, setCart ] = useState([]);
+    const [ cartLoading, setCartLoading ] = useState(true);
     const mainRef = useRef(null)
     const cartRef = useRef(null)
     const headerRef = useRef(null);
