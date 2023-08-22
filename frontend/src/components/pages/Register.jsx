@@ -29,8 +29,10 @@ export function Register({userId, setUserId, setCart, authToast}) {
                 <RegisterForm {...{registerState, registerDispatch, setUserId, setCart, authToast}}/>
             </>
         )
-    else if (userId != null)
+    else if (userId !== null)
         return <div>Logged in. Soon to be redirected</div>
-
+    else if (userId === null) {
+        return <div>loading...</div>
+    }
   }
 

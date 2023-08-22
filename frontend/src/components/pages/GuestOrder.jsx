@@ -20,10 +20,6 @@ export function GuestOrder({userId}) {
             id: localStorage.getItem("GUEST_ORDER_ID")
         })
     }, [setOrder])
-
-    useEffect(() => {
-        console.log(order)
-    }, [order])
     
     return (
         <div className="orders">
