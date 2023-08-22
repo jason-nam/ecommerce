@@ -137,7 +137,7 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
                     </div>
                     )
                 : (
-                    !loading ? (
+                    !loading ? 
                         <> 
                             <div className="pi-left">
                                 <div className="pi-left-links">
@@ -169,8 +169,8 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
                                     <div className="pi-desc">{product.description}</div>
                                 </div>
                             </div>
-                        </>)
-                    : (<p>loading</p>)
+                        </>
+                    : <div>loading...</div>
                 )}
             </div>
             <div className="recs">You May Also Like</div>
@@ -187,7 +187,7 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
                     className="rec-button" 
                     id="rec-button-right"
                     onClick={e => scrollCarousel(0, e)}
-                    disabled={(window.innerWidth <= 799) ?
+                    disabled={(window.innerWidth <= 799) ? //mobile
                         (rec_products.length * window.innerWidth + (rec_products.length - 1) * 8 - window.innerWidth <= scrollLoc+1 ) ? true 
                         : false 
                         : (rec_products.length * 380 + (rec_products.length - 1) * 16 - window.innerWidth * 0.84 <= scrollLoc+1 ) ? true 
@@ -196,7 +196,7 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
                 >&gt;</button>
             </div>
             <div className="product-carousel" ref={carousel} onScroll={() => setScrollLoc(carousel.current.scrollLeft)}>
-                <ProductCards products={rec_products}/>
+                { rec_loading? <div>loading...</div> : <ProductCards products={rec_products}/> }
             </div>
         </div>
         

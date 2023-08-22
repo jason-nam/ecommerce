@@ -25,8 +25,6 @@ module.exports = {
     },
 
     login: async (req, res, next) => {
-        console.log(req.body)
-
         if (req.isAuthenticated()) {
             /** 
              * TODO

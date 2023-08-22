@@ -27,6 +27,8 @@ export function Login({userId, setUserId, setCart, authToast}) {
         </>
     : userId !== null && !newLogin ?
         <div>You are logged in. Soon to be redirected</div>
+    : userId === null ? 
+        <div>loading...</div>
     : null
         
 
