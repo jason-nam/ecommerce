@@ -69,21 +69,21 @@ const { faker } = require('@faker-js/faker');
             id              SERIAL            PRIMARY KEY,
             name            VARCHAR(50)       NOT NULL,
             price           DECIMAL(10,2)     NOT NULL,
-            description     VARCHAR(300)      NOT NULL,
-            image           VARCHAR(200)      NOT NULL,
+            description     VARCHAR(300)      NOT NULL, 
             subcategoryid   INT               NOT NULL,
             FOREIGN KEY (subcategoryid) REFERENCES subcategories(id)
         );
     `
+    // image           VARCHAR(200)      NOT NULL,
 
-    // const imagesTableStatement = `
-    //     CREATE TABLE IF NOT EXISTS images (
-    //         id              SERIAL            PRIMARY KEY,
-    //         productid       INT               NOT NULL,
-    //         image           VARCHAR(200)      NOT NULL,
-    //         FOREIGN KEY (productid) REFERENCES products(id)
-    //     );
-    // `
+    const imagesTableStatement = `
+        CREATE TABLE IF NOT EXISTS images (
+            id              SERIAL            PRIMARY KEY,
+            productid       INT,
+            image           VARCHAR(200)      NOT NULL,
+            FOREIGN KEY (productid) REFERENCES products(id)
+        );
+    `
 
     const ordersTableStatement = `
         CREATE TABLE IF NOT EXISTS orders (
@@ -144,8 +144,14 @@ const { faker } = require('@faker-js/faker');
     `;
 
     const insertProducts = `
-        INSERT INTO products (name, price, description, image, subcategoryid)
-        VALUES ($1, $2, $3, $4, $5) 
+        INSERT INTO products (name, price, description, subcategoryid)
+        VALUES ($1, $2, $3, $4) 
+        RETURNING *
+    `;
+
+    const insertImages = `
+        INSERT INTO images (productid, image)
+        VALUES ($1, $2)
         RETURNING *
     `;
 
@@ -167,6 +173,7 @@ const { faker } = require('@faker-js/faker');
         await db.query(categoriesTableStatement);
         await db.query(subcategoriesTableStatement);
         await db.query(productsTableStatement);
+        await db.query(imagesTableStatement);
         await db.query(ordersTableStatement);
         await db.query(orderItemsTableStatement);
         await db.query(cartsTableStatement);
@@ -215,14 +222,26 @@ const { faker } = require('@faker-js/faker');
                 faker.commerce.productName(), 
                 faker.commerce.price({ max: 100 }),
                 faker.commerce.productDescription(),
-                faker.image.urlLoremFlickr({ category: 'hat,whitebackground', width: 1000, height: 1000, randomize: true}),
+                // faker.image.urlLoremFlickr({ category: 'hat,whitebackground', width: 1000, height: 1000, randomize: true}),
                 randomIndex
             ]
             const productsResult = await db.query(insertProducts, values);
             insertedProducts.push(productsResult.rows[0]);
         }
-
         console.log("Products inserted:", insertedProducts);
+
+        const insertedImages = [];
+        for (const product of insertedProducts) {
+            for (let i = 0; i < 5; i++) {
+                const values = [
+                    product.id, 
+                    faker.image.urlLoremFlickr({ category: 'hat,whitebackground', width: 1000, height: 1000, randomize: true})
+                ];
+                const imagesResult = await db.query(insertImages, values);
+                insertedImages.push(imagesResult.rows[0]);
+            }
+        }
+        console.log("Images inserted:", insertedImages);
 
         await db.end();
 
