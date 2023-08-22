@@ -12,6 +12,7 @@ const { faker } = require('@faker-js/faker');
             password        TEXT,
             firstname       VARCHAR(50),
             lastname        VARCHAR(50),
+            region          TEXT,
             isactive        BOOLEAN,
             UNIQUE(email)
         );
