@@ -52,7 +52,6 @@ module.exports = class CartItemModel {
         try {
 
             const { qty, productid, cartid } = data;
-            console.log(qty, productid, cartid)
 
             const statement = `UPDATE cartitems 
                                SET qty = $1, productid = $2, cartid = $3
