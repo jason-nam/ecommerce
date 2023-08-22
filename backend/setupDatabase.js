@@ -76,6 +76,15 @@ const { faker } = require('@faker-js/faker');
         );
     `
 
+    // const imagesTableStatement = `
+    //     CREATE TABLE IF NOT EXISTS images (
+    //         id              SERIAL            PRIMARY KEY,
+    //         productid       INT               NOT NULL,
+    //         image           VARCHAR(200)      NOT NULL,
+    //         FOREIGN KEY (productid) REFERENCES products(id)
+    //     );
+    // `
+
     const ordersTableStatement = `
         CREATE TABLE IF NOT EXISTS orders (
             id              SERIAL            PRIMARY KEY,
@@ -83,10 +92,10 @@ const { faker } = require('@faker-js/faker');
             status          VARCHAR(50)       NOT NULL,
             created         TIMESTAMP         NOT NULL,
             modified        TIMESTAMP         NOT NULL,
-            userid          INT               NOT NULL
+            userid          INT,
+            FOREIGN KEY (userid) REFERENCES users(id)
         );
-    `// FOREIGN KEY (userid) REFERENCES users(id)
-
+    `
 
     const orderItemsTableStatement = `
         CREATE TABLE IF NOT EXISTS orderitems (
