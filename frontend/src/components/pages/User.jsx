@@ -10,6 +10,7 @@ export function User() {
     const [user, setUser] = useState({});
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [activeTab, setActiveTab] = useState('personal');
 
     useEffect(() => {
 
@@ -44,13 +45,23 @@ export function User() {
             <div className="user-page">
                 <div className="account-box">
                     <div id="greet">Hello,</div>
-                    <div id="account-firstname">{user.firstname}!</div>
+                    <div id="account-firstname">{user.firstname}</div>
                     <div id="email">{user.email}</div>
                     <div className="app-options">
-                        <button type="button" id='personal-information-button'>
+                        <button
+                            type="button"
+                            onClick={() => setActiveTab('personal')}
+                            className={activeTab === 'personal' ? 'active' : ''}
+                            id="personal-information-button"
+                        >
                             Personal Information
                         </button>
-                        <button type="button" id="billing-payments-button">
+                        <button
+                            type="button"
+                            onClick={() => setActiveTab('billing')}
+                            className={activeTab === 'billing' ? 'active' : ''}
+                            id="billing-payments-button"
+                        >
                             Billing & Payments
                         </button>
                         <div id="cart-link">
@@ -62,17 +73,50 @@ export function User() {
                     </div>
                 </div>
                 <div className="app-box">
-                    <div className="personal-information-box">
-                        <div id="title">
-                            Personal Information
-                        </div> 
+
+                    <div
+                        className={`personal-information-box ${
+                            activeTab === 'personal' ? 'active' : ''
+                        }`}
+                    >
+                        <div id="title">Personal Information</div>
                         <div id="desc">
                             Manage your personal information, including phone numbers and email address where you can be contacted.
                         </div>
+
+                        <div className="info-edit-container">
+                            <div className="name-edit-box" id="edit-box">
+                                <div id="variable">Name:</div>
+                                <div id="name"> {user.firstname} {user.lastname}</div>
+                            </div>
+                            <div className="email-edit-box" id="edit-box">
+                                <div id="variable">Email:</div>
+                                <div id="name"> {user.email}</div>
+                            </div>
+                            <div className="country-region-box" id="edit-box">
+                                <div id="variable">Country Region:</div>
+                                <div id="name"> {user.region}</div>
+                            </div>
+                        </div>
+
                     </div>
-                    <div className="billing-payments-box">
-                        Billing & Payments
+
+                    <div
+                        className={`billing-payments-box ${
+                            activeTab === 'billing' ? 'active' : ''
+                        }`}
+                    >
+                        <div id="title">Billing & Payments</div>
+                        <div id="desc">
+                            Manage your billings and payments information.
+                        </div>
+
+                        <div className="payments-edit-container">
+                            
+                        </div>
+
                     </div>
+
                 </div>
             </div>
         ) :

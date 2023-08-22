@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: row;
     margin: 0 auto;
+    margin-top: 2rem;
     width: 100%;
     max-width: 1000px;
     height: 100%;
@@ -17,7 +18,11 @@
 
 .account-box #greet,
 .account-box #account-firstname {
-    font-size: 5rem;
+    font-size: min(max(1rem, 5vw), 4rem);
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .account-box #account-firstname {
@@ -49,11 +54,53 @@
     background-color: white;
 }
 
+.app-options #personal-information-button.active,
+.app-options #billing-payments-button.active {
+    font-weight: 500;
+}
+
 /* App Box */
 
 .app-box {
     display: flex;
     flex-direction: column;
     width: 70%;
+    margin-left: 3rem;
 }
 
+.personal-information-box,
+.billing-payments-box {
+    display: none;
+}
+
+.personal-information-box.active,
+.billing-payments-box.active {
+    display: block;
+}
+
+#title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.info-edit-container {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+#edit-box {
+    margin: 5px 0;
+    padding: 2rem 1rem;
+    border: 1px solid black;
+    background-color: white;
+
+    display: flex;
+    flex-direction: row;
+}
+
+#edit-box #variable {
+    font-weight: 600;
+}
