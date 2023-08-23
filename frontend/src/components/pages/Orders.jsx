@@ -55,14 +55,10 @@ export function Orders({userId}) {
             </div>
 
             {userId === -1 ?  
-                <>
-                    <div className="auth-redirect">
-                        <div className="item underline"><Link to="/login">Sign In</Link></div>
-                    </div>
-                    <div className="auth-redirect">
-                        <div className="item underline"><Link to="/register">Register</Link></div> 
-                    </div>
-                </>
+                <div className="logged-out-orders">
+                    <Link to="/login"><button className="auth-redirect">Sign In</button></Link>
+                    <Link to="/register"><button className="auth-redirect">Register</button></Link>
+                </div>
                 : userId !== null ? 
                 <>
                     <div className="order order-head">

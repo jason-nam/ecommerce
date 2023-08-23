@@ -3,6 +3,10 @@ const CartModelInstance = new CartModel();
 const CartItemModel = require("../models/cartItem");
 const OrderModel = require("../models/order");
 const ProductModel = require("../models/product");
+const BillingModel = require("../models/billing");
+const BillingModelInstance = new BillingModel();
+const PaymentModel = require("../models/payment");
+const PaymentModelInstance = new PaymentModel();
 
 module.exports = class CartService {
 
@@ -139,7 +143,12 @@ module.exports = class CartService {
             await Order.createOrder();
 
             // payment method
-            // TODO
+            // ECRYPT
+            // const payment = PaymentModelInstance.createPayment(
+            //     userid, name_on_card, addr_line_1, addr_line_2, 
+            //     addr_city, addr_province, addr_postal, 
+            //     phone_number, encrypted_card, encrypted_exp)
+            // const billing = BillingModelInstance.createBilling(userid, paymentid, amount, payment_date, payment_status)
 
             // order COMPLETE after successful payment process
             const order = await Order.updateOrder({ status: "COMPLETE" });

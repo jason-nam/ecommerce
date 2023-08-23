@@ -114,7 +114,7 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
     const scrollCarousel = (bool, e) => {
         e.preventDefault();
         // offset: mobile vs pc
-        let offset = window.innerWidth <= 799 ? window.innerWidth + 8 : 396;
+        let offset = window.innerWidth <= 787 ? window.innerWidth + 8 : 396;
         if (carousel.current) {
             if (bool === 0) {
                 setScrollLoc(carousel.current.scrollLeft + offset)
@@ -173,30 +173,32 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
                     : <div>loading...</div>
                 )}
             </div>
-            <div className="recs">You May Also Like</div>
-            <div className='rec-button-group'>
-                <button 
-                    type="button" 
-                    className="rec-button" 
-                    id="rec-button-left"
-                    onClick={e => scrollCarousel(1, e)} 
-                    disabled={scrollLoc <= 0 ? true : false }
-                >&lt;</button>
-                <button 
-                    type="button" 
-                    className="rec-button" 
-                    id="rec-button-right"
-                    onClick={e => scrollCarousel(0, e)}
-                    disabled={(window.innerWidth <= 799) ? //mobile
-                        (rec_products.length * window.innerWidth + (rec_products.length - 1) * 8 - window.innerWidth <= scrollLoc+1 ) ? true 
-                        : false 
-                        : (rec_products.length * 380 + (rec_products.length - 1) * 16 - window.innerWidth * 0.84 <= scrollLoc+1 ) ? true 
-                        : false} 
-                        // carousel width - container width < scrollLeft
-                >&gt;</button>
-            </div>
-            <div className="product-carousel" ref={carousel} onScroll={() => setScrollLoc(carousel.current.scrollLeft)}>
-                { rec_loading? <div>loading...</div> : <ProductCards products={rec_products}/> }
+            <div className="recs">
+                <div className="rec-title">You May Also Like</div>
+                <div className='rec-button-group'>
+                    <button 
+                        type="button" 
+                        className="rec-button" 
+                        id="rec-button-left"
+                        onClick={e => scrollCarousel(1, e)} 
+                        disabled={scrollLoc <= 0 ? true : false }
+                    >&lt;</button>
+                    <button 
+                        type="button" 
+                        className="rec-button" 
+                        id="rec-button-right"
+                        onClick={e => scrollCarousel(0, e)}
+                        disabled={(window.innerWidth <= 787) ? //mobile
+                            (rec_products.length * window.innerWidth + (rec_products.length - 1) * 8 - window.innerWidth <= scrollLoc+1 ) ? true 
+                            : false 
+                            : (rec_products.length * 380 + (rec_products.length - 1) * 16 - window.innerWidth * 0.84 <= scrollLoc+1 ) ? true 
+                            : false} 
+                            // carousel width - container width < scrollLeft
+                    >&gt;</button>
+                </div>
+                <div className="product-carousel" ref={carousel} onScroll={() => setScrollLoc(carousel.current.scrollLeft)}>
+                    { rec_loading? <div>loading...</div> : <ProductCards products={rec_products}/> }
+                </div>
             </div>
         </div>
         

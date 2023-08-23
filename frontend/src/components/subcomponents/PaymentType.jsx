@@ -1,14 +1,14 @@
 
-export default function({creditChecked, setCreditChecked}) {
+export default function({register}) {
     return <div className="radio-buttons-group">
                 <div className="radio-button-container">
                     <input type="radio" 
                         name="payment-type" 
                         id="debit-credit-radio" 
                         className="radio-button" 
-                        value="credit" 
-                        defaultChecked={creditChecked} 
-                        onChange={e => setCreditChecked(e.target.value)} 
+                        value="credit"
+                        defaultChecked 
+                        {...register("paymentType", { required: true })}
                     />
                     <label htmlFor="debit-credit-radio" className="radio-button-label">Credit</label>
                 </div>
@@ -18,7 +18,7 @@ export default function({creditChecked, setCreditChecked}) {
                         id="paypal-radio" 
                         className="radio-button" 
                         value="paypal" 
-                        onChange={e => setCreditChecked(e.target.value)} 
+                        {...register("paymentType", { required: true })}
                     />
                     <label htmlFor="paypal-radio" className="radio-button-label">Paypal</label>
                 </div>
