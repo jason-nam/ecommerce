@@ -129,7 +129,7 @@ select {
     width: calc(50% + 1px);
 }
 
-.debit-credit, .billing-form {
+.debit-credit, .billing-form, .shipping-form {
     margin: 1rem 0;
 }
 

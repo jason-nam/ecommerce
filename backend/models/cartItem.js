@@ -80,8 +80,14 @@ module.exports = class CartItemModel {
     static async getCartItems(cartid) {
         try {
 
-            const statement = `SELECT ci.qty, ci.id AS cartitemid, ci.cartid, p.*
-                               FROM cartitems ci INNER JOIN products p ON p.id = ci.productid
+            const statement = `SELECT ci.qty, ci.id AS cartitemid, ci.cartid, p.*, im.image
+                               FROM cartitems ci 
+                               INNER JOIN products p ON p.id = ci.productid
+                               LEFT JOIN (
+                                    SELECT productid, STRING_AGG(image, ', ' ORDER BY id) AS image
+                                    FROM images
+                                    GROUP BY 1) 
+                                im ON p.id = im.productid
                                WHERE cartid = $1
                                ORDER BY ci.id ASC`;
             const values = [cartid];
