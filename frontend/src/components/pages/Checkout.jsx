@@ -137,7 +137,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
 
         axios.post("/api/carts/checkout", 
             {
-                paymentinfo: 'paymentInfo', 
+                paymentinfo: paymentInfo, 
                 cart, 
                 userId 
             }

@@ -18,7 +18,7 @@ export default function SearchForm({headerRef}) {
     const doSearch = (e) => {
         e.preventDefault();
         if (searchVal.length){
-            navigate(`/products?search=${searchVal}`)
+            navigate(`/products?search=${searchVal.replace(/\s/g, '+')}`)
         }
     }
 
