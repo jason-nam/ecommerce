@@ -110,6 +110,7 @@ module.exports = class CartService {
 
     async checkout(cart, userid, paymentinfo) {
         try {
+
             // list of cart items
             const promises = cart.map(async cartitem => {
                 let ProductModelInstance = new ProductModel();
@@ -127,8 +128,13 @@ module.exports = class CartService {
             const shipping = 0;
             const total = parseFloat(subtotal) + parseFloat(tax) + parseFloat(shipping);
 
+            if (userid == -1) {
+                userid = null;
+            }
+
             // create new order
             const Order = new OrderModel({ total, userid });
+
             Order.addItems(cartItems);
             await Order.createOrder();
 
