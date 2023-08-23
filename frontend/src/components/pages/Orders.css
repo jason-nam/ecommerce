@@ -110,15 +110,21 @@
 }
 
 /* Not logged in */
+.logged-out-orders {
+    width: 20rem;
+    margin: auto;
+}
+
 .auth-redirect {
-    max-width: 20rem;
     margin: auto;
     border: 1px black solid;
     padding: 1rem;
     margin-top: 1rem;
     box-sizing: border-box;
-}
-.orders .underline{
+    background-color: transparent;
+    width: 100%;
+    cursor: pointer;
+    font-size: 1rem;
     text-align: center;
 }
 
@@ -132,9 +138,10 @@
         padding: 1rem 0.2rem;
     }
 
-    .auth-redirect {
-        max-width: 90%;
+    .logged-out-orders {
+        width: 90%;
     }
+
 }
 
 /* Guest Order */
