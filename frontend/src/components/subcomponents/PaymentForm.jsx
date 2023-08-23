@@ -1,16 +1,16 @@
 
 
-export default function PaymentForm({creditChecked, register, errors, watch}) {
+export default function PaymentForm({register, errors, watch, paymentType}) {
 
-    const [cardname, cardnum, expdate, cvv] = watch(['cardname', 'cardnum', 'expdate', 'cvv',])
+    const [cardname, cardnum, expdate, cvv] = watch(['cardname', 'cardnum', 'expdate', 'cvv'])
 
-    return <div className="debit-credit" style={creditChecked!=="credit"? {display: 'none'} : {}}>
+    return <div className="debit-credit" style={paymentType!=="credit"? {display: 'none'} : {}}>
                 <div className={`cinfo ${errors.cardnum? 'error' : '' }`}>
                     <input 
                         className="cinfo-input" 
                         id="cinfo-cardnum" 
                         type="number"
-                        { ...register("cardnum", { required: creditChecked==='credit' ? "Invalid card number" : creditChecked==='paypal' ? false : true })}                     
+                        { ...register("cardnum", { required: paymentType==='credit' ? "Invalid card number" : paymentType==='paypal' ? false : true })}                     
                     />
                     <label 
                         className={`cinfo-label ${cardnum.length ? 'active' : ''}`} 
@@ -22,7 +22,7 @@ export default function PaymentForm({creditChecked, register, errors, watch}) {
                     <input 
                         className="cinfo-input" 
                         id="cinfo-cardname"
-                        { ...register("cardname", { required: creditChecked==='credit' ? "Invalid name" : creditChecked==='paypal' ? false : true })}                     
+                        { ...register("cardname", { required: paymentType==='credit' ? "Invalid name" : paymentType==='paypal' ? false : true })}                     
                     />
                     <label 
                         className={`cinfo-label ${cardname.length ? 'active' : ''}`} 
@@ -36,7 +36,7 @@ export default function PaymentForm({creditChecked, register, errors, watch}) {
                             className="cinfo-input" 
                             id="cinfo-expdate" 
                             placeholder="MM/YY"
-                            { ...register("expdate", { required: creditChecked==='credit' ? "Invalid expiration date" : creditChecked==='paypal' ? false : true })}                     
+                            { ...register("expdate", { required: paymentType==='credit' ? "Invalid expiration date" : paymentType==='paypal' ? false : true })}                     
                         />
                         <label 
                             className={`cinfo-label ${expdate.length ? 'active' : ''}`} 
@@ -48,7 +48,7 @@ export default function PaymentForm({creditChecked, register, errors, watch}) {
                         <input 
                             className="cinfo-input" 
                             id="cinfo-cvv"
-                            { ...register("cvv", { required: creditChecked==='credit' ? "Invalid security code" : creditChecked==='paypal' ? false : true })}                     
+                            { ...register("cvv", { required: paymentType==='credit' ? "Invalid security code" : paymentType==='paypal' ? false : true })}                     
                         />
                         <label 
                             className={`cinfo-label ${cvv.length ? 'active' : ''}`} 
