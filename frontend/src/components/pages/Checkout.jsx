@@ -24,7 +24,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
         defaultValues: {
             firstname: '', lastname: '', address: '', addressTwo: '', 
             city: '', province: '', code: '', country:'CA', 
-            phone:'', email: '',
+            phone:'', email: '', paymentType: 'credit',
             cardname: '', cardnum: '', expdate: '', cvv: '',
             bfirstname: '', blastname: '', baddress: '', baddressTwo: '', 
             bcity: '', bprovince: '', bcode: '', bcountry: 'CA', bphone: '', bemail: ''    
@@ -32,13 +32,15 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
     });
     const [firstname, lastname, address, addressTwo, 
         city, province, code, country, phone, email, 
-        bfirstname, blastname, baddress, baddressTwo, 
-        bcity, bprovince, bcode, bcountry, bphone, bemail
+        bfirstname, blastname, baddress, baddressTwo,
+        bcity, bprovince, bcode, bcountry, bphone, bemail,
+        paymentType
     ] = watch([
             'firstname', 'lastname', 'address', 'addressTwo', 
             'city', 'province', 'code', 'country', 'phone', 'email', 
             'bfirstname', 'blastname', 'baddress', 'baddressTwo', 
-            'bcity', 'bprovince', 'bcode', 'bcountry', 'bphone', 'bemail'
+            'bcity', 'bprovince', 'bcode', 'bcountry', 'bphone', 'bemail', 
+            'paymentType'
         ])
 
     //logged in => autofill
@@ -112,12 +114,13 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
             phone: data.phone,
         }
 
-        let cardDetails = creditChecked === 'credit' ? {
+        let paymentType = data.paymentType;
+        let cardDetails = paymentType === 'credit' ? {
             name: data.cardname,
             num: data.cardnum,
             cvv: data.cvv,
             exp: data.expdate, 
-        } : creditChecked === 'paypal' ? {} : null;
+        } : paymentType === 'paypal' ? {} : null;
         if (cardDetails===null) return;
 
         let billDetails = { 
@@ -137,7 +140,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
 
         axios.post("/api/carts/checkout", 
             {
-                paymentinfo: paymentInfo, 
+                paymentinfo: data, 
                 cart, 
                 userId 
             }
@@ -184,8 +187,8 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
                         <div className="head">
                             <div className="title"> Payment </div>
                         </div>
-                        <PaymentType {...{creditChecked, setCreditChecked}}/>
-                        <PaymentForm {...{creditChecked, register, errors, watch}}/>
+                        <PaymentType {...{register}}/>
+                        <PaymentForm {...{register, errors, watch, paymentType}}/>
                         <input type="checkbox" 
                             id="billing-checkbox"
                             defaultChecked={billingChecked}
@@ -206,14 +209,14 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
                             code={bcode}
                             country={bcountry}
                             phone={bphone}
-                            email
+                            email={bemail}
                         />
                     </div>
                     <div className="order-box">
                         <button type="submit" id="order" 
                         disabled = {!cart.length}
                         // disabled={!formState.isValid}
-                        >{ creditChecked=="credit" ? "Order" : "Pay with Paypal"}</button>
+                        >{ paymentType=="credit" ? "Order" : "Pay with Paypal"}</button>
                     </div>
                 </form>
             </div>
