@@ -100,8 +100,8 @@ module.exports = {
         try {
 
             // const { id } = req.user;
-            const { paymentinfo, cart, id } = req.body;
-            const response = await CartServiceInstance.checkout(cart, id, paymentinfo);
+            const { paymentinfo, cart, userId } = req.body;
+            const response = await CartServiceInstance.checkout(cart, userId, paymentinfo);
 
             res.status(200).send(response);
 

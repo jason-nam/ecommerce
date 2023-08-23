@@ -109,11 +109,16 @@ module.exports = class OrderModel {
     static async getOrderById(orderid) {
         try {
 
-            const statement = `SELECT oi.*, p.name, p.price, p.image
-                               FROM orders o
-                               INNER JOIN orderitems oi ON oi.orderid = o.id
-                               INNER JOIN products p ON oi.productid = p.id
-                               WHERE o.id = $1`;
+            const statement = `SELECT oi.*, p.name, p.price, im.image
+                                FROM orders o
+                                INNER JOIN orderitems oi ON oi.orderid = o.id
+                                INNER JOIN products p ON oi.productid = p.id
+                                LEFT JOIN (
+                                    SELECT productid, STRING_AGG(image, ', ' ORDER BY id) AS image
+                                    FROM images
+                                    GROUP BY 1) 
+                                im ON p.id = im.productid
+                                WHERE o.id = $1`;
             const values = [orderid];
 
             const result = await db.query(statement, values);

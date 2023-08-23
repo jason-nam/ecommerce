@@ -25,7 +25,7 @@ export function Cart({userId, cart, setCart, subtotal}) {
                         <div className="item" >
                             <div className="cart-prod-img">
                                 <Link to={`/products/product/${item.id}`}>
-                                    <img src={item.image} alt={`${item.name}`}></img>
+                                    <img src={item.image.split(', ')[0]} alt={`${item.name}`}></img>
                                 </Link>
                             </div>
                             <div className="cart-prod-info">

@@ -150,7 +150,7 @@ export function Product({userId, cart, setCart, cartToggle, addedToast}) {
                                         <span className="pi-category">{product.subcategory}</span>
                                     </Link>
                                 </div>
-                                <img className="product-image" src={product.image} alt={`${product.name}`}/>
+                                <img className="product-image" src={product.image.split(', ')[0]} alt={`${product.name}`}/>
                             </div>
                             <div className="pi-right">
                                 <div className="product-info">
