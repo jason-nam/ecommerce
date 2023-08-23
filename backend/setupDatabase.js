@@ -182,7 +182,6 @@ const { faker } = require('@faker-js/faker');
         // Sample Database
         const categoriesList = ["Men", "Women", "Children"];
         const insertedCategories = [];
-        // const subcategoriesList = ["Tops", "Bottoms", "Outerwear", "Innerwear", "Loungewear", "Accessories"];
         
         for (const categoryName of categoriesList) {
             const categoryResult = await db.query(insertCategories, [categoryName]);
@@ -212,7 +211,7 @@ const { faker } = require('@faker-js/faker');
 
         const insertedProducts = [];
 
-        for (let i = 0; i < 60; i++) {
+        for (let i = 0; i < 120; i++) {
             const subcategoryNames = Object.keys(subcategoriesMap).flatMap(name => subcategoriesMap[name]);
             const randomIndex = Math.floor(Math.random() * subcategoryNames.length) + 1;
             // const randomSubcategoryName = subcategoryNames[randomIndex];
