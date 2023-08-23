@@ -90,7 +90,7 @@ export function Orders({userId}) {
                                         {selectedOrder.map(x =>
                                             <div className="order-item" key={x.id}>
                                                 <div className="order-item-left">
-                                                    <img src={x.image}></img>
+                                                    <img src={x.image.split(', ')[0]}></img>
                                                 </div>
                                                 <div className="oi-name">{x.name}</div>
                                                 <div className="oi-price">Price: ${x.price}</div>

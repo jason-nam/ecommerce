@@ -33,7 +33,7 @@ export default function CheckoutSummary ({subtotal, stateCH, cart}) {
                             <div className="lines"></div>
                             <div className="item-ch" >
                                 <div className="item-ch-img">
-                                    <img src={item.image} alt={`${item.name}`}></img>
+                                    <img src={item.image.split(', ')[0]} alt={`${item.name}`}></img>
                                 </div>
                                 <div className="item-info-ch">
                                     <div className="info-left">
