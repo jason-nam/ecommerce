@@ -184,6 +184,7 @@ const { faker } = require('@faker-js/faker');
         // create tables on db
         await db.query(usersTableStatement);
         await db.query(paymentsTableStatement);
+        await db.query(shippingTableStatement);
         await db.query(billingTableStatement);
         await db.query(categoriesTableStatement);
         await db.query(subcategoriesTableStatement);

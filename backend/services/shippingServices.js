@@ -28,18 +28,16 @@ module.exports = class ShippingService {
     async createShipping(data) {
         try {
 
-            const {
-                userid, name_on_card, addr_line_1, addr_line_2, 
-                addr_city, addr_province, addr_postal, 
-                phone_number, encrypted_card, encrypted_exp 
-            } = data;
+            const { userid, first_name, last_name, 
+                addr_line_1, addr_line_2, addr_city, addr_province, 
+                addr_country, addr_postal, phone_number } = data;
 
-            const payment = await ShippingModelInstance.createShipping(
-                userid, name_on_card, addr_line_1, addr_line_2, 
-                addr_city, addr_province, addr_postal, 
-                phone_number, encrypted_card, encrypted_exp
-            );
-            return payment;
+            const shipping = await ShippingModelInstance.createShipping(
+                userid, first_name, last_name, addr_line_1, addr_line_2, 
+                addr_city, addr_province, addr_country, addr_postal, 
+                phone_number);
+
+            return shipping;
 
         } catch(err) {
             throw new Error(err);
@@ -49,16 +47,16 @@ module.exports = class ShippingService {
     async updateShipping(data) {
         try {
 
-            const { paymentid, name_on_card, addr_line_1, addr_line_2, 
-                addr_city, addr_province, addr_postal, 
-                phone_number, encrypted_card, encrypted_exp } = data;
+            const { shippingid, first_name, last_name, 
+                addr_line_1, addr_line_2, addr_city, addr_province, 
+                addr_country, addr_postal, phone_number } = data;
 
-            const payment = await ShippingModel.updateShipping(
-                paymentid, name_on_card, addr_line_1, addr_line_2, 
-                addr_city, addr_province, addr_postal, 
-                phone_number, encrypted_card, encrypted_exp);
+            const shipping = await ShippingModel.updateShipping(
+                shippingid, first_name, last_name, 
+                addr_line_1, addr_line_2, addr_city, addr_province, 
+                addr_country, addr_postal, phone_number);
                 
-            return payment;
+            return shipping;
 
         } catch(err) {
             throw new Error(err);
