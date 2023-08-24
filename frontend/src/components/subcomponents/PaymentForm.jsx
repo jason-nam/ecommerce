@@ -1,16 +1,41 @@
+import validator from 'validator'
+import moment from 'moment'
 
-
-export default function PaymentForm({register, errors, watch, paymentType}) {
+export default function PaymentForm({register, errors, watch, paymentType, setValue}) {
 
     const [cardname, cardnum, expdate, cvv] = watch(['cardname', 'cardnum', 'expdate', 'cvv'])
+
+    const setExpDate = (e) => {
+        //delete slash and second digit
+        if (expdate.length === 3 && (e.key === "Delete" || e.key === "Backspace")) {
+            setValue('expdate', expdate.slice(0,2))
+        }
+        // add slash
+        if (expdate.length === 2 && e.key !== "Delete" && e.key !== "Backspace") {
+            setValue('expdate', expdate.slice(0,2) + "/")
+        }
+        // numbers only
+        if (/^[a-zA-Z\s\+\-!@#$%^&*\(\)\=\~\`\?\/\<\>\,\.\_\'\"\;\:{\}\[\]\\\|]$/.test(e.key)) 
+            e.preventDefault();
+    }
 
     return <div className="debit-credit" style={paymentType!=="credit"? {display: 'none'} : {}}>
                 <div className={`cinfo ${errors.cardnum? 'error' : '' }`}>
                     <input 
                         className="cinfo-input" 
                         id="cinfo-cardnum" 
-                        type="number"
-                        { ...register("cardnum", { required: paymentType==='credit' ? "Invalid card number" : paymentType==='paypal' ? false : true })}                     
+                        onKeyDown={e => {
+                            //numbers, space, and hyphen only
+                            if (/^[a-zA-Z\+!@#$%^&*\(\)\=\~\`\?\/\<\>\,\.\_\'\"\;\:{\}\[\]\\\|]$/.test(e.key)) 
+                                e.preventDefault()
+                            }
+                        }
+                        { ...register("cardnum", { 
+                            required: paymentType==='credit' ? "Card number required" : 
+                            paymentType==='paypal' ? 
+                            false : true,
+                            validate: (v) => (paymentType==='credit' ? validator.isCreditCard(v) : true )|| "Invalid card number"
+                        })}                     
                     />
                     <label 
                         className={`cinfo-label ${cardnum.length ? 'active' : ''}`} 
@@ -22,7 +47,12 @@ export default function PaymentForm({register, errors, watch, paymentType}) {
                     <input 
                         className="cinfo-input" 
                         id="cinfo-cardname"
-                        { ...register("cardname", { required: paymentType==='credit' ? "Invalid name" : paymentType==='paypal' ? false : true })}                     
+                        { ...register("cardname", 
+                        { 
+                            required: paymentType==='credit' ? 
+                            "Invalid name" : paymentType==='paypal' ? 
+                            false : true,
+                        })}                     
                     />
                     <label 
                         className={`cinfo-label ${cardname.length ? 'active' : ''}`} 
@@ -36,7 +66,14 @@ export default function PaymentForm({register, errors, watch, paymentType}) {
                             className="cinfo-input" 
                             id="cinfo-expdate" 
                             placeholder="MM/YY"
-                            { ...register("expdate", { required: paymentType==='credit' ? "Invalid expiration date" : paymentType==='paypal' ? false : true })}                     
+                            maxLength="5"
+                            { ...register("expdate", { 
+                                required: paymentType==='credit' ? "Invalid expiration date" : 
+                                paymentType==='paypal' ? 
+                                false : true, 
+                                validate: (v) => (paymentType==='credit' ? (moment(v , "MM/YY").isValid() && moment(v , "MM/YY").diff(moment(), 'months') >= 0) : true) || "Invalid expiration date"
+                            })}
+                            onKeyDown={setExpDate}                   
                         />
                         <label 
                             className={`cinfo-label ${expdate.length ? 'active' : ''}`} 
@@ -48,7 +85,16 @@ export default function PaymentForm({register, errors, watch, paymentType}) {
                         <input 
                             className="cinfo-input" 
                             id="cinfo-cvv"
-                            { ...register("cvv", { required: paymentType==='credit' ? "Invalid security code" : paymentType==='paypal' ? false : true })}                     
+                            maxLength="4"
+                            onKeyDown={e => {
+                                if (/^[a-zA-Z\s\+\-!@#$%^&*\(\)\=\~\`\?\/\<\>\,\.\_\'\"\;\:{\}\[\]\\\|]$/.test(e.key)) 
+                                    e.preventDefault()
+                                }
+                            }
+                            { ...register("cvv", { 
+                                required: paymentType==='credit' ? "Invalid security code" : paymentType==='paypal' ? false : true,
+                                validate: (v) => (paymentType==='credit' ? v.length < 5 && Number.isInteger(Number(v)) : true) || "Invalid security code"
+                            })}                     
                         />
                         <label 
                             className={`cinfo-label ${cvv.length ? 'active' : ''}`} 

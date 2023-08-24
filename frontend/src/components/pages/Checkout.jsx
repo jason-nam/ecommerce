@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from "react-hook-form";
 import axios from "axios"
@@ -7,6 +7,7 @@ import PaymentType from '../subcomponents/PaymentType'
 import PaymentForm from '../subcomponents/PaymentForm'
 import CustomerForm from '../subcomponents/CustomerForm'
 import CheckoutSummary from '../subcomponents/CheckoutSummary'
+import FormSummary from '../subcomponents/FormSummary'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheck } from '@fortawesome/free-solid-svg-icons'
 
@@ -15,31 +16,31 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
     const navigate = useNavigate()
     //billing checkbox
     const [ billingChecked, setBillingChecked ] = useState(true)
-    //credit radio check
-    const [ creditChecked, setCreditChecked ] = useState("credit")
-    
+    const shippingRef = useRef(null)
+    const billingRef = useRef(null)
+
     //form
-    const { register, watch, handleSubmit, formState: { errors }, setValue } = useForm({
-        mode: "onChange",
+    const { register, watch, handleSubmit, formState: { errors }, setValue, trigger } = useForm({
+        mode: "onBlur",
         defaultValues: {
             firstname: '', lastname: '', address: '', addressTwo: '', 
-            city: '', province: '', code: '', country:'CA', 
+            city: '', province: '', postalCode: '', country:'CA', 
             phone:'', email: '', paymentType: 'credit',
             cardname: '', cardnum: '', expdate: '', cvv: '',
             bfirstname: '', blastname: '', baddress: '', baddressTwo: '', 
-            bcity: '', bprovince: '', bcode: '', bcountry: 'CA', bphone: '', bemail: ''    
+            bcity: '', bprovince: '', bpostalCode: '', bcountry: 'CA', bphone: '', bemail: ''    
         }
     });
     const [firstname, lastname, address, addressTwo, 
-        city, province, code, country, phone, email, 
+        city, province, postalCode, country, phone, email, 
         bfirstname, blastname, baddress, baddressTwo,
-        bcity, bprovince, bcode, bcountry, bphone, bemail,
+        bcity, bprovince, bpostalCode, bcountry, bphone, bemail,
         paymentType
     ] = watch([
             'firstname', 'lastname', 'address', 'addressTwo', 
-            'city', 'province', 'code', 'country', 'phone', 'email', 
+            'city', 'province', 'postalCode', 'country', 'phone', 'email', 
             'bfirstname', 'blastname', 'baddress', 'baddressTwo', 
-            'bcity', 'bprovince', 'bcode', 'bcountry', 'bphone', 'bemail', 
+            'bcity', 'bprovince', 'bpostalCode', 'bcountry', 'bphone', 'bemail', 
             'paymentType'
         ])
 
@@ -79,7 +80,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
             setValue("bcity", city)
             setValue("bprovince", province)
             setValue("bcountry", country)
-            setValue("bcode", code)
+            setValue("bpostalCode", postalCode)
             setValue("bphone", phone)
             setValue("bemail", email)
         } else {
@@ -90,11 +91,11 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
             setValue("bcity", '')
             setValue("bprovince", '')
             setValue("bcountry", 'CA')
-            setValue("bcode", '')
+            setValue("bpostalCode", '')
             setValue("bphone", '')
             setValue("bemail", '')
         } 
-    }, [billingChecked, firstname, lastname, address, addressTwo, city, province, code, phone, email])
+    }, [billingChecked, firstname, lastname, address, addressTwo, city, province, postalCode, phone, email])
 
     //submit order
     const submitOrder = (data, e) => {
@@ -109,7 +110,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
             city: data.city,
             province: data.province,
             country: data.country,
-            code: data.code,
+            postalCode: data.postalCode,
             email: data.email,
             phone: data.phone,
         }
@@ -131,7 +132,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
             city: data.bcity,
             province: data.bprovince,
             country: data.bcountry,
-            code: data.bcode,
+            postalCode: data.bpostalCode,
             email: data.bemail,
             phone: data.bphone,
         }
@@ -172,23 +173,24 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
         <div className="checkout">
             <div className="left-ch">
                 <form onSubmit={handleSubmit(submitOrder)}>
-                    <div className="shipping">
+                    <div className="shipping" ref={shippingRef}>
                         <div className="head">
-                            <div className="title"> SHIPPING INFO </div>
+                            <div className="title"> Shipping </div>
                         </div>
                         {userId > 0 ? null: <Link to="/login" className="link">Sign in for a better experience</Link>}
                         <CustomerForm 
-                            {...{register, errors, firstname, lastname, address, addressTwo, 
-                                city, province, code, country, phone, email}}
+                            {...{register, errors, setValue, firstname, lastname, address, addressTwo, 
+                                city, province, postalCode, country, phone, email}}
                             formType={1}
                         />
                     </div>
-                    <div className="billing">
+                    <FormSummary {...{watch, trigger, shippingRef, billingRef}}/>
+                    <div className="billing" ref={billingRef}>
                         <div className="head">
                             <div className="title"> Payment </div>
                         </div>
                         <PaymentType {...{register}}/>
-                        <PaymentForm {...{register, errors, watch, paymentType}}/>
+                        <PaymentForm {...{register, errors, watch, paymentType, setValue}}/>
                         <input type="checkbox" 
                             id="billing-checkbox"
                             defaultChecked={billingChecked}
@@ -198,7 +200,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
                         <FontAwesomeIcon icon={faCheck} className="faCheck" />
                         <label htmlFor="billing-checkbox" className="checkbox-label">Billing Address same as shipping</label>
                         <CustomerForm 
-                            {...{register, errors}}
+                            {...{register, errors, setValue}}
                             formType={0}
                             firstname={bfirstname}
                             lastname={blastname} 
@@ -206,7 +208,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
                             addressTwo={baddressTwo}
                             city={bcity}
                             province={bprovince} 
-                            code={bcode}
+                            postalCode={bpostalCode}
                             country={bcountry}
                             phone={bphone}
                             email={bemail}
