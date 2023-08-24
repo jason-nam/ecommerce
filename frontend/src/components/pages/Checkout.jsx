@@ -180,7 +180,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
                         {userId > 0 ? null: <Link to="/login" className="link">Sign in for a better experience</Link>}
                         <CustomerForm 
                             {...{register, errors, setValue, firstname, lastname, address, addressTwo, 
-                                city, province, postalCode, country, phone, email}}
+                                city, province, postalCode, country, phone, email, trigger}}
                             formType={1}
                         />
                     </div>
@@ -200,7 +200,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
                         <FontAwesomeIcon icon={faCheck} className="faCheck" />
                         <label htmlFor="billing-checkbox" className="checkbox-label">Billing Address same as shipping</label>
                         <CustomerForm 
-                            {...{register, errors, setValue}}
+                            {...{register, errors, setValue, trigger}}
                             formType={0}
                             firstname={bfirstname}
                             lastname={blastname} 
