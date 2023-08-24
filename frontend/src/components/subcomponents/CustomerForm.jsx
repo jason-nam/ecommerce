@@ -4,7 +4,7 @@ import validator from 'validator'
 export default function CustomerForm(
     {formType, register, errors, setValue, 
         firstname, lastname, address, addressTwo, 
-        city, province, postalCode, country, phone, email}) {
+        city, province, postalCode, country, phone, email, trigger}) {
         
     return <div className={formType ? "shipping-form" : "billing-form"}>
                 <div className = "cinfo-double">
@@ -16,7 +16,7 @@ export default function CustomerForm(
                             { ...register( formType ? "firstname" : "bfirstname", { required: "First name required" })}                     
                             />
                         <label 
-                            htmlFor="cinfo-fname" 
+                            htmlFor={formType ? "cinfo-fname" : "binfo-fname"}
                             className={`cinfo-label ${firstname.length? 'active' : ''}`}>
                             {errors.firstname? errors.firstname.message :'First Name'}
                         </label>
@@ -29,7 +29,7 @@ export default function CustomerForm(
                             { ...register( formType ? "lastname" : "blastname", { required: "Last name required" })}                     
                             />
                         <label 
-                            htmlFor="cinfo-lname" 
+                            htmlFor={formType ? "cinfo-lname" : "binfo-lname"}
                             className={`cinfo-label ${lastname.length? 'active' : ''}`}>
                             {errors.lastname? errors.lastname.message :'Last Name'}
                         </label>
@@ -43,7 +43,7 @@ export default function CustomerForm(
                         { ...register( formType ? "address" : "baddress" , { required: "Address required" })}                     
                     />
                     <label 
-                        htmlFor="cinfo-address" 
+                        htmlFor={formType ? "cinfo-address" : "binfo-address"}
                         className={`cinfo-label ${address.length? 'active' : ''}`}>
                     {errors.address? errors.address.message :'Address'}
                     </label>
@@ -56,7 +56,7 @@ export default function CustomerForm(
                         { ...register(formType ? "addressTwo" : "baddressTwo", { required: false })}                     
                     />
                     <label 
-                    htmlFor="cinfo-address-2" 
+                    htmlFor={formType ? "cinfo-address-2" : "binfo-address-2"}
                     className={`cinfo-label ${addressTwo.length? 'active' : ''}`}>
                     {errors.addressTwo? errors.addressTwo.message :'Address 2'}
                     </label>
@@ -70,7 +70,7 @@ export default function CustomerForm(
                             { ...register(formType ? "city" : "bcity", { required: "City required"})}                     
                         />
                         <label 
-                            htmlFor="cinfo-city" 
+                            htmlFor={formType ? "cinfo-city" : "binfo-city"}
                             className={`cinfo-label ${city.length? 'active' : ''}`}>
                         {errors.city? errors.city.message :'City'}
                         </label>
@@ -78,7 +78,7 @@ export default function CustomerForm(
                     <div className={`cinfo ${errors.province? 'error' : '' }`}>
                         <DropDown which={formType ? 'province' : 'bprovince'} {...{register, country}}/>
                         <label 
-                            htmlFor="cinfo-province" 
+                            htmlFor={formType ? "cinfo-province" : "binfo-province"}
                             className={`cinfo-label ${province.length? 'active' : ''}`}>
                         {errors.province? errors.province.message :'Province/State'}
                         </label>
@@ -89,22 +89,23 @@ export default function CustomerForm(
                         <input 
                             id={formType ? "cinfo-postal-code" : "binfo-postal-code"}
                             className="cinfo-input"
-                            onBlur={() => 
-                                setValue('postalCode', 
-                                country==="CA" ? 
-                                    postalCode.charAt(3)!==' ' ? 
-                                        `${postalCode.slice(0,3)} ${postalCode.slice(3, )}` : 
-                                    postalCode: 
-                                postalCode)
-                            }             
                             { ...register(formType ? "postalCode" : "bpostalCode", 
                             { 
                                 required: "Postal code required", 
                                 validate: (v) => validator.isPostalCode(v, country) || "Invalid postal code"
                             })}
+                            onBlur={() => {
+                                let value = formType ? "postalCode" : "bpostalCode"
+                                let postal = formType ? postalCode : bpostalCode
+                                let ct = formType ? country : bcountry
+                                setValue(value, ct==="CA" ? 
+                                    postal.charAt(3) !== ' ' ? `${postal.slice(0,3)} ${postal.slice(3, )}` : 
+                                    postal: postal)
+                                trigger('postalCode')
+                            }}
                         />
                         <label 
-                            htmlFor="cinfo-postal-code" 
+                            htmlFor={formType ? "cinfo-postal-code" : "binfo-postal-code"}
                             className={`cinfo-label ${postalCode.length? 'active' : ''}`}>
                         {errors.postalCode? errors.postalCode.message :'Postal/Zip Code'}
                         </label>
@@ -116,7 +117,7 @@ export default function CustomerForm(
                             setValue={setValue}
                         />
                         <label 
-                            htmlFor="cinfo-country" 
+                            htmlFor={formType ? "cinfo-country" : "binfo-country" }
                             className={`cinfo-label ${country.length? 'active' : ''}`}>
                         {errors.country? errors.country.message :'Country'}
                         </label>
@@ -138,7 +139,7 @@ export default function CustomerForm(
                         })}           
                     />
                     <label 
-                        htmlFor="cinfo-phone" 
+                        htmlFor={formType ? "cinfo-phone" : "binfo-phone"} 
                         className={`cinfo-label ${phone.length? 'active' : ''}`}>
                     {errors.phone? errors.phone.message :'Phone'}
                     </label>
@@ -158,7 +159,7 @@ export default function CustomerForm(
                         )}                     
                     />
                     <label 
-                        htmlFor="cinfo-email" 
+                        htmlFor={formType ? "cinfo-email" : "binfo-email"} 
                         className={`cinfo-label ${email.length? 'active' : ''}`}>
                     {errors.email? errors.email.message :'Email'}
                     </label>
