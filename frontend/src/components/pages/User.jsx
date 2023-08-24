@@ -12,35 +12,83 @@ export function User() {
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('personal');
 
+    // Fetch user data
     useEffect(() => {
 
         let isMounted = true;
         const controller = new AbortController();
 
-        axios.get("/api/users/profile", 
-        { signal: controller.signal })
-        .then((res) => {
-            if (isMounted) {
-                setUser(res.data[0]);
-                setLoading(false);
-            }
-        })
-        .catch(err => setError(true));
-        
+        axios.get("/api/users/profile", { signal: controller.signal })
+            .then((res) => {
+                if (isMounted) {
+                    setUser(res.data[0]);
+                    setLoading(false);
+                }
+            })
+            .catch(err => setError(true));
+
         return () => {
             isMounted = false;
-            isMounted && controller.abort()
-        }
+            isMounted && controller.abort();
+        };
 
     }, [id]);
 
+    // Update user data
+    useEffect(() => {
+
+        if (activeTab === 'personal') {
+            // Logic for updating user's personal information
+            
+            // Sample logic to update user's name
+            const updateUserName = async () => {
+                try {
+                    const newName = 'New Name'; // New name value
+                    const updatedUser = { ...user, firstname: newName };
+                    const response = await axios.put(`/api/users/name/${user.id}`, updatedUser);
+                    if (response.status === 200) {
+                        setUser(updatedUser); // Update local state with the updated user data
+                    }
+                } catch (error) {
+                    // Handle error
+                }
+            };
+    
+            // Call the updateUserName function or other functions as needed
+            updateUserName();
+        } else if (activeTab === 'billing') {
+            // Logic for updating user's billing information
+            
+            // Sample logic to update user's billing information
+            const updateBillingInfo = async () => {
+                try {
+                    const newBillingInfo = {
+                        // New billing information object
+                    };
+
+                    // Use the appropriate route to update billing information
+                    const response = await axios.put(`/api/billing/${user.id}`, newBillingInfo);
+                    if (response.status === 200) {
+                        // Update billing information successfully
+                    }
+                } catch (error) {
+                    // Handle error
+                }
+            };
+    
+            // Call the updateBillingInfo function or other functions as needed
+            updateBillingInfo();
+        }
+
+    }); 
+
     if (error) {
         return (
-        <div className="user-page">
-            Bad Request
-        </div>
-    )
-    } else
+            <div className="user-page">
+                Bad Request
+            </div>
+        )
+    } else {
         return !loading ?(
             <div className="user-page">
                 <div className="account-box">
@@ -119,8 +167,7 @@ export function User() {
 
                 </div>
             </div>
-        ) :
-        (<p>loading</p>)
-        ;
+        ) : (<p>loading</p>);
+    }
 }
 
