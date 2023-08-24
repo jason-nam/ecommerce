@@ -1,8 +1,99 @@
-export default function DropDown({which, register, country}){
+const states = [
+    { name: 'Alabama', code: 'AL' },
+    { name: 'Alaska', code: 'AK' },
+    { name: 'Arizona', code: 'AZ' },
+    { name: 'Arkansas', code: 'AR' },
+    { name: 'California', code: 'CA' },
+    { name: 'Colorado', code: 'CO' },
+    { name: 'Connecticut', code: 'CT' },
+    { name: 'Delaware', code: 'DE' },
+    { name: 'District of Columbia', code: 'DC'},
+    { name: 'Florida', code: 'FL' },
+    { name: 'Georgia', code: 'GA' },
+    { name: 'Hawaii', code: 'HI' },
+    { name: 'Idaho', code: 'ID' },
+    { name: 'Illinois', code: 'IL' },
+    { name: 'Indiana', code: 'IN' },
+    { name: 'Iowa', code: 'IA' },
+    { name: 'Kansas', code: 'KS' },
+    { name: 'Kentucky', code: 'KY' },
+    { name: 'Louisiana', code: 'LA' },
+    { name: 'Maine', code: 'ME' },
+    { name: 'Maryland', code: 'MD' },
+    { name: 'Massachusetts', code: 'MA' },
+    { name: 'Michigan', code: 'MI' },
+    { name: 'Minnesota', code: 'MN' },
+    { name: 'Mississippi', code: 'MS' },
+    { name: 'Missouri', code: 'MO' },
+    { name: 'Montana', code: 'MT' },
+    { name: 'Nebraska', code: 'NE' },
+    { name: 'Nevada', code: 'NV' },
+    { name: 'New Hampshire', code: 'NH' },
+    { name: 'New Jersey', code: 'NJ' },
+    { name: 'New Mexico', code: 'NM' },
+    { name: 'New York', code: 'NY' },
+    { name: 'North Carolina', code: 'NC' },
+    { name: 'North Dakota', code: 'ND' },
+    { name: 'Ohio', code: 'OH' },
+    { name: 'Oklahoma', code: 'OK' },
+    { name: 'Oregon', code: 'OR' },
+    { name: 'Pennsylvania', code: 'PA' },
+    { name: 'Rhode Island', code: 'RI' },
+    { name: 'South Carolina', code: 'SC' },
+    { name: 'South Dakota', code: 'SD' },
+    { name: 'Tennessee', code: 'TN' },
+    { name: 'Texas', code: 'TX' },
+    { name: 'Utah', code: 'UT' },
+    { name: 'Vermont', code: 'VT' },
+    { name: 'Virginia', code: 'VA' },
+    { name: 'Washington', code: 'WA' },
+    { name: 'West Virginia', code: 'WV' },
+    { name: 'Wisconsin', code: 'WI' },
+    { name: 'Wyoming', code: 'WY' },
+    { name: 'American Samoa', code: 'AS' },
+    { name: 'Guam', code: 'GU' },
+    { name: 'Northern Mariana Islands', code: 'MP' },
+    { name: 'Puerto Rico', code: 'PR' },
+    { name: 'United States Minor Outlying Islands', code: 'UM' },
+    { name: 'Virgin Islands', code: 'VI' },
+]
+
+const provinces = [ 
+    { name: 'Alberta', code: 'AB' }, 
+    { name: 'British Columbia', code: 'BC' }, 
+    { name: 'Manitoba', code: 'MB' }, 
+    { name: 'New Brunswick', code: 'NB' }, 
+    { name: 'Newfoundland and Labrador', code: 'NL' }, 
+    { name: 'Northwest Territories', code: 'NT' }, 
+    { name: 'Nova Scotia', code: 'NS' }, 
+    { name: 'Nunavut', code: 'NU' }, 
+    { name: 'Ontario', code: 'ON' }, 
+    { name: 'Prince Edward Island', code: 'PE' }, 
+    { name: 'Quebec', code: 'QC' }, 
+    { name: 'Saskatchewan', code: 'SK' }, 
+    { name: 'Yukon Territory', code: 'YT' } 
+]
+
+export default function DropDown({which, register, country, setValue}){
+
+    const countryChanged = (which, countryCode) => {
+        if (which === "country") {
+            setValue("province", "")
+            setValue("postalCode", "")
+            setValue("country", countryCode)
+        } else if (which === "bcountry") {
+            setValue("bprovince", "")
+            setValue("bpostalCode", "")
+            setValue("bcountry", countryCode) 
+        }
+    }
+
     if (which === "country")
         return <select className="cinfo-input" id="cinfo-country" name="cinfo-country"
                     defaultValue={'CA'}
-                    { ...register("country", { required: "Country required"})} >
+                    { ...register("country", { required: "Country required"})}
+                    onChange={(e) => countryChanged(which, e.target.value)}
+                    >
                     <option value="PLACEHOLDER" disabled>Select country</option>
                     <option value="CA">Canada</option>
                     <option value="US">United States</option>
@@ -10,7 +101,9 @@ export default function DropDown({which, register, country}){
     else if (which === "bcountry") {
         return <select className="cinfo-input" id="binfo-country" name="binfo-country"
             defaultValue={'CA'}
-            { ...register("bcountry", { required: "Country required"})} >
+            { ...register("bcountry", { required: "Country required"})} 
+            onChange={(e) => countryChanged(which, e.target.value)}
+            >
             <option value="PLACEHOLDER" disabled>Select country</option>
             <option value="CA">Canada</option>
             <option value="US">United States</option>
@@ -23,20 +116,8 @@ export default function DropDown({which, register, country}){
                     defaultValue={""}
                     { ...register( which === "province" ? "province" : which === "bprovince" ? "bprovince" : null,
                     { required: "Province required"})} >
-                    <option value=""></option>
-                    <option value="AB">Alberta</option>
-                    <option value="BC">British Columbia</option>
-                    <option value="MB">Manitoba</option>
-                    <option value="NB">New Brunswick</option>
-                    <option value="NF">Newfoundland</option>
-                    <option value="NT">Northwest Territories</option>
-                    <option value="NS">Nova Scotia</option>
-                    <option value="NU">Nunavut</option>
-                    <option value="ON">Ontario</option>
-                    <option value="PE">Prince Edward Island</option>
-                    <option value="QC">Quebec</option>
-                    <option value="SK">Saskatchewan</option>
-                    <option value="YT">Yukon Territory</option>
+                    <option value="" disabled></option>
+                    {provinces.map(p => <option value={p.code} key={p.code}>{p.name}</option>)}
                 </select>
     } else if (which !== "country" && which !== "bcountry" && country === "US") {
         return <select className="cinfo-input" 
@@ -45,59 +126,8 @@ export default function DropDown({which, register, country}){
                     defaultValue={""}
                     { ...register( which === "province" ? "province" : which === "bprovince" ? "bprovince" : null,
                     { required: "State required"})} >
-                    <option value=""></option>
-                    <option value="AK">Alaska</option>
-                    <option value="AL">Alabama</option>
-                    <option value="AR">Arkansas</option>
-                    <option value="AZ">Arizona</option>
-                    <option value="CA">California</option>
-                    <option value="CO">Colorado</option>
-                    <option value="CT">Connecticut</option>
-                    <option value="DC">District of Columbia</option>
-                    <option value="DE">Delaware</option>
-                    <option value="FL">Florida</option>
-                    <option value="GA">Georgia</option>
-                    <option value="HI">Hawaii</option>
-                    <option value="IA">Iowa</option>
-                    <option value="ID">Idaho</option>
-                    <option value="IL">Illinois</option>
-                    <option value="IN">Indiana</option>
-                    <option value="KS">Kansas</option>
-                    <option value="KY">Kentucky</option>
-                    <option value="LA">Louisiana</option>
-                    <option value="MA">Massachusetts</option>
-                    <option value="MD">Maryland</option>
-                    <option value="ME">Maine</option>
-                    <option value="MI">Michigan</option>
-                    <option value="MN">Minnesota</option>
-                    <option value="MO">Missouri</option>
-                    <option value="MS">Mississippi</option>
-                    <option value="MT">Montana</option>
-                    <option value="NC">North Carolina</option>
-                    <option value="ND">North Dakota</option>
-                    <option value="NE">Nebraska</option>
-                    <option value="NH">New Hampshire</option>
-                    <option value="NJ">New Jersey</option>
-                    <option value="NM">New Mexico</option>
-                    <option value="NV">Nevada</option>
-                    <option value="NY">New York</option>
-                    <option value="OH">Ohio</option>
-                    <option value="OK">Oklahoma</option>
-                    <option value="OR">Oregon</option>
-                    <option value="PA">Pennsylvania</option>
-                    <option value="PR">Puerto Rico</option>
-                    <option value="RI">Rhode Island</option>
-                    <option value="SC">South Carolina</option>
-                    <option value="SD">South Dakota</option>
-                    <option value="TN">Tennessee</option>
-                    <option value="TX">Texas</option>
-                    <option value="UT">Utah</option>
-                    <option value="VA">Virginia</option>
-                    <option value="VT">Vermont</option>
-                    <option value="WA">Washington</option>
-                    <option value="WI">Wisconsin</option>
-                    <option value="WV">West Virginia</option>
-                    <option value="WY">Wyoming</option>
+                <option value="" disabled></option>
+                {states.map(s => <option value={s.code} key={s.code}>{s.name}</option>)}
                 </select>
     }
 }
