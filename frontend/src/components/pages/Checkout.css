@@ -14,14 +14,13 @@
     width: 40%;
 }
 
-.shipping, .billing, .order-box {
+.shipping, .billing, .order-box, .shipping-summary, .proceed-box {
     margin: 0 2rem 1rem 3rem;
 }
 
 .link {
     font-size: 0.8rem;
     text-decoration: underline;
-    margin-bottom: 1rem;
 }
 
 .head .title {
@@ -30,11 +29,21 @@
 	margin: 1rem 0;
 }
 
+.head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 /* Shipping and billing*/
 
-.shipping {
+.shipping, .shipping-summary {
     display: flex;
     flex-direction: column;
+}
+
+.billing, .order-box {
+    display: none;
 }
 
 .cinfo-double {
@@ -74,11 +83,12 @@
     outline: none;
     border: none;
     background-color: transparent;
+    font-size: 0.8rem;
 }
 
 .cinfo-input:focus + .cinfo-label,
 .cinfo-label.active {
-    transform: translateY(0.5rem) scale(0.7);
+    transform: translateY(0.5rem) scale(0.8);
     margin-left: 0.5rem;
 }
 
@@ -110,7 +120,7 @@ select {
 }
 
 .cinfo-label {
-    transform: translateY(1rem);
+    transform: translateY(1.4rem);
     margin-left: 0.5rem;
     cursor: text;
     color: rgb(96, 96, 96);
@@ -118,6 +128,7 @@ select {
     transform-origin: top left;
     pointer-events: none;
     position: absolute;
+    font-size: 0.8rem;
 }
 
 .cinfo-double .cinfo:first-child {
@@ -227,10 +238,16 @@ input[type=radio]:checked ~ .radio-button-label::after {
     margin-bottom: 1rem;
 }
 
+/* form summary */
+
+.shipping-summary {
+    display: none;
+}
+
 
 /* order button */
 
-#order {
+#order, #proceed {
     width: 100%;
     height: 60px;
     background-color: black;

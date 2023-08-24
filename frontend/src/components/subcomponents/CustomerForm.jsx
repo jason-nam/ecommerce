@@ -1,10 +1,11 @@
 import DropDown from "./DropDown"
+import validator from 'validator'
 
 export default function CustomerForm(
-    {formType, register, errors, 
+    {formType, register, errors, setValue, 
         firstname, lastname, address, addressTwo, 
-        city, province, code, country, phone, email}) {
-
+        city, province, postalCode, country, phone, email}) {
+        
     return <div className={formType ? "shipping-form" : "billing-form"}>
                 <div className = "cinfo-double">
                     <div className={`cinfo ${errors.firstname? 'error' : '' }`}>
@@ -75,7 +76,7 @@ export default function CustomerForm(
                         </label>
                     </div>
                     <div className={`cinfo ${errors.province? 'error' : '' }`}>
-                        <DropDown which={formType ? 'province' : 'bprovince'} register={register} country={country}/>
+                        <DropDown which={formType ? 'province' : 'bprovince'} {...{register, country}}/>
                         <label 
                             htmlFor="cinfo-province" 
                             className={`cinfo-label ${province.length? 'active' : ''}`}>
@@ -84,20 +85,36 @@ export default function CustomerForm(
                     </div>
                 </div>
                 <div className="cinfo-double">
-                    <div className={`cinfo ${errors.code? 'error' : '' }`}>
+                    <div className={`cinfo ${errors.postalCode? 'error' : '' }`}>
                         <input 
-                            id={formType ? "cinfo-code" : "binfo-code"}
+                            id={formType ? "cinfo-postal-code" : "binfo-postal-code"}
                             className="cinfo-input"
-                            { ...register(formType ? "code" : "bcode", { required: "Postal code required"})}                     
+                            onBlur={() => 
+                                setValue('postalCode', 
+                                country==="CA" ? 
+                                    postalCode.charAt(3)!==' ' ? 
+                                        `${postalCode.slice(0,3)} ${postalCode.slice(3, )}` : 
+                                    postalCode: 
+                                postalCode)
+                            }             
+                            { ...register(formType ? "postalCode" : "bpostalCode", 
+                            { 
+                                required: "Postal code required", 
+                                validate: (v) => validator.isPostalCode(v, country) || "Invalid postal code"
+                            })}
                         />
                         <label 
-                            htmlFor="cinfo-code" 
-                            className={`cinfo-label ${code.length? 'active' : ''}`}>
-                        {errors.code? errors.code.message :'Postal/Zip Code'}
+                            htmlFor="cinfo-postal-code" 
+                            className={`cinfo-label ${postalCode.length? 'active' : ''}`}>
+                        {errors.postalCode? errors.postalCode.message :'Postal/Zip Code'}
                         </label>
                     </div>
                     <div className={`cinfo ${errors.country? 'error' : '' }`}>
-                        <DropDown which={formType ? 'country' : 'bcountry'} register={register}/>
+                        <DropDown 
+                            which={formType ? 'country' : 'bcountry'} 
+                            register={register} 
+                            setValue={setValue}
+                        />
                         <label 
                             htmlFor="cinfo-country" 
                             className={`cinfo-label ${country.length? 'active' : ''}`}>
@@ -109,7 +126,16 @@ export default function CustomerForm(
                     <input 
                         id={formType ? "cinfo-phone" : "binfo-phone"} 
                         className="cinfo-input"
-                        { ...register(formType ? "phone" : "bphone", { required: "Phone number required"})}                     
+                        onKeyDown={e => {
+                            if (/^[a-zA-Z!@#$%^&*\(\)\=\~\`\?\/\<\>\,\.\_\'\"\;\:{\}\[\]\\\|]$/.test(e.key)) 
+                                e.preventDefault()
+                            }
+                        }
+                        { ...register(formType ? "phone" : "bphone", 
+                        { 
+                            required: "Phone number required",
+                            validate: (v) => validator.isMobilePhone(v) || "Invalid phone number"
+                        })}           
                     />
                     <label 
                         htmlFor="cinfo-phone" 
@@ -126,7 +152,7 @@ export default function CustomerForm(
                                 required: "Email required",
                                 pattern: {
                                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                                    message: "Please enter a valid email address."
+                                    message: "Invalid email address"
                                 }
                             }
                         )}                     
