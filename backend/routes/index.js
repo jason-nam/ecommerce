@@ -7,6 +7,7 @@ const categoryRouter = require("./category");
 const paymentRouter = require("./payment");
 const billingRouter = require("./billing");
 const imageRouter = require("./image");
+const shippingRouter = require("./shipping");
 
 module.exports = (app, passport) => {
     userRouter(app);
@@ -18,4 +19,5 @@ module.exports = (app, passport) => {
     paymentRouter(app);
     billingRouter(app);
     imageRouter(app);
+    shippingRouter(app);
 }

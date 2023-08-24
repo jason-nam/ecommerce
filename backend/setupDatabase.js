@@ -8,20 +8,36 @@ const { faker } = require('@faker-js/faker');
     const usersTableStatement = `
         CREATE TABLE IF NOT EXISTS users (
             id              SERIAL            PRIMARY KEY,
-            email           VARCHAR(50),
-            password        TEXT,
+            email           VARCHAR(50)       NOT NULL,
+            password        TEXT              NOT NULL,
             firstname       VARCHAR(50),
             lastname        VARCHAR(50),
-            region          TEXT,
             isactive        BOOLEAN,
             UNIQUE(email)
         );
     `
 
+    const shippingTableStatement = `
+        CREATE TABLE IF NOT EXISTS shipping (
+            id              SERIAL            PRIMARY KEY,
+            userid          INT,
+            first_name      INT,
+            last_name       INT,
+            addr_line_1     TEXT              NOT NULL,
+            addr_line_2     TEXT,
+            addr_city       TEXT              NOT NULL,
+            addr_province   TEXT              NOT NULL,
+            addr_country    TEXT              NOT NULL,
+            addr_postal     TEXT              NOT NULL,
+            phone_number    INT,
+            FOREIGN KEY (userid) REFERENCES users(id)
+        )
+    `
+
     const paymentsTableStatement = `
         CREATE TABLE IF NOT EXISTS payments (
             id              SERIAL            PRIMARY KEY,
-            userid          INT               NOT NULL,
+            userid          INT,
             name_on_card    TEXT              NOT NULL,
             addr_line_1     TEXT              NOT NULL,
             addr_line_2     TEXT,
@@ -74,7 +90,6 @@ const { faker } = require('@faker-js/faker');
             FOREIGN KEY (subcategoryid) REFERENCES subcategories(id)
         );
     `
-    // image           VARCHAR(200)      NOT NULL,
 
     const imagesTableStatement = `
         CREATE TABLE IF NOT EXISTS images (
@@ -88,11 +103,11 @@ const { faker } = require('@faker-js/faker');
     const ordersTableStatement = `
         CREATE TABLE IF NOT EXISTS orders (
             id              SERIAL            PRIMARY KEY,
+            userid          INT,
             total           DECIMAL(10,2)     NOT NULL,
             status          VARCHAR(50)       NOT NULL,
             created         TIMESTAMP         NOT NULL,
             modified        TIMESTAMP         NOT NULL,
-            userid          INT,
             FOREIGN KEY (userid) REFERENCES users(id)
         );
     `
@@ -169,6 +184,7 @@ const { faker } = require('@faker-js/faker');
         // create tables on db
         await db.query(usersTableStatement);
         await db.query(paymentsTableStatement);
+        await db.query(shippingTableStatement);
         await db.query(billingTableStatement);
         await db.query(categoriesTableStatement);
         await db.query(subcategoriesTableStatement);
