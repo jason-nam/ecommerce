@@ -80,7 +80,7 @@ export default function SearchForm({headerRef}) {
                     type = "search"
                     className = "search-bar"
                     onKeyDown={ e => e.key === "Escape" ? searchToggle(e, 0) : null }
-                    />
+                />
                 <div className="search-clear" onClick={() => setSearchVal("")}>Clear</div>
                 <div 
                     className="search-close" 
