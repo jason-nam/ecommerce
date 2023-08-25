@@ -12,6 +12,8 @@ export function User() {
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('personal');
 
+    const [newFirstName, setNewFirstName] = useState("");
+
     // Fetch user data
     useEffect(() => {
 
@@ -34,53 +36,36 @@ export function User() {
 
     }, [id]);
 
-    // Update user data
-    useEffect(() => {
-
-        if (activeTab === 'personal') {
-            // Logic for updating user's personal information
-            
-            // Sample logic to update user's name
-            const updateUserName = async () => {
-                try {
-                    const newName = 'New Name'; // New name value
-                    const updatedUser = { ...user, firstname: newName };
-                    const response = await axios.put(`/api/users/name/${user.id}`, updatedUser);
-                    if (response.status === 200) {
-                        setUser(updatedUser); // Update local state with the updated user data
-                    }
-                } catch (error) {
-                    // Handle error
-                }
-            };
-    
-            // Call the updateUserName function or other functions as needed
-            updateUserName();
-        } else if (activeTab === 'billing') {
-            // Logic for updating user's billing information
-            
-            // Sample logic to update user's billing information
-            const updateBillingInfo = async () => {
-                try {
-                    const newBillingInfo = {
-                        // New billing information object
-                    };
-
-                    // Use the appropriate route to update billing information
-                    const response = await axios.put(`/api/billing/${user.id}`, newBillingInfo);
-                    if (response.status === 200) {
-                        // Update billing information successfully
-                    }
-                } catch (error) {
-                    // Handle error
-                }
-            };
-    
-            // Call the updateBillingInfo function or other functions as needed
-            updateBillingInfo();
+    // Update user's name data
+    const updateUserName = async (e) => {
+        e.preventDefault();
+        try {
+            const firstName = newFirstName; // New name value
+            const updatedUser = { ...user, firstname: firstName };
+            const response = await axios.put(`/api/users/name/${user.id}`, updatedUser);
+            if (response.status === 200) {
+                setUser(updatedUser); // Update local state with the updated user data
+            }
+        } catch (error) {
+            // Handle error
         }
+    };
 
-    }); 
+    const updateBillingInfo = async () => {
+        try {
+            const newBillingInfo = {
+                // New billing information object
+            };
+
+            // Use the appropriate route to update billing information
+            const response = await axios.put(`/api/billing/${user.id}`, newBillingInfo);
+            if (response.status === 200) {
+                // Update billing information successfully
+            }
+        } catch (error) {
+            // Handle error
+        }
+    };
 
     if (error) {
         return (
@@ -136,6 +121,9 @@ export function User() {
                             <div className="name-edit-box" id="edit-box">
                                 <div id="variable">Name:</div>
                                 <div id="name"> {user.firstname} {user.lastname}</div>
+                                <input value={newFirstName} onChange={e => setNewFirstName(e.target.value)}>
+                                    input
+                                </input>
                             </div>
                             <div className="email-edit-box" id="edit-box">
                                 <div id="variable">Email:</div>
@@ -143,7 +131,7 @@ export function User() {
                             </div>
                             <div className="country-region-box" id="edit-box">
                                 <div id="variable">Country Region:</div>
-                                <div id="name"> {user.region}</div>
+                                <div id="name"> {}</div>
                             </div>
                         </div>
 
