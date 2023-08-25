@@ -25,10 +25,15 @@ export function User() {
 
         let isMounted = true;
         const controller = new AbortController();
+        
+        const firstName = "";
+        const lastName = "";
 
         axios.get("/api/users/profile", { signal: controller.signal })
             .then((res) => {
                 if (isMounted) {
+                    firstName = res.data[0].firstname;
+                    lastName = res.data[0].lastname;
                     setUser(res.data[0]);
                     setNewFirstName(res.data[0].firstname);
                     setNewLastName(res.data[0].lastname);
@@ -38,12 +43,41 @@ export function User() {
             })
             .catch(err => setError(true));
 
+        // axios.get("/api/shipping/", { signal: controller.signal })
+        //     .then((res) => {
+        //         if (isMounted) {
+        //             setShipping(res.data.rows[0]);
+        //             // setNewPhoneNumber(res.data.row[0].phone_number);
+        //             setLoading(false);
+        //         }
+        //     })
+        //     .catch(err => setError(true));
+
+        // console.log("hello", firstName, lastName);
+
         axios.get("/api/shipping/", { signal: controller.signal })
             .then((res) => {
                 if (isMounted) {
-                    setShipping(res.data.rows[0]);
-                    // setNewPhoneNumber(res.data.row[0].phone_number);
-                    setLoading(false);
+                    if (res.data.rows[0] === undefined) {
+                        // Run the post request to create shipping entry
+                        const newShippingData = {
+                            first_name: firstName,
+                            last_name: lastName
+                        };
+        
+                        axios.post("/api/shipping/create", newShippingData)
+                            .then((response) => {
+                                setShipping(res.data.rows[0]);
+                                setLoading(false);
+                            })
+                            .catch((error) => {
+                                setError(true);
+                            });
+                    } else {
+                        setShipping(res.data.rows[0]);
+                        // setNewPhoneNumber(res.data.row[0].phone_number);
+                        setLoading(false);
+                    }
                 }
             })
             .catch(err => setError(true));

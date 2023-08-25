@@ -28,14 +28,33 @@ module.exports = class ShippingService {
     async createShipping(data) {
         try {
 
-            const { userid, first_name, last_name, 
-                addr_line_1, addr_line_2, addr_city, addr_province, 
-                addr_country, addr_postal, phone_number } = data;
+            console.log(data);
+
+            const { 
+                userid, 
+                first_name = null, 
+                last_name = null, 
+                addr_line_1 = null, 
+                addr_line_2 = null, 
+                addr_city = null, 
+                addr_province = null, 
+                addr_country = null, 
+                addr_postal = null, 
+                phone_number = null 
+            } = data;
 
             const shipping = await ShippingModelInstance.createShipping(
-                userid, first_name, last_name, addr_line_1, addr_line_2, 
-                addr_city, addr_province, addr_country, addr_postal, 
-                phone_number);
+                userid, 
+                first_name, 
+                last_name,
+                addr_line_1, 
+                addr_line_2, 
+                addr_city, 
+                addr_province, 
+                addr_country, 
+                addr_postal, 
+                phone_number
+            );
 
             return shipping;
 
@@ -47,14 +66,31 @@ module.exports = class ShippingService {
     async updateShipping(data) {
         try {
 
-            const { shippingid, first_name, last_name, 
-                addr_line_1, addr_line_2, addr_city, addr_province, 
-                addr_country, addr_postal, phone_number } = data;
+            const { 
+                shippingid, 
+                first_name = null, 
+                last_name = null, 
+                addr_line_1 = null, 
+                addr_line_2 = null, 
+                addr_city = null, 
+                addr_province = null, 
+                addr_country = null, 
+                addr_postal = null, 
+                phone_number = null 
+            } = data;
 
             const shipping = await ShippingModel.updateShipping(
-                shippingid, first_name, last_name, 
-                addr_line_1, addr_line_2, addr_city, addr_province, 
-                addr_country, addr_postal, phone_number);
+                shippingid, 
+                first_name, 
+                last_name, 
+                addr_line_1, 
+                addr_line_2, 
+                addr_city, 
+                addr_province, 
+                addr_country, 
+                addr_postal, 
+                phone_number
+            );
                 
             return shipping;
 
