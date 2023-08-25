@@ -42,6 +42,8 @@
 	--font-size-1: 1rem;
 	--font-size-2: 0.8rem;
 	--font-style-number: 'Inter Tight', sans-serif;
+
+	--header-height: 4rem;
 }
 
 header {
@@ -56,7 +58,7 @@ header {
 	background-color: var(--base-color);
 	
 	padding: 0.5rem 0;
-	height: 4rem;
+	height: var(--header-height);
 	box-sizing: border-box;
 	width: 100%;
 }
@@ -114,7 +116,7 @@ header {
 	position: absolute;
 	left: 50%;
 	transform: translate(-50%, 0);
-	height: 4rem;
+	height: var(--header-height);
 	/* aspect-ratio: 582 / 421; */
 	z-index: 110;
 }
@@ -192,7 +194,7 @@ header {
 	max-width: 200px;
 	width: 100%;
 	flex-direction: column;
-	top: 4rem;
+	top: var(--header-height);
 	padding: 1rem;
 	box-sizing: border-box;
 	border: 1px solid black;
