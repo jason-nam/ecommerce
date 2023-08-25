@@ -11,11 +11,10 @@ export function Contact({}) {
         <div className="contact">
             <div className="head">
                 <h1 className="title">Contact Us</h1>
-                <div>
-                    {faker.lorem.lines(10)}
-                </div>
             </div>
-
+            <div>
+                {faker.lorem.lines(10)}
+            </div>
         </div>
     )
 }

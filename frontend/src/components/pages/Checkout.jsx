@@ -173,7 +173,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
         <div className="checkout">
             <div className="left-ch">
                 <form onSubmit={handleSubmit(submitOrder)}>
-                    <div className="shipping" ref={shippingRef}>
+                    <div className="shipping show" ref={shippingRef}>
                         <div className="head">
                             <div className="title"> Shipping </div>
                         </div>
@@ -185,22 +185,29 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
                         />
                     </div>
                     <FormSummary {...{watch, trigger, shippingRef, billingRef}}/>
-                    <div className="billing" ref={billingRef}>
+                    <div className="billing dn" ref={billingRef}>
                         <div className="head">
                             <div className="title"> Payment </div>
                         </div>
                         <PaymentType {...{register}}/>
                         <PaymentForm {...{register, errors, watch, paymentType, setValue}}/>
-                        <input type="checkbox" 
-                            id="billing-checkbox"
-                            defaultChecked={billingChecked}
-                            className="billing-checkbox" 
-                            onChange={() => setBillingChecked(!billingChecked)} />
-                        <span className="billing-checkbox-box"></span>
-                        <FontAwesomeIcon icon={faCheck} className="faCheck" />
-                        <label htmlFor="billing-checkbox" className="checkbox-label">Billing Address same as shipping</label>
+                        <div className="billing-checkbox-container" 
+                        style={paymentType=="paypal"? {display: 'none'} : {}}
+                        >
+                            <input type="checkbox" 
+                                id="billing-checkbox"
+                                defaultChecked={billingChecked}
+                                className="billing-checkbox" 
+                                onChange={() => setBillingChecked(!billingChecked)} />
+                            <span className="billing-checkbox-box"></span>
+                            <FontAwesomeIcon icon={faCheck} className="faCheck" />
+                            <label 
+                                htmlFor="billing-checkbox" 
+                                className="checkbox-label" 
+                            >Billing Address same as shipping</label>
+                        </div>
                         <CustomerForm 
-                            {...{register, errors, setValue, trigger}}
+                            {...{register, errors, setValue, trigger, billingChecked}}
                             formType={0}
                             firstname={bfirstname}
                             lastname={blastname} 
@@ -214,7 +221,7 @@ export function Checkout({userId, cart, setCart, subtotal, stateCH, orderToast, 
                             email={bemail}
                         />
                     </div>
-                    <div className="order-box">
+                    <div className="order-box dn">
                         <button type="submit" id="order" 
                         disabled = {!cart.length}
                         // disabled={!formState.isValid}

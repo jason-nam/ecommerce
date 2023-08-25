@@ -42,10 +42,6 @@
     flex-direction: column;
 }
 
-.billing, .order-box {
-    display: none;
-}
-
 .cinfo-double {
     display: flex;
     flex-direction: row;
@@ -186,9 +182,9 @@ input[type=checkbox] {
     background-color: rgb(60, 60, 60);
 }
 
-.billing-checkbox:checked ~ .billing-form {
+/* .billing-checkbox:checked ~ .billing-form {
     display: none;
-}
+} */
 
 /* radio button */
 
@@ -240,8 +236,32 @@ input[type=radio]:checked ~ .radio-button-label::after {
 
 /* form summary */
 
-.shipping-summary {
-    display: none;
+.dn {
+    /* display: none; */
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    transition: all 0s;
+}
+
+.show {
+    visibility: visible;
+    transition: opacity 1s ease, margin 0s ease, height 0s ease, width 0s ease, visibility 0s ease, padding 0s ease;
+}
+
+.edit-button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    display: inline-block;
+    margin: 1rem 0;
+}
+
+.shipping, .billing {
+    scroll-margin-top: var(--header-height);
 }
 
 
