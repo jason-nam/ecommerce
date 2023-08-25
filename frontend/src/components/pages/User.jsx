@@ -43,11 +43,12 @@ export function User() {
             const firstName = newFirstName; // New name value
             const updatedUser = { ...user, firstname: firstName };
             const response = await axios.put(`/api/users/name/${user.id}`, updatedUser);
-            if (response.status === 200) {
+            if (response.status === 204) {
                 setUser(updatedUser); // Update local state with the updated user data
             }
-        } catch (error) {
+        } catch (err) {
             // Handle error
+            console.log(err)
         }
     };
 
@@ -121,9 +122,8 @@ export function User() {
                             <div className="name-edit-box" id="edit-box">
                                 <div id="variable">Name:</div>
                                 <div id="name"> {user.firstname} {user.lastname}</div>
-                                <input value={newFirstName} onChange={e => setNewFirstName(e.target.value)}>
-                                    input
-                                </input>
+                                <input value={newFirstName} onChange={e => setNewFirstName(e.target.value)} />
+                                <button type="submit" onClick={updateUserName}>button</button>
                             </div>
                             <div className="email-edit-box" id="edit-box">
                                 <div id="variable">Email:</div>
