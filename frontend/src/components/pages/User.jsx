@@ -12,35 +12,68 @@ export function User() {
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('personal');
 
+    const [newFirstName, setNewFirstName] = useState("");
+
+    // Fetch user data
     useEffect(() => {
 
         let isMounted = true;
         const controller = new AbortController();
 
-        axios.get("/api/users/profile", 
-        { signal: controller.signal })
-        .then((res) => {
-            if (isMounted) {
-                setUser(res.data[0]);
-                setLoading(false);
-            }
-        })
-        .catch(err => setError(true));
-        
+        axios.get("/api/users/profile", { signal: controller.signal })
+            .then((res) => {
+                if (isMounted) {
+                    setUser(res.data[0]);
+                    setLoading(false);
+                }
+            })
+            .catch(err => setError(true));
+
         return () => {
             isMounted = false;
-            isMounted && controller.abort()
-        }
+            isMounted && controller.abort();
+        };
 
     }, [id]);
 
+    // Update user's name data
+    const updateUserName = async (e) => {
+        e.preventDefault();
+        try {
+            const firstName = newFirstName; // New name value
+            const updatedUser = { ...user, firstname: firstName };
+            const response = await axios.put(`/api/users/name/${user.id}`, updatedUser);
+            if (response.status === 200) {
+                setUser(updatedUser); // Update local state with the updated user data
+            }
+        } catch (error) {
+            // Handle error
+        }
+    };
+
+    const updateBillingInfo = async () => {
+        try {
+            const newBillingInfo = {
+                // New billing information object
+            };
+
+            // Use the appropriate route to update billing information
+            const response = await axios.put(`/api/billing/${user.id}`, newBillingInfo);
+            if (response.status === 200) {
+                // Update billing information successfully
+            }
+        } catch (error) {
+            // Handle error
+        }
+    };
+
     if (error) {
         return (
-        <div className="user-page">
-            Bad Request
-        </div>
-    )
-    } else
+            <div className="user-page">
+                Bad Request
+            </div>
+        )
+    } else {
         return !loading ?(
             <div className="user-page">
                 <div className="account-box">
@@ -88,6 +121,9 @@ export function User() {
                             <div className="name-edit-box" id="edit-box">
                                 <div id="variable">Name:</div>
                                 <div id="name"> {user.firstname} {user.lastname}</div>
+                                <input value={newFirstName} onChange={e => setNewFirstName(e.target.value)}>
+                                    input
+                                </input>
                             </div>
                             <div className="email-edit-box" id="edit-box">
                                 <div id="variable">Email:</div>
@@ -95,7 +131,7 @@ export function User() {
                             </div>
                             <div className="country-region-box" id="edit-box">
                                 <div id="variable">Country Region:</div>
-                                <div id="name"> {user.region}</div>
+                                <div id="name"> {}</div>
                             </div>
                         </div>
 
@@ -119,8 +155,7 @@ export function User() {
 
                 </div>
             </div>
-        ) :
-        (<p>loading</p>)
-        ;
+        ) : (<p>loading</p>);
+    }
 }
 
