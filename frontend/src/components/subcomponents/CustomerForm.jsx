@@ -4,9 +4,12 @@ import validator from 'validator'
 export default function CustomerForm(
     {formType, register, errors, setValue, 
         firstname, lastname, address, addressTwo, 
-        city, province, postalCode, country, phone, email, trigger}) {
+        city, province, postalCode, country, phone, email, trigger, billingChecked}) {
         
-    return <div className={formType ? "shipping-form" : "billing-form"}>
+    return <div 
+                className={formType ? "shipping-form" : "billing-form"}
+                style={(billingChecked && !formType) ? {display: 'none'} : {}}
+            >
                 <div className = "cinfo-double">
                     <div className={`cinfo ${errors.firstname? 'error' : '' }`}>
                         <input 
