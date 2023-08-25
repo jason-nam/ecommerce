@@ -21,15 +21,15 @@ const { faker } = require('@faker-js/faker');
         CREATE TABLE IF NOT EXISTS shipping (
             id              SERIAL            PRIMARY KEY,
             userid          INT,
-            first_name      INT,
-            last_name       INT,
-            addr_line_1     TEXT              NOT NULL,
+            first_name      TEXT,
+            last_name       TEXT,
+            addr_line_1     TEXT,
             addr_line_2     TEXT,
-            addr_city       TEXT              NOT NULL,
-            addr_province   TEXT              NOT NULL,
-            addr_country    TEXT              NOT NULL,
-            addr_postal     TEXT              NOT NULL,
-            phone_number    INT,
+            addr_city       TEXT,
+            addr_province   TEXT,
+            addr_country    TEXT,
+            addr_postal     TEXT,
+            phone_number    TEXT,
             FOREIGN KEY (userid) REFERENCES users(id)
         )
     `
@@ -44,7 +44,7 @@ const { faker } = require('@faker-js/faker');
             addr_city       TEXT              NOT NULL,
             addr_province   TEXT              NOT NULL,
             addr_postal     TEXT              NOT NULL,
-            phone_number    INT,
+            phone_number    TEXT,
             encrypted_card  TEXT              NOT NULL,
             encrypted_exp   TEXT              NOT NULL,
             FOREIGN KEY (userid) REFERENCES users(id)
