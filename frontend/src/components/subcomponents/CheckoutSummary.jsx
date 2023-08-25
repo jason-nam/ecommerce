@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 export default function CheckoutSummary ({subtotal, stateCH, cart}) {
 
     const { tax, shipping, total } = stateCH;
@@ -26,6 +28,7 @@ export default function CheckoutSummary ({subtotal, stateCH, cart}) {
                     </div>                    
                 </div>
                 <div className="cart-ch">
+                    <Link to="/cart" className="link">Edit</Link>
                     <div className="items-ch">
                         {cart.slice(0).reverse().map(item => {
                         return (
