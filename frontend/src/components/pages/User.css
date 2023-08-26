@@ -38,6 +38,7 @@
 
 .app-options #personal-information-button,
 .app-options #billing-payments-button,
+.app-options #shipping-information-button,
 .app-options #cart-link,
 .app-options #orders-link {
     text-align: left;
@@ -55,7 +56,8 @@
 }
 
 .app-options #personal-information-button.active,
-.app-options #billing-payments-button.active {
+.app-options #billing-payments-button.active,
+.app-options #shipping-information-button.active {
     font-weight: 500;
 }
 
@@ -69,12 +71,14 @@
 }
 
 .personal-information-box,
-.billing-payments-box {
+.billing-payments-box,
+.shipping-information-box {
     display: none;
 }
 
 .personal-information-box.active,
-.billing-payments-box.active {
+.billing-payments-box.active,
+.shipping-information-box.active {
     display: block;
 }
 
@@ -85,7 +89,9 @@
     text-transform: uppercase;
 }
 
-.info-edit-container {
+.info-edit-container,
+.shipping-edit-container,
+.payments-edit-container {
     display: flex;
     flex-direction: column;
     margin: 1rem 0;
@@ -108,7 +114,8 @@
     flex-direction: row;
 }
 
-.edit-form {
+.edit-form,
+.edit-form-confidential {
     width: 100%;
     box-sizing: border-box;
     padding: 0.5rem 0.5rem;
@@ -120,10 +127,26 @@
     font-size: 1rem;
 }
 
-.edit-form::placeholder {
+.edit-form::placeholder,
+.edit-form-confidential::placeholder {
     opacity: 0;
     color: rgb(155, 155, 155);
     transition: opacity 0.25s ease;
+}
+
+.edit-form-confidential {
+    background-color: rgb(242, 242, 242);
+}
+
+#address-column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-right: 5px;
+}
+
+#addr-line-1-edit-form {
+    border-bottom: none;
 }
 
 .edit-submit-button {
@@ -137,4 +160,9 @@
 .edit-submit-button:hover {
     background-color: white;
     color: black;    
+}
+
+#shipping-edit-submit-button {
+    padding: 5px 5px;
+    height: 50px;
 }

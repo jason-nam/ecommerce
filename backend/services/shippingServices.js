@@ -28,8 +28,6 @@ module.exports = class ShippingService {
     async createShipping(data) {
         try {
 
-            console.log(data);
-
             const { 
                 userid, 
                 first_name = null, 
