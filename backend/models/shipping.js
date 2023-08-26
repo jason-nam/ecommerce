@@ -49,21 +49,45 @@ module.exports = class ShippingModel {
         }
     }
 
-    async createShipping( userid, first_name, last_name, 
-        addr_line_1, addr_line_2, addr_city, addr_province, 
-        addr_country, addr_postal, phone_number
+    async createShipping(
+        userid, 
+        first_name, 
+        last_name, 
+        addr_line_1, 
+        addr_line_2, 
+        addr_city, 
+        addr_province, 
+        addr_country, 
+        addr_postal, 
+        phone_number
     ) {
         try {
 
             const statement = `INSERT INTO shipping (
-                                   userid, first_name, last_name, 
-                                   addr_line_1, addr_line_2, addr_city, addr_province, 
-                                   addr_country, addr_postal, phone_number
+                                   userid, 
+                                   first_name, 
+                                   last_name, 
+                                   addr_line_1,
+                                   addr_line_2, 
+                                   addr_city, 
+                                   addr_province, 
+                                   addr_country, 
+                                   addr_postal,
+                                   phone_number)
                                VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
                                RETURNING *`;
-            const values = [userid, first_name, last_name, 
-                addr_line_1, addr_line_2, addr_city, addr_province, 
-                addr_country, addr_postal, phone_number];
+            const values = [
+                userid, 
+                first_name, 
+                last_name, 
+                addr_line_1, 
+                addr_line_2, 
+                addr_city, 
+                addr_province, 
+                addr_country, 
+                addr_postal, 
+                phone_number
+            ];
 
             const result = await db.query(statement, values);
 
@@ -78,9 +102,17 @@ module.exports = class ShippingModel {
         }
     }
 
-    static async updateShipping(shippingid, first_name, last_name, 
-        addr_line_1, addr_line_2, addr_city, addr_province, 
-        addr_country, addr_postal, phone_number
+    static async updateShipping(
+        shippingid, 
+        first_name, 
+        last_name, 
+        addr_line_1, 
+        addr_line_2, 
+        addr_city, 
+        addr_province, 
+        addr_country, 
+        addr_postal, 
+        phone_number
     ) {
         try {
 
@@ -97,9 +129,18 @@ module.exports = class ShippingModel {
                                    phone_number = $10
                                WHERE id = $1
                                RETURNING *`;
-            const values = [shippingid, first_name, last_name, 
-                addr_line_1, addr_line_2, addr_city, addr_province, 
-                addr_country, addr_postal, phone_number];
+            const values = [
+                shippingid, 
+                first_name, 
+                last_name, 
+                addr_line_1, 
+                addr_line_2, 
+                addr_city, 
+                addr_province, 
+                addr_country, 
+                addr_postal, 
+                phone_number
+            ];
 
             const result = await db.query(statement, values);
 

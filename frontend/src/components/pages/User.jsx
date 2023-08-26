@@ -11,29 +11,30 @@ export function User() {
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(true);
     const [activeTab, setActiveTab] = useState('personal');
-    // const [editNameVisible, setEditNameVisible] = useState(false);
 
     const [shipping, setShipping] = useState({});
-    const [newPhoneNumber, setNewPhoneNumber] = useState()
+    const [newAddrLine1, setNewAddrLine1] = useState("");
+    const [newAddrLine2, setNewAddrLine2] = useState("");
+    const [newAddrCity, setNewAddrCity] = useState("");
+    const [newAddrProvince, setNewAddrProvince] = useState("");
+    const [newAddrCountry, setNewAddrCountry] = useState("");
+    const [newAddrPostal, setNewAddrPostal] = useState("");
+    const [newPhoneNumber, setNewPhoneNumber] = useState("");
 
     const [newFirstName, setNewFirstName] = useState("");
     const [newLastName, setNewLastName] = useState("");
     const [newEmail, setNewEmail] = useState("");
+    const [newPassword, setNewPassword] = useState("");
 
     // Fetch user data
     useEffect(() => {
 
         let isMounted = true;
         const controller = new AbortController();
-        
-        const firstName = "";
-        const lastName = "";
 
         axios.get("/api/users/profile", { signal: controller.signal })
             .then((res) => {
                 if (isMounted) {
-                    firstName = res.data[0].firstname;
-                    lastName = res.data[0].lastname;
                     setUser(res.data[0]);
                     setNewFirstName(res.data[0].firstname);
                     setNewLastName(res.data[0].lastname);
@@ -43,17 +44,18 @@ export function User() {
             })
             .catch(err => setError(true));
 
-        // axios.get("/api/shipping/", { signal: controller.signal })
-        //     .then((res) => {
-        //         if (isMounted) {
-        //             setShipping(res.data.rows[0]);
-        //             // setNewPhoneNumber(res.data.row[0].phone_number);
-        //             setLoading(false);
-        //         }
-        //     })
-        //     .catch(err => setError(true));
+        return () => {
+            isMounted = false;
+            isMounted && controller.abort();
+        };
 
-        // console.log("hello", firstName, lastName);
+    }, [id]);
+
+    // Fetch shipping data
+    useEffect(() => {
+
+        let isMounted = true;
+        const controller = new AbortController();
 
         axios.get("/api/shipping/", { signal: controller.signal })
             .then((res) => {
@@ -61,13 +63,20 @@ export function User() {
                     if (res.data.rows[0] === undefined) {
                         // Run the post request to create shipping entry
                         const newShippingData = {
-                            first_name: firstName,
-                            last_name: lastName
+                            first_name: user.firstname,
+                            last_name: user.lastname
                         };
         
                         axios.post("/api/shipping/create", newShippingData)
                             .then((response) => {
                                 setShipping(res.data.rows[0]);
+                                setNewAddrLine1(res.data.rows[0].addr_line_1);
+                                setNewAddrLine2(res.data.rows[0].addr_line_2);
+                                setNewAddrCity(res.data.rows[0].addr_city);
+                                setNewAddrProvince(res.data.rows[0].addr_province);
+                                setNewAddrCountry(res.data.rows[0].addr_country);
+                                setNewAddrPostal(res.data.rows[0].addr_postal);
+                                setNewPhoneNumber(res.data.rows[0].phone_number);
                                 setLoading(false);
                             })
                             .catch((error) => {
@@ -75,7 +84,13 @@ export function User() {
                             });
                     } else {
                         setShipping(res.data.rows[0]);
-                        // setNewPhoneNumber(res.data.row[0].phone_number);
+                        setNewAddrLine1(res.data.rows[0].addr_line_1);
+                        setNewAddrLine2(res.data.rows[0].addr_line_2);
+                        setNewAddrCity(res.data.rows[0].addr_city);
+                        setNewAddrProvince(res.data.rows[0].addr_province);
+                        setNewAddrCountry(res.data.rows[0].addr_country);
+                        setNewAddrPostal(res.data.rows[0].addr_postal);
+                        setNewPhoneNumber(res.data.rows[0].phone_number);
                         setLoading(false);
                     }
                 }
@@ -87,7 +102,7 @@ export function User() {
             isMounted && controller.abort();
         };
 
-    }, [id]);
+    }, [user]);
 
     // Update user's name information data
     const updateUserName = async (e) => {
@@ -127,12 +142,27 @@ export function User() {
     // Update shipping details data
     const updateShipping = async (e) => {
         try {
+            const addrLine1 = newAddrLine1;
+            const addrLine2 = newAddrLine2;
+            const city = newAddrCity;
+            const province = newAddrProvince;
+            const country = newAddrCountry;
+            const postalCode = newAddrPostal;
             const phoneNumber = newPhoneNumber;
 
-            const updatedShipping = { ...shipping, phone_number: phoneNumber };
+            const updatedShipping = { ...shipping, 
+                addr_line_1: addrLine1, 
+                addr_line_2: addrLine2, 
+                addr_city: city,
+                addr_province: province,
+                addr_country: country,
+                addr_postal: postalCode,
+                phone_number: phoneNumber 
+            };
             const response = await axios.put(`/api/shipping/update/${shipping.id}`, updatedShipping);
             if (response.status === 200) {
                 setShipping(updatedShipping);
+                
             }
         } catch (err) {
             console.log(err);
@@ -178,6 +208,14 @@ export function User() {
                             Personal Information
                         </button>
                         <button
+                            id="shipping-information-button"
+                            type="button"
+                            onClick={() => setActiveTab('shipping')}
+                            className={activeTab === 'shipping' ? 'active' : ''}
+                        >
+                            Shipping Address
+                        </button>
+                        <button
                             id="billing-payments-button"
                             type="button"
                             onClick={() => setActiveTab('billing')}
@@ -206,6 +244,45 @@ export function User() {
                         </div>
 
                         <div className="info-edit-container">
+                            <div className="edit-box" id="email-edit-box">
+                                <div className="variable">Email&nbsp;</div>
+                                <div className="edit-form-box">
+                                    <input
+                                        className="edit-form-confidential"
+                                        id="email-edit-form"
+                                        value={newEmail}
+                                        onChange={(e) => setNewEmail(e.target.value)}
+                                    />
+                                    <button
+                                        className="edit-submit-button"
+                                        id="email-edit-submit-button"
+                                        type="submit"
+                                        onClick={() => updateUserEmail()}
+                                    >
+                                        Change
+                                    </button>
+                                </div>
+                            </div>
+                            <div className="edit-box" id="password-edit-box">
+                                <div className="variable">Password&nbsp;</div>
+                                <div className="edit-form-box">
+                                    <input
+                                        className="edit-form-confidential"
+                                        id="password-edit-form"
+                                        value={newPassword}
+                                        onChange={(e) => setNewPassword(e.target.value)} //TODO
+                                    />
+                                    <button
+                                        className="edit-submit-button"
+                                        id="password-edit-submit-button"
+                                        type="submit"
+                                        onClick={() => updateUserEmail()} //TODO
+                                    >
+                                        Change
+                                    </button>
+                                </div>
+                            </div>
+
                             <div className="edit-box" id="first-name-edit-box">
                                 <div className="variable">First Name&nbsp;</div>
                                 <div className="edit-form-box">
@@ -245,25 +322,7 @@ export function User() {
                                     </button>
                                 </div>
                             </div>
-                            <div className="edit-box" id="email-edit-box">
-                                <div className="variable">Email&nbsp;</div>
-                                <div className="edit-form-box">
-                                    <input
-                                        className="edit-form"
-                                        id="email-edit-form"
-                                        value={newEmail}
-                                        onChange={(e) => setNewEmail(e.target.value)}
-                                    />
-                                    <button
-                                        className="edit-submit-button"
-                                        id="email-edit-submit-button"
-                                        type="submit"
-                                        onClick={() => updateUserEmail()}
-                                    >
-                                        Change
-                                    </button>
-                                </div>
-                            </div>
+                            
                             <div className="edit-box" id="phone-edit-box">
                                 <div className="variable">Mobile Phone Number&nbsp;</div>
                                 <div className="edit-form-box">
@@ -283,12 +342,134 @@ export function User() {
                                     </button>
                                 </div>
                             </div>
-                            <div className="edit-box" id="region-edit-box">
-                                <div className="variable">Country Region&nbsp;</div>
-                                <div className="value"> {}</div>
-                            </div>
                         </div>
 
+                    </div>
+
+                    <div
+                        className={`shipping-information-box ${
+                            activeTab === 'shipping' ? 'active' : ''
+                        }`}
+                    >
+                        <div className="title">Shipping Address</div>
+                        <div className="desc">
+                            Manage your personal address.
+                        </div>
+                        <div className="shipping-edit-container">
+
+                            <div className="edit-box" id="region-edit-box">
+                                <div className="variable">Address&nbsp;</div>
+                                <div className="edit-form-box" id="address-edit-form-box">
+                                    <div id="address-column">
+                                        <input
+                                            className="edit-form" 
+                                            id="addr-line-1-edit-form"
+                                            value={newAddrLine1} 
+                                            onChange={(e) => setNewAddrLine1(e.target.value)}
+                                        />
+                                        <input
+                                            className="edit-form" 
+                                            id="addr-line-2-edit-form"
+                                            value={newAddrLine2} 
+                                            onChange={(e) => setNewAddrLine2(e.target.value)}
+                                        />
+                                    </div>
+                                    {/* <button 
+                                        className="edit-submit-button"
+                                        id="address-edit-submit-button"
+                                        type="submit" 
+                                        onClick={() => updateShipping()}
+                                    >
+                                        Change
+                                    </button> */}
+                                </div>
+                            </div>
+                            <div className="edit-box" id="city-edit-box">
+                                <div className="variable">City&nbsp;</div>
+                                <div className="edit-form-box">
+                                    <input
+                                        className="edit-form"
+                                        id="city-edit-form"
+                                        value={newAddrCity}
+                                        onChange={(e) => setNewAddrCity(e.target.value)}
+                                    />
+                                    {/* <button
+                                        className="edit-submit-button"
+                                        id="city-edit-submit-button"
+                                        type="submit"
+                                        onClick={() => updateShipping()}
+                                    >
+                                        Change
+                                    </button> */}
+                                </div>
+                            </div>
+                            <div className="edit-box" id="province-edit-box">
+                                <div className="variable">Province/State&nbsp;</div>
+                                <div className="edit-form-box">
+                                    <input
+                                        className="edit-form"
+                                        id="province-edit-form"
+                                        value={newAddrProvince}
+                                        onChange={(e) => setNewAddrProvince(e.target.value)}
+                                    />
+                                    {/* <button
+                                        className="edit-submit-button"
+                                        id="province-edit-submit-button"
+                                        type="submit"
+                                        onClick={() => updateShipping()}
+                                    >
+                                        Change
+                                    </button> */}
+                                </div>
+                            </div>
+                            <div className="edit-box" id="country-edit-box">
+                                <div className="variable">Country&nbsp;</div>
+                                <div className="edit-form-box">
+                                    <input
+                                        className="edit-form"
+                                        id="country-edit-form"
+                                        value={newAddrCountry}
+                                        onChange={(e) => setNewAddrCountry(e.target.value)}
+                                    />
+                                    {/* <button
+                                        className="edit-submit-button"
+                                        id="country-edit-submit-button"
+                                        type="submit"
+                                        onClick={() => updateShipping()}
+                                    >
+                                        Change
+                                    </button> */}
+                                </div>
+                            </div>
+                            <div className="edit-box" id="postal-edit-box">
+                                <div className="variable">Postal Code&nbsp;</div>
+                                <div className="edit-form-box">
+                                    <input
+                                        className="edit-form"
+                                        id="postal-edit-form"
+                                        value={newAddrPostal}
+                                        onChange={(e) => setNewAddrPostal(e.target.value)}
+                                    />
+                                    {/* <button
+                                        className="edit-submit-button"
+                                        id="postal-edit-submit-button"
+                                        type="submit"
+                                        onClick={() => updateShipping()}
+                                    >
+                                        Change
+                                    </button> */}
+                                </div>
+                            </div>
+                            <button
+                                className="edit-submit-button"
+                                id="shipping-edit-submit-button"
+                                type="submit"
+                                onClick={() => updateShipping()}
+                            >
+                                Update
+                            </button>
+                            
+                        </div>
                     </div>
 
                     <div
@@ -300,11 +481,9 @@ export function User() {
                         <div className="desc">
                             Manage your billings and payments information.
                         </div>
-
                         <div className="payments-edit-container">
                             
                         </div>
-
                     </div>
 
                 </div>
