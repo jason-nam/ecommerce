@@ -24,7 +24,7 @@ export function User() {
     const [newFirstName, setNewFirstName] = useState("");
     const [newLastName, setNewLastName] = useState("");
     const [newEmail, setNewEmail] = useState("");
-    const [newPassword, setNewPassword] = useState("");
+    const [newPassword, setNewPassword] = useState("********");
 
     // Fetch user data
     useEffect(() => {
@@ -39,6 +39,7 @@ export function User() {
                     setNewFirstName(res.data[0].firstname);
                     setNewLastName(res.data[0].lastname);
                     setNewEmail(res.data[0].email);
+                    // setNewPassword(res.data[0].password);
                     setLoading(false);
                 }
             })
@@ -138,6 +139,21 @@ export function User() {
             console.log(err);
         }
     };
+
+    // Update user password
+    const updateUserPassword = async(e) => {
+        try {
+            const password = newPassword;
+
+            const updatedUser = { ...user, password: password };
+            const response = await axios.put(`/api/users/password/${user.id}`, updatedUser);
+            if (response.status === 204) {
+                setUser(updatedUser);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
 
     // Update shipping details data
     const updateShipping = async (e) => {
@@ -276,7 +292,7 @@ export function User() {
                                         className="edit-submit-button"
                                         id="password-edit-submit-button"
                                         type="submit"
-                                        onClick={() => updateUserEmail()} //TODO
+                                        onClick={() => updateUserPassword()}
                                     >
                                         Change
                                     </button>
@@ -292,14 +308,14 @@ export function User() {
                                         value={newFirstName} 
                                         onChange={(e) => setNewFirstName(e.target.value)}
                                     />
-                                    <button 
+                                    {/* <button 
                                         className="edit-submit-button"
                                         id="first-name-edit-submit-button"
                                         type="submit" 
                                         onClick={() => updateUserName()}
                                     >
                                         Change
-                                    </button>
+                                    </button> */}
                                 </div>
                             
                             </div>
@@ -312,14 +328,14 @@ export function User() {
                                         value={newLastName} 
                                         onChange={(e) => setNewLastName(e.target.value)}
                                     />
-                                    <button 
+                                    {/* <button 
                                         className="edit-submit-button"
                                         id="last-name-edit-submit-button"
                                         type="submit" 
                                         onClick={() => updateUserName()}
                                     >
                                         Change
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
                             
@@ -332,16 +348,26 @@ export function User() {
                                         value={newPhoneNumber}
                                         onChange={(e) => setNewPhoneNumber(e.target.value)}
                                     />
-                                    <button
+                                    {/* <button
                                         className="edit-submit-button"
                                         id="phone-edit-submit-button"
                                         type="submit"
                                         onClick={() => updateShipping()}
                                     >
                                         Change
-                                    </button>
+                                    </button> */}
                                 </div>
                             </div>
+
+                            <button
+                                className="update-submit-button"
+                                id="phone-edit-submit-button"
+                                type="submit"
+                                onClick={() => updateShipping()}
+                            >
+                                Update
+                            </button>
+
                         </div>
 
                     </div>
@@ -461,7 +487,7 @@ export function User() {
                                 </div>
                             </div>
                             <button
-                                className="edit-submit-button"
+                                className="update-submit-button"
                                 id="shipping-edit-submit-button"
                                 type="submit"
                                 onClick={() => updateShipping()}
