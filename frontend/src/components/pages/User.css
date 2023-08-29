@@ -149,7 +149,8 @@
     border-bottom: none;
 }
 
-.edit-submit-button {
+.edit-submit-button,
+.update-submit-button {
     background-color: black;
     color: white;
     box-sizing: border-box;
@@ -157,12 +158,16 @@
     transition: background-color 0.3s ease;
 }
 
-.edit-submit-button:hover {
+.edit-submit-button:hover,
+.update-submit-button:hover {
     background-color: white;
     color: black;    
 }
 
-#shipping-edit-submit-button {
+.update-submit-button {
     padding: 5px 5px;
     height: 50px;
+    margin: 25px 0;
+    text-transform: uppercase;
+    font-size: 1rem;
 }
