@@ -37,7 +37,7 @@ const hashPassword = async (password) => {
     } catch (err) {
         throw new Error('Password hashing failed');
     }
-  };
+};
 
 // Middleware function to verify the password
 const verifyPassword = async (password, hashedPassword) => {
