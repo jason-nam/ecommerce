@@ -3,7 +3,6 @@ import { useParams, Link } from "react-router-dom"
 import axios from "axios";
 import './User.css'
 
-
 export function User() {
 
     const { id } = useParams()
