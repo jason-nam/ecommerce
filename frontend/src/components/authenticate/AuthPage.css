@@ -1,0 +1,140 @@
+:root {
+	--base-color: #ffffff;
+	--secondary-color: #32c1e5;
+}
+
+
+.auth-form {
+    margin: 0 auto;
+    width: 20rem;
+    padding: 1rem;
+}
+
+.input-form {
+    margin: 1rem auto;
+    position: relative;
+    box-sizing: border-box;
+    min-height: 4.3rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-form:focus-within{
+    .auth-label {
+        transform: translateY(0.5rem) scale(0.7);
+        margin-left: 0.5rem;
+    }
+}
+
+.auth-input:focus + .auth-label {
+    transform: translateY(0.5rem) scale(0.7);
+    margin-left: 0.5rem;
+}
+
+.auth-label {
+    position: absolute;
+    cursor: text;
+    margin-left: 0.5rem;
+    text-transform: uppercase;
+    z-index: 5;
+    color: rgb(96, 96, 96);
+    transform: translateY(1rem);
+    transition: transform 0.3s ease;
+    transform-origin: top left;
+    letter-spacing: 2px;
+    pointer-events: none;
+}
+
+.auth-label.input {
+    transform: translateY(0.5rem) scale(0.7);
+    margin-left: 0.5rem;
+}
+
+
+.auth-input{
+    box-sizing: border-box;
+    padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+    width: 100%;
+    border-radius: 0;
+    outline: none;
+    border: 1px solid black;
+}
+
+
+
+.warning {
+    box-sizing: border-box;
+    margin-top: 0.5rem;
+    color: red;
+    font-size: 0.8rem;
+}
+
+.auth-button {
+	display: flex;
+	align-items: center;
+    justify-content: center;
+
+	height: 60px;
+	width: 100%;
+
+	padding: 1rem;
+
+    font-size: 1rem;
+
+	box-sizing: border-box;
+    
+    cursor: pointer;
+
+	border-radius: 0;
+    border-width: 0;
+    border: 1px solid var(--secondary-color);
+
+    background-color: var(--secondary-color);
+	color: white;
+
+    text-transform: uppercase;
+	text-align: center;
+    letter-spacing: 2px;
+
+    transition: background-color 0.5s ease, color 0.5s ease, font-size 0.5s ease;
+
+	text-align: center;
+	text-decoration: none;
+
+}
+
+.auth-button:hover {
+	background-color: var(--base-color);
+	color: var(--secondary-color);
+	font-size: 0.8rem;
+}
+
+.auth-title {
+    margin: 0 auto;
+    margin-top: 3rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+
+.link-register{
+    margin-top: 1rem;
+}
+
+.link-register a{
+    text-decoration: underline;
+
+}
+
+@media screen and (max-width: 769px ) {
+    .auth-form {
+        margin: 0 auto;
+        width: 90%;
+        padding: 0;
+    }    
+
+    .auth-title {
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+    }
+}

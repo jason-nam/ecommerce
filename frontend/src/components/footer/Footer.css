@@ -1,0 +1,66 @@
+
+
+footer {
+    margin-top: 4rem;
+    overflow: hidden;
+}
+
+.footer {
+    height: 50vh;
+    min-width: 100%;
+    z-index: 1;
+    bottom: 0;
+    background-color: black;
+}
+
+.footer-bounce {
+    z-index: 0;
+    background-color: black;
+    position: absolute;
+    height: 200px;
+    bottom: 0;
+}
+
+.footer-container {
+    position: relative;
+    height: 100%;
+}
+
+.footer-pages {
+    bottom: calc(50vh - 10vh);
+    position: absolute;
+    list-style-type: none;
+}
+
+.footer-pages li {
+    color: white;
+    transition: color 0.5s ease, background-color 0.5s ease;
+}
+
+.footer-pages li:hover {
+    color: black;
+    background-color: white;
+}
+
+.coders {
+    bottom: calc(50vh - 20rem);
+    position: absolute;   
+    text-align: center;
+    width: 100%;
+}
+
+.coders span {
+    color: white;
+}
+
+.coders a span {
+    background-color: rgb(82, 82, 172);
+    color: white;
+    padding: 2px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.coders a:hover span {
+    background-color: rgb(148, 227, 29);
+    color: black;
+}

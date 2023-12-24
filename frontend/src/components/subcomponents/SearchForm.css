@@ -1,0 +1,250 @@
+.search-container {
+	margin-right: var(--nav-button-margin);
+	height: 100%;
+	width: 100%;
+}
+
+#sf {
+	display: flex;
+    justify-content: flex-end;
+	align-items: center;
+    position: relative;
+	height: 100%;
+	width: 17rem;
+	float: right;
+}
+
+#search-bar:valid {
+	color: black;
+}
+
+.search-bar::placeholder {
+	color: #999;
+}
+  
+#search-bar:hover,
+#search-bar:hover:valid {
+	/* background-color: var(--search-bar-grey-2); */
+	fill: var(--font-color);
+	color: black;
+}
+
+#search-bar, #sf:not(.active) #search-bar {
+	opacity: 0;
+	width: 0;
+	height: 90%;
+	overflow: hidden;
+	visibility: hidden;
+	/* background-color: grey; */
+	border: none;
+	transition: width 0s ease 0.5s, padding 0s ease 0.5s, visibility 0s ease 0.5s, opacity 0.3s ease 0s;
+	outline: none;
+	font-size: 14px;
+	z-index: 100;
+}
+
+#sf.active #search-bar {
+	transition: visibility 0s ease 0s, opacity 0.3s ease 0.2s;
+	visibility: visible;
+	opacity: 1;
+	width: 17rem;
+	/* max-width: 50rem; */
+	padding: 0.5rem 0rem 0.5rem 0.5rem;
+	color: var(--search-bar-grey-2);
+	/* background-color: var(--search-bar-grey-1); */
+}
+
+#sf.active #search-bar:valid {
+	color: black;
+}
+
+#sf.active #search-bar:hover,
+#sf.active #search-bar:hover + #sf.active #search-button {
+	/* background-color: var(--search-bar-grey-2); */
+	fill: var(--font-color);
+}
+
+#sf.active #search-bar:hover::placeholder {
+	/* background-color: var(--search-bar-grey-2); */
+	color: var(--search-bar-grey-3);
+}
+
+/* border bottom */
+#sf:after {
+	position: absolute;
+	display: flex;
+	left: 100%;
+	bottom: 0.1rem;
+    height: 1px;
+    width: 0%;
+    background-color: black;
+    content: "";
+	transition: 0.5s ease;
+}
+
+#sf.active:after{
+    left: 0;
+    width: 100%;
+	transition: 0.5s ease;
+}
+
+#search-close, #sf:not(.active) #search-close {
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: var(--font-color);
+	text-decoration: none;
+	font-size: var(--icon-size);
+	border: none;
+	border-radius: 50%;
+	height: var(--button-size);
+	aspect-ratio: 1/1;
+	font-size: 2.5rem;
+	font-weight: 100;
+	opacity: 0;
+	visibility: hidden;
+	overflow: hidden;
+	z-index: 101;
+	width: 0;
+	right: 0;
+}
+
+#search-open {
+	right: var(--search-button-margin);
+}
+
+#search-open.not-active {
+	animation: animate-display 0.5s;
+	transition: transform 0s ease 0.5s, visibility 0s ease 0.5s;
+	visibility: visible;
+}
+
+#search-open.active {
+	transform: translateY(-300000px);
+	width: 0;
+	padding: 0;
+	visibility: hidden;
+	/* display: none; */ /* not working for Safari */
+}
+
+@keyframes animate-display {
+	0% {
+		display: none;
+		width: 0;
+		padding: 0;
+	}
+	99.99999% {
+		display: none;
+		width: 0;
+		padding: 0;
+	}
+	100% {
+		display: flex;
+	}
+}
+
+#search-button, #sf:not(.active) #search-button {
+	visibility: hidden;
+	opacity: 0;
+	transition: visibility 0s ease 0.5s, opacity 0s ease 0.5s;
+	z-index: 101;
+	/* position: absolute; */
+	/* right: var(--search-button-margin); */
+	/* transition: color 0.2s; */
+	/* background-color: var(--search-bar-grey-1); */
+	/* height: calc(90% - var(--search-button-margin) * 2);
+	width: calc(3rem * 0.9 - var(--search-button-margin) * 2); */
+}
+
+#sf.active #search-button {
+	visibility: visible;
+	opacity: 1;
+	transition: visibility 0s ease 0s, opacity 0s ease 0s;
+	/* background-color: var(--search-bar-grey-1); */
+}
+
+.search-clear {
+	display: none;
+	visibility: hidden;
+	font-size: 0.6rem;
+	color: grey;
+	position: absolute;
+	cursor: pointer;
+}
+
+/* Mobile Header View */
+
+@media (max-width: 899px) {
+
+	.nav-r-auth-cart-box {	
+		margin-right: 0px !important;
+	}
+
+	#sf {
+		width: 100%;
+	}
+
+	#sf.active {
+		width: calc(100vw - 2rem);
+		margin: 0 auto;
+		float: none;
+	}
+
+	#sf:not(.active):after {
+		transition: none;
+		opacity: 0;
+	}
+
+	#sf.active:after {
+		opacity: 1;
+		transition: opacity 0.5s ease;
+	}
+
+	#sf:not(.active) #search-bar {
+		opacity: 0;
+		transition:none;
+	}
+
+	#sf.active #search-bar {
+		margin-left: 1.5rem;
+		width: 100%;
+		opacity: 1;
+		transition: opacity 0.5s ease;
+	}
+
+	#sf:not(.active) #search-close, #sf:not(.active) #search-button {
+		transition:none;
+		width: 0;
+		padding: 0;
+	}
+
+	#sf.active #search-close, #sf.active #search-button {
+		transition: opacity 0.5s ease;
+		width: 1.5rem;
+	}
+	#sf.active #search-button {
+		left: 0;
+		position: absolute;
+		margin: 0;
+	}
+
+	#sf.active #search-close {
+		visibility: visible;
+		opacity: 1;
+		flex: 0 0 1.5rem;
+	}
+
+	#search-open:not(.active) {
+		animation: none;
+		transition: none;
+	}
+
+	#sf.active .search-clear {
+		position: relative;
+		visibility: visible;
+		padding: 0 0.5rem;
+		z-index: 101;
+	}
+	
+}

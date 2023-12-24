@@ -1,0 +1,18 @@
+.contact {
+    margin: 0 auto;
+    max-width: 50rem;
+}
+
+.contact .head .title {
+    margin: 0 auto;
+    margin: 3rem 0 1rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    text-align: center;
+}
+
+@media screen and (max-width: 799px) {
+    .contact {
+        width: 90%;
+    }
+}

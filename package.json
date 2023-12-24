@@ -1,0 +1,26 @@
+{
+  "name": "ecap",
+  "version": "1.0.0",
+  "description": "E-Commerce App",
+  "scripts": {
+    "postinstall": "npm --prefix ./frontend install ; npm --prefix ./backend install",
+    "frontend": "npm start --prefix frontend",
+    "backend": "npm start --prefix backend",
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "create-db": "cd backend && node -r dotenv/config setupDatabase",
+    "delete-db": "cd backend && node -r dotenv/config deleteDatabase",
+    "rm-modules": "rm -rf node_modules ; rm -rf ./backend/node_modules ; rm -rf ./frontend/node_modules"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jason-yunjae-nam/ecommerce"
+  },
+  "keywords": [],
+  "author": "Yun Jae Nam, Yun Hye Nam",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^8.2.2",
+    "moment": "^2.29.4"
+  }
+}

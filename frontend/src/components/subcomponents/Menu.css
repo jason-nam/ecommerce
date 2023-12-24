@@ -1,0 +1,156 @@
+.menu, 
+.menu:not(.active) {
+	position: fixed;
+	right: 0;
+	z-index: 105;
+
+	background-color: var(--white-color);
+
+	transform: translateX(125%);
+	transition: transform 0.3s ease-in;
+	height: 100vh;
+	width: 30rem;
+}
+
+.menu.active {
+	background-color: var(--white-color);
+	transform: translateX(0%);
+	transition: transform 0.3s ease-out;
+}
+
+.menu::-webkit-scrollbar {
+    width: 0.5rem;
+}
+ 
+.menu::-webkit-scrollbar-thumb {
+    background-color: var(--grey-3);
+}
+
+/* Header */
+
+.menu .head {
+    position: fixed;
+    right: 1rem;
+    top: 1rem;
+    z-index: 110;
+
+    width: 3rem;
+
+    /* display: flex;
+    align-items: center;
+    flex-direction: row-reverse; */
+}
+
+#close-menu {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	color: var(--font-color);
+	background-color: var(--base-color);
+
+	text-decoration: none;
+	text-align: center;
+
+	font-size: 3rem;
+	font-weight: 100;
+
+	transition: color 0.5s ease, background-color 0.5s ease, font-size 0.5s ease;
+	
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+
+	height: 3rem;
+	width: auto;
+	aspect-ratio: 1/1;
+}
+
+#close-menu:hover {
+	color: var(--base-color);
+	background-color: var(--secondary-color);
+
+	font-size: 2rem;
+}
+
+.menu .main {
+    position: absolute;
+    top: 0;
+
+	display: flex;
+	flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+
+    padding: 4rem 5rem;
+
+    overflow-y: scroll;
+	height: calc(100%);
+    width: calc(100% - 10rem);
+}
+
+.main-category {
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+.menu .main .item-group {
+	width: 100%;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+}
+
+.menu .main .subcategory:hover {
+	font-weight: 400;
+}
+
+.menu .main .item-group .subcategories {
+	visibility: hidden;
+	height: 0;
+	overflow: hidden;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	transition: visibility 0s ease 0.3s, height 0.3s ease-in-out;
+}
+
+.menu .main .item-group .item.active + .subcategories{
+	visibility: visible;
+	height: 11rem;
+	transition: visibility 0s ease 0s, height 0.3s ease-in-out;
+}
+
+.menu .main .item {
+    font-weight: 450;
+	font-size: 1rem;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+
+	transition: letter-spacing 0.5s ease;
+
+    margin-top: 1rem;
+	width: 100%;
+}
+
+.menu .main .item:hover {
+	letter-spacing: 5px;
+}
+
+.menu .main .separator {
+    border-top: 2px groove black;
+}
+
+@media (max-width: 787px) {
+
+	.menu, .menu:not(.active) {
+		width: 85%;
+	}
+
+	.menu .main {
+		padding: 2.5rem;
+		width: 100%;
+		box-sizing: border-box;
+		height: 100%;
+	}
+
+}

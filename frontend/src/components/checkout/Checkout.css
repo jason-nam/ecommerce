@@ -1,0 +1,432 @@
+.checkout {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.left-ch {
+    width: 60%;
+}
+
+.right-ch {
+    width: 40%;
+}
+
+.shipping, .billing, .order-box, .shipping-summary, .proceed-box {
+    margin: 0 2rem 1rem 3rem;
+}
+
+.link {
+    font-size: 0.8rem;
+    text-decoration: underline;
+}
+
+.head .title {
+    font-weight: bold;
+	font-size: 1.5rem;
+	margin: 1rem 0;
+}
+
+.head {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+/* Shipping and billing*/
+
+.shipping, .shipping-summary {
+    display: flex;
+    flex-direction: column;
+}
+
+.cinfo-double {
+    display: flex;
+    flex-direction: row;
+}
+
+.shipping > div, .billing > div {
+    width: 100%;
+}
+
+/* input boxes */
+
+.cinfo {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    margin: 0;
+    margin-bottom: -1px;
+    height: 3.3rem;
+    border: 1px black solid;
+}
+
+.cinfo:focus-within {
+    .cinfo .shipping-label {
+        transform: translateY(0.5rem) scale(0.7);
+        margin-left: 0.5rem;
+    }
+}
+
+.cinfo-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 1.5rem 0.5rem 0.5rem 0.5rem;
+    border-radius: 0;
+    outline: none;
+    border: none;
+    background-color: transparent;
+    font-size: 0.8rem;
+}
+
+.cinfo-input:focus + .cinfo-label,
+.cinfo-label.active {
+    transform: translateY(0.5rem) scale(0.8);
+    margin-left: 0.5rem;
+}
+
+.cinfo-input::placeholder {
+    opacity: 0;
+    color: rgb(155, 155, 155);
+    transition: opacity 0.25s ease;
+}
+
+.cinfo-input:focus::placeholder {
+    opacity: 1;
+}
+
+select {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: url('data:image/svg+xml;utf-8,<svg xmlns="http://www.w3.org/2000/svg" fill="%23606060" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"/></svg>')
+    98% 50% no-repeat transparent;
+}
+
+.cinfo.error {
+    border-color: red;
+    z-index: 10;
+}
+
+.cinfo.error .cinfo-label {
+    color: red;    
+}
+
+.cinfo-label {
+    transform: translateY(1.4rem);
+    margin-left: 0.5rem;
+    cursor: text;
+    color: rgb(96, 96, 96);
+    transition: transform 0.3s ease;
+    transform-origin: top left;
+    pointer-events: none;
+    position: absolute;
+    font-size: 0.8rem;
+}
+
+.cinfo-double .cinfo:first-child {
+    width: 50%;
+}
+
+.cinfo-double .cinfo:nth-child(2) {
+    margin-left: -1px;
+    width: calc(50% + 1px);
+}
+
+.debit-credit, .billing-form, .shipping-form {
+    margin: 1rem 0;
+}
+
+/* checkbox */ 
+
+input[type=checkbox] {
+    display: none;
+}
+
+.billing-checkbox-box {
+    content: "";
+    background-color: white;
+    border: 1px solid rgb(60, 60, 60);
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.checkbox-label {
+    padding-left: 25px;
+    position: relative;
+    cursor: pointer;
+}
+
+.billing-checkbox ~ .faCheck {
+    display: none;
+    position: absolute;
+    cursor: pointer;
+}
+
+.billing-checkbox:checked ~.faCheck {
+    display: inline-block;
+    color: white;
+    width: 20px;
+    height: 20px;
+    border: 3px transparent solid;
+    box-sizing: border-box;
+}
+
+.billing-checkbox:checked ~ .billing-checkbox-box {
+    background-color: rgb(60, 60, 60);
+}
+
+/* .billing-checkbox:checked ~ .billing-form {
+    display: none;
+} */
+
+/* radio button */
+
+input[type=radio] {
+    display: none;
+}
+
+.radio-button-label::after {
+    display: none;
+    content: "";
+    position: absolute;
+    background-color: rgb(60, 60, 60);
+    width: 1rem;
+    height: 1rem;
+    box-sizing: border-box;
+    border-radius: 50%;
+    border-radius: rgb(60, 60, 60);
+    top: 3.5px;
+    left: 0px;
+}
+
+input[type=radio]:checked ~ .radio-button-label::after {
+    display: inline-block;
+}
+
+
+.radio-button-label::before {
+    content: "";
+    background-color: white;
+    width: 1rem;
+    height: 1rem;
+    border: 1px rgb(60, 60, 60) solid;
+    box-sizing: border-box;
+    position: absolute;
+    border-radius: 50%;
+    top: 3.5px;
+    left: 0px;
+    display: inline-block;
+}
+
+.radio-button-label {
+    position: relative;
+    padding-left: 20px;
+}
+
+.radio-buttons-group {
+    margin-bottom: 1rem;
+}
+
+/* form summary */
+
+.dn {
+    /* display: none; */
+    visibility: hidden;
+    height: 0;
+    width: 0;
+    margin: 0;
+    opacity: 0;
+    padding: 0;
+    transition: all 0s;
+}
+
+.show {
+    visibility: visible;
+    transition: opacity 1s ease, margin 0s ease, height 0s ease, width 0s ease, visibility 0s ease, padding 0s ease;
+}
+
+.edit-button {
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    display: inline-block;
+    margin: 1rem 0;
+}
+
+.shipping, .billing {
+    scroll-margin-top: var(--header-height);
+}
+
+
+/* order button */
+
+#order, #proceed {
+    width: 100%;
+    height: 60px;
+    background-color: black;
+    color: white;
+    border: solid 1px black;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin: 1rem 0 3rem;
+    font-size: 1rem;
+    transition: letter-spacing 0.3s ease, background-color 0.3s ease, font-size 0.3s ease;
+}
+
+#order:hover {
+    background-color: rgb(51, 51, 51);
+}
+
+#order:focus {
+    background-color: var(--base-color);
+    color: var(--secondary-color);
+    letter-spacing: 5px;
+}
+
+#order:disabled {
+    background-color: grey;
+    border-color: grey;
+    cursor: not-allowed;
+}
+
+/* cart item */
+
+.cart-ch, .order-summary {
+    margin: 0 3rem 1rem 3rem;
+}
+
+.items-ch {
+    display: flex;
+    flex-direction: column;
+}
+
+.items-ch .item-ch {
+    display: flex;
+    flex-direction: row;
+    margin: 1rem 0;
+    font-size: 0.8rem;
+}
+
+.item-ch-img {
+    width: 5rem;
+    height: 5rem;
+}
+
+.item-ch-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    justify-content: space-around;
+    color: transparent;
+    background:rgb(238, 238, 238);
+}
+
+.item-info-ch {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: calc(100% - 5rem);
+}
+
+.info-left {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.info-left > * {
+    text-align: left;
+    padding: 0 1rem;
+    margin: 0;
+}
+
+.info-left .name, .info-right .price {
+    font-weight: 400;
+}
+
+.info-right {
+    text-align: right;
+}
+
+.info-right .price {
+    white-space: nowrap;
+}
+
+/* order summary */
+
+.order-summary {
+    display: flex;
+    flex-direction: column;
+}
+
+
+.order-summary .value {
+    white-space: nowrap;
+    font-weight: 400
+}
+
+.order-summary .subtotal-box,
+.order-summary .shipping-handling-box,
+.order-summary .tax-box,
+.order-summary .total-box {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 8px 0;
+}
+
+.order-summary .separator {
+    margin: 8px 0;
+    border-top: 2px groove black;
+}
+
+.order-summary .total-box {
+    font-weight: bold;
+}
+
+/* mobile */
+
+@media screen and (max-width: 787px) {
+
+    .checkout {
+        flex-direction: column;
+    }
+
+    .left-ch, .right-ch {
+        width: 100%;
+    }
+
+    .right-ch {
+        order: 1;
+    }
+
+    .left-ch {
+        order: 2;
+    }
+
+    .shipping, .billing, .order-box, .cart-ch, .order-summary {
+        margin: 0 1rem;
+    }
+
+    .cinfo-double {
+        flex-direction: column;
+    }
+
+    .cinfo-double .cinfo:first-child, .cinfo-double .cinfo:nth-child(2) {
+        width: 100%;
+    }
+
+    .cinfo-double .cinfo:nth-child(2) {
+        margin-left: 0;
+    }
+
+}

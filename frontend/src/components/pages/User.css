@@ -1,0 +1,173 @@
+.user-page {
+    display: flex;
+    flex-direction: row;
+    margin: 0 auto;
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 1000px;
+    height: 100%;
+}
+
+/* Account Box */
+
+.account-box {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+}
+
+.account-box #greet,
+.account-box #account-firstname {
+    font-size: min(max(1rem, 5vw), 4rem);
+    max-width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.account-box #account-firstname {
+    font-weight: 500;
+}
+
+.app-options {
+    display: flex;
+    flex-direction: column;
+
+    margin-top: 40px;
+}
+
+.app-options #personal-information-button,
+.app-options #billing-payments-button,
+.app-options #shipping-information-button,
+.app-options #cart-link,
+.app-options #orders-link {
+    text-align: left;
+    border: none;
+    padding: 0;
+    margin-top: 1rem;
+
+    font-size: 1.5rem;
+    font-weight: 300;
+
+    cursor: pointer;
+
+    color: black;
+    background-color: white;
+}
+
+.app-options #personal-information-button.active,
+.app-options #billing-payments-button.active,
+.app-options #shipping-information-button.active {
+    font-weight: 500;
+}
+
+/* App Box */
+
+.app-box {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-left: 3rem;
+}
+
+.personal-information-box,
+.billing-payments-box,
+.shipping-information-box {
+    display: none;
+}
+
+.personal-information-box.active,
+.billing-payments-box.active,
+.shipping-information-box.active {
+    display: block;
+}
+
+.title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+}
+
+.info-edit-container,
+.shipping-edit-container,
+.payments-edit-container {
+    display: flex;
+    flex-direction: column;
+    margin: 1rem 0;
+}
+
+.edit-box {
+    margin-bottom: 25px;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-box .variable {
+    font-weight: 500;
+    margin-bottom: 5px;
+}
+
+.edit-form-box {
+    display: flex;
+    flex-direction: row;
+}
+
+.edit-form,
+.edit-form-confidential {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem 0.5rem;
+    margin-right: 5px;
+    border-radius: 0;
+    outline: none;
+    border: 1px solid black;
+    background-color: transparent;
+    font-size: 1rem;
+}
+
+.edit-form::placeholder,
+.edit-form-confidential::placeholder {
+    opacity: 0;
+    color: rgb(155, 155, 155);
+    transition: opacity 0.25s ease;
+}
+
+.edit-form-confidential {
+    background-color: rgb(242, 242, 242);
+}
+
+#address-column {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-right: 5px;
+}
+
+#addr-line-1-edit-form {
+    border-bottom: none;
+}
+
+.edit-submit-button,
+.update-submit-button {
+    background-color: black;
+    color: white;
+    box-sizing: border-box;
+    border: 1px solid black;
+    transition: background-color 0.3s ease;
+}
+
+.edit-submit-button:hover,
+.update-submit-button:hover {
+    background-color: white;
+    color: black;    
+}
+
+.update-submit-button {
+    padding: 5px 5px;
+    height: 50px;
+    margin: 25px 0;
+    text-transform: uppercase;
+    font-size: 1rem;
+}

@@ -1,0 +1,155 @@
+.orders {
+    margin: 0 auto 2rem;
+    width: 100%;
+    max-width: 50rem;
+}
+
+.orders .head {
+    text-align: center;
+}
+
+.orders .head .title {
+    margin: 0 auto;
+    margin-top: 3rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+/* Order Table */
+.order-container {
+    width: 100%;
+    font-size: 0.9rem;
+}
+
+.tb-head {
+    background-color: rgb(68, 68, 68);
+    color: white;
+    width: 20%;
+    padding: 0.5rem;
+}
+
+.order {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.order-detail {
+    border-bottom: 1px solid rgb(241, 241, 241);
+    width: 20%;
+    padding: 1rem 0.5rem;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+}
+
+
+.order-detail-button {
+    border: none;
+    width: 80%;
+    padding: 0.5rem;
+    box-sizing: border-box;
+    cursor: pointer;
+    align-items: center;
+    border-radius: 5px;
+    background-color: rgb(183, 214, 227);
+    transition: background-color .3s ease;
+}
+
+.order-detail-button:hover {
+    background-color: rgb(194, 228, 241);
+}
+
+/* Ordered Products */
+
+.order-item-container {
+    animation: elongate 0.5s ease-out;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    max-height: 20rem;
+}
+
+@keyframes elongate {
+    0% { max-height: 0; overflow-y: hidden;}
+    99.9% {overflow-y: hidden;}
+    100% { max-height: 20rem; overflow-y: scroll;}
+}
+
+.order-item {
+    display: flex;
+    flex-direction: row;
+    background-color: rgb(247, 247, 247);
+    max-height: 5rem;
+}
+
+.order-item > div {
+    padding: 0.5rem;
+    box-sizing: border-box;
+}
+
+.order-item-left {
+    width: 10%;
+    align-items: center;
+}
+
+.order-item-left > img {
+    width: 100%;
+    object-fit: cover;
+    justify-content: space-around;
+    color: transparent;
+    background:rgb(238, 238, 238);
+}
+
+.oi-name {
+    font-weight: 400;
+    width: 50%;
+}
+
+.oi-price, .oi-qty {
+    width: 20%;
+}
+
+/* Not logged in */
+.logged-out-orders {
+    width: 20rem;
+    margin: auto;
+}
+
+.auth-redirect {
+    margin: auto;
+    border: 1px black solid;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-sizing: border-box;
+    background-color: transparent;
+    width: 100%;
+    cursor: pointer;
+    font-size: 1rem;
+    text-align: center;
+}
+
+@media screen and (max-width: 799px) {
+    .order-container {
+        font-size: 0.8rem;
+        word-break: break-word;
+    }
+
+    .order-detail {
+        padding: 1rem 0.2rem;
+    }
+
+    .logged-out-orders {
+        width: 90%;
+    }
+
+}
+
+/* Guest Order */
+.guest-order .order-id {
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+
+.guest-order .order-total {
+    font-weight: 500;
+}
